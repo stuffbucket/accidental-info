@@ -8,7 +8,7 @@ and fonts/ (the exact font files used). Output is deterministic (ReportLab invar
 so a rebuild with the pinned packages in requirements.txt is byte-identical to the shipped
 PDF. The SHA-256 of the expected PDF is in expected.sha256.
 """
-import hashlib, os, re, sys
+import hashlib, io, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import content as C
 
@@ -71,6 +71,8 @@ TW = PW - MR - TX
 INK = HexColor("#111111")
 GREY = HexColor("#5f5f5f")
 HAIR = HexColor("#bdbdbd")
+PANEL = HexColor("#ebebeb")  # the background of a grey block
+PAD = 7                      # inside a grey block or callout; the box reaches this far into the margin
 
 # Colorway from the supplied swatch (bg tokens): base, darker secondary, text colour.
 def _dark(h, f=0.80):
@@ -80,18 +82,19 @@ TOKENS = {  # token: base hex
     "brand": "#0D99FF", "figjam": "#9747FF", "danger": "#F24822",
     "warning": "#FFCD29", "success": "#14AE5C", "assistive": "#E83FBF",
 }
-# The series rule: the entry number sets the colour, in every guide of the series, so a writer
-# doesn't have to look it up and the thumb tabs and cover grid look the same in each guide.
-# 01 brand, 02 success, 03 figjam, 04 warning, 05 assistive, 06 danger. The token names carry
-# no meaning.
-PART_TOKEN = {"De": "brand", "In": "success", "Sc": "figjam", "Rf": "warning", "As": "assistive"}
+# Each color is one family, the same in every guide of the series
+# (contrib/accidental-guides/registry.md).
+FAMILY_TOKEN = {"Ru": "warning", "Wr": "figjam", "Ck": "success", "Us": "danger", "Dm": "assistive",
+                "Nu": "brand"}
+PART_FAMILY = {"Ds": "Wr", "Is": "Wr", "Sr": "Us", "Rf": "Wr", "At": "Wr"}
+PART_TOKEN = {k: FAMILY_TOKEN[f] for k, f in PART_FAMILY.items()}
 def colors(mono_key):
     t = PART_TOKEN[mono_key]; base = TOKENS[t]
     fg = INK if t == "warning" else white
     return HexColor(base), _dark(base, 0.86 if t == "warning" else 0.80), fg
-NAME2MONO = {"Description": "De", "Descriptions": "De", "Instructions": "In", "Script": "Sc",
-             "Scripts": "Sc", "Reference file": "Rf", "Reference files": "Rf", "Asset": "As",
-             "Assets": "As"}
+NAME2MONO = {"Description": "Ds", "Descriptions": "Ds", "Skill instructions": "Is", "Script": "Sr",
+             "Scripts": "Sr", "Reference file": "Rf", "Reference files": "Rf", "Asset": "At",
+             "Assets": "At"}
 # Any other name, such as an instructions file, a tool or a sub-agent, is plain text with no
 # tile.
 # Tiles per row on the cover: two rows of two for four parts, otherwise rows of three.
@@ -146,9 +149,11 @@ def para(c, text, style, x, ytop, w):
     return ytop - h
 
 def rule(c, y, x0=ML, x1=PW - MR, weight=0.3, color=HAIR):
+    if not weight:
+        return
     c.setStrokeColor(color); c.setLineWidth(weight); c.line(x0, y, x1, y)
 
-def row(c, label, text, y, style=SMALL, pad=4.5, weight=0.3, color=HAIR, lstyle=LABEL):
+def row(c, label, text, y, style=SMALL, pad=4.5, weight=0, color=HAIR, lstyle=LABEL):
     rule(c, y, weight=weight, color=color)
     y -= pad
     yl = para(c, label, lstyle, ML, y, LABW)
@@ -156,7 +161,9 @@ def row(c, label, text, y, style=SMALL, pad=4.5, weight=0.3, color=HAIR, lstyle=
     return min(yl, yt) - pad + 1
 
 def first(i):
-    return dict(weight=(1 if i == 0 else 0.3), color=(INK if i == 0 else HAIR))
+    """A heavy rule over the first row of a group and none between the rows: the space between
+    rows is enough to tell them apart."""
+    return dict(weight=(1 if i == 0 else 0), color=INK)
 
 def title(c, text, y=None):
     y = PH - MT if y is None else y
@@ -260,7 +267,7 @@ def page_cover(c):
         c.setFillColor(INK); c.setFont("Sans-Bold", 7.6)
         c.drawString(x, yb - 11, e["name"])
         c.setFillColor(GREY); c.setFont("Sans", 6.6)
-        c.drawString(x, yb - 20, f"page {ENTRY_START + i}")
+        c.drawString(x, yb - 20, f"page {ENTRY_PAGE[i]}")
     rule(c, MB + 4, weight=1, color=INK)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
     c.drawString(ML, MB - 6, f"{C.COVER_FOOTER} · Version {C.VERSION}")
@@ -268,18 +275,7 @@ def page_cover(c):
 
 def page_why(c, n):
     y = plain_title(c, C.WHY_TITLE)
-    for t in C.WHY_INTRO:
-        y = para(c, t, BODY, ML, y, W) - 5
-    y -= 4
-    c.setFont("Sans-Bold", 6.8); c.setFillColor(GREY)
-    c.drawString(ML, y - 7, C.WHY_HEAD[0]); c.drawString(TX, y - 7, C.WHY_HEAD[1])
-    y -= 11
-    for i, (term, meaning) in enumerate(C.WHY_ROWS):
-        rule(c, y, **first(i))
-        y -= 4.5
-        yl = para(c, term, LABEL, ML, y, LABW)
-        yt = para(c, meaning, SMALL, TX, y, TW)
-        y = min(yl, yt) - 3.5
+    y = blocks(c, C.WHY_BLOCKS, y)
     footer(c, n); check("why", y)
 
 def arrow_head(c, x, y, direction):
@@ -315,6 +311,40 @@ def note(c, text, y, style=SMALL):
     rule(c, y, weight=1, color=INK)
     return para(c, text, style, ML, y - 6, W)
 
+def on_grey(c, y, draw):
+    """A grey block: draw(c, y) on a grey panel, which reaches PAD into the side margins so the
+    text keeps its left edge. draw returns the bottom y; it runs once on a scratch canvas first
+    to measure the panel."""
+    bottom = draw(canvas.Canvas(io.BytesIO()), y - PAD)
+    c.setFillColor(PANEL); c.rect(ML - PAD, bottom - PAD, W + 2 * PAD, y - bottom + PAD, stroke=0, fill=1)
+    draw(c, y - PAD)
+    return bottom - PAD
+
+def callout(c, label, text, y):
+    """One tip or warning in an outlined box, led by its label in bold."""
+    p = Paragraph(mono(f"<b>{label}.</b> {text}", SMALL.fontSize), SMALL)
+    _, h = p.wrap(W, 1000)
+    c.setStrokeColor(INK); c.setLineWidth(0.8)
+    c.rect(ML - PAD, y - h - 2 * PAD, W + 2 * PAD, h + 2 * PAD, stroke=1, fill=0)
+    p.drawOn(c, ML, y - PAD - h)
+    return y - h - 2 * PAD
+
+def blocks(c, items, y, grey=False):
+    """A section's paragraphs, two-column tables, grey blocks and callouts, in order. A table is
+    drawn as rows, with no rules on a grey block. Returns the bottom y."""
+    for b in items:
+        if b[0] == "p":
+            y = para(c, b[1], SMALL if grey else BODY, ML, y, W) - SP_PARA
+        elif b[0] == "table":
+            for i, (label, text) in enumerate(b[2]):
+                y = row(c, label, text, y, **({} if grey else first(i)))
+            y -= SP_PARA
+        elif b[0] == "grey":
+            y = on_grey(c, y, lambda c_, y_, b=b: blocks(c_, b[1], y_, grey=True) + SP_PARA) - SP_PARA - 4
+        elif b[0] == "callout":
+            y = callout(c, b[1], b[2], y) - SP_PARA - 4
+    return y
+
 def page_meaning(c, n):
     y = plain_title(c, C.MEAN_TITLE)
     for t in C.MEAN_INTRO:
@@ -326,16 +356,16 @@ def page_meaning(c, n):
 
 MEAN_WIDTHS = [72, 128, W - 200]
 
-def page_table(c, n, sid):
-    """A plain page: title, paragraphs, a table with a header row, and a closing note."""
+def table_part(c, sid, y):
+    """A title, paragraphs, a table with a header row, and the blocks after it, from ytop down.
+    Returns the bottom y."""
     t = C.TABLE_PAGES[sid]
-    y = plain_title(c, t["title"])
+    y = title(c, t["title"], y)
     for p in t["intro"]:
         y = para(c, p, BODY, ML, y, W) - SP_PARA
     y -= SP_SECTION - SP_PARA - 4
     y = table(c, t["cols"], t["rows"], TABLE_WIDTHS[sid], y)
-    y = note(c, t["note"], y - 4)
-    footer(c, n); check(sid, y)
+    return blocks(c, t["after"], y - SP_PARA)
 
 # Column widths for each table page; the last column takes the rest of the text block.
 TABLE_WIDTHS = {"shared": [66, 84, W - 150], "choose": [66, 110, W - 176]}
@@ -463,7 +493,7 @@ def page_fit(c, n):
     size = min(5.6, (box_r - box_x - 8) / longest)
     lead = size * 1.4
     close = [i for i, l in enumerate(lines) if l.strip() == "---"][1]
-    bands = (("Description", lines[:close + 1]), ("Instructions", lines[close + 1:]))
+    bands = (("Description", lines[:close + 1]), ("Skill instructions", lines[close + 1:]))
     yb = ym - 6
     for part, body in bands:
         h = max(len(body) * lead + 6, side_height(part, parts[part][1]) + 6)
@@ -486,16 +516,12 @@ def page_fit(c, n):
         y = side_label(c, part, parts[part][1], y + 1) - 10
     c.setStrokeColor(GREY); c.setLineWidth(0.5); c.line(trunk, y0 - 10, trunk, last)
     BOXES["fit"] = (ML - 2, y + 4, PW - MR + 2, y0 + 2)
-    y -= 6
-    rule(c, y, weight=1, color=INK)
-    y -= 6
-    for t in C.FIT_BODY:
-        y = para(c, t, BODY, ML, y, W) - SP_PARA
+    y = blocks(c, C.FIT_BLOCKS, y - 8)
     footer(c, n); check("fit", y)
 
 # The context window filling up, one row per moment. Each part has a fixed width in the bar,
 # so a row's bar is the one above it plus the part that row adds.
-CTX_WIDTH = {"De": 14, "In": 74, "Sc": 14, "Rf": 48, "As": 40}
+CTX_WIDTH = {"Ds": 14, "Is": 74, "Sr": 14, "Rf": 48, "At": 40}
 BAR_H = 12
 
 def page_ctx(c, n):
@@ -527,30 +553,51 @@ def page_ctx(c, n):
         yt = para(c, label, CELLG, TX, yt, TW)
         y = min(yl, yt) - 5
     BOXES["ctx"] = (ML - 2, y + 1, PW - MR + 2, top + 2)
-    y = note(c, C.CTX_NOTE, y - 2)
+    y = blocks(c, C.CTX_BLOCKS, y - 8)
     footer(c, n); check("ctx", y)
 
-def page_entry(c, e, idx, n):
-    size = 46
-    corner_avatar(c, e["mono"], number=e["num"], size=size)
+ENTRY_TILE = 34
+
+def entry(c, e, idx, ytop):
+    """One entry, from ytop down: its name and numbered tile, the three rows, the field marks
+    and Confused with. Returns the bottom y."""
+    avatar(c, e["mono"], PW - MR - ENTRY_TILE, ytop - ENTRY_TILE, ENTRY_TILE, number=e["num"])
     thumb_tab(c, e["mono"], idx)
-    c.setFillColor(INK); c.setFont("Sans-Bold", 24); c.drawString(ML, PH - MT - size + 1, e["name"])
-    y = PH - MT - size - 10
+    c.setFillColor(INK); c.setFont("Sans-Bold", 20); c.drawString(ML, ytop - ENTRY_TILE + 1, e["name"])
+    y = ytop - ENTRY_TILE - 8
     y = row(c, "Identify by", e["identify"], y, style=SMALL, weight=1, color=INK)
     y = row(c, "What", bold_first(e["what"]), y, style=BODY)
     y = row(c, "So what", bold_first(e["sowhat"]), y, style=BODY)
-    y -= 8
-    c.setFont("Sans-Bold", 6.8); c.setFillColor(GREY); c.drawString(ML, y - 6, "Field marks"); y -= 10
-    for i, (l, s_, d) in enumerate(e["marks"]):
-        y = row(c, l, short_detail(s_, d), y, **first(i))
-    y -= 8
+    y -= 6
+    if e["marks_grey"]:
+        y = on_grey(c, y, lambda c_, y_: marks_grid(c_, e["marks"], y_)) - 8
+    else:
+        c.setFont("Sans-Bold", 6.8); c.setFillColor(GREY); c.drawString(ML, y - 6, "Field marks"); y -= 10
+        for i, (l, s_, d) in enumerate(e["marks"]):
+            y = row(c, l, short_detail(s_, d), y, **first(i))
+        y -= 8
     other, test = e["confused"]
     rule(c, y, weight=1, color=INK); y -= 4.5
     yl = para(c, "Confused with", LABEL, ML, y, LABW)
     yt = tag(c, other, TX, y, style=SMALLB, w=TW)
     yt = para(c, test, SMALL, TX, yt - 1, TW)
-    y = min(yl, yt)
-    footer(c, n); check(f"entry {e['name']}", y)
+    return min(yl, yt)
+
+LABELG = ParagraphStyle("labelg", parent=LABEL, textColor=GREY)
+
+def marks_grid(c, marks, y):
+    """Field marks on a grey block, in three columns: each label over its short answer."""
+    c.setFont("Sans-Bold", 6.8); c.setFillColor(GREY); c.drawString(ML, y - 6, "Field marks")
+    y -= 13
+    colw = W / 3
+    for k in range(0, len(marks), 3):
+        low = y
+        for j, (l, s_, d) in enumerate(marks[k:k + 3]):
+            x = ML + j * colw
+            yl = para(c, l, LABELG, x, y, colw - 8)
+            low = min(low, para(c, short_detail(s_, d), SMALL, x, yl, colw - 8))
+        y = low - 5
+    return y + 5
 
 FLOW_X = (ML, ML + 11, ML + 72, ML + 170, ML + 236)
 FLOW_W = (59, 94, 64, PW - MR - (ML + 236))
@@ -628,6 +675,41 @@ def page_apart(c, n):
         y = row(c, l, t, y, **first(i))
     footer(c, n); check("apart+other", y)
 
+# ---------- entries and table sections, packed onto pages ----------
+# The entries, then "Where do skills come from?" and "Skill or something else?", go down the
+# page one after another, and a new page starts only when the next one doesn't fit.
+FLOW_GAP = 22
+
+def flow_parts():
+    return [("entry", i) for i in range(len(C.ENTRIES))] + [(x,) for x in ("shared", "choose") if x in HAVE]
+
+def draw_part(c, part, y):
+    if part[0] == "entry":
+        return entry(c, C.ENTRIES[part[1]], part[1], y)
+    return table_part(c, part[0], y) + SP_PARA
+
+def pack():
+    """The flow parts, as pages: each a list of parts that fit on one page."""
+    pages, y = [], MB
+    for part in flow_parts():
+        h = PH - draw_part(canvas.Canvas(io.BytesIO()), part, PH)
+        if pages and y - FLOW_GAP - h >= MB:
+            pages[-1].append(part)
+            y -= FLOW_GAP + h
+        else:
+            pages.append([part])
+            y = PH - MT - h
+    return pages
+
+PAGES = pack()
+ENTRY_PAGE = {part[1]: ENTRY_START + k for k, parts in enumerate(PAGES) for part in parts if part[0] == "entry"}
+
+def page_parts(c, parts, n):
+    y = PH - MT
+    for k, part in enumerate(parts):
+        y = draw_part(c, part, y - (FLOW_GAP if k else 0))
+    footer(c, n); check(f"page {n}", y)
+
 URL = ParagraphStyle("url", fontName="Mono", fontSize=5.9, leading=8.2, textColor=GREY)
 DATE = ParagraphStyle("date", fontName="Sans", fontSize=6.2, leading=7.8, textColor=GREY)
 
@@ -675,13 +757,9 @@ def build(out):
                for x in FRONT_IDS]:
         fn(c, n); c.showPage(); n += 1
     assert n == ENTRY_START, (n, ENTRY_START)
-    for i, e in enumerate(C.ENTRIES):
-        page_entry(c, e, i, n); c.showPage(); n += 1
-    back = (("seq", page_seq), ("levels", lambda c, n: page_table(c, n, "levels")),
-            ("shown", lambda c, n: page_table(c, n, "shown")),
-            ("shared", lambda c, n: page_table(c, n, "shared")),
-            ("choose", lambda c, n: page_table(c, n, "choose")), ("flow", page_flow),
-            ("side", page_side), ("apart", page_apart))
+    for parts in PAGES:
+        page_parts(c, parts, n); c.showPage(); n += 1
+    back = (("seq", page_seq), ("flow", page_flow), ("side", page_side), ("apart", page_apart))
     for sid, fn in back:
         if sid in HAVE:
             fn(c, n); c.showPage(); n += 1

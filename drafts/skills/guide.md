@@ -14,13 +14,13 @@ It’s easy to think of a skill as one Markdown file. A skill is a folder, and n
 
 An Accidental Guide to: Agents, Harnesses, Skills, and Tools covers the basics. The harness loads each part of the folder only when a step needs it, so a skill can carry a lot without filling the context window.
 
-| Term | Meaning |
-|---|---|
-| Description | The name and description at the top of SKILL.md. |
-| Instructions | The steps in SKILL.md. |
-| Script | Code the agent runs for a step. |
-| Reference file | Detail the agent reads only when a step needs it. |
-| Asset | A file used in what the skill makes, such as a template. |
+> | Term | Meaning |
+> |---|---|
+> | Description | The name and description at the top of SKILL.md. |
+> | Skill instructions | The steps in SKILL.md. |
+> | Script | Code the agent runs for a step. |
+> | Reference file | Detail the agent reads only when a step needs it. |
+> | Asset | A file used in what the skill makes, such as a template. |
 
 # How do the parts fit together? {#fit}
 
@@ -38,7 +38,7 @@ description: Writes release notes from merged pull
 | Part | File | Caption |
 |---|---|---|
 | Description | SKILL.md, top | What it does and when |
-| Instructions | SKILL.md, body | The steps |
+| Skill instructions | SKILL.md, body | The steps |
 | Script | scripts/list_changes.sh | Lists the merged pull requests |
 | Reference file | references/style.md | The team’s writing rules |
 | Asset | assets/template.md | The layout of the notes |
@@ -54,14 +54,14 @@ The harness loads a skill in stages, as each step needs it. The Agent Skills sta
 | When | Adds | Label |
 |---|---|---|
 | Session starts | Description | Every skill’s name and description |
-| Your request matches | Instructions | The rest of SKILL.md |
+| Your request matches | Skill instructions | The rest of SKILL.md |
 | A step runs the script | Script | Only what the script prints |
 | A step needs the rules | Reference file | references/style.md |
 | A step fills in the template | Asset | assets/template.md |
 
 The script’s code and any file no step opens never enter the context window. What does load stays for the rest of the session.
 
-# Description {#entry num=01 mono=De}
+# Description {#entry num=01 mono=Ds}
 
 | Field | Text |
 |---|---|
@@ -71,33 +71,33 @@ The script’s code and any file no step opens never enter the context window. W
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| In context | Every call | Used or not, each one takes room. |
+> | Field | Short answer |
+> |---|---|
+> | In context | Every call |
 
-## Confused with: Instructions
+## Confused with: Skill instructions
 
-The description decides whether the skill is used. The instructions say what to do next.
+The description decides whether the skill is used. The skill instructions say what to do next.
 
-# Instructions {#entry num=02 mono=In}
+# Skill instructions {#entry num=02 mono=Is}
 
 | Field | Text |
 |---|---|
 | Identify by | The Markdown under the description in SKILL.md. |
-| What | Instructions are the steps the agent follows. Each step names the file it uses. |
+| What | Skill instructions are the steps the agent follows. Each step names the file it uses. |
 | So what | The whole body loads at once and stays, so keep it under 500 lines. Move detail into reference files. |
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| In context | From first use | The whole body loads. |
+> | Field | Short answer |
+> |---|---|
+> | In context | From first use |
 
 ## Confused with: Instructions file
 
-An instructions file loads in every session. A skill’s instructions load only when the skill is used.
+An instructions file loads in every session. Skill instructions load only when the skill is used.
 
-# Script {#entry num=03 mono=Sc}
+# Script {#entry num=03 mono=Sr}
 
 | Field | Text |
 |---|---|
@@ -107,9 +107,9 @@ An instructions file loads in every session. A skill’s instructions load only 
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| In context | Output only | The code never loads. |
+> | Field | Short answer |
+> |---|---|
+> | In context | Output only |
 
 ## Confused with: Tool
 
@@ -125,15 +125,15 @@ A script is one kind of tool. The agent runs it through the shell tool.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| In context | When a step reads it | A file no step names stays unread. |
+> | Field | Short answer |
+> |---|---|
+> | In context | When a step reads it |
 
-## Confused with: Instructions
+## Confused with: Skill instructions
 
-Instructions say what to do. A reference file holds the detail for one step.
+Skill instructions say what to do. A reference file holds the detail for one step.
 
-# Asset {#entry num=05 mono=As}
+# Asset {#entry num=05 mono=At}
 
 | Field | Text |
 |---|---|
@@ -143,15 +143,15 @@ Instructions say what to do. A reference file holds the detail for one step.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| In context | Only if the agent reads it | A script can fill it in without loading it. |
+> | Field | Short answer |
+> |---|---|
+> | In context | Only if the agent reads it |
 
 ## Confused with: Reference file
 
 A reference file is read for guidance. An asset ends up in the result.
 
-# Where do skills<br/>come from? {#shared}
+# Where do skills come from? {#shared}
 
 The folder format is an open standard, so the same skill works in Claude Code, Codex and GitHub Copilot.
 
@@ -163,9 +163,10 @@ The folder format is an open standard, so the same skill works in Claude Code, C
 | Plugin | Everyone who installs it | Claude Code and Codex plugins |
 | Your organization | Everyone your admins choose | Claude Code managed settings, a Claude API workspace |
 
-Read every file in a skill from someone else before you use it, as you would any program you install. Shared collections include anthropics/skills and github/awesome-copilot.
+> [!WARNING]
+> Read every file in a skill from someone else before you use it, as you would any program you install. Shared collections include anthropics/skills and github/awesome-copilot.
 
-# Skill or<br/>something else? {#choose}
+# Skill or something else? {#choose}
 
 Pick by what the agent is missing.
 
