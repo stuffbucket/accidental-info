@@ -1,0 +1,21 @@
+{
+ "group": "project",
+ "n": 1,
+ "commons": "File:EB1911 - Theodolite.png",
+ "title": "Theodolite",
+ "source_url": "https://commons.wikimedia.org/wiki/File:EB1911_-_Theodolite.png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/EB1911_-_Theodolite.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 988,
+ "h": 1844,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "AnonymousUnknown author",
+ "date_meta": "1911",
+ "credit_meta": "https://en.wikisource.org/wiki/Page%3AEB1911_-_Volume_26.djvu/803",
+ "desc_meta": "Theodolite.",
+ "license_templates": [
+  "PD-US-expired"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{en|1=Theodolite.}}\n|date=1911\n|source=https://en.wikisource.org/wiki/Page%3AEB1911_-_Volume_26.djvu/803\n|author={{anonymous}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-US-expired}}\n\n[[Category:Images from the 1911 Encyclopædia Britannica, volume 26]]",
+ "raw_path": "raw/project/1/original.png"
+}

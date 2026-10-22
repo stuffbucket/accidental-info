@@ -1,0 +1,424 @@
+---
+// A collection's map page (Accidental Intelligence's is /intelligence/): the catalog's cover in the middle and the
+// collection's groups down either side, each joined to the cover by a fine curve and holding its guides as tiles
+// in the series' style. A finished guide's tile is filled with its group's colour, a draft's is an outline in that
+// colour, and a coming guide's is a faint dashed outline. src/data/collections.json gives each such collection its
+// page, its catalog, its groups and the guides' codes; src/lib/mandala.mjs places them.
+//
+// The groups are HTML, placed over an SVG that draws only the curves, so the titles wrap and the links are
+// ordinary links in reading order. On a phone the same list runs down the page from the cover.
+import Plain from "../layouts/Plain.astro";
+import { base, loadCollections, type Collection, type Guide } from "../lib/guides";
+import { layout, WIDTH } from "../lib/mandala.mjs";
+
+export function getStaticPaths() {
+  return loadCollections()
+    .filter((collection) => collection.map && collection.page)
+    .map((collection) => ({ params: { map: collection.page!.replace(/\/$/, "") }, props: { collection } }));
+}
+
+const { collection } = Astro.props as { collection: Collection };
+const map = collection.map!;
+const plan = layout(map.groups.map((group) => group.entries.map((entry) => (entry.guide ?? entry.coming).title)));
+const pct = (value: number, of: number) => `${((value / of) * 100).toFixed(3)}%`;
+const state = (guide: Guide) => (guide.status === "draft" ? "draft" : "finished");
+const counts = {
+  finished: collection.guides.filter((guide) => guide.status !== "draft").length,
+  draft: collection.guides.filter((guide) => guide.status === "draft").length,
+  coming: collection.coming.length,
+};
+---
+
+<Plain
+  title={`${collection.name} · Accidental Guides`}
+  description={`The ${collection.name} guides on one map.${collection.line ? ` ${collection.line}` : ""}`}
+  image={`guides/${map.center.id}/card.png`}
+  imageAlt={`The cover of ${map.center.title}`}
+>
+  <main>
+    <div class="head" style={`--tile: ${collection.colour.base}`}>
+      <h1>{collection.name}</h1>
+      {collection.line && <p class="lead">{collection.line}</p>}
+      <ul class="key" aria-label="Key">
+        <li><span class="tile finished" aria-hidden="true"></span>Finished ({counts.finished})</li>
+        <li><span class="tile draft" aria-hidden="true"></span>Draft ({counts.draft})</li>
+        <li><span class="tile coming" aria-hidden="true"></span>Coming ({counts.coming})</li>
+      </ul>
+    </div>
+
+    <div class="mandala" style={`--ratio: ${WIDTH} / ${plan.height}`} data-mandala>
+      <svg class="links" viewBox={`0 0 ${WIDTH} ${plan.height}`} aria-hidden="true" focusable="false">
+        {
+          plan.groups.map((spot, index) => (
+            <g class="link" data-group={index} style={`--tile: ${map.groups[index].colour.base}`}>
+              <path d={spot.link} />
+              <circle cx={spot.end[0]} cy={spot.end[1]} r="3.5" />
+            </g>
+          ))
+        }
+      </svg>
+
+      <div
+        class="hub"
+        style={`left: ${pct(plan.cover.x, WIDTH)}; top: ${pct(plan.cover.y, plan.height)}; width: ${pct(plan.cover.width, WIDTH)}`}
+      >
+        <a class="cover" href={`${base}${map.center.page}`} tabindex="-1" aria-hidden="true">
+          <img
+            src={`${base}guides/${map.center.id}/cover.png`}
+            alt=""
+            width={map.center.cover.width}
+            height={map.center.cover.height}
+          />
+        </a>
+        <a class="hub-title" href={`${base}${map.center.page}`}>{map.center.title}</a>
+      </div>
+
+      <ol class="groups">
+        {
+          map.groups.map((group, index) => {
+            const spot = plan.groups[index];
+            return (
+              <li
+                class:list={["group", spot.side]}
+                data-group={index}
+                style={`--x: ${pct(spot.x, WIDTH)}; --y: ${pct(spot.y, plan.height)}; --tile: ${group.colour.base}; --band: ${group.colour.band}; --tile-ink: ${group.colour.ink}`}
+              >
+                <h2 class="group-name">{group.name}</h2>
+                <ul class="guides">
+                  {group.entries.map(({ guide, coming }) =>
+                    guide ? (
+                      <li class:list={["guide", state(guide)]}>
+                        <a href={`${base}${guide.page}`}>
+                          <span class="tile" aria-hidden="true">
+                            {map.codes[guide.id]}
+                          </span>
+                          <span class="title">
+                            {guide.title}
+                            {guide.status === "draft" && <span class="sr-only">, draft</span>}
+                          </span>
+                        </a>
+                      </li>
+                    ) : (
+                      <li class="guide coming">
+                        <span class="row">
+                          <span class="tile" aria-hidden="true">
+                            {map.codes[coming.id]}
+                          </span>
+                          <span class="title">
+                            {coming.title}
+                            <span class="sr-only">, coming</span>
+                          </span>
+                        </span>
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </main>
+</Plain>
+
+<script>
+  // Pointing at a group, or tabbing into it, darkens its curve.
+  for (const mandala of document.querySelectorAll<HTMLElement>("[data-mandala]")) {
+    const link = (group: Element) => mandala.querySelector(`.link[data-group="${(group as HTMLElement).dataset.group}"]`);
+    for (const group of mandala.querySelectorAll(".group")) {
+      const on = () => link(group)?.classList.add("on");
+      const off = () => link(group)?.classList.remove("on");
+      group.addEventListener("mouseenter", on);
+      group.addEventListener("mouseleave", off);
+      group.addEventListener("focusin", on);
+      group.addEventListener("focusout", off);
+    }
+  }
+</script>
+
+<style>
+  main {
+    width: min(100% - 2 * var(--gutter), var(--page));
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 6rem);
+  }
+  /* A band of the collection's colour over its name, as on the landing page. */
+  .head {
+    margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+    padding-top: 1.25rem;
+    border-top: 0.375rem solid var(--tile);
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: var(--text-2xl);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .lead {
+    margin: 0 0 1.5rem;
+    color: var(--muted);
+    font-size: var(--text-lg);
+  }
+
+  /* The tiles: a finished guide's filled with its group's colour, a draft's outlined in it, a coming guide's a
+     faint dashed outline. The key uses ink. */
+  .tile {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 1.625rem;
+    aspect-ratio: 1;
+    border: 1.5px solid var(--tile);
+    background: var(--tile);
+    color: var(--tile-ink);
+    font-size: 0.6875rem;
+    font-weight: bold;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  .draft .tile,
+  .tile.draft {
+    border-color: var(--band);
+    background: transparent;
+    color: var(--text);
+  }
+  .coming .tile,
+  .tile.coming {
+    border: 1px dashed var(--faint);
+    background: transparent;
+    color: var(--faint);
+  }
+
+  .key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    list-style: none;
+  }
+  .key li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .key .tile {
+    --tile: var(--text);
+    --band: var(--text);
+    width: 0.875rem;
+  }
+
+  /* The map. The curves and the cover are placed in the viewBox's proportions, the groups by --x and --y. */
+  .mandala {
+    position: relative;
+    max-width: 66rem;
+    margin: 0 auto;
+    aspect-ratio: var(--ratio);
+  }
+  .links {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .link path {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    transition: stroke 120ms;
+  }
+  .link circle {
+    fill: var(--tile);
+  }
+  .link.on path {
+    stroke: var(--text);
+  }
+
+  .hub {
+    position: absolute;
+    display: grid;
+    justify-items: center;
+    gap: 0.9rem;
+    text-align: center;
+  }
+  .hub .cover {
+    display: block;
+    width: 100%;
+  }
+  .hub img {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+  }
+  .hub-title {
+    font-weight: bold;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+  .hub-title:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+
+  .groups {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .group {
+    position: absolute;
+    top: var(--y);
+    width: 15rem;
+    /* The name's middle sits on the curve's end. */
+    transform: translateY(-0.6875rem);
+  }
+  .right {
+    left: var(--x);
+  }
+  .left {
+    right: calc(100% - var(--x));
+    text-align: right;
+  }
+  .group-name {
+    margin: 0 0 0.7rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 1.375rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .guides {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .guide a,
+  .guide .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    text-decoration: none;
+  }
+  .left .guide a,
+  .left .guide .row {
+    flex-direction: row-reverse;
+  }
+  .title {
+    padding-top: 0.2rem;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+  }
+  .guide a:hover .title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+  .coming .title {
+    color: var(--muted);
+  }
+
+  /* On a narrower screen the map runs down the page: the cover, then each group on a branch from one stem. */
+  @media (max-width: 56rem) {
+    .mandala {
+      aspect-ratio: auto;
+    }
+    .links {
+      display: none;
+    }
+    .hub {
+      position: static;
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+      align-items: end;
+      justify-items: start;
+      gap: 1.25rem;
+      width: auto !important;
+      text-align: left;
+    }
+    .hub-title {
+      font-size: var(--text-lg);
+    }
+    .groups {
+      /* The stem drops from the middle of the cover. */
+      --stem: 3.25rem;
+      position: relative;
+      margin-left: var(--stem);
+      padding: 1.75rem 0 0 1.5rem;
+    }
+    .group {
+      position: relative;
+      width: auto;
+      transform: none;
+      padding-bottom: 1.75rem;
+      text-align: left;
+    }
+    .left,
+    .right {
+      left: auto;
+      right: auto;
+    }
+    .left .guide a,
+    .left .guide .row {
+      flex-direction: row;
+    }
+    /* The stem, from the cover down to this group, and the branch out to its name. */
+    .group::before {
+      content: "";
+      position: absolute;
+      top: calc(-1.75rem - 1px);
+      left: -1.5rem;
+      width: 1rem;
+      height: calc(1.75rem + 0.6875rem);
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      border-bottom-left-radius: 0.75rem;
+    }
+    .group:first-child::before {
+      top: -1.75rem;
+    }
+    .group:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -1.5rem;
+      border-left: 1px solid var(--border);
+    }
+    .group:last-child {
+      padding-bottom: 0;
+    }
+    /* The branch ends in the group's colour, as the curves do on a wide screen. */
+    .group-name {
+      position: relative;
+    }
+    .group-name::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -0.5rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--tile);
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .hub img {
+      box-shadow: none;
+    }
+  }
+  :root[data-theme="dark"] .hub img {
+    box-shadow: none;
+  }
+</style>

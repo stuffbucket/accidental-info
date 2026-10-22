@@ -1,0 +1,146 @@
+/* Print layout for the design study: A3 landscape, 420 x 297 mm.
+   Loaded after the page's own <style>, so it only overrides.
+   Content box: 380 x 263 mm = 1436 x 994 CSS px. */
+
+@page {
+  size: 420mm 297mm;
+  margin: 18mm 20mm 16mm 20mm;
+
+  @top-left {
+    content: "Accidental Guides";
+    font: 700 9pt "Heros", Helvetica, sans-serif;
+    color: #111;
+    vertical-align: bottom;
+    padding-bottom: 5mm;
+  }
+  @top-right {
+    content: "Covers: a design study";
+    font: 400 9pt "Heros", Helvetica, sans-serif;
+    color: #5f5f5f;
+    vertical-align: bottom;
+    padding-bottom: 5mm;
+  }
+  @bottom-left {
+    content: "Design study · 22 October 2026";
+    font: 400 9pt "Heros", Helvetica, sans-serif;
+    color: #5f5f5f;
+    vertical-align: top;
+    padding-top: 5mm;
+  }
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font: 700 9pt "Heros", Helvetica, sans-serif;
+    color: #111;
+    vertical-align: top;
+    padding-top: 5mm;
+  }
+}
+@page :first {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+
+:root { --gutter: 0px; --col: 389px; color-scheme: light; }   /* --col: the 3fr column + 40px gap */
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html, body { background: #fff; }
+body { font-size: 15px; line-height: 1.5; }
+.wrap { max-width: none; padding: 0; margin: 0; }
+
+/* The page's layout lives in min-width media queries, which print does not
+   reliably match, so the wide layout is restated here. */
+.sec-head, .cols, .dir-head, footer { grid-template-columns: 3fr 9fr; column-gap: 40px; }
+.cols > :first-child { grid-column: 1; }
+.verdict { grid-template-columns: 3fr 4.5fr 4.5fr; column-gap: 40px; }
+.answer { grid-template-columns: repeat(3, 1fr); }
+.four { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.signs { grid-template-columns: repeat(8, 1fr); gap: 16px; }
+.crit { grid-template-columns: 290px 290px 1fr; gap: 24px; }
+.crit-text { grid-column: auto; padding: 0 0 0 24px; max-width: 46rem; }
+
+/* ---------- title page ---------- */
+.title-page {
+  height: 990px;
+  display: flex; flex-direction: column;
+  break-after: page;
+}
+.title-page .mast { padding: 0 0 14px; border-bottom: 2px solid var(--ink); font-size: 14px; }
+.title-page .hero { flex: 1; display: grid; grid-template-columns: 8fr 4fr; align-items: end; gap: 64px; padding: 0 0 64px; }
+.title-page h1 { font-size: 136px; line-height: .94; letter-spacing: -.03em; }
+.title-page .hero .q { font-size: 18px; line-height: 1.45; max-width: none; }
+.title-page .answer { margin: 0; padding: 32px 28px 36px; gap: 40px; }
+.title-page .answer h2 { font-size: 14px; margin-bottom: 8px; }
+.title-page .answer p { font-size: 16px; line-height: 1.5; }
+.title-foot { display: flex; justify-content: space-between; gap: 24px; padding-top: 14px; font-size: 12px; color: var(--grey); }
+
+/* ---------- type scale ---------- */
+section { padding: 0; break-before: page; }
+.sec-head { margin-bottom: 28px; }
+.num { padding-top: 12px; font-size: 13px; }
+h2.t, .dir h2 { font-size: 40px; }
+.lede { font-size: 18px; max-width: 46rem; }
+h3 { font-size: 15px; }
+
+/* ---------- breaks ---------- */
+h2, h3, .sec-head, .dir-head, .shelf-label { break-after: avoid; page-break-after: avoid; }
+figure, .shelf, .crit, .four, .signs, .tiny, .verdict, .rules, .tt, table, tr, .dir-head, .sec-head, .answer {
+  break-inside: avoid; page-break-inside: avoid;
+}
+p, li { orphans: 3; widows: 3; }
+
+/* ---------- 01 critique ---------- */
+#critique .shelf-label { margin-top: 0; }
+#critique > .shelf-label { break-before: page; }
+#critique figure.fig img { max-width: 900px !important; }
+#critique > .cols { margin-top: 36px !important; grid-template-columns: 1fr; row-gap: 12px; }
+#critique > .cols > .prose { display: flex; align-items: baseline; gap: 12px; max-width: none; }
+#critique > .cols > .prose h3, #critique > .cols > .prose p { margin: 0; }
+#critique .tt table { font-size: 13.5px; }
+#critique .tt th, #critique .tt td { padding-top: 7px; padding-bottom: 7px; }
+#critique .tt tbody th { width: 16%; }
+
+/* ---------- 02 directions ---------- */
+.dir { padding-top: 48px; }
+#a, #b, #c, #d { break-before: page; padding-top: 0; }
+.dir-head { margin-bottom: 24px; }
+.rules { margin-top: 16px; }
+/* covers and the sign grid sit on the text column */
+.dir .four, .dir .signs, .dir .tiny, .dir > h3 { margin-left: var(--col); }
+.cover figcaption, figure.fig figcaption { font-size: 12px; }
+.cover img { outline: 1px solid #d6d6d4; }
+#a > h3 { break-before: page; margin-top: 0 !important; }
+#b > h3 { break-before: page; margin-top: 0 !important; margin-left: 0; }
+#b figure.fig { max-width: none !important; display: grid; grid-template-columns: 560px 300px; gap: 24px; align-items: end; margin-top: 20px !important; }
+#b figure.fig figcaption { margin: 0; }
+.verdict { margin-top: 24px; }
+
+/* ---------- 03 shelves ---------- */
+.shelf { margin: 0; background: var(--shelf); }
+.shelf img { width: 100%; }
+.shelf-label { margin: 22px 0 8px; }
+#shelves > .shelf-label:nth-of-type(6), #shelves > .shelf-label:nth-of-type(10) { break-before: page; margin-top: 0; }
+#shelves h3.site-size { break-before: page; margin-top: 0 !important; }
+#shelves > .cols > div:last-child img { width: 660px; }
+#shelves > .cols > div:last-child { gap: 8px !important; }
+
+/* ---------- 04 / 05 ---------- */
+.tt { overflow: visible; margin: 0; padding: 12px 24px; }
+table { min-width: 0; }
+footer { margin-top: 56px; break-inside: avoid; }
+
+/* pass-1 fixes */
+#critique figure.fig img { max-width: 780px !important; }
+#critique .tt th, #critique .tt td { padding-top: 6px; padding-bottom: 6px; }
+#critique .tt td .n { line-height: 1.3; }
+#recommendation .cols { break-inside: avoid; page-break-inside: avoid; }
+
+/* pass-2 fixes */
+.verdict { grid-template-columns: calc(var(--col) - 40px) 1fr 1fr; }
+#recommendation > .cols:nth-of-type(4) { break-before: page; margin-top: 0 !important; }
+tr.best td.rec { box-shadow: none; border-left: 3px solid var(--ink); padding-left: 12px; }
+#tradeoffs .tt { padding: 20px 28px 24px; }
+#tradeoffs table { font-size: 17px; }
+#tradeoffs thead th { font-size: 14px; padding-bottom: 12px; }
+#tradeoffs th, #tradeoffs td { padding-top: 16px; padding-bottom: 16px; }
+#tradeoffs td .n { font-size: 14px; margin-top: 4px; }

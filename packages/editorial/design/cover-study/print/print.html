@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Covers: a design study</title>
+<meta name="description" content="Do the engravings fit the Accidental Guides? A critique, four Swiss/Bauhaus alternatives with real sample covers, and a recommendation.">
+<style>
+@font-face { font-family: "Heros"; src: url("../fonts/heros-regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Heros"; src: url("../fonts/heros-bold.ttf") format("truetype"); font-weight: 700; }
+:root {
+  color-scheme: light;
+  --ink: #111111;
+  --grey: #5f5f5f;
+  --soft: #8a8a8a;
+  --block: #ebebeb;
+  --paper: #ffffff;
+  --shelf: #ecece9;
+  --run: #FFCD29; --write: #9747FF; --check: #14AE5C; --use: #F24822; --decide: #E83FBF; --count: #0D99FF;
+  --measure: 38rem;
+  --gutter: 16px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 16px/1.5 "Heros", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-feature-settings: "kern";
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+img { display: block; max-width: 100%; height: auto; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter); }
+@media (min-width: 720px) { :root { --gutter: 40px; } }
+
+/* masthead */
+.mast { padding: 28px 0 0; display: flex; justify-content: space-between; gap: 16px; font-size: 13px; }
+.mast b { font-weight: 700; }
+.mast span { color: var(--grey); }
+.hero { padding: 72px 0 40px; display: grid; gap: 32px; }
+@media (min-width: 960px) { .hero { grid-template-columns: 7fr 5fr; align-items: end; } }
+h1 { font-size: clamp(44px, 7vw, 92px); line-height: .98; letter-spacing: -.025em; margin: 0; font-weight: 700; }
+.hero .q { font-size: 15px; color: var(--grey); max-width: 30rem; margin: 0; }
+.hero .q b { color: var(--ink); }
+
+/* the short answer, on a grey block as the guides do */
+.answer { background: var(--block); margin: 0 calc(var(--gutter) * -0.5); padding: 28px calc(var(--gutter) * .5 + 8px); display: grid; gap: 24px; }
+@media (min-width: 900px) { .answer { grid-template-columns: repeat(3, 1fr); margin: 0 -24px; padding: 32px 24px; } }
+.answer h2 { font-size: 13px; margin: 0 0 6px; letter-spacing: .02em; }
+.answer p { margin: 0; font-size: 15px; line-height: 1.45; }
+
+/* sections */
+section { padding: 88px 0 0; }
+.sec-head { display: grid; gap: 8px 32px; margin-bottom: 32px; }
+@media (min-width: 900px) { .sec-head { grid-template-columns: 3fr 9fr; } }
+.num { font-size: 13px; font-weight: 700; padding-top: 10px; }
+h2.t { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.08; letter-spacing: -.015em; margin: 0; }
+.lede { font-size: 18px; line-height: 1.45; max-width: var(--measure); margin: 14px 0 0; }
+.cols { display: grid; gap: 28px 40px; }
+@media (min-width: 900px) { .cols { grid-template-columns: 3fr 9fr; } .cols > :first-child { grid-column: 1; } }
+.prose { max-width: var(--measure); }
+.prose p { margin: 0 0 14px; }
+h3 { font-size: 15px; margin: 28px 0 8px; }
+.prose h3:first-child { margin-top: 0; }
+ul.plain { list-style: none; padding: 0; margin: 0 0 14px; }
+ul.plain li { padding-left: 18px; position: relative; margin-bottom: 8px; }
+ul.plain li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--ink); }
+ul.plain.minus li::before { background: transparent; border: 1px solid var(--ink); }
+.small { font-size: 13px; color: var(--grey); }
+
+/* covers */
+.four { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (min-width: 900px) { .four { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+.cover { margin: 0; }
+.cover img { width: 100%; outline: 1px solid #d6d6d4; }
+.cover figcaption, figure.fig figcaption { font-size: 12px; color: var(--grey); margin-top: 8px; line-height: 1.35; }
+.pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 640px; }
+figure.fig { margin: 0; }
+.crit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; align-items: start; }
+.crit-text { grid-column: 1 / -1; padding-top: 12px; }
+@media (min-width: 1000px) { .crit { grid-template-columns: repeat(2, minmax(0, 290px)) 1fr; gap: 20px; } .crit-text { grid-column: auto; padding: 0 0 0 20px; } }
+.shelf { background: var(--shelf); margin: 0 calc(var(--gutter) * -1); padding: 0; overflow: hidden; }
+.shelf img { width: 100%; }
+@media (min-width: 1240px) { .shelf { margin: 0; } }
+.shelf-label { display: flex; align-items: baseline; gap: 12px; margin: 28px 0 8px; font-size: 13px; }
+.shelf-label b { font-size: 15px; }
+.shelf-label span { color: var(--grey); }
+
+/* direction header */
+.dir { padding-top: 96px; }
+.dir-head { display: grid; gap: 20px 40px; align-items: start; margin-bottom: 28px; }
+@media (min-width: 900px) { .dir-head { grid-template-columns: 3fr 9fr; } }
+.letter { width: 56px; height: 56px; background: var(--ink); color: #fff; font-weight: 700; font-size: 26px; display: flex; align-items: flex-end; padding: 0 0 6px 8px; }
+.letter.outline { background: transparent; color: var(--ink); outline: 2px solid var(--ink); outline-offset: -2px; }
+.dir h2 { font-size: clamp(28px, 3.4vw, 40px); margin: 0 0 10px; letter-spacing: -.015em; line-height: 1.05; }
+.rules { background: var(--block); padding: 18px 20px; margin: 20px 0 0; font-size: 14px; }
+.rules b { display: block; font-size: 12px; margin-bottom: 6px; }
+.rules ol { margin: 0; padding-left: 18px; }
+.rules li { margin-bottom: 3px; }
+.verdict { display: grid; gap: 20px 40px; margin-top: 28px; }
+@media (min-width: 900px) { .verdict { grid-template-columns: 3fr 4.5fr 4.5fr; } }
+.verdict h3 { margin-top: 0; }
+.kpi { font-size: 13px; color: var(--grey); }
+.kpi b { color: var(--ink); display: block; font-size: 15px; }
+
+/* specimen */
+.signs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (min-width: 900px) { .signs { grid-template-columns: repeat(8, 1fr); } }
+.signs figure { margin: 0; }
+.signs figcaption { font-size: 11px; color: var(--grey); margin-top: 4px; line-height: 1.3; }
+.tiny { display: flex; gap: 14px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+.tiny img { width: 32px; height: 32px; image-rendering: auto; }
+
+/* trade-off table on a grey block, no rules between rows */
+.tt { background: var(--block); margin: 0 calc(var(--gutter) * -0.5); padding: 8px calc(var(--gutter) * .5); overflow-x: auto; }
+@media (min-width: 900px) { .tt { margin: 0 -24px; padding: 12px 24px; } }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 14px 9px 0; }
+thead th { font-size: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+tbody th { font-weight: 700; width: 18%; }
+td.g { font-weight: 700; }
+td .n { display: block; font-weight: 400; color: var(--grey); font-size: 12.5px; line-height: 1.35; margin-top: 2px; }
+tr.best td.rec { box-shadow: inset 3px 0 0 var(--ink); padding-left: 10px; }
+
+/* recommendation */
+.rec-block { border-top: 2px solid var(--ink); padding-top: 24px; }
+.decide { counter-reset: d; list-style: none; padding: 0; margin: 0; }
+.decide li { counter-increment: d; position: relative; padding-left: 36px; margin-bottom: 14px; }
+.decide li::before { content: counter(d, decimal-leading-zero); position: absolute; left: 0; top: 0; font-weight: 700; font-size: 13px; padding-top: 2px; }
+code { font-family: "Liberation Mono", Menlo, monospace; font-size: .86em; background: var(--block); padding: 1px 4px; }
+
+footer { margin: 120px 0 0; padding: 24px 0 48px; border-top: 2px solid var(--ink); font-size: 12.5px; color: var(--grey); display: grid; gap: 16px; }
+@media (min-width: 900px) { footer { grid-template-columns: 3fr 9fr; } }
+footer p { margin: 0 0 8px; max-width: 46rem; }
+</style>
+<link rel="stylesheet" href="print.css">
+</head>
+<body>
+<div class="wrap">
+
+<div class="title-page">
+<header class="mast"><b>Accidental Guides</b><span>Design study · 22 October 2026</span></header>
+
+<div class="hero">
+  <h1>Covers for the<br>Accidental Guides</h1>
+  <p class="q"><b>Brian’s question.</b> Do the engravings fit the modern typesetting, colour and other elements of the guides? Do they add to or take away from the unity of the design? Is there a better option, more Swiss/Bauhaus, with a modern take?</p>
+</div>
+
+<div class="answer">
+  <div><h2>Do they fit?</h2><p>Not on the covers. They’re good pictures in the wrong system. They come from another century, they’re drawn in hatched grey against flat colour, and their subjects are metaphors you have to explain. Each one floats on its own, not on the grid.</p></div>
+  <div><h2>Do they help unity?</h2><p>They help one thing: today every cover is the same white card at thumbnail size, and the engravings at least make them different. But they do it by adding a second visual language, so the series looks less like one thing, not more.</p></div>
+  <div><h2>What instead?</h2><p><b>B, the part grid.</b> Each cover puts its own coloured tiles on a fixed six-column grid, one column per family. The art comes from the guide’s content, costs nothing per guide, and shows readers the colour rule on every cover. Keep the engravings as a reference, on the about page.</p></div>
+</div>
+
+<div class="title-foot"><span>A critique, four Swiss and Bauhaus alternatives with real sample covers, and a recommendation</span><span>01 Critique · 02 Directions · 03 Shelves · 04 Trade-offs · 05 Recommendation</span></div>
+</div>
+<!-- ============================================================ 1 -->
+<section id="critique">
+  <div class="sec-head">
+    <div class="num">01 · Critique</div>
+    <div>
+      <h2 class="t">The engravings are charming, and they’re not part of this system</h2>
+      <p class="lede">The guides are already a Swiss system: Helvetica, a strict margin, flat saturated tiles, one meaning per colour, grey blocks, no ornament. Here’s a real cover today and the same cover with its engraving, placed where the sample covers put it.</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="crit">
+      <figure class="cover"><img src="../img/now/specs-and-reviews.png" alt="Specs and Reviews cover as it is now: title, subtitle and five coloured tiles on white"><figcaption>Now. Redrawn by the study script with the guide’s own fonts, sizes and data.</figcaption></figure>
+      <figure class="cover"><img src="../img/engraving/specs-and-reviews.png" alt="The same cover with a 1911 engraving of a theodolite at the right"><figcaption>With the engraving (project management: a theodolite, EB 1911), at the size and place the sample covers use.</figcaption></figure>
+      <div class="prose crit-text">
+        <h3>Where they add</h3>
+        <ul class="plain">
+          <li><b>Identity at a glance.</b> On the site the covers sit at about 120 px wide, and today they’re identical (below). An engraving is the first thing that makes one cover different from the next.</li>
+          <li><b>The joke.</b> Babbage’s engine for the AI catalog, the chess Turk (a machine with a person hidden inside) for Games, a magnifying glass for checking claims. That’s the series’ tone: a little dry, a little self-mocking.</li>
+          <li><b>Craft.</b> Steel and wood engraving is beautiful line work, and it’s free to use.</li>
+        </ul>
+        <h3>Where they clash</h3>
+        <ul class="plain minus">
+          <li><b>Era.</b> 1783 to 1911 against a 1957 typeface and 2020s Figma colours. O’Reilly made engravings work with a period serif. Next to Helvetica they read as an illustration somebody chose, not part of the page.</li>
+          <li><b>Line density.</b> Engravings get their tone from hatching, about 30 to 60% grey. The tiles are flat and saturated. On one page they fight, and at thumbnail size the dense plates (Babbage, the loom, the Turk) go to grey smudges.</li>
+          <li><b>Colour.</b> In this series colour means one thing, the part’s family. The engravings are the only element with no colour and no meaning, and tinting them would give colour a second job.</li>
+          <li><b>The grid.</b> Each image is a different shape, scale and viewpoint, floating right-aligned in the space between subtitle and tiles. A grid can hold images (Marber, Unigrid), but only if every image gets the same field.</li>
+          <li><b>Meaning.</b> They show groups, not guides, so five harness guides share one typewriter. The metaphors need a caption: a theodolite for project management, a brace and bit for extending an agent.</li>
+          <li><b>Supply.</b> Each new group means another archive search, a licence check, a cleanup pass and judgement calls. Two picks already carry a caution (the Turk’s costume, a face on the vaporiser).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="shelf-label"><b>Today, on the site</b><span>The thumbnail problem the engravings were really solving</span></div>
+  <figure class="fig"><img src="../img/ref/site-today.png" alt="The site's Accidental Intelligence row: five white cover thumbnails that look alike" style="max-width: 860px; outline: 1px solid #d6d6d4;"><figcaption>accidental.info today. Five covers, one white card. Any new direction has to fix this, at this size.</figcaption></figure>
+
+  <div class="cols" style="margin-top: 48px;">
+    <div class="prose"><h3>Precedents</h3><p class="small">Both ways, and what each one actually teaches.</p></div>
+    <div class="tt">
+      <table>
+        <thead><tr><th>Precedent</th><th>What it did</th><th>What it says about the engravings</th></tr></thead>
+        <tbody>
+          <tr><th>O’Reilly animals</th><td>Edie Freedman’s covers: a 19th-century animal engraving, large and centred, over a colour band, in a Garamond.</td><td class="g">For, with conditions.<span class="n">It works because the subject class (animals), size and position never change and the type comes from the same period. Ours change subject, sit small, and use Helvetica. Engravings on a tech book also now read as O’Reilly, or as a parody of it.</span></td></tr>
+          <tr><th>Penguin, Marber grid (1961)</th><td>A fixed typographic top band; below it, a full field for a commissioned image that changes with each book.</td><td class="g">Partly for.<span class="n">A grid can hold very different images, but each image gets the whole field, and the images were made then, in the same modern spirit as the type.</span></td></tr>
+          <tr><th>Unigrid, Vignelli (1977)</th><td>One black band and one modular grid for hundreds of National Park Service brochures.</td><td class="g">The system is the identity.<span class="n">Pictures change; the band and the grid never do. The starting point for C, and the best case for D.</span></td></tr>
+          <tr><th>Müller-Brockmann</th><td>Concert posters and <i>Grid Systems</i>: the type and the grid are the image.</td><td class="g">Against.<span class="n">Abstraction drawn from the content, not added to it. The starting point for B and C.</span></td></tr>
+          <tr><th>Aicher, Munich ’72</th><td>Pictograms on a square grid with 90° and 45° strokes, one weight, one colour, every sport drawn by the same rules.</td><td class="g">Against the engravings, for A.<span class="n">The simplest drawing that still says what it is, made from one rule book so it scales.</span></td></tr>
+          <tr><th>Isotype, Neurath and Arntz</th><td>Flat signs, no perspective, quantity shown by repeating the sign.</td><td class="g">Against, for A and B.<span class="n">Pictures that count. B is Isotype applied to a guide’s parts.</span></td></tr>
+          <tr><th>Bauhaus print</th><td>Bayer, Moholy-Nagy, Schmidt: asymmetric layouts, bars, primary geometry.</td><td class="g">Against.<span class="n">Source of the four collection marks (square, triangle, circle, diamond) and of B’s diagonal compositions.</span></td></tr>
+          <tr><th>GOV.UK</th><td>No decoration at all; type, spacing and plain words carry everything.</td><td class="g">Against.<span class="n">Proof that plain is enough for an anxious reader, as long as the hierarchy is right.</span></td></tr>
+          <tr><th>Stripe Press</th><td>A cohesive, deliberately bookish list where each cover is designed one by one.</td><td class="g">Neutral.<span class="n">Shows what that charm costs: every cover is a commission. That doesn’t scale to dozens of five-minute guides.</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="directions">
+  <div class="sec-head">
+    <div class="num">02 · Directions</div>
+    <div>
+      <h2 class="t">Four systems, each built to scale to dozens of guides</h2>
+      <p class="lede">Every mockup uses the guides’ real page (324 × 540 pt), fonts, tile drawing, titles, subtitles, parts, families and page numbers, rendered with ReportLab at 2×. Only the art and the layout change. A, B and D share one new line at the top: the collection’s mark, its name and the guide’s number.</p>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="prose"><h3>Shared: collection marks</h3></div>
+    <div class="prose" style="max-width: 46rem;">
+      <p>Colour already means a part’s family, so collections shouldn’t get colours of their own. Today the site does give them colours (Accidental Intelligence blue, Around the house yellow, At the table red, Games green), which makes yellow mean both “things that run” and “the house”. Instead, each collection gets a black Bauhaus primary: <b>■ Accidental Intelligence, ▲ Around the house, ● At the table, ◆ Games</b>. A fifth collection could take a half-disc or a bar. This is worth doing whichever direction is picked.</p>
+    </div>
+  </div>
+
+  <!-- engraving -->
+  <div class="dir" id="engraving">
+    <div class="dir-head">
+      <div class="letter outline">E</div>
+      <div>
+        <h2>The engravings, as proposed</h2>
+        <p class="lede" style="margin-top: 0;">The sample covers’ treatment, here applied to these eight guides: the current cover plus an engraving, right-aligned, 27% of the page width (32% for collection pictures), top at 180 pt.</p>
+      </div>
+    </div>
+    <div class="four">
+      <figure class="cover"><img src="../img/engraving/specs-and-reviews.png" alt="Specs and Reviews with theodolite engraving"><figcaption>Specs and Reviews · theodolite</figcaption></figure>
+      <figure class="cover"><img src="../img/engraving/chirping-smoke-detector.png" alt="Smoke Detectors That Chirp with an electric bell engraving"><figcaption>Smoke Detectors · Breguet bell</figcaption></figure>
+      <figure class="cover"><img src="../img/engraving/chess-first-move.png" alt="The First Move in Chess with the chess Turk engraving"><figcaption>The First Move in Chess · the Turk</figcaption></figure>
+      <figure class="cover"><img src="../img/engraving/accidental-intelligence.png" alt="Accidental Intelligence catalog with Babbage difference engine engraving"><figcaption>Accidental Intelligence · Babbage’s engine</figcaption></figure>
+    </div>
+  </div>
+
+  <!-- A -->
+  <div class="dir" id="a">
+    <div class="dir-head">
+      <div class="letter">A</div>
+      <div>
+        <h2>Signs</h2>
+        <p class="lede" style="margin-top: 0;">One pictogram per guide, drawn to Aicher’s and Arntz’s rules, in ink on the series’ grey block. The parts become a compact contents list beside it.</p>
+        <div class="rules"><b>Rules</b><ol>
+          <li>A 12 × 12 unit grid inside a 16-unit field. One stroke weight, 1 unit, square caps.</li>
+          <li>Only 0°, 45° and 90° lines; circles and arcs centred on grid points.</li>
+          <li>One ink, no colour: colour stays with the part tiles. Overlaps are cut apart with a 0.75-unit white gap.</li>
+          <li>On the cover: a grey square two columns wide, bottom-right; contents in the left column.</li>
+        </ol></div>
+      </div>
+    </div>
+    <div class="four">
+      <figure class="cover"><img src="../img/a-signs/specs-and-reviews.png" alt="Specs and Reviews cover with a page and review-check sign"><figcaption>A page with a folded corner and a review mark</figcaption></figure>
+      <figure class="cover"><img src="../img/a-signs/chirping-smoke-detector.png" alt="Smoke detector cover with alarm and chirp arcs sign"><figcaption>The ceiling, the alarm, its light, and the chirp</figcaption></figure>
+      <figure class="cover"><img src="../img/a-signs/chess-first-move.png" alt="Chess cover with a pawn and arrow sign"><figcaption>A pawn and its first move</figcaption></figure>
+      <figure class="cover"><img src="../img/a-signs/accidental-intelligence.png" alt="Catalog cover with an abacus sign"><figcaption>A counting frame: the oldest calculating machine for the series about the newest</figcaption></figure>
+    </div>
+    <h3 style="margin-top: 40px;">The signs on their grid</h3>
+    <div class="signs">
+      <figure><img src="../img/signs/accidental-intelligence-grid.png" alt="Abacus sign on its construction grid"><figcaption>Catalog</figcaption></figure>
+      <figure><img src="../img/signs/agents-harnesses-skills-tools-grid.png" alt="Model in harness sign on grid"><figcaption>Agents… (weakest)</figcaption></figure>
+      <figure><img src="../img/signs/context-windows-grid.png" alt="Window filling up sign on grid"><figcaption>Context Windows</figcaption></figure>
+      <figure><img src="../img/signs/claude-code-grid.png" alt="Terminal sign on grid"><figcaption>Claude Code</figcaption></figure>
+      <figure><img src="../img/signs/specs-and-reviews-grid.png" alt="Page and check sign on grid"><figcaption>Specs and Reviews</figcaption></figure>
+      <figure><img src="../img/signs/chirping-smoke-detector-grid.png" alt="Smoke alarm sign on grid"><figcaption>Smoke Detectors</figcaption></figure>
+      <figure><img src="../img/signs/grilled-cheese-grid.png" alt="Sandwich in a pan sign on grid"><figcaption>Grilled Cheese</figcaption></figure>
+      <figure><img src="../img/signs/chess-first-move-grid.png" alt="Pawn and arrow sign on grid"><figcaption>First Move in Chess</figcaption></figure>
+    </div>
+    <div class="tiny small">At 32 px:
+      <img src="../img/signs/accidental-intelligence-32.png" alt=""><img src="../img/signs/agents-harnesses-skills-tools-32.png" alt=""><img src="../img/signs/context-windows-32.png" alt=""><img src="../img/signs/claude-code-32.png" alt=""><img src="../img/signs/specs-and-reviews-32.png" alt=""><img src="../img/signs/chirping-smoke-detector-32.png" alt=""><img src="../img/signs/grilled-cheese-32.png" alt=""><img src="../img/signs/chess-first-move-32.png" alt="">
+    </div>
+    <div class="verdict">
+      <div class="kpi"><b>Cost per new guide</b>One sign, 20 to 60 minutes of careful drawing in code</div>
+      <div class="prose"><h3>Good</h3><p>The direct answer to “the simpler the illustration, the easier it is to use”: the same sign works on the cover, as a favicon, on a share card, beside a link. It keeps the joke (steam off the pan, the chirp), and the grey squares give the shelf a strong, even beat.</p></div>
+      <div class="prose"><h3>Hard</h3><p>Concrete subjects draw themselves: an alarm, a pan, a pawn. The AI guides, two-thirds of the series, are abstract. The five harness guides would all be windows and terminals, and words like plugin, skill and software factory drift toward generic icon-library glyphs (a plug, a puzzle piece, a gear). Getting past that takes real drawing time for every guide.</p></div>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div class="dir" id="b">
+    <div class="dir-head">
+      <div class="letter">B</div>
+      <div>
+        <h2>The part grid</h2>
+        <p class="lede" style="margin-top: 0;">The cover’s art is the guide itself. Six columns, one per family, always in the same order; one row per entry. Each part’s tile sits where its family meets its entry number, so every guide makes its own pattern on the same grid.</p>
+        <div class="rules"><b>Rules</b><ol>
+          <li>Six columns across the measure (46 pt each), six rows: the series already caps a guide at six parts.</li>
+          <li>Column heads are one word per family: Runs, Written, Checks, Used, Decided, Counted. Families the guide covers get a filled swatch, the rest an empty outline (the strip <code>design-direction.md</code> already proposes).</li>
+          <li>The tiles are today’s two-tone tiles, number in the band. Each name and page sits beside its tile, on the right where it fits, otherwise on the left.</li>
+          <li>No empty cells are drawn. The structure is the column heads and the alignment, not a ruled grid.</li>
+        </ol></div>
+      </div>
+    </div>
+    <div class="four">
+      <figure class="cover"><img src="../img/b-grid/specs-and-reviews.png" alt="Specs and Reviews: three purple tiles stacked under Written, then pink under Decided, green under Checks"><figcaption>Mostly written-down things, one decision and one check: the cover says so</figcaption></figure>
+      <figure class="cover"><img src="../img/b-grid/chirping-smoke-detector.png" alt="Smoke detector: tiles stepping diagonally across Checks, Used, Decided and Counted"><figcaption>Two checks, then a staircase</figcaption></figure>
+      <figure class="cover"><img src="../img/b-grid/grilled-cheese.png" alt="Grilled cheese: three red tiles under Used and a pink tile under Decided"><figcaption>Three things you use and one decision (the heat)</figcaption></figure>
+      <figure class="cover"><img src="../img/b-grid/accidental-intelligence.png" alt="Catalog: six family tiles on a perfect diagonal"><figcaption>The catalog’s parts are the six families: a diagonal, the key to every other cover</figcaption></figure>
+    </div>
+    <h3 style="margin-top: 40px;">Every guide in the repository today, with no extra work</h3>
+    <div class="shelf"><img src="../img/shelves/b-all-1.png" alt="Twelve B covers: catalog and AI guides"></div>
+    <div class="shelf" style="margin-top: 8px;"><img src="../img/shelves/b-all-2.png" alt="Twelve more B covers: AI, house, table and games guides"></div>
+    <figure class="fig" style="margin-top: 24px; max-width: 760px;"><img src="../img/b-marks.png" alt="Each guide's six-by-six pattern alone, as a small mark"><figcaption>The pattern alone, as a mark for site lists and thumb tabs. Claude Code and Claude Desktop come out identical because they cover the same five parts. That’s true, but it means titles have to tell sibling guides apart.</figcaption></figure>
+    <div class="verdict">
+      <div class="kpi"><b>Cost per new guide</b>None. The builder draws the cover from the parts it already has.</div>
+      <div class="prose"><h3>Good</h3><p>Unity comes from the rules, not from anyone’s taste: every cover is the same system, by definition. Colour gets more meaning, not a second job; a reader who has seen two covers can read the third. It’s Isotype and Bauhaus without nostalgia, and it looks like nothing else on a shelf. At thumbnail size each cover is a distinct pattern.</p></div>
+      <div class="prose"><h3>Hard</h3><p>It never pictures the subject: the smoke alarm is in the title, not the art. Sibling guides look alike. It’s the most cerebral of the four, so the warmth has to come from the subtitles and the writing. It also depends on every part having a settled family; four older builders don’t have <code>PART_FAMILY</code> yet.</p></div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div class="dir" id="c">
+    <div class="dir-head">
+      <div class="letter">C</div>
+      <div>
+        <h2>Band and number</h2>
+        <p class="lede" style="margin-top: 0;">Pure typography, Unigrid style. A fixed black band holds the kicker, the collection and the title, set on the band’s foot. A large series number fills the lower field, with the contents beside it.</p>
+        <div class="rules"><b>Rules</b><ol>
+          <li>Band 176 pt, full bleed; the title’s last line always sits 14 pt above its foot.</li>
+          <li>The number is the guide’s place in its collection, at 160 pt. The catalog is 00.</li>
+          <li>Numbers are permanent once given, like Penguin’s, and never reused.</li>
+        </ol></div>
+      </div>
+    </div>
+    <div class="four">
+      <figure class="cover"><img src="../img/c-numbers/specs-and-reviews.png" alt="Specs and Reviews with black band and number 11"><figcaption>■ 11</figcaption></figure>
+      <figure class="cover"><img src="../img/c-numbers/chirping-smoke-detector.png" alt="Smoke detectors with black band and number 01"><figcaption>▲ 01</figcaption></figure>
+      <figure class="cover"><img src="../img/c-numbers/chess-first-move.png" alt="First Move in Chess with black band and number 02"><figcaption>◆ 02</figcaption></figure>
+      <figure class="cover"><img src="../img/c-numbers/accidental-intelligence.png" alt="Catalog with black band and number 00"><figcaption>■ 00, the catalog</figcaption></figure>
+    </div>
+    <div class="verdict">
+      <div class="kpi"><b>Cost per new guide</b>None, plus one permanent number</div>
+      <div class="prose"><h3>Good</h3><p>The strongest series identity on a shelf and the cheapest to build. Plain, confident and unmannered. The black band also gives the site and share cards one obvious brand mark.</p></div>
+      <div class="prose"><h3>Hard</h3><p>A number tells the reader nothing: “11” isn’t a reason to pick a guide. Numbers repeat across collections (three 02s on the shelf below). The band is heavy for a pocket guide meant to calm a nervous reader, and C is the furthest from Brian’s wish for illustration. Don’t use the site’s two-letter guide codes instead: Sp, Sk, Mc and He are already part codes.</p></div>
+    </div>
+  </div>
+
+  <!-- D -->
+  <div class="dir" id="d">
+    <div class="dir-head">
+      <div class="letter">D</div>
+      <div>
+        <h2>Engravings, reduced</h2>
+        <p class="lede" style="margin-top: 0;">The hybrid: the same engravings, cropped hard into the same two-column square as A, either duotoned on a solid ground of the guide’s main family colour (lines knocked out white; ink on yellow, as the tiles do) or in ink on the grey block.</p>
+      </div>
+    </div>
+    <div class="four">
+      <figure class="cover"><img src="../img/d-duotone/specs-and-reviews.png" alt="Theodolite in white on purple"><figcaption>Duotone: works on purple</figcaption></figure>
+      <figure class="cover"><img src="../img/d-duotone/chess-first-move.png" alt="The Turk in black on yellow"><figcaption>Duotone: the costume becomes the subject</figcaption></figure>
+      <figure class="cover"><img src="../img/d-duotone/accidental-intelligence.png" alt="Babbage's engine, cropped, in black on yellow: visual noise"><figcaption>Duotone: dense plates turn to noise</figcaption></figure>
+      <figure class="cover"><img src="../img/d-mono/specs-and-reviews.png" alt="Theodolite in ink on grey"><figcaption>Ink on grey: D at its most restrained</figcaption></figure>
+    </div>
+    <div class="verdict">
+      <div class="kpi"><b>Cost per new guide</b>An archive search, a licence check, a cleanup pass, a crop and a credit line</div>
+      <div class="prose"><h3>Good</h3><p>It fixes the placement problem: every picture gets the same field and a hard edge, as Marber and Unigrid did. The purple theodolite and the grey version are handsome, in a museum-catalogue way.</p></div>
+      <div class="prose"><h3>Against</h3><p>It fixes the grid but not the era, the density or the metaphors. A large field of family colour says “this guide is purple”, which breaks the one-meaning rule <code>colors.md</code> was written to protect. Four of these eight guides come out yellow, the weakest ground. Hard crops lose the silhouette that made the engravings readable. And duotoned archive art is a current fashion that will date quickly. I’d argue against it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="shelves">
+  <div class="sec-head">
+    <div class="num">03 · Shelves</div>
+    <div>
+      <h2 class="t">Unity is the point, so judge them in a row</h2>
+      <p class="lede">The same eight guides from three collections: the catalog, four AI guides, one house, one table, one games. Each shelf is shown at reading size, then at the size the site lists them.</p>
+    </div>
+  </div>
+
+  <div class="shelf-label"><b>Now</b><span>One white card, eight times</span></div>
+  <div class="shelf"><img src="../img/shelves/now.png" alt="Shelf of eight current covers"></div>
+  <div class="shelf-label"><b>E · Engravings</b><span>Different, but each picture is its own world</span></div>
+  <div class="shelf"><img src="../img/shelves/engraving.png" alt="Shelf of eight covers with engravings"></div>
+  <div class="shelf-label"><b>A · Signs</b><span>An even beat of grey squares; the subject at a glance</span></div>
+  <div class="shelf"><img src="../img/shelves/a-signs.png" alt="Shelf of eight covers with signs"></div>
+  <div class="shelf-label"><b>B · The part grid</b><span>Eight patterns, one system</span></div>
+  <div class="shelf"><img src="../img/shelves/b-grid.png" alt="Shelf of eight part-grid covers"></div>
+  <div class="shelf-label"><b>C · Band and number</b><span>The loudest series mark</span></div>
+  <div class="shelf"><img src="../img/shelves/c-numbers.png" alt="Shelf of eight band-and-number covers"></div>
+  <div class="shelf-label"><b>D · Engravings, reduced</b><span>A magazine rack</span></div>
+  <div class="shelf"><img src="../img/shelves/d-duotone.png" alt="Shelf of eight duotone engraving covers"></div>
+
+  <h3 class="site-size" style="margin-top: 56px;">At site size, about 96 px wide</h3>
+  <div class="cols" style="margin-top: 12px;">
+    <div class="prose small"><p>Top to bottom: now, E, A, B, C, D. Dense engravings go to grey. The signs and B’s patterns still read, and C’s bands read best.</p></div>
+    <div style="display: grid; gap: 6px;">
+      <img src="../img/shelves/now-thumb.png" alt="Thumbnail shelf: now">
+      <img src="../img/shelves/engraving-thumb.png" alt="Thumbnail shelf: engravings">
+      <img src="../img/shelves/a-signs-thumb.png" alt="Thumbnail shelf: signs">
+      <img src="../img/shelves/b-grid-thumb.png" alt="Thumbnail shelf: part grid">
+      <img src="../img/shelves/c-numbers-thumb.png" alt="Thumbnail shelf: band and number">
+      <img src="../img/shelves/d-duotone-thumb.png" alt="Thumbnail shelf: duotone">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="tradeoffs">
+  <div class="sec-head">
+    <div class="num">04 · Trade-offs</div>
+    <div><h2 class="t">What each one costs and buys</h2></div>
+  </div>
+  <div class="tt">
+    <table>
+      <thead><tr><th></th><th>E · Engravings</th><th>A · Signs</th><th class="rec">B · Part grid</th><th>C · Band and number</th><th>D · Reduced</th></tr></thead>
+      <tbody>
+        <tr class="best"><th>Unity with the system</th><td>Weak<span class="n">A second visual language</span></td><td>Strong<span class="n">Grey block, one stroke, no colour</span></td><td class="rec g">Strongest<span class="n">Made of the system’s own tiles</span></td><td>Strong<span class="n">Type only</span></td><td>Fair<span class="n">Grid yes, era no</span></td></tr>
+        <tr class="best"><th>Tells covers apart at thumbnail</th><td>Fair<span class="n">Dense plates blur</span></td><td>Strong</td><td class="rec g">Strong<span class="n">Except sibling guides</span></td><td>Strong<span class="n">But only by number</span></td><td>Fair<span class="n">Colour yes, content no</span></td></tr>
+        <tr class="best"><th>Says what’s inside</th><td>Weak<span class="n">Metaphors for groups</span></td><td>Strong<span class="n">The subject</span></td><td class="rec g">Strong<span class="n">The kinds of parts, in order</span></td><td>None</td><td>Weak</td></tr>
+        <tr class="best"><th>Colour keeps one meaning</th><td>Yes</td><td>Yes</td><td class="rec g">Yes, and teaches it</td><td>Yes</td><td>No</td></tr>
+        <tr class="best"><th>Charm and wit</th><td>Most</td><td>Some, if drawn well</td><td class="rec">Little; it lives in the words</td><td>Little</td><td>Some</td></tr>
+        <tr class="best"><th>Cost per new guide</th><td>Search, licence, clean</td><td>20–60 min of drawing</td><td class="rec g">Nothing</td><td>Nothing</td><td>Search, licence, clean, crop</td></tr>
+        <tr class="best"><th>Builder change</th><td>Image + placement</td><td>Cover + signs module</td><td class="rec">Cover only, about 40 lines</td><td>Cover only, about 25 lines</td><td>Image pipeline</td></tr>
+        <tr class="best"><th>Biggest risk</th><td>Reads as O’Reilly pastiche</td><td>Abstract AI subjects become stock icons</td><td class="rec">Feels like a chart; siblings look alike</td><td>Austere; numbers mean nothing</td><td>Dates quickly</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="recommendation">
+  <div class="sec-head">
+    <div class="num">05 · Recommendation</div>
+    <div>
+      <h2 class="t">Use B, the part grid</h2>
+      <p class="lede">It’s the only direction where the cover art is the guide’s own content, and where the series’ one real visual idea, the same kind of part in the same colour everywhere, does the work. It costs nothing per guide, so it scales to dozens and to new collections by itself. It also fulfils a decision already made in <code>design-direction.md</code>: show which families a guide covers on its cover.</p>
+    </div>
+  </div>
+
+  <div class="cols rec-block">
+    <div class="prose"><h3>Why not A?</h3></div>
+    <div class="prose">
+      <p>A is the close second, and the right choice if Brian wants a picture on every cover. Its rule book is in <code>scripts/pictograms.py</code>. But two-thirds of the series is about abstract software, and that’s where pictograms turn into stock icons and where the per-guide drawing time goes. If A is chosen, budget for it: every new guide needs a sign drawn to the rules before it ships.</p>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top: 32px;">
+    <div class="prose"><h3>What it costs in the builders</h3></div>
+    <div class="prose">
+      <ul class="plain">
+        <li><b>build_guide.py:</b> in <code>page_cover()</code>, replace the three-column tile loop with the grid: six column heads, one tile per entry at (family, row), and a label beside it. About 40 lines, using <code>avatar()</code>, <code>FAMILY_TOKEN</code> and <code>PART_FAMILY</code>, which already exist. Add the series line (collection mark, name, number), which needs the collection id and number in each guide’s content or read from <code>collections.json</code>. About half a day in <code>packages/template</code>, plus a check that six rows of 46 pt clear a three-line title and two-line subtitle (they do, with 40 pt to spare).</li>
+        <li><b>Rolling out:</b> every guide carries its own copy of the builder, so the change goes to 24 <code>build_guide.py</code> files, with new <code>expected.sha256</code> files and a patch version each. Four older builders (Agents, Claude Code, Claude Desktop, Software Factories) need <code>PART_FAMILY</code> first, the family migration <code>colors.md</code> already describes.</li>
+        <li><b>build_docx.py:</b> the Word cover becomes a 6 × 6 table with shaded cells. Simple, but <code>cover_gap()</code> needs redoing.</li>
+        <li><b>The site</b> needs no change for covers: <code>guide_pages.py</code> makes <code>cover.png</code> and <code>card.png</code> from each PDF’s first page. Optionally, use the 6 × 6 pattern as a small mark in lists.</li>
+        <li><b>Mockup code:</b> <code>scripts/covers.py</code>, <code>cover_grid()</code>, is a working ReportLab prototype on the guides’ constants. Port it, don’t reinvent it.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top: 32px;">
+    <div class="prose"><h3>Where the engravings live</h3></div>
+    <div class="prose">
+      <p>Not on the covers and not in the guides. Give them one place where era and wit are the point: the site’s about page, as a short “From the archive” strip of the machines that came before (Babbage’s engine, the Turk, the loom), each with its credit line. The joke survives there without fighting the system. The 404 page could take one too. Everything is already in <code>engravings/clean</code> with full records in <code>shortlist.json</code>. If even that feels like decoration, leave them out entirely; the guides lose nothing.</p>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top: 32px;">
+    <div class="prose"><h3>What Brian needs to decide</h3></div>
+    <ol class="decide prose">
+      <li><b>B, or A.</b> The part grid as recommended, or signs if a picture on every cover matters more than zero cost per guide.</li>
+      <li><b>Collection marks in black, not colour.</b> Swap the site’s collection colours for ■ ▲ ● ◆, so yellow stops meaning both “things that run” and “the house”.</li>
+      <li><b>A guide number on the cover?</b> If yes, numbers are permanent and never reused. B and A work without them.</li>
+      <li><b>The six column words:</b> Runs, Written, Checks, Used, Decided, Counted. Short enough for 46 pt, and they work for bread as well as for MCP.</li>
+      <li><b>The engravings:</b> about page and 404, or nowhere.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div><b style="color: var(--ink);">How this was made</b></div>
+  <div>
+    <p>All covers were drawn by <code>scripts/covers.py</code> with ReportLab on the guides’ page size, margins, TeX Gyre Heros and two-tone tile, then rendered at 2× with pypdfium2. Titles, subtitles, parts, families and page numbers come from the repository by <code>scripts/data.py</code> (read only). Family colours follow <code>packages/editorial/registry.md</code>. The signs were drawn for this study on a 12-unit grid in <code>scripts/pictograms.py</code>; nothing was traced. The “Now” covers are redrawn the same way so every comparison uses one renderer.</p>
+    <p>Engravings are public domain; sources and licences are in <code>~/Claude/accidental-guides/engravings/shortlist.json</code> (Figuier, <i>Les Merveilles de la science</i>; Scammell’s <i>Cyclopedia</i>, 1897; <i>Popular Science Monthly</i>, 1891; <i>Encyclopaedia Britannica</i>, 1911; <i>Harper’s</i>, 1864). TeX Gyre Heros is under the GUST Font License, included in <code>fonts/</code>.</p>
+    <p>Rebuild: <code>~/github/stuffbucket/accidentalguide/.venv/bin/python scripts/data.py && …/python scripts/covers.py && …/python scripts/covers.py all-b && …/python scripts/specimen.py</code></p>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

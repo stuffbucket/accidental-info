@@ -170,6 +170,42 @@ importers:
         specifier: 2.11.7
         version: 2.11.7
 
+  drafts/chess-caro-kann:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/chess-first-move:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/chess-last-move:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/chess-problem-positions:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/chess-scholars-mate:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/chirping-smoke-detector:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
   drafts/claude-code:
     devDependencies:
       '@accidentalguide/pipeline':
@@ -200,7 +236,49 @@ importers:
         specifier: workspace:*
         version: link:../../packages/pipeline
 
+  drafts/first-dnd-game:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/giving-a-toast:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/grilled-cheese:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/hosting-thanksgiving:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/is-my-houseplant-dying:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/loading-a-dishwasher:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
   drafts/mcp:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  drafts/ordering-wine:
     devDependencies:
       '@accidentalguide/pipeline':
         specifier: workspace:*
@@ -254,6 +332,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/pipeline
 
+  packages/chess:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../pipeline
+
+  packages/editorial: {}
+
   packages/pipeline: {}
 
   packages/template:
@@ -270,6 +356,9 @@ importers:
       astro:
         specifier: 7.3.5
         version: 7.3.5(@types/node@24.19.1)(yaml@2.9.1)
+      d3-shape:
+        specifier: 3.2.0
+        version: 3.2.0
     devDependencies:
       '@accidentalguide/accidental-intelligence':
         specifier: workspace:*
@@ -277,6 +366,24 @@ importers:
       '@accidentalguide/agents-harnesses-skills-tools':
         specifier: workspace:*
         version: link:../guides/agents-harnesses-skills-tools
+      '@accidentalguide/chess-caro-kann':
+        specifier: workspace:*
+        version: link:../drafts/chess-caro-kann
+      '@accidentalguide/chess-first-move':
+        specifier: workspace:*
+        version: link:../drafts/chess-first-move
+      '@accidentalguide/chess-last-move':
+        specifier: workspace:*
+        version: link:../drafts/chess-last-move
+      '@accidentalguide/chess-problem-positions':
+        specifier: workspace:*
+        version: link:../drafts/chess-problem-positions
+      '@accidentalguide/chess-scholars-mate':
+        specifier: workspace:*
+        version: link:../drafts/chess-scholars-mate
+      '@accidentalguide/chirping-smoke-detector':
+        specifier: workspace:*
+        version: link:../drafts/chirping-smoke-detector
       '@accidentalguide/claude-code':
         specifier: workspace:*
         version: link:../drafts/claude-code
@@ -292,12 +399,33 @@ importers:
       '@accidentalguide/copilot-cli':
         specifier: workspace:*
         version: link:../drafts/copilot-cli
+      '@accidentalguide/first-dnd-game':
+        specifier: workspace:*
+        version: link:../drafts/first-dnd-game
+      '@accidentalguide/giving-a-toast':
+        specifier: workspace:*
+        version: link:../drafts/giving-a-toast
+      '@accidentalguide/grilled-cheese':
+        specifier: workspace:*
+        version: link:../drafts/grilled-cheese
+      '@accidentalguide/hosting-thanksgiving':
+        specifier: workspace:*
+        version: link:../drafts/hosting-thanksgiving
+      '@accidentalguide/is-my-houseplant-dying':
+        specifier: workspace:*
+        version: link:../drafts/is-my-houseplant-dying
       '@accidentalguide/lights-off-software-factories':
         specifier: workspace:*
         version: link:../guides/lights-off-software-factories
+      '@accidentalguide/loading-a-dishwasher':
+        specifier: workspace:*
+        version: link:../drafts/loading-a-dishwasher
       '@accidentalguide/mcp':
         specifier: workspace:*
         version: link:../drafts/mcp
+      '@accidentalguide/ordering-wine':
+        specifier: workspace:*
+        version: link:../drafts/ordering-wine
       '@accidentalguide/pipeline':
         specifier: workspace:*
         version: link:../packages/pipeline
@@ -1242,6 +1370,14 @@ packages:
   csso@5.0.5:
     resolution: {integrity: sha1-+bf+bMasC32QeBuxbV6YdDA+LKY=}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
+
+  d3-path@3.1.0:
+    resolution: {integrity: sha1-It+TkDL7WnGuixgA1h3beFHEJSY=}
+    engines: {node: '>=12'}
+
+  d3-shape@3.2.0:
+    resolution: {integrity: sha1-oag5y9m6RfKGdMadf4Vbz5HfxqU=}
+    engines: {node: '>=12'}
 
   debug@4.4.3:
     resolution: {integrity: sha1-xq5DLZvZZiWC/OCHCbA4xY6ePWo=}
@@ -2890,6 +3026,12 @@ snapshots:
   csso@5.0.5:
     dependencies:
       css-tree: 2.2.1
+
+  d3-path@3.1.0: {}
+
+  d3-shape@3.2.0:
+    dependencies:
+      d3-path: 3.1.0
 
   debug@4.4.3:
     dependencies:

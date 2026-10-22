@@ -1,0 +1,21 @@
+{
+ "group": "harness-eng",
+ "n": 3,
+ "commons": "File:T1- d102 - Régulateur de Watt à force centrifuge.png",
+ "title": "Régulateur de Watt à force centrifuge",
+ "source_url": "https://commons.wikimedia.org/wiki/File:T1-_d102_-_R%C3%A9gulateur_de_Watt_%C3%A0_force_centrifuge.png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/T1-_d102_-_R%C3%A9gulateur_de_Watt_%C3%A0_force_centrifuge.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 1281,
+ "h": 1078,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Louis Figuier",
+ "date_meta": "2014-09-29 18:12:18",
+ "credit_meta": "Figuier - Les Merveilles de la science, 1867 - 1891, Tome 1.djvu",
+ "desc_meta": "Régulateur de Watt à force centrifuge",
+ "license_templates": [
+  "PD-old-100-1923"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{fr|1=Régulateur de Watt à force centrifuge}}\n|date=2014-09-29 18:12:18\n|source=Figuier - Les Merveilles de la science, 1867 - 1891, Tome 1.djvu\n|author={{Creator:Louis Figuier}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-100-1923}}\n\n[[Category:Les Merveilles de la science - Tome 1]]",
+ "raw_path": "raw/harness-eng/3/original.png"
+}

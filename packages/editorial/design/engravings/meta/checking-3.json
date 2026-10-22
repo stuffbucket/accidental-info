@@ -1,0 +1,21 @@
+{
+ "group": "checking",
+ "n": 3,
+ "commons": "File:EB1911 Weighing Machines - Precision Balance.jpg",
+ "title": "Precision balance",
+ "source_url": "https://commons.wikimedia.org/wiki/File:EB1911_Weighing_Machines_-_Precision_Balance.jpg",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/EB1911_Weighing_Machines_-_Precision_Balance.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 600,
+ "h": 520,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Unknown authorUnknown author",
+ "date_meta": "published 1911",
+ "credit_meta": "1911 Encyclopædia Britannica, Vol. 28, pg. 469.",
+ "desc_meta": "A precision balance constructed to weigh with great accuracy.",
+ "license_templates": [
+  "PD-Britannica"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{en|1=A precision balance constructed to weigh with great accuracy.}}\n|date={{Date context|published|1911}}\n|source=1911 Encyclopædia Britannica, Vol. 28, pg. 469.\n|author={{unknown|author}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n\n{{PD-Britannica}}\n\n[[Category:Images from the 1911 Encyclopædia Britannica, volume 28]]\n[[Category:Balance scales in art]]",
+ "raw_path": "raw/checking/3/original.jpg"
+}

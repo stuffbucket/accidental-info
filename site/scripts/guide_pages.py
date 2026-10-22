@@ -113,6 +113,8 @@ def address_link(address):
     if not is_web_address(address):
         return escape(address)
     url = address if re.match(r"https?://", address) else "https://" + address
+    # Encoded, so a bracket in the address (".../Pin_(chess)") can't end the link early.
+    url = url.replace("(", "%28").replace(")", "%29")
     return f"[{escape(address)}]({url})"
 
 
@@ -275,6 +277,8 @@ def diagram_labels(lines):
             labels += rest.split("|")
         elif kind == "next":
             labels += rest.split(" -> ")
+        elif kind == "board":
+            labels.append(rest.split("|")[0])
     return [normalize(l) for l in labels if l.strip()]
 
 
@@ -283,6 +287,9 @@ def find_page(texts, title, labels=(), window=120):
     `window` characters of the page's text, after any tile key). Every label must be on it."""
     want = normalize(heading_text(title))
     hits = [i for i, t in enumerate(texts) if i > 0 and want in t[:window]]
+    if len(hits) > 1 and labels:
+        # A short title ("Pin") can open more than one page; the diagram's page has its labels.
+        hits = [i for i in hits if all(l in texts[i] for l in labels)] or hits
     if len(hits) != 1:
         raise SystemExit(f"expected one PDF page titled {want!r}, found pages {[h + 1 for h in hits]}")
     text = texts[hits[0]]
@@ -577,10 +584,14 @@ def main():
             if fit and "def page_fit" in (folder / "build_guide.py").read_text(encoding="utf-8"):
                 fit_page = find_page(texts, fit.title)
             figures = {n: sections[si] for (si, _di), n in diagram_pages.items()}
-            if fit_page:
-                figures[fit_page] = fit
             for n, section in sorted(figures.items()):
                 render_diagram(pdf, n, section, out_dir / f"diagram-{n}.png")
+            # The overview page may be text only; then there is no figure to show.
+            if fit_page and fit_page not in figures:
+                try:
+                    render_diagram(pdf, fit_page, fit, out_dir / f"diagram-{fit_page}.png")
+                except SystemExit:
+                    fit_page = None
         finally:
             pdf.close()
         page = render_page(g, sections, order[gid], published, diagram_pages, fit_page, fences)

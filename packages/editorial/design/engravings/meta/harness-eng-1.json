@@ -1,0 +1,21 @@
+{
+ "group": "harness-eng",
+ "n": 1,
+ "commons": "File:T5- d070 - Fig. 056, 57. — Régulateur à force centrifuge (système Denis).png",
+ "title": "Régulateur à force centrifuge (Denis)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d070_-_Fig._056,_57._%E2%80%94_R%C3%A9gulateur_%C3%A0_force_centrifuge_(syst%C3%A8me_Denis).png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/T5-_d070_-_Fig._056%2C_57._%E2%80%94_R%C3%A9gulateur_%C3%A0_force_centrifuge_%28syst%C3%A8me_Denis%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 2708,
+ "h": 2956,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Louis Figuier",
+ "date_meta": "1891",
+ "credit_meta": "Figuier - Les Merveilles de la science, 1867 - 1891, Tome 5.djvu",
+ "desc_meta": "Régulateur à force centrifuge (système Denis)",
+ "license_templates": [
+  "PD-old-100-1923"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{fr|1=Régulateur à force centrifuge (système Denis)}}\n|date=1891\n|source=Figuier - Les Merveilles de la science, 1867 - 1891, Tome 5.djvu\n|author={{Creator:Louis Figuier}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-100-1923}}\n\n[[Category:Les Merveilles de la science - Tome 5]]",
+ "raw_path": "raw/harness-eng/1/original.png"
+}

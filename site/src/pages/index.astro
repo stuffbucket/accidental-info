@@ -1,433 +1,395 @@
 ---
-// The landing page: every guide in public/guides.json (written by scripts/guide_pages.py from each guide's
-// dist/), finished guides in the catalog's order and then the drafts, each with its cover, a link to read it here
-// and its PDF and Word files.
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+// The landing page: a short title and the collections' tiles, then each collection as a shelf of covers.
+// Accidental Intelligence shows its finished guides and a small picture of its map page, linked; the others show
+// every guide they have, drafts included, and a blank grey sheet for each guide still to come. Two collections share
+// a row unless one has more than four books. The full list with versions and files is on /guides/.
 import Plain from "../layouts/Plain.astro";
-import StarLink from "../components/StarLink.astro";
-import groupData from "../data/groups.json";
-import { checkGroups } from "../lib/groups.mjs";
+import Tile from "../components/Tile.astro";
+import MiniMap from "../components/MiniMap.astro";
+import { base, loadCollections, repo } from "../lib/guides";
 
-interface Guide {
-  id: string;
-  title: string;
-  subtitle: string;
-  version: string;
-  blurb: string;
-  pdf: string;
-  docx: string | null;
-  pages: number;
-  status: "published" | "draft";
-}
+const collections = loadCollections().map((collection) => {
+  // A collection with a map shows only its finished guides here; the rest are on its page.
+  const mapped = collection.map !== null;
+  const shelf = mapped
+    ? collection.entries.filter((entry) => entry.guide && entry.guide.status !== "draft")
+    : collection.entries;
+  return { ...collection, shelf, wide: shelf.length + (mapped ? 1 : 0) > 4 };
+});
 
-// The catalog's order. A guide not listed here goes at the end, in the order guides.json has it.
-const ORDER = [
-  "accidental-intelligence",
-  "agents-harnesses-skills-tools",
-  "specs-and-reviews",
-  "software-factories",
-  "lights-off-software-factories",
-];
-const rank = (id: string) => (ORDER.includes(id) ? ORDER.indexOf(id) : ORDER.length);
-
-// Astro runs from the site folder, in development and in the build.
-const publicDir = join(process.cwd(), "public");
-const read = (path: string) => {
-  try {
-    return readFileSync(join(publicDir, path));
-  } catch {
-    throw new Error(`public/${path} is missing: run pnpm build at the repository root`);
-  }
-};
-
-// The cover's width and height in pixels, from its PNG header. It is rendered at twice the size it is shown.
-const coverSize = (id: string) => {
-  const png = read(`guides/${id}/cover.png`);
-  return { width: png.readUInt32BE(16) / 2, height: png.readUInt32BE(20) / 2 };
-};
-
-const all = (JSON.parse(read("guides.json").toString()) as Guide[])
-  .map((guide, index) => ({
-    ...guide,
-    index,
-    cover: coverSize(guide.id),
-    page: `${guide.status === "draft" ? "drafts" : "guides"}/${guide.id}/`,
-  }))
-  .sort((a, b) => rank(a.id) - rank(b.id) || a.index - b.index);
-// The map above the list: the catalog guide in the middle and the series groups around it. This throws, and fails
-// the build, if a guide is missing from the map or on it twice (see src/lib/groups.mjs).
-const map = checkGroups(groupData, all);
-const finished = all.filter((guide) => guide.status !== "draft");
-const drafts = all.filter((guide) => guide.status === "draft");
-
-const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-const repo = "https://github.com/stuffbucket/accidentalguide";
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
+// What a tile says under the collection's name, a line each: how many guides it has, and how many are coming.
+const tally = (collection: (typeof collections)[number]) =>
+  [collection.count && plural(collection.count, "guide"), collection.coming.length && `${collection.coming.length} coming`]
+    .filter((line): line is string => Boolean(line));
 ---
 
 <Plain
   title="Accidental Guides"
-  description="Short guides to AI coding agents and the ways teams use them to build software."
+  description="Short guides to things you were apparently meant to know already."
   image="social.png"
   imageAlt="The covers of the Accidental Guides"
 >
   <main>
-    <h1>Accidental Guides</h1>
-    <p class="lead">
-      Short guides to AI coding agents and the ways teams use them to build software. Each one answers one question,
-      a few parts at a time.
-    </p>
-    <p class="lead">
-      A person writes and reviews every guide. AI does the grunt work: finding sources, rough drafts and the builds.
-    </p>
-    <p class="star">
-      <StarLink look="button" />
-    </p>
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <h1 id="title"><span>Accidental</span> <span>Guides</span></h1>
+        <p class="line">For things you were apparently meant to know already.</p>
+      </div>
 
-    <nav class="map" aria-label="The guides by series">
-      <ul class="cells">
-        <li class="cell center" data-group="center">
-          <a class="cover" href={`${base}${map.center.page}`} tabindex="-1" aria-hidden="true">
-            <img
-              src={`${base}guides/${map.center.id}/cover.png`}
-              alt=""
-              width={map.center.cover.width}
-              height={map.center.cover.height}
-            />
-          </a>
-          <h2 class="center-title">
-            <a href={`${base}${map.center.page}`}>{map.center.title}</a>
-          </h2>
-          <p class="links">
-            <a class="btn btn-primary" href={`${base}${map.center.page}`}>
-              Read online
-            </a>
-            <a class="btn" href={`${base}guides/${map.center.pdf}`}>
-              PDF
-            </a>
-          </p>
-        </li>
-        {
-          map.groups.map((group) => (
-            <li class="cell" data-group={group.id} style={`--row: ${group.row}; --column: ${group.column}`}>
-              {/* Each group will get a small black-and-white illustration here, from "image" in groups.json. */}
-              {group.image && <img class="art" src={`${base}${group.image}`} alt="" />}
-              <h2 class="group-name">{group.name}</h2>
-              <ul class="titles">
-                {group.guides.map((guide) => (
-                  <li>
-                    <a href={`${base}${guide.page}`}>{guide.title}</a>
-                    {guide.status === "draft" && (
-                      <>
-                        {" "}
-                        <span class="note">Draft</span>
-                      </>
-                    )}
-                  </li>
-                ))}
-                {group.coming.map((title) => (
-                  <li class="coming">
-                    {title}{" "}
-                    <span class="note">Coming</span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-
-    {
-      [
-        { id: "finished", heading: null, list: finished },
-        { id: "drafts", heading: "Drafts", list: drafts },
-      ]
-        .filter((group) => group.list.length)
-        .map((group) => (
-          <section id={group.id}>
-            {group.heading && (
-              <>
-                <h2 class="group">{group.heading}</h2>
-                <p class="group-lead">
-                  Guides still being written. Their words and parts may change, and{" "}
-                  <a href="https://github.com/stuffbucket/accidentalguide/issues">suggestions are welcome</a>.
-                </p>
-              </>
-            )}
-            {group.list.map((guide) => (
-              <article id={guide.id}>
-                <a class="cover" href={`${base}${guide.page}`} tabindex="-1" aria-hidden="true">
-                  <img
-                    src={`${base}guides/${guide.id}/cover.png`}
-                    alt=""
-                    width={guide.cover.width}
-                    height={guide.cover.height}
-                    loading="lazy"
+      <nav class="tiles" aria-label="Collections">
+        <ol>
+          {
+            collections.map((collection, index) => (
+              <li>
+                <a href={`#${collection.id}`}>
+                  <Tile
+                    code={collection.code}
+                    colour={collection.colour}
+                    number={String(index + 1).padStart(2, "0")}
                   />
+                  <span class="tile-name">{collection.name}</span>
+                  {tally(collection).map((line) => (
+                    <span class="small muted">{line}</span>
+                  ))}
                 </a>
-                <div class="head">
-                  <h2>
-                    <a href={`${base}${guide.page}`}>{guide.title}</a>
-                  </h2>
-                  <p class="subtitle">{guide.subtitle}</p>
-                  <p class="meta">
-                    {guide.status === "draft" ? "Draft · " : ""}Version {guide.version} · {guide.pages} pages
-                  </p>
-                </div>
-                <p class="blurb">{guide.blurb}</p>
-                <p class="links">
-                  <a class="btn btn-primary" href={`${base}${guide.page}`}>
-                    Read online
-                  </a>
-                  <a class="btn" href={`${base}guides/${guide.pdf}`}>
-                    PDF
-                  </a>
-                  {guide.docx && (
-                    <a class="btn" href={`${base}guides/${guide.docx}`}>
-                      Word
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+    </section>
+
+    <div class="collections">
+      {
+        collections.map((collection) => (
+          <section
+            class:list={["collection", { wide: collection.wide }]}
+            id={collection.id}
+            aria-labelledby={`${collection.id}-name`}
+            style={`--tile: ${collection.colour.base}`}
+          >
+            <div class="label">
+              <div>
+                <h2 id={`${collection.id}-name`}>{collection.name}</h2>
+                {collection.line && <p class="muted">{collection.line}</p>}
+              </div>
+              {collection.image && (
+                <img class="art" src={`${base}${collection.image}`} alt={collection.imageAlt} loading="lazy" />
+              )}
+            </div>
+
+            <ul class="shelf">
+              {collection.shelf.map(({ guide, coming }) =>
+                guide ? (
+                  <li class="book">
+                    <a href={`${base}${guide.page}`}>
+                      <img
+                        class="cover"
+                        src={`${base}guides/${guide.id}/cover.png`}
+                        alt=""
+                        width={guide.cover.width}
+                        height={guide.cover.height}
+                        loading="lazy"
+                      />
+                      <span class="title">{guide.title}</span>
                     </a>
-                  )}
-                </p>
-              </article>
-            ))}
+                    {guide.status === "draft" && <span class="small muted">Draft</span>}
+                  </li>
+                ) : (
+                  <li class="book coming">
+                    <span class="cover ghost">{coming.title}</span>
+                    <span class="small muted">Coming</span>
+                  </li>
+                ),
+              )}
+              {collection.map && (
+                <li class="book map">
+                  <a href={`${base}${collection.page}`}>
+                    <span class="cover plate">
+                      <MiniMap map={collection.map} />
+                    </span>
+                    <span class="title">All {collection.count} guides, on one map</span>
+                  </a>
+                </li>
+              )}
+            </ul>
           </section>
         ))
-    }
-    <section id="write">
-      <h2 class="group">Write your own</h2>
-      <p class="group-lead">
-        The template is the guides’ layout as a Word document. Each place in it says what goes there: the reader’s
-        question, up to six parts, and the sources you read.
-      </p>
-      <p class="links">
-        <a class="btn" href={`${base}accidental-guide-template.docx`} download>Word template</a>
-      </p>
-      <p class="group-lead">
-        Use it for your own team or class. We publish a few guides from other writers, so{" "}
-        <a href={`${repo}/blob/main/CONTRIBUTING.md#sending-us-a-guide`}>read how to send one</a> before you start.
-      </p>
-    </section>
+      }
+
+      <section class="write" aria-labelledby="write">
+        <h2 id="write">Write your own</h2>
+        <p class="muted">
+          The <a href={`${base}accidental-guide-template.docx`} download>Word template</a> is the guides’ layout, with
+          a note in each place saying what goes there. Use it for your own team or class. We publish a few guides from
+          other writers, so <a href={`${repo}/blob/main/CONTRIBUTING.md#sending-us-a-guide`}>read how to send one</a
+          >{" "}first.
+        </p>
+      </section>
+    </div>
   </main>
 </Plain>
 
 <style>
+  /* Four sizes: the title, the line under it and the collections' names, body text, and small text. Two weights. */
   main {
-    width: min(100% - 2 * var(--gutter), 48rem);
+    --paper: #f4f4f3;
+    /* One grid for the whole page: eight columns on a wide screen, a cover to a column. */
+    --gap: clamp(1.25rem, 2.2vw, 2rem);
+    width: min(100% - 2 * var(--gutter), var(--page));
     margin: 0 auto;
-    padding: clamp(2rem, 6vw, 3.5rem) 0 1rem;
+    padding-bottom: clamp(3rem, 8vw, 6rem);
   }
-  h1 {
-    margin: 0 0 0.75rem;
-    font-size: var(--text-2xl);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .group {
-    margin: 3rem 0 0.5rem;
-    font-size: var(--text-xl);
-  }
-  .group-lead {
-    margin: 0 0 1.5rem;
-    max-width: 36rem;
+  .muted {
     color: var(--muted);
   }
-  .group-lead a {
-    color: inherit;
-  }
-  .lead {
-    max-width: 36rem;
-    margin: 0 0 1.25rem;
-    color: var(--muted);
-    font-size: var(--text-lg);
-  }
-  .star {
-    margin: 0 0 2.5rem;
-  }
-
-  /* The map: a 3 x 3 grid of hairline cells, the catalog guide in the middle. The center comes first in the page,
-     so a screen reader and the one-column phone layout start there; on a wider screen each group takes its place
-     from --row and --column. The 1px gaps show the grid's background as the rules between cells. */
-  .map {
-    margin: 0 0 3.5rem;
-  }
-  .cells {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    margin: 0;
-    padding: 0;
-    border: 1px solid var(--border);
-    background: var(--border);
-    list-style: none;
-  }
-  .cell {
-    grid-row: var(--row);
-    grid-column: var(--column);
-    padding: clamp(1rem, 2.5vw, 1.25rem) clamp(1rem, 2.5vw, 1.25rem) 1.5rem;
-    background: var(--bg);
-  }
-  .center {
-    position: relative;
-    grid-row: 2;
-    grid-column: 2;
-    /* One ink rule over the hairlines around it. */
-    box-shadow: 0 0 0 1px var(--text);
-  }
-  .center .cover {
-    display: block;
-    width: min(100%, 8rem);
-    margin: 0 0 1rem;
-  }
-  .center .cover img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--border);
-  }
-  .center-title {
-    margin: 0 0 1rem;
-    font-size: var(--text-lg);
-    line-height: 1.25;
-  }
-  .art {
-    display: block;
-    max-width: 100%;
-    height: 3rem;
-    margin: 0 0 0.75rem;
-  }
-  .group-name {
-    margin: 0 0 0.6rem;
-    font-size: var(--text-md);
-    line-height: 1.3;
-  }
-  .titles {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .titles li {
-    margin: 0 0 0.45rem;
-    line-height: 1.35;
-  }
-  .titles li:last-child {
-    margin-bottom: 0;
-  }
-  .titles a {
-    text-decoration: none;
-  }
-  .titles a:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.15em;
-  }
-  .note {
-    color: var(--muted);
+  .small {
     font-size: var(--text-sm);
   }
-  .coming {
-    color: var(--muted);
+  p {
+    margin: 0;
   }
 
-  /* On a phone the cells stack: the center first, then the groups in order. */
-  @media (max-width: 40rem) {
-    .cells {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .cell,
-    .center {
-      grid-row: auto;
-      grid-column: auto;
-    }
+  /* The title, set like a guide's cover title, and the collections' tiles, like the part tiles under it. */
+  .hero {
+    padding: clamp(3rem, 8vw, 6rem) 0 clamp(3.5rem, 8vw, 6.5rem);
   }
-
-  /* The cover sits beside the heading, the blurb and the links. The last row takes any height the cover adds. */
-  article {
-    display: grid;
-    grid-template-columns: 10rem minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr;
-    column-gap: 1.75rem;
-    padding: 1.75rem 0 2.25rem;
-    border-top: 1px solid var(--text);
+  h1 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(3.25rem, 9vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
   }
-  .cover {
-    grid-row: 1 / -1;
-    align-self: start;
-  }
-  .head,
-  .blurb,
-  .links {
-    grid-column: 2;
-  }
-  .cover img {
+  h1 span {
     display: block;
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--border);
   }
-  h2 {
-    margin: 0 0 0.35rem;
-    font-size: var(--text-xl);
-    line-height: 1.2;
+  .line {
+    max-width: 22em;
+    margin: 0 0 clamp(2.5rem, 6vw, 3.5rem);
+    font-size: 1.25rem;
+    line-height: 1.35;
   }
-  h2 a {
+  /* Four tiles across the page's eight columns, each starting on a cover's column. */
+  .tiles ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem var(--gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tiles a {
+    display: grid;
+    justify-items: start;
+    gap: 0.1rem;
     text-decoration: none;
   }
-  h2 a:hover {
+  .tiles a :global(.tile) {
+    margin-bottom: 0.6rem;
+  }
+  .tile-name {
+    font-weight: bold;
+    line-height: 1.3;
+  }
+  .tiles a:hover .tile-name,
+  .book a:hover .title {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.15em;
   }
-  .subtitle {
-    margin: 0 0 0.5rem;
-    color: var(--muted);
-    font-size: var(--text-lg);
-    line-height: 1.35;
+
+  /* The collections, two to a row like shelves in a bookcase; one with more than four books takes the row. The
+     gap between them is the gap between covers, so every cover sits on the same eight columns. Each opens with a
+     band of its colour. */
+  .collections {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(3.5rem, 7vw, 5.5rem) var(--gap);
   }
-  .meta {
-    margin: 0 0 1rem;
-    color: var(--muted);
-    font: var(--text-sm) / 1.4 var(--mono);
+  .collection,
+  .write {
+    border-top: 0.375rem solid var(--tile);
+    padding-top: 1.25rem;
+    scroll-margin-top: 1.5rem;
   }
-  .blurb {
-    margin: 0 0 1.25rem;
+  .write {
+    --tile: var(--text);
   }
-  .links {
+  .wide {
+    grid-column: 1 / -1;
+  }
+  .label {
     display: flex;
-    flex-wrap: wrap;
-    align-content: start;
-    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+    margin: 0 0 1.5rem;
+  }
+  h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+  /* The collection's illustration, when "image" is set in collections.json (none is yet). */
+  .art {
+    display: block;
+    flex: none;
+    width: auto;
+    max-width: 40%;
+    height: 6rem;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  /* The shelf: four books to a half row, eight to a whole one, so every cover is the same size. */
+  .shelf {
+    --cols: 4;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    gap: 2rem var(--gap);
     margin: 0;
+    padding: 0;
+    list-style: none;
+    container-type: inline-size;
+  }
+  .wide .shelf {
+    --cols: 8;
+  }
+  .book {
+    display: grid;
+    align-content: start;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .book a {
+    display: grid;
+    gap: 0.15rem;
+    text-decoration: none;
+  }
+  .cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 324 / 540;
+    margin-bottom: 0.7rem;
+    background: #fff;
+    /* A white sheet needs an edge on a white page; a faint one, flat. */
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+  }
+  .title {
+    font-size: var(--text-sm);
+    font-weight: bold;
+    line-height: 1.3;
   }
 
-  #write {
-    padding-top: 1.75rem;
-    border-top: 1px solid var(--text);
+  /* A guide still to come: a blank grey sheet, its title in grey where a cover's title goes. */
+  .ghost {
+    padding: 18% 13%;
+    background: var(--paper);
+    box-shadow: none;
+    color: var(--muted);
+    font-size: 10cqi;
+    font-weight: bold;
+    line-height: 1.12;
   }
-  #write .group {
-    margin-top: 0;
-  }
-  #write .links {
-    margin: 0 0 1.25rem;
+  .coming {
+    container-type: inline-size;
   }
 
-  /* On a phone the cover sits beside the heading only, and the blurb and links take the full width below. */
-  @media (max-width: 36rem) {
-    article {
-      grid-template-columns: 6rem minmax(0, 1fr);
-      grid-template-rows: auto;
-      column-gap: 1rem;
+  /* The link to the map page: a small picture of the map on a grey plate, two books wide and one tall. */
+  .map {
+    grid-column: span 2;
+  }
+  .plate {
+    display: block;
+    height: calc((100cqi - (var(--cols) - 1) * var(--gap)) / var(--cols) * 540 / 324);
+    aspect-ratio: auto;
+    padding: 4% 5%;
+    background: var(--accent-soft);
+    box-shadow: none;
+  }
+
+  .write {
+    align-self: start;
+  }
+  .write p {
+    max-width: 32rem;
+  }
+  .write h2 {
+    margin-bottom: 0.6rem;
+  }
+  .write a {
+    color: var(--text);
+  }
+
+  /* On a wide screen the title takes the first four columns and the tiles the last four, one to a column. */
+  @media (min-width: 72rem) {
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: end;
+      column-gap: var(--gap);
     }
-    .cover {
-      grid-row: 1;
-      margin-bottom: 1rem;
+    .line {
+      margin-bottom: 0;
     }
-    .head {
-      grid-column: 2;
+    .tiles ol {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--gap);
     }
-    .blurb,
-    .links {
+  }
+
+  @media (max-width: 52rem) {
+    .collections {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .shelf,
+    .wide .shelf {
+      --cols: 5;
+    }
+  }
+
+  /* On a phone: the tiles two by two, and three books to a shelf. */
+  @media (max-width: 40rem) {
+    .tiles ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.75rem 1rem;
+    }
+    .tiles a :global(.tile) {
+      --size: 4rem;
+    }
+    .label {
+      margin-bottom: 1.25rem;
+    }
+    .shelf,
+    .wide .shelf {
+      --cols: 3;
+      row-gap: 1.5rem;
+    }
+    .ghost {
+      padding: 16% 11%;
+      font-size: 11cqi;
+    }
+    .map {
       grid-column: 1 / -1;
     }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) main {
+      --paper: #1f1f1f;
+    }
+    :root:not([data-theme="light"]) .art {
+      filter: invert(0.92);
+      mix-blend-mode: screen;
+    }
+  }
+  :root[data-theme="dark"] main {
+    --paper: #1f1f1f;
+  }
+  :root[data-theme="dark"] .art {
+    filter: invert(0.92);
+    mix-blend-mode: screen;
   }
 </style>

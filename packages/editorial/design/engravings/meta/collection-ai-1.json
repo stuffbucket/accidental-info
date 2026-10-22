@@ -1,0 +1,21 @@
+{
+ "group": "collection-ai",
+ "n": 1,
+ "commons": "File:Babbage difference engine drawing.gif",
+ "title": "Fragment of Babbage's Difference Engine",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Babbage_difference_engine_drawing.gif",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/67/Babbage_difference_engine_drawing.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 930,
+ "h": 1332,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Benjamin Herschel Babbage, printed in Harper's new monthly magazine",
+ "date_meta": "1864-12",
+ "credit_meta": "Harper's new monthly magazine. / Volume 30, Issue 175, p.34",
+ "desc_meta": "Portion of Babbage's difference engine.",
+ "license_templates": [
+  "PD-US"
+ ],
+ "wikitext_head": "== {{int:filedesc}} ==\n{{Information\n|Description={{en|1=Portion of Babbage's difference engine.}}\n{{de|1=Differenzmaschine No. 1 von [[:de:Charles Babbage|Charles Babbage]]. Frontalansicht. Holzschnitt nach einer Zeichnung seines Sohnes Benjamin Herschel Babbage.}}\n|Source=[http://cdl.library.cornell.edu/cgi-bin/moa/pageviewer?coll=moa&root=/moa/harp/harp0030/&tif=00044.TIF&view=50&frames=1 Harper's new monthly magazine. / Volume 30, Issue 175, p.34]\n|Author=Benjamin Herschel Babbage, printed in Harper's new monthly magazine\n|Date=1864-12\n|Permission=\n|other_versions=\n}}\n\n== {{int:license-header}} ==\n{{PD-US}}\n\n[[Category:Difference Engine No. 1 (Charles Babbage)]]",
+ "raw_path": "raw/collection-ai/1/original.gif"
+}

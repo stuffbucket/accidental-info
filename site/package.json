@@ -9,11 +9,12 @@
     "dev": "../.venv/bin/python scripts/guide_pages.py && node scripts/copy_template.mjs && astro dev",
     "build": "../.venv/bin/python scripts/guide_pages.py && node scripts/copy_template.mjs && astro build",
     "preview": "astro preview",
-    "test": "../.venv/bin/python -m unittest discover -s scripts && node --test scripts/test_groups.mjs"
+    "test": "../.venv/bin/python -m unittest discover -s scripts && node --test scripts/test_collections.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.5",
-    "astro": "7.3.5"
+    "astro": "7.3.5",
+    "d3-shape": "3.2.0"
   },
   "engines": {
     "node": ">=24 <25"
@@ -21,13 +22,26 @@
   "devDependencies": {
     "@accidentalguide/accidental-intelligence": "workspace:*",
     "@accidentalguide/agents-harnesses-skills-tools": "workspace:*",
+    "@accidentalguide/chess-caro-kann": "workspace:*",
+    "@accidentalguide/chess-first-move": "workspace:*",
+    "@accidentalguide/chess-last-move": "workspace:*",
+    "@accidentalguide/chess-problem-positions": "workspace:*",
+    "@accidentalguide/chess-scholars-mate": "workspace:*",
+    "@accidentalguide/chirping-smoke-detector": "workspace:*",
     "@accidentalguide/claude-code": "workspace:*",
     "@accidentalguide/claude-desktop": "workspace:*",
     "@accidentalguide/codex": "workspace:*",
     "@accidentalguide/context-windows": "workspace:*",
     "@accidentalguide/copilot-cli": "workspace:*",
+    "@accidentalguide/first-dnd-game": "workspace:*",
+    "@accidentalguide/giving-a-toast": "workspace:*",
+    "@accidentalguide/grilled-cheese": "workspace:*",
+    "@accidentalguide/hosting-thanksgiving": "workspace:*",
+    "@accidentalguide/is-my-houseplant-dying": "workspace:*",
     "@accidentalguide/lights-off-software-factories": "workspace:*",
+    "@accidentalguide/loading-a-dishwasher": "workspace:*",
     "@accidentalguide/mcp": "workspace:*",
+    "@accidentalguide/ordering-wine": "workspace:*",
     "@accidentalguide/pipeline": "workspace:*",
     "@accidentalguide/plugins-and-marketplaces": "workspace:*",
     "@accidentalguide/skills": "workspace:*",

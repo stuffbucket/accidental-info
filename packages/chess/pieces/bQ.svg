@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<title>Black queen</title>
+<g stroke-linejoin="round" stroke-linecap="round">
+<path d="M23.2 89 L76.8 89 C78.57 89 80 87.57 80 85.8 L80 83.2 C80 81.43 78.57 80 76.8 80 L23.2 80 C21.43 80 20 81.43 20 83.2 L20 85.8 C20 87.57 21.43 89 23.2 89 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M29 80 C36.2 71 41 65.6 41 44 L59 44 C59 65.6 63.8 71 71 80 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M36.9 46 L63.1 46 C64.43 46 65.5 44.93 65.5 43.6 L65.5 41.9 C65.5 40.57 64.43 39.5 63.1 39.5 L36.9 39.5 C35.57 39.5 34.5 40.57 34.5 41.9 L34.5 43.6 C34.5 44.93 35.57 46 36.9 46 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M37.5 39 L25.5 21 L38 29.5 L37 14.5 L45 28 L50 11.5 L55 28 L63 14.5 L62 29.5 L74.5 21 L62.5 39 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M29.6 21 C29.6 18.74 27.76 16.9 25.5 16.9 C23.24 16.9 21.4 18.74 21.4 21 C21.4 23.26 23.24 25.1 25.5 25.1 C27.76 25.1 29.6 23.26 29.6 21 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M41.1 14.5 C41.1 12.24 39.26 10.4 37 10.4 C34.74 10.4 32.9 12.24 32.9 14.5 C32.9 16.76 34.74 18.6 37 18.6 C39.26 18.6 41.1 16.76 41.1 14.5 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M54.1 11.5 C54.1 9.24 52.26 7.4 50 7.4 C47.74 7.4 45.9 9.24 45.9 11.5 C45.9 13.76 47.74 15.6 50 15.6 C52.26 15.6 54.1 13.76 54.1 11.5 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M67.1 14.5 C67.1 12.24 65.26 10.4 63 10.4 C60.74 10.4 58.9 12.24 58.9 14.5 C58.9 16.76 60.74 18.6 63 18.6 C65.26 18.6 67.1 16.76 67.1 14.5 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M78.6 21 C78.6 18.74 76.76 16.9 74.5 16.9 C72.24 16.9 70.4 18.74 70.4 21 C70.4 23.26 72.24 25.1 74.5 25.1 C76.76 25.1 78.6 23.26 78.6 21 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M38.5 34 L61.5 34" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+<path d="M22 79 L78 79" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+<path d="M37 44.2 L63 44.2" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+<path d="M37.5 39.4 L62.5 39.4" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+</g>
+</svg>

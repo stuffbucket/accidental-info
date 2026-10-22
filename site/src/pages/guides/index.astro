@@ -1,0 +1,174 @@
+---
+// Every guide, by collection: its cover, title and subtitle, its version and length, and its PDF and Word files.
+// Guides still to come are listed by title.
+import Plain from "../../layouts/Plain.astro";
+import { base, loadCollections } from "../../lib/guides";
+
+const collections = loadCollections();
+---
+
+<Plain
+  title="All guides · Accidental Guides"
+  description="Every Accidental Guide, with its PDF and Word document."
+  image="social.png"
+  imageAlt="The covers of the Accidental Guides"
+>
+  <main>
+    <h1>All guides</h1>
+    {
+      collections.map((collection) => (
+        <section aria-labelledby={`${collection.id}-name`} style={`--tile: ${collection.colour.base}`}>
+          <h2 id={`${collection.id}-name`}>
+            <span>{collection.name}</span>
+            {collection.page && (
+              <a class="map-link" href={`${base}${collection.page}`}>
+                The map
+              </a>
+            )}
+          </h2>
+          <ul class="list">
+            {collection.entries.map(({ guide, coming }) =>
+              guide ? (
+                <li class="guide">
+                  <a class="cover" href={`${base}${guide.page}`} tabindex="-1" aria-hidden="true">
+                    <img
+                      src={`${base}guides/${guide.id}/cover.png`}
+                      alt=""
+                      width={guide.cover.width}
+                      height={guide.cover.height}
+                      loading="lazy"
+                    />
+                  </a>
+                  <div>
+                    <h3>
+                      <a href={`${base}${guide.page}`}>{guide.title}</a>
+                    </h3>
+                    <p class="subtitle">{guide.subtitle}</p>
+                    <p class="meta">
+                      {guide.status === "draft" ? "Draft · " : ""}Version {guide.version} · {guide.pages} pages ·{" "}
+                      <a href={`${base}guides/${guide.pdf}`}>PDF</a>
+                      {guide.docx && (
+                        <>
+                          {" · "}
+                          <a href={`${base}guides/${guide.docx}`}>Word</a>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </li>
+              ) : (
+                <li class="guide coming">
+                  <span class="cover" />
+                  <div>
+                    <h3>{coming.title}</h3>
+                    <p class="meta">Coming</p>
+                  </div>
+                </li>
+              ),
+            )}
+          </ul>
+        </section>
+      ))
+    }
+  </main>
+</Plain>
+
+<style>
+  main {
+    width: min(100% - 2 * var(--gutter), var(--page));
+    --paper: #f4f4f3;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 3.5rem) 0 3rem;
+  }
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: var(--text-2xl);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  /* Each collection opens with a band of its colour. */
+  section {
+    margin: 2.5rem 0 0;
+    padding: 1.25rem 0 1rem;
+    border-top: 0.375rem solid var(--tile);
+  }
+  h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    margin: 0 0 1.5rem;
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+  .map-link {
+    margin-inline-start: auto;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    font-weight: normal;
+  }
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+    gap: 1.5rem 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .guide {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 324 / 540;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+  }
+  h3 {
+    margin: 0 0 0.25rem;
+    font-size: var(--text-md);
+    line-height: 1.3;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  h3 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+  .subtitle {
+    margin: 0 0 0.4rem;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+  }
+  .meta {
+    margin: 0;
+    color: var(--muted);
+    font: 0.8125rem / 1.5 var(--mono);
+  }
+  .meta a {
+    color: var(--text);
+  }
+  /* A guide still to come: a blank grey sheet where its cover will be. */
+  .coming .cover {
+    display: block;
+    aspect-ratio: 324 / 540;
+    background: var(--paper);
+  }
+  .coming h3 {
+    color: var(--muted);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) main {
+      --paper: #1f1f1f;
+    }
+  }
+  :root[data-theme="dark"] main {
+    --paper: #1f1f1f;
+  }
+</style>
