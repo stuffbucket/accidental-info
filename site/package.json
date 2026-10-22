@@ -29,6 +29,7 @@
     "@accidentalguide/lights-off-software-factories": "workspace:*",
     "@accidentalguide/mcp": "workspace:*",
     "@accidentalguide/pipeline": "workspace:*",
+    "@accidentalguide/plugins-and-marketplaces": "workspace:*",
     "@accidentalguide/skills": "workspace:*",
     "@accidentalguide/software-factories": "workspace:*",
     "@accidentalguide/specs-and-reviews": "workspace:*",

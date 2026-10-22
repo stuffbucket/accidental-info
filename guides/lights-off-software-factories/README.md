@@ -44,7 +44,7 @@ the same text gives the same bytes.
 | File | What it's for |
 |---|---|
 | `guide.md` | Every word in the guide: titles, entries, tables, sources and footers. Edit this to change the text. |
-| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_ROWS`, `ENTRIES`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
+| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_BLOCKS`, `FIT_BLOCKS`, `ENTRIES`, `BACK` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
 | `build_guide.py` | The PDF: page layout, colors, tiles, the diagrams and the margin check. |
 | `build_docx.py` | The Word document: layout in Word's terms, the diagrams as images from the PDF, and the embedded fonts. |
 | `fonts/texgyreheros-{regular,bold,italic}.otf` | TeX Gyre Heros 2.004, the body typeface, as originally distributed (OpenType with CFF outlines). |
@@ -58,10 +58,15 @@ the same text gives the same bytes.
 `guide.md` starts with front matter (title, kicker, subtitle, running footer, edition,
 cover footer). After that, each `#` heading starts one part of the guide and ends with
 an id that says which part it is: `{#why}`, `{#fit}`, four `{#entry}` sections,
-`{#shown}` and `{#sources}`. The builders also print `{#levels}` and `{#apart}` (with
-`{#other}`) pages if guide.md has those sections. Each of the four entries
-is `# Name {#entry num=01 mono=Sn}`. The order of sections in the file doesn't set the
-order of pages; the builders do.
+`{#shown}` and `{#sources}`. The builders also print `{#levels}`, `{#habits}`, `{#apart}` and
+`{#other}` if guide.md has those sections. Each of the four entries is
+`# Name {#entry num=01 mono=Sn}`. The order of sections in the file doesn't set the order of
+pages; the builders do.
+
+The entries, then `{#shown}`, `{#habits}`, `{#apart}` and `{#other}`, go down the page one
+after another, and a new page starts only when the next one doesn't fit, so two short
+entries share a page. The cover and the Word document take the page numbers from the same
+packing (`PAGES` in `build_guide.py`).
 
 Within a section:
 
@@ -69,12 +74,20 @@ Within a section:
   lines.
 - `##` headings are the subheads. In an entry, `## Field marks` comes before its table and
   `## Confused with: Agent` names the part it's confused with, followed by a paragraph.
-- Tables are pipe tables. Where the PDF prints a column header row, such as the tables on
-  the levels and shown pages, the table's header row is what's printed. Tables the PDF
-  prints without a header still need one in Markdown; those header rows (`Question`,
-  `Field`, `Term`, `Source`) are only labels for whoever edits the file.
-- The shown page (and a levels page, if present) has one or more intro paragraphs, one table, and
-  exactly one closing paragraph after the table.
+- Tables are pipe tables. A two-column table is printed as rows, label on the left, with a
+  heavy rule over the first row and no rules between rows. Its header row (`Term`,
+  `Habit`, `Claim`, `Field`, `Source`) is only a label for whoever edits the file. A levels
+  page, if present, prints its table's header row.
+- A levels page, if present, has one or more intro paragraphs, one table, and exactly one
+  closing paragraph after the table.
+- A block of lines that start with `> ` is a grey block: its paragraphs and tables are printed
+  on a light grey background, with no rules. Use it for the one table or passage on a page that
+  the reader should look at first.
+- A `> ` block whose first line is `> [!TIP]`, `> [!NOTE]` or `> [!WARNING]` is a callout:
+  one paragraph in an outlined box, led by "Tip.", "Note." or "Watch out." in bold. Use at most
+  one on a page, for one practical tip or warning.
+- In an entry, a field marks table in a grey block is printed as a grid of three columns, each
+  label over its short answer. Its Detail column can be left out.
 - The sources table has three columns: the source, its date, and its address (no
   `https://`), which is set in mono.
 - Names in `NAME2MONO` in `build_guide.py` get a tile wherever they label a row. The four

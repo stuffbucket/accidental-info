@@ -16,12 +16,12 @@ A factory that runs with nobody on the floor can turn the lights off. A lights-o
 
 At the gate, a person decides whether a change does what you wanted and whether it breaks anything. When nobody reads the code, these four parts make those decisions.
 
-| Term | Meaning |
-|---|---|
-| Scenario | A story of someone using the software from start to finish, kept where agent sessions can’t see or change it. |
-| Digital twin | A working copy of an outside service that scenarios can use thousands of times. |
-| Satisfaction | The share of scenario runs that a model, asked to judge each run, says a user would accept. |
-| Closed loop | The route from a failure in use back to a released fix with no person in it. |
+> | Term | Meaning |
+> |---|---|
+> | Scenario | A story of someone using the software from start to finish, kept where agent sessions can’t see or change it. |
+> | Digital twin | A working copy of an outside service that scenarios can use thousands of times. |
+> | Satisfaction | The share of scenario runs that a model, asked to judge each run, says a user would accept. |
+> | Closed loop | The route from a failure in use back to a released fix with no person in it. |
 
 # How do the parts fit together? {#fit}
 
@@ -37,10 +37,10 @@ Agent sessions write the code. Each change runs against scenarios the sessions c
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | People | Product and engineering people write each story. |
-| Cannot | Cover a missing story | Behavior nobody put in a scenario may still be wrong. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Owned by | People | Product and engineering people write each story. |
+> | Cannot | Cover a missing story | Behavior nobody put in a scenario may still be wrong. |
 
 ## Confused with: Test
 
@@ -56,10 +56,10 @@ An acceptance test checks one fixed result and often lives beside the code, wher
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | The factory team | The team records the service’s public behavior and keeps the copy current. |
-| Cannot | Know behavior nobody observed | The copy can miss an edge case nobody has seen yet. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Owned by | The factory team | The team records the service’s public behavior and keeps the copy current. |
+> | Cannot | Know behavior nobody observed | The copy can miss an edge case nobody has seen yet. |
 
 ## Confused with: Mock
 
@@ -75,10 +75,10 @@ A mock returns canned answers for one test. A digital twin copies enough of a se
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | People | Product and engineering people choose the scenarios, judge and score needed for release. |
-| Cannot | Speak for users or future maintainers | A high score doesn’t show what real users think or whether the code will be easy to change. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Owned by | People | Product and engineering people choose the scenarios, judge and score needed for release. |
+> | Cannot | Speak for users or future maintainers | A high score doesn’t show what real users think or whether the code will be easy to change. |
 
 ## Confused with: Passing tests
 
@@ -94,10 +94,10 @@ Passing tests means the software produced the fixed result each test checks. Sat
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | The team that runs the software | The team chooses which signals create work and which changes may release automatically. |
-| Cannot | Recover from every failure | The retry limit still stops work that agent sessions and checks can’t resolve. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Owned by | The team that runs the software | The team chooses which signals create work and which changes may release automatically. |
+> | Cannot | Recover from every failure | The retry limit still stops work that agent sessions and checks can’t resolve. |
 
 ## Confused with: Feedback path
 
@@ -107,14 +107,15 @@ A feedback path turns a failure into a work item, and a person still approves th
 
 As of October 2026 there are three published examples: a company that says it runs lights off, a startup that tried it and stopped, and a large build that came close.
 
-| Claim | What has been shown |
-|---|---|
-| A factory runs lights off | One software company has said since February 2026 that no person writes or reviews its code. The company reports no defect rates, satisfaction numbers or shipped results. |
-| Unread code stays maintainable | One startup stopped reading its code in July 2025. By November, changing the code was hard enough that a founder rewrote the core by hand over two weeks. The startup now reads the code. |
-| Agents can do almost all review | A team at a large AI lab built a product with no hand-written code over five months and merged about 1,500 pull requests. Agents did most of the review. The team says it doesn’t know how the design will hold up over years. |
-| The results are measured | No published study reports defect, incident or cost data for a factory where no person reads the code. |
+> | Claim | What has been shown |
+> |---|---|
+> | A factory runs lights off | One software company has said since February 2026 that no person writes or reviews its code. The company reports no defect rates, satisfaction numbers or shipped results. |
+> | Unread code stays maintainable | One startup stopped reading its code in July 2025. By November, changing the code was hard enough that a founder rewrote the core by hand over two weeks. The startup now reads the code. |
+> | Agents can do almost all review | A team at a large AI lab built a product with no hand-written code over five months and merged about 1,500 pull requests. Agents did most of the review. The team says it doesn’t know how the design will hold up over years. |
+> | The results are measured | No published study reports defect, incident or cost data for a factory where no person reads the code. |
 
-When someone says their factory runs lights off, ask three questions: What has it shipped? How do they know the software works? What happens when the agents can’t fix a failure? An Accidental Guide to: Software Factory Claims explains how to read the answers.
+> [!TIP]
+> When someone says their factory runs lights off, ask three questions: What has it shipped? How do they know the software works? What happens when the agents can’t fix a failure? An Accidental Guide to: Software Factory Claims explains how to read the answers.
 
 # Sources {#sources}
 

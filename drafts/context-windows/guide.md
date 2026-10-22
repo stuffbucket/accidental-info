@@ -18,12 +18,12 @@ An Accidental Guide to: Agents, Harnesses, Skills, and Tools covers the basics a
 what the window holds. These four ideas explain how the window fills up and how you keep
 room for the work.
 
-| Term | Meaning |
-|---|---|
-| Token | A short piece of text used to count the window’s size and usage. |
-| Startup context | What the harness loads before your first message. |
-| Compaction | Replacing older conversation with a summary when the window is nearly full. |
-| New session | An empty conversation that starts with only the startup context. |
+> | Term | Meaning |
+> |---|---|
+> | Token | A short piece of text used to count the window’s size and usage. |
+> | Startup context | What the harness loads before your first message. |
+> | Compaction | Replacing older conversation with a summary when the window is nearly full. |
+> | New session | An empty conversation that starts with only the startup context. |
 
 # What takes up room? {#fit}
 
@@ -32,9 +32,10 @@ The conversation above it grows with every message, file and command output. Aft
 compaction, a short summary replaces that conversation. A new session has only the startup
 context. The sizes in the picture are examples.
 
-A crowded window can give worse answers before it is full. The model has more to read, so
-important details are harder to find. To see how full yours is, run /context in Claude
-Code or GitHub Copilot CLI, or /status in Codex, as of October 2026.
+> [!TIP]
+> A crowded window can give worse answers before it is full. The model has more to read, so
+> important details are harder to find. To see how full yours is, run /context in Claude
+> Code or GitHub Copilot CLI, or /status in Codex, as of October 2026.
 
 # Token {#entry num=01 mono=Tk}
 
@@ -46,10 +47,10 @@ Code or GitHub Copilot CLI, or /status in Codex, as of October 2026.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Controlled by | The model you pick | Each model sets its context window size. |
-| Cannot | Be counted exactly from words | Token counts for the same text can differ by model. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Controlled by | The model you pick | Each model sets its context window size. |
+> | Cannot | Be counted exactly from words | Token counts for the same text can differ by model. |
 
 ## Confused with: Word
 
@@ -65,10 +66,10 @@ A short, common word is often one token. A long or rare word can take several.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Controlled by | You, your team and the harness | You choose the instructions files and MCP servers. The harness writes the system prompt. |
-| Cannot | Hold every procedure cheaply | A procedure used for one kind of task belongs in a skill, which loads only when used. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Controlled by | You, your team and the harness | You choose the instructions files and MCP servers. The harness writes the system prompt. |
+> | Cannot | Hold every procedure cheaply | A procedure used for one kind of task belongs in a skill, which loads only when used. |
 
 ## Confused with: Memory
 
@@ -85,10 +86,10 @@ itself keeps nothing between calls.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Controlled by | The harness and you | The harness compacts on its own. You can compact sooner and say what to keep, such as /compact focus on the login bug. |
-| Cannot | Bring lost detail back | A completed compaction can’t be undone. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Controlled by | The harness and you | The harness compacts on its own. You can compact sooner and say what to keep, such as /compact focus on the login bug. |
+> | Cannot | Bring lost detail back | A completed compaction can’t be undone. |
 
 ## Confused with: Trimming
 
@@ -105,10 +106,10 @@ before they compact.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Controlled by | You | Open a session, or use /clear or /new where supported. |
-| Cannot | Recall the old conversation | Some harnesses let you go back to it, such as /resume in Claude Code. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Controlled by | You | Open a session, or use /clear or /new where supported. |
+> | Cannot | Recall the old conversation | Some harnesses let you go back to it, such as /resume in Claude Code. |
 
 ## Confused with: Compaction
 
@@ -118,14 +119,14 @@ Compaction keeps a summary in the same session. A new session keeps only files.
 
 A few habits keep the window small and on topic, so the model can find what matters.
 
-| Habit | Why it helps |
-|---|---|
-| Start fresh for unrelated work | A new session gives the next task an empty conversation. |
-| Save the plan and progress | A file carries what matters into the next session. |
-| Send long work to sub-agents | Searches, test runs and log reading stay in separate windows. Only summaries return. |
-| Read only what you need | Ask for one function or the failing tests instead of the full output. |
-| Keep instructions files short | Startup context is sent on every call. Move specific procedures into skills. |
-| Compact at a natural break | When one part of the work is done, run /compact and say what to keep. |
+> | Habit | Why it helps |
+> |---|---|
+> | Start fresh for unrelated work | A new session gives the next task an empty conversation. |
+> | Save the plan and progress | A file carries what matters into the next session. |
+> | Send long work to sub-agents | Searches, test runs and log reading stay in separate windows. Only summaries return. |
+> | Read only what you need | Ask for one function or the failing tests instead of the full output. |
+> | Keep instructions files short | Startup context is sent on every call. Move specific procedures into skills. |
+> | Compact at a natural break | When one part of the work is done, run /compact and say what to keep. |
 
 Each habit leaves more room for the work you’re doing now.
 
