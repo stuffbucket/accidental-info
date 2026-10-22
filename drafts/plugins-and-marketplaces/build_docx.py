@@ -451,8 +451,8 @@ def page_entry(doc, i, e):
         [text_cell("So what", 6.8, bold=True), text_cell(G.bold_first(e["sowhat"]), 7.6)],
     ])
     label(doc, e["names_head"])
-    grid(doc, G.NAMES_WIDTHS, [[text_cell(a, 6.6, bold=True), text_cell(b, 6.6), text_cell(c, 6.6)]
-                               for a, b, c in e["names"]], header=list(e["names_cols"]))
+    grid(doc, G.NAMES_WIDTHS, [[tag_cell(a), text_cell(b, 6.6)] for a, b in e["names"]],
+         header=list(e["names_cols"]))
     other, test = e["confused"]
     grid(doc, [G.LABW + G.GAP, G.TW], [[
         text_cell("Confused with", 6.8, bold=True),

@@ -5,7 +5,7 @@ subtitle: A pocket-sized guide to what a skill folder can hold, as of October 20
 running_footer: Agent Skills
 edition: [Co]Lab · bstucker · October 2026
 cover_footer: October 2026
-version: 0.1.0
+version: 0.2.0
 ---
 
 # What’s in a skill? {#why}
@@ -43,9 +43,7 @@ description: Writes release notes from merged pull
 | Reference file | references/style.md | The team’s writing rules |
 | Asset | assets/template.md | The layout of the notes |
 
-SKILL.md is the only file a skill needs.
-
-Each step names the file it uses, so the agent knows when to open or run it.
+SKILL.md is the only file a skill needs. The other folders are optional, and a step names the file it uses.
 
 # What’s in the context<br/>window, and when? {#ctx}
 
@@ -73,7 +71,7 @@ The script’s code and any file no step opens never enter the context window. W
 
 > | Field | Short answer |
 > |---|---|
-> | In context | Every call |
+> | In context | From session start |
 
 ## Confused with: Skill instructions
 
@@ -84,7 +82,7 @@ The description decides whether the skill is used. The skill instructions say wh
 | Field | Text |
 |---|---|
 | Identify by | The Markdown under the description in SKILL.md. |
-| What | Skill instructions are the steps the agent follows. Each step names the file it uses. |
+| What | Skill instructions are the steps the agent follows once it picks the skill. A step can tell the agent to run a script or open a file. |
 | So what | The whole body loads at once and stays, so keep it under 500 lines. Move detail into reference files. |
 
 ## Field marks
@@ -102,7 +100,7 @@ An instructions file loads in every session. Skill instructions load only when t
 | Field | Text |
 |---|---|
 | Identify by | A file in scripts/, such as list_changes.sh. |
-| What | A script is code the agent runs instead of writing it. Only what it prints enters the context window. |
+| What | A script is code that comes with the skill, and the agent runs it as it is. Only what the script prints enters the context window. |
 | So what | Tested code gives the same result every time. The agent doesn’t work it out again in each session. |
 
 ## Field marks
@@ -113,7 +111,7 @@ An instructions file loads in every session. Skill instructions load only when t
 
 ## Confused with: Tool
 
-A script is one kind of tool. The agent runs it through the shell tool.
+A tool is something the harness lets the agent use, such as the shell. The agent runs a script with the shell tool.
 
 # Reference file {#entry num=04 mono=Rf}
 
@@ -121,7 +119,7 @@ A script is one kind of tool. The agent runs it through the shell tool.
 |---|---|
 | Identify by | A file in references/, such as style.md. |
 | What | A reference file holds detail that only some requests need. The agent opens it when a step says to. |
-| So what | A skill can hold many reference files. The agent reads only the one the task needs. |
+| So what | Long rules and examples can go in reference files. The skill instructions stay short, and the agent reads only the file the task needs. |
 
 ## Field marks
 
@@ -138,7 +136,7 @@ Skill instructions say what to do. A reference file holds the detail for one ste
 | Field | Text |
 |---|---|
 | Identify by | A template, image or data file in assets/. |
-| What | An asset is a file the skill uses in what it makes. Templates, images and lookup tables are common. |
+| What | An asset is a file the skill uses in what it makes. The agent copies it or fills it in. |
 | So what | Each set of release notes starts from the same layout. The steps only say where to find it. |
 
 ## Field marks
@@ -177,7 +175,7 @@ Pick by what the agent is missing.
 | MCP server | The agent needs another system | Query a database |
 | Sub-agent | Side work would fill your context window | Search many files, return a summary |
 
-They work together: a skill can tell the agent which MCP tools to call and which sub-agents to start. When you paste the same steps into a conversation for the third time, make them a skill.
+A skill can also tell the agent which MCP tools to call and which sub-agents to start. When you paste the same steps into a conversation for the third time, make them a skill.
 
 # Sources {#sources}
 

@@ -541,7 +541,7 @@ def map_layout():
     x0, x1 = ML + 26, PW - MR - 22
     dx = (x1 - x0) / cols
     dy = 34
-    grid_top = top - 16
+    grid_top = top - 28  # room for the tiles at the top of the lines
     grid = (x0, grid_top, dx, dy)
     # The key starts under the lowest station or label.
     low = min(min(map_xy(n, grid)[1] - MAP_HUB,
@@ -694,8 +694,8 @@ def page_entry(c, e, idx, n):
     y = min(yl, yt)
     footer(c, n); check(f"entry {e['name']}", y)
 
-# The names table on an entry page: the name, where you see it, what it is there.
-NAMES_WIDTHS = [LABW + GAP, 74, W - LABW - GAP - 74]
+# The names table on an entry page: the name and what it is.
+NAMES_WIDTHS = [LABW + GAP, W - LABW - GAP]
 
 FLOW_X = (ML + 11, ML + 72, ML + 170, ML + 236)
 FLOW_W = (59, 94, 64, PW - MR - (ML + 236))

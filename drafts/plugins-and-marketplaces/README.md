@@ -68,7 +68,7 @@ Within a section:
 - Paragraphs are separated by blank lines, and a paragraph can be wrapped over several
   lines.
 - `##` headings are the subheads. In an entry, the first `##` heading names the table of names
-  on that line (columns: name, where you see it, what it is) and `## Confused with: Tools`
+  on that line (columns: name, what it is) and `## Confused with: Tools`
   names the entry it's confused with, followed by a paragraph.
 - Tables are pipe tables. Where the PDF prints a column header row, such as the tables on
   the levels and shown pages, the table's header row is what's printed. Tables the PDF

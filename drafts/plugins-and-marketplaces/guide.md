@@ -11,8 +11,8 @@ version: 0.1.0
 # What are all these things? {#why}
 
 Every product lets you add things to a coding agent or AI app, but each product uses its
-own names and the same word can mean different things. The five kinds are drawn as a map:
-tools, instructions, hooks, packages and marketplaces.
+own names and the same word can mean different things. Every one of them is one of five
+kinds of thing: tools, instructions, hooks, packages and marketplaces.
 
 Claude apps means claude.ai and the Claude Desktop app. For the basics behind agents,
 harnesses, skills, tools and MCP servers, see An Accidental Guide to: Agents, Harnesses,
@@ -20,8 +20,8 @@ Skills, and Tools.
 
 # The map {#map}
 
-Coloured lines are kinds and stops are names; the larger ringed stop marks a reused name
-or one thing with several names.
+Each colored line is one kind of thing, and each stop is a name you’ll see. A larger
+ringed stop marks a name used for different things, or one thing with several names.
 
 ```map
 line Tl | Tools: reach other systems | MCP server, Desktop extension, Extension
@@ -62,111 +62,108 @@ Find a new word on its line, then check the product because names can overlap.
 
 | Field | Text |
 |---|---|
-| Identify by | An MCP setting, connector, .mcpb file or extension |
-| What | Most things you add to reach another system are MCP servers under another name. Products may call one a connector, app, desktop extension or extension. |
-| So what | Ask for an MCP server when the agent needs a new system. It works across these products; see An Accidental Guide to: MCP. |
+| What | Most things you add to reach another system are MCP servers. Products may call them connectors, apps or extensions. |
+| So what | Ask for an MCP server when the agent needs a new system. One server works across these products. See An Accidental Guide to: Model Context Protocol. |
 
-## Names on this line
+## Names
 
-| Name | Where | What it is |
-|---|---|---|
-| MCP server | Every product here | A program that provides tools |
-| Connector | Claude apps, ChatGPT, Codex | An MCP server called a connector or app |
-| Desktop extension | Claude Desktop | A local MCP server under Settings, Extensions |
-| Extension | Copilot CLI, VS Code | A tool module or add-on |
+| Name | What it is |
+|---|---|
+| MCP server | A program that gives the agent tools |
+| Connector | What Claude apps call an MCP server; OpenAI says app |
+| Desktop extension | A local MCP server packed into one file for Claude Desktop |
+| Extension | A tool module in Copilot CLI, or a VS Code add-on that adds tools |
 
 ## Confused with: Instructions
 
-A tool lets the agent do something, such as query another service. Instructions tell the
-model when and how to use that ability.
+A tool lets the agent reach a service. Instructions tell the model when and how to use it.
+
 # Instructions {#entry num=02 mono=In}
 
 | Field | Text |
 |---|---|
-| Identify by | AGENTS.md, CLAUDE.md, a .prompt.md file or a SKILL.md folder |
-| What | Instructions tell the agent how to work. A file loads every session, while a skill or prompt loads for its task or when you run it by name. |
-| So what | Put rules in an instructions file and reusable procedures in skills. See An Accidental Guide to: Skills. |
+| What | Instructions tell the agent how to work. An instructions file loads every session, while a skill or prompt file loads when the task calls for it. |
+| So what | Put rules in an instructions file and procedures in skills. See An Accidental Guide to: Agent Skills. |
 
-## Names on this line
+## Names
 
-| Name | Where | What it is |
-|---|---|---|
-| Instructions file | Claude Code, Copilot CLI, VS Code, Visual Studio, Codex | Project guidance; Claude apps use project instructions |
-| Skill | Every product here | Runs when its task matches or with /name |
-| Prompt file | VS Code, Visual Studio | A saved prompt; Codex’s version is deprecated |
-| Custom agent | Copilot CLI, VS Code, Visual Studio | Sets up a sub-agent; Claude Code and Codex say subagent |
+| Name | What it is |
+|---|---|
+| Instructions file | Read every session, such as AGENTS.md or CLAUDE.md; Claude apps use project instructions |
+| Skill | Loaded when the task matches or when you type /name |
+| Prompt file | A saved prompt you run with /name |
+| Custom agent | Sets up a sub-agent; Claude Code and Codex call it a subagent |
 
 ## Confused with: Hooks
 
-Use instructions for guidance and a hook when an action must happen. The model may skip
-an instruction, while a hook always runs.
+Instructions guide the model. Hooks make required actions happen even if the model skips
+an instruction.
+
 # Hooks {#entry num=03 mono=Hk}
 
 | Field | Text |
 |---|---|
-| Identify by | A hooks file with an event and command |
 | What | A hook is a command the harness runs at a set moment, such as after every edit. The model does not choose whether it runs. |
-| So what | Use a hook for something that must happen every time, such as running a formatter. If it fails, check the event and command. |
+| So what | Use a hook for anything that must happen every time. A check before each commit is a common one. |
 
-## Names on this line
+## Names
 
-| Name | Where | What it is |
-|---|---|---|
-| Hook | Claude Code, Codex | A command run on an event |
-| Hook | Copilot CLI, VS Code | One format; preview in VS Code |
-| Plugin hook | Claude apps | A Cowork hook |
+| Name | What it is |
+|---|---|
+| Hook | A command the harness runs on an event |
+| Hook | In Claude apps, only inside a plugin, in Cowork |
 
-## Confused with: Instructions
+## Confused with: Tools
 
-An instruction asks the model, which may not follow it. A hook always runs when its
-event happens.
+A tool runs when the model calls it. A hook runs when its event happens, whether or not
+the model asks.
+
 # Packages {#entry num=04 mono=Pk}
 
 | Field | Text |
 |---|---|
-| Identify by | An installed plugin or editor extension |
-| What | Installing skills, agent definitions, hooks and MCP servers one at a time is tedious. A plugin brings them in with one step. |
-| So what | Copilot CLI, VS Code and Codex read Claude Code’s plugin files, but load only the parts they support. |
+| What | A plugin installs skills, agent definitions, hooks and MCP servers in one step. Adding them one at a time is tedious. |
+| So what | A plugin often works in more than one product. Copilot CLI, VS Code and Codex read Claude Code’s plugin files, but each loads only the parts it supports. |
 
-## Names on this line
+## Names
 
-| Name | Where | What it is |
-|---|---|---|
-| Plugin | Claude Code, Claude apps, Copilot CLI, Codex | Agent parts installed together |
-| Agent plugin | VS Code | VS Code’s plugin name |
-| Extension | VS Code, Visual Studio | An add-on for the editor itself |
-| IDE extension | Claude Code, Codex | The harness in an editor; Codex loads no plugins there |
+| Name | What it is |
+|---|---|
+| Plugin | A folder of agent parts installed as one package |
+| Agent plugin | VS Code’s name for a plugin |
+| Extension | An add-on for the VS Code or Visual Studio editor |
+| IDE extension | Claude Code or Codex itself, inside the editor |
 
 ## Confused with: Marketplaces
 
-A plugin is a package you install from a marketplace. The marketplace tells your product
-where to find it.
+A plugin is a package you install. A marketplace tells your product where to find it.
+
 # Marketplaces {#entry num=05 mono=Mk}
 
 | Field | Text |
 |---|---|
-| Identify by | A marketplace.json file, directory or registry |
-| What | A plugin marketplace is a list of plugins and where to get each one, kept as a marketplace.json file in a Git repository. You add the list once, then install its plugins by name. |
-| So what | Anyone can publish a marketplace, so you trust whoever runs it. Anthropic reviews directory plugins, but not ones added from a marketplace URL. |
+| What | A plugin marketplace is a marketplace.json catalog in a Git repository. Add it, then install plugins by name. |
+| So what | Anyone can publish a marketplace, so adding one means trusting whoever runs it. Anthropic reviews the plugins in its directory, but not ones added from a marketplace. |
 
-## Names on this line
+## Names
 
-| Name | Where | What it is |
-|---|---|---|
-| Marketplace | Claude Code, Claude apps, Copilot CLI, VS Code, Codex | A marketplace.json list of plugins in a Git repository; anyone can publish one |
-| Directory | Claude apps, ChatGPT, Codex | A list the company reviews, such as the Connectors Directory |
-| MCP registry | Copilot CLI, VS Code, Visual Studio | GitHub’s MCP server list |
-| Visual Studio Marketplace | VS Code, Visual Studio | The store for editor extensions |
+| Name | What it is |
+|---|---|
+| Marketplace | A list of plugins kept in a Git repository |
+| Directory | A list the company reviews, such as the Connectors Directory |
+| MCP registry | GitHub’s list of MCP servers |
+| Visual Studio Marketplace | The store for VS Code and Visual Studio extensions |
 
-## Confused with: Packages
+## Confused with: Visual Studio Marketplace
 
-A marketplace tells your product where to find a package. Your product installs the
-package and loads its parts.
+The Visual Studio Marketplace is the store for VS Code and Visual Studio extensions, and
+Claude Marketplace is a website. You can’t add either one to a coding agent as a plugin
+marketplace.
 
 # Which product uses which word {#who}
 
-As of October 2026, this table shows which words each product uses and what each word
-means there. A dash means the product’s documentation does not use the word.
+These are the words each product uses, and what they mean there, as of October 2026. A dash means
+the product’s documentation doesn’t use the word.
 
 | Word | Claude Code | Claude apps | Copilot CLI | VS Code | Visual Studio | Codex |
 |---|---|---|---|---|---|---|
@@ -174,16 +171,15 @@ means there. A dash means the product’s documentation does not use the word.
 | Connector | from claude.ai | MCP server | – | – | – | inside plugins |
 | Extension | harness in an editor | local MCP server | tool module | editor add-on | editor add-on | harness in an editor |
 | Instructions file | CLAUDE.md | project instructions | yes | yes | yes | AGENTS.md |
-| Skill | yes | yes | yes | yes | yes | yes |
 | Prompt file | merged into skills | – | – | Local harness only | yes | deprecated |
 | Custom agent | subagent | Cowork only | yes | yes | yes | subagent |
 | Hook | yes | Cowork only | yes | preview | – | yes |
 | Plugin | yes | yes | yes | agent plugin | – | not in the IDE |
 | Marketplace | plugin list | plugin list | plugin list | both kinds | extension store | plugin list |
-| Directory | yes | yes | – | – | – | yes |
-| MCP registry | – | – | yes | MCP gallery | yes | – |
 
-Each product has its own guide: An Accidental Guide to: Claude Code, An Accidental Guide to: Claude Desktop, An Accidental Guide to: GitHub Copilot CLI, An Accidental Guide to: Codex, An Accidental Guide to: Visual Studio and An Accidental Guide to: VS Code.
+Each product has its own guide: An Accidental Guide to: Claude Code, An Accidental Guide
+to: Claude Desktop, An Accidental Guide to: GitHub Copilot CLI, An Accidental Guide to:
+OpenAI Codex, and An Accidental Guide to: VS Code and Visual Studio.
 
 # Sources {#sources}
 
