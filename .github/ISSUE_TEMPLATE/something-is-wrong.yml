@@ -1,0 +1,30 @@
+name: Something is wrong
+description: A fact that's wrong or out of date, or a broken link.
+title: "Wrong: "
+body:
+  - type: input
+    id: guide
+    attributes:
+      label: Guide
+      description: The guide's title or its address.
+      placeholder: Software Factories
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: What it says
+      description: Quote the sentence or row, and name its section.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What's true
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: A link that shows it, if you have one.

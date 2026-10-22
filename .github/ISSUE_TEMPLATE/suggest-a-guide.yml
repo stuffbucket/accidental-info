@@ -1,0 +1,30 @@
+name: Suggest a guide
+description: A question about coding agents that a guide should answer.
+title: "Guide: "
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: The one question the guide would answer.
+      placeholder: Where does Cursor keep its rules, and which copy wins?
+    validations:
+      required: true
+  - type: textarea
+    id: reader
+    attributes:
+      label: Who asks it
+      description: Who has this question, and when.
+      placeholder: A developer setting up Cursor for a team that already uses Claude Code.
+    validations:
+      required: true
+  - type: textarea
+    id: parts
+    attributes:
+      label: Parts
+      description: The things the guide would name and explain, if you know them.
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Documentation or other pages the guide could draw on.

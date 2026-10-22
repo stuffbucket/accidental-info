@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Read the guides
+    url: https://stuffbucket.github.io/accidentalguide/
+    about: Every guide, to read online or download as a PDF or Word document.
+  - name: How to contribute
+    url: https://github.com/stuffbucket/accidentalguide/blob/main/CONTRIBUTING.md
+    about: Suggesting a guide, reporting a mistake and starting a draft.

@@ -1,0 +1,30 @@
+name: A word is used two ways
+description: One word with two meanings, in one guide or across guides, or two words for one thing.
+title: "Two ways: "
+body:
+  - type: input
+    id: word
+    attributes:
+      label: Word
+      placeholder: agent
+    validations:
+      required: true
+  - type: textarea
+    id: first
+    attributes:
+      label: First use
+      description: The guide, and the sentence or row where the word means one thing.
+    validations:
+      required: true
+  - type: textarea
+    id: second
+    attributes:
+      label: Second use
+      description: The guide, and the sentence or row where it means another.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggestion
+      description: Which meaning should keep the word, and what to call the other.

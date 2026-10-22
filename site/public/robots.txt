@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stuffbucket.github.io/accidentalguide/sitemap-index.xml

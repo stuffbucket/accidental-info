@@ -248,7 +248,11 @@ class Page(unittest.TestCase):
                      docx="software-factories.docx", blurb="Another paragraph.")
         page = gp.render_page(guide, sections, 4, PUBLISHED, {(0, 0): 9})
         self.assertTrue(page.startswith('---\ntitle: "Software Factories"\n'
-                                        'description: "A subtitle."\nsidebar:\n  order: 4\n---\n'))
+                                        'description: "A subtitle."\nsidebar:\n  order: 4\nhead:\n'))
+        self.assertIn('      property: "og:image"\n'
+                      '      content: "https://stuffbucket.github.io/accidentalguide/guides/software-factories/card.png"\n',
+                      page)
+        self.assertIn('      content: "The cover of Software Factories"\n---\n', page)
         self.assertIn("Version 0.1.0 · 12 pages · [PDF](/accidentalguide/guides/software-factories.pdf)"
                       " · [Word](/accidentalguide/guides/software-factories.docx)", page)
         self.assertIn("\n\nAnother paragraph.\n\n## One work item", page)
@@ -257,6 +261,26 @@ class Page(unittest.TestCase):
         ids = [{"id": i} for i in ("zeta", "software-factories", "alpha", "accidental-intelligence")]
         self.assertEqual(gp.sidebar_order(ids), {"accidental-intelligence": 1, "software-factories": 2,
                                                  "alpha": 3, "zeta": 4})
+
+
+class ShareImages(unittest.TestCase):
+    def cover(self):
+        from PIL import Image
+        return Image.new("RGB", (648, 1080), "white")
+
+    def test_guide_card_size(self):
+        card = gp.guide_card(self.cover(), "Agents, Harnesses, Skills, and Tools",
+                             "A pocket-sized guide to the AI coding systems of mid-October 2026.")
+        self.assertEqual(card.size, gp.CARD)
+
+    def test_long_title_shrinks_to_fit(self):
+        face, lines = gp.fit_lines("Agents, Harnesses, Skills, and Tools", "bold", (76, 68, 60, 52), 720, 3)
+        self.assertLessEqual(len(lines), 3)
+        self.assertTrue(all(face.getlength(line) <= 720 for line in lines))
+
+    def test_site_card_size(self):
+        self.assertEqual(gp.site_card([self.cover() for _ in range(9)]).size, gp.CARD)
+        self.assertEqual(gp.site_card([]).size, gp.CARD)
 
 
 if __name__ == "__main__":

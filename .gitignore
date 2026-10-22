@@ -7,5 +7,6 @@ dist/
 # Written by site/scripts/guide_pages.py
 site/public/guides/
 site/public/guides.json
+site/public/social.png
 site/src/content/docs/guides/
 site/src/content/docs/drafts/

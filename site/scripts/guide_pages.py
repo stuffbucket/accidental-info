@@ -12,6 +12,8 @@ the same way the PDF does). It writes:
     site/public/guides.json                    every guide's guide.json, with its status
     site/public/guides/<id>.pdf, <id>.docx     copies of the built files
     site/public/guides/<id>/cover.png          the PDF's first page
+    site/public/guides/<id>/card.png           the share image: the cover and the title, 1200 x 630
+    site/public/social.png                     the landing page's share image: the finished guides' covers
     site/public/guides/<id>/diagram-<n>.png    the diagram on PDF page n, cropped to the figure
     site/src/content/docs/guides/<id>.md       a finished guide as a Starlight doc page
     site/src/content/docs/drafts/<id>.md       a draft, the same way, marked as a draft
@@ -40,7 +42,14 @@ CONTENT = ROOT / "site" / "src" / "content" / "docs"
 DOCS = CONTENT / "guides"
 DRAFT_DOCS = CONTENT / "drafts"
 BASE = "/accidentalguide"
+SITE = "https://stuffbucket.github.io" + BASE
 SCALE = 2
+FONTS = PUBLIC / "fonts"
+# Share images (og:image) for links on social sites and in chat: 1200 x 630, white, black text.
+CARD = (1200, 630)
+CARD_MARGIN = 56
+SITE_TITLE = "Accidental Guides"
+SITE_LEAD = "Short guides to AI coding agents and the ways teams use them to build software."
 
 ORDER = ["accidental-intelligence", "agents-harnesses-skills-tools", "specs-and-reviews",
          "software-factories", "lights-off-software-factories"]
@@ -195,6 +204,20 @@ def yaml_str(text):
     return json.dumps(text, ensure_ascii=False)
 
 
+def share_head(guide):
+    """Front matter `head` entries that point og:image at the guide's card. Starlight writes
+    og:title, og:description and twitter:card itself."""
+    meta = [("og:image", f"{SITE}/guides/{guide['id']}/card.png"),
+            ("og:image:width", str(CARD[0])),
+            ("og:image:height", str(CARD[1])),
+            ("og:image:alt", f"The cover of {guide['title']}")]
+    out = ["head:"]
+    for prop, value in meta:
+        out += ["  - tag: meta", "    attrs:", f"      property: {yaml_str(prop)}",
+                f"      content: {yaml_str(value)}"]
+    return out
+
+
 def render_page(guide, sections, order, published, diagram_pages, fit_page=None, fences=None):
     gid = guide["id"]
     head = [
@@ -203,6 +226,7 @@ def render_page(guide, sections, order, published, diagram_pages, fit_page=None,
         f"description: {yaml_str(guide['subtitle'])}",
         "sidebar:",
         f"  order: {order}",
+        *share_head(guide),
         "---",
         "",
         "",
@@ -387,6 +411,102 @@ def render_diagram(pdf, page_number, section, path, margin=24):
     return crop
 
 
+# ---------------------------------------------------------------- share images
+def font(name, size):
+    from PIL import ImageFont
+    return ImageFont.truetype(str(FONTS / f"texgyreheros-{name}.otf"), size)
+
+
+def wrap(text, face, width):
+    """Split text into lines no wider than `width` pixels, breaking between words."""
+    lines = []
+    for word in text.split():
+        if lines and face.getlength(lines[-1] + " " + word) <= width:
+            lines[-1] += " " + word
+        else:
+            lines.append(word)
+    return lines
+
+
+def fit_lines(text, name, sizes, width, max_lines):
+    """The largest size in `sizes` at which the text wraps to at most max_lines lines."""
+    for size in sizes:
+        face = font(name, size)
+        lines = wrap(text, face, width)
+        if len(lines) <= max_lines and all(face.getlength(l) <= width for l in lines):
+            return face, lines
+    return face, lines
+
+
+def draw_lines(draw, xy, lines, face, leading):
+    """Draw lines from a top-left point; return the y below the last line."""
+    x, y = xy
+    ascent, _descent = face.getmetrics()
+    for line in lines:
+        draw.text((x, y + ascent), line, font=face, fill="black", anchor="ls")
+        y += round(face.size * leading)
+    return y
+
+
+def paste_cover(canvas, cover, box):
+    """Scale the cover to fit box (left, top, height) and paste it with a thin grey edge, so
+    its white page shows against the white card. Return its width."""
+    from PIL import Image, ImageDraw
+    left, top, height = box
+    width = round(cover.width * height / cover.height)
+    canvas.paste(cover.convert("RGB").resize((width, height), Image.LANCZOS), (left, top))
+    ImageDraw.Draw(canvas).rectangle((left - 1, top - 1, left + width, top + height), outline=(200, 200, 200))
+    return width
+
+
+def guide_card(cover, title, subtitle):
+    """A guide's share image: its cover on the left, its title and subtitle beside it."""
+    from PIL import Image, ImageDraw
+    canvas = Image.new("RGB", CARD, "white")
+    m = CARD_MARGIN
+    cover_w = paste_cover(canvas, cover, (m, m, CARD[1] - 2 * m))
+    x = m + cover_w + m
+    width = CARD[0] - m - x
+    draw = ImageDraw.Draw(canvas)
+    face, lines = fit_lines(title, "bold", (76, 68, 60, 52), width, 3)
+    y = draw_lines(draw, (x, m + 24), lines, face, 1.1)
+    if subtitle:
+        face, lines = fit_lines(subtitle, "regular", (34, 30, 26), width, 4)
+        draw_lines(draw, (x, y + 28), lines, face, 1.3)
+    return canvas
+
+
+def site_card(covers):
+    """The landing page's share image: the site's title and lead above a row of covers,
+    centred top to bottom."""
+    from PIL import Image, ImageDraw
+    canvas = Image.new("RGB", CARD, "white")
+    m = CARD_MARGIN
+    draw = ImageDraw.Draw(canvas)
+    title_face, title = fit_lines(SITE_TITLE, "bold", (64,), CARD[0] - 2 * m, 1)
+    lead_face, lead = fit_lines(SITE_LEAD, "regular", (30, 26), CARD[0] - 2 * m, 2)
+    text_h = round(title_face.size * 1.1) * len(title) + 8 + round(lead_face.size * 1.3) * len(lead)
+    gap, space = 24, 36
+    height = 0
+    if covers:
+        ratio = covers[0].width / covers[0].height
+        # As tall as the card allows, unless a row of covers that tall is wider than the card.
+        across = (CARD[0] - 2 * m - gap * (len(covers) - 1)) / len(covers)
+        height = min(CARD[1] - 2 * m - text_h - space, int(across / ratio))
+    y = (CARD[1] - (text_h + (space + height if covers else 0))) // 2
+    y = draw_lines(draw, (m, y), title, title_face, 1.1)
+    y = draw_lines(draw, (m, y + 8), lead, lead_face, 1.3)
+    left = m
+    for cover in covers:
+        left += paste_cover(canvas, cover, (left, y + space, height)) + gap
+    return canvas
+
+
+def save_png(image, path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(path, optimize=True)
+
+
 # ---------------------------------------------------------------- main
 def built_guides():
     """Each built guide's guide.json, with the folder it came from."""
@@ -406,10 +526,12 @@ def clean():
         if p.exists():
             shutil.rmtree(p)
     (PUBLIC / "guides.json").unlink(missing_ok=True)
+    (PUBLIC / "social.png").unlink(missing_ok=True)
 
 
 def main():
     import pypdfium2
+    from PIL import Image
 
     found = built_guides()
     guides = [g for g, _ in found]
@@ -436,6 +558,8 @@ def main():
         pdf = pypdfium2.PdfDocument(str(dist / g["pdf"]))
         try:
             render_png(pdf, 1, out_dir / "cover.png")
+            with Image.open(out_dir / "cover.png") as cover:
+                save_png(guide_card(cover, g["title"], g["subtitle"]), out_dir / "card.png")
             texts = page_texts(pdf)
             diagram_pages, fences = {}, {}
             langs = iter(fence_langs((folder / "guide.md").read_text(encoding="utf-8")))
@@ -462,6 +586,9 @@ def main():
         (docs / f"{gid}.md").write_text(page, encoding="utf-8")
         shown = ", ".join(str(n) for n in sorted(set(diagram_pages.values()) | ({fit_page} - {None})))
         print(f"{gid}: {len(sections)} sections, diagram pages: {shown or 'none'}")
+    finished = [g["id"] for g in sorted(guides, key=lambda g: order[g["id"]]) if g.get("status") != "draft"]
+    covers = [Image.open(PUBLIC / "guides" / gid / "cover.png") for gid in finished]
+    save_png(site_card(covers), PUBLIC / "social.png")
     print(f"wrote {CONTENT.relative_to(ROOT)}/ and {(PUBLIC / 'guides').relative_to(ROOT)}/ for {len(guides)} guides")
 
 

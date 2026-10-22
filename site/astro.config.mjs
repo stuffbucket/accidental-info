@@ -4,6 +4,10 @@ import starlight from "@astrojs/starlight";
 
 import tableFocus from "./scripts/table-focus.mjs";
 
+// The share image for pages without their own. scripts/guide_pages.py writes it, and gives each guide's page its
+// own card in the page's front matter.
+const socialImage = "https://stuffbucket.github.io/accidentalguide/social.png";
+
 export default defineConfig({
   site: "https://stuffbucket.github.io",
   base: "/accidentalguide/",
@@ -13,6 +17,12 @@ export default defineConfig({
     starlight({
       title: "Accidental Guides",
       description: "Short guides to AI coding agents and the ways teams use them to build software.",
+      head: [
+        { tag: "meta", attrs: { property: "og:image", content: socialImage } },
+        { tag: "meta", attrs: { property: "og:image:width", content: "1200" } },
+        { tag: "meta", attrs: { property: "og:image:height", content: "630" } },
+        { tag: "meta", attrs: { property: "og:image:alt", content: "The covers of the Accidental Guides" } },
+      ],
       social: [{ icon: "github", label: "GitHub", href: "https://github.com/stuffbucket/accidentalguide" }],
       // The "On this page" panel opens and closes from an icon button, and closed it gives the page its room
       // (see the component).

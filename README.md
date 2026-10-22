@@ -37,6 +37,11 @@ Guides still being written, in `drafts/`. Their words and parts may change.
 | [VS Code and Visual Studio](https://stuffbucket.github.io/accidentalguide/drafts/visual-studio-and-vs-code/) | A pocket-sized guide to where GitHub Copilot’s agent setup lives, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/visual-studio-and-vs-code.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/visual-studio-and-vs-code.docx) |
 <!-- drafts:end -->
 
+## Contributing
+
+Suggest a guide, report a wrong fact or a word used two ways, or start a draft. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for how, and for the rules the guides' text follows.
+
 ## How the guides are built
 
 This is a pnpm and Turborepo workspace:
@@ -82,6 +87,13 @@ write the new PDF's hash into `expected.sha256`.
 
 Copy a guide folder into `drafts/<slug>/`, change its text, and run `pnpm sync` to add it
 to the workspace. When it's finished, move it to `guides/` and run `pnpm sync` again.
+[CONTRIBUTING.md](CONTRIBUTING.md) has the steps.
+
+### Releases
+
+On each push to `main`, the Pages workflow makes a GitHub release for every guide version
+that doesn't have one yet: tag `<slug>-v<version>`, named "<Title> <version>", with the PDF
+and Word files attached. A draft's release is marked as a prerelease.
 
 ### Changing Python package versions
 
