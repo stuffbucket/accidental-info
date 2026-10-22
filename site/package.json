@@ -9,7 +9,7 @@
     "dev": "../.venv/bin/python scripts/guide_pages.py && node scripts/copy_template.mjs && astro dev",
     "build": "../.venv/bin/python scripts/guide_pages.py && node scripts/copy_template.mjs && astro build",
     "preview": "astro preview",
-    "test": "../.venv/bin/python -m unittest discover -s scripts"
+    "test": "../.venv/bin/python -m unittest discover -s scripts && node --test scripts/test_groups.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.5",

@@ -6,6 +6,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import Plain from "../layouts/Plain.astro";
 import StarLink from "../components/StarLink.astro";
+import groupData from "../data/groups.json";
+import { checkGroups } from "../lib/groups.mjs";
 
 interface Guide {
   id: string;
@@ -53,6 +55,9 @@ const all = (JSON.parse(read("guides.json").toString()) as Guide[])
     page: `${guide.status === "draft" ? "drafts" : "guides"}/${guide.id}/`,
   }))
   .sort((a, b) => rank(a.id) - rank(b.id) || a.index - b.index);
+// The map above the list: the catalog guide in the middle and the series groups around it. This throws, and fails
+// the build, if a guide is missing from the map or on it twice (see src/lib/groups.mjs).
+const map = checkGroups(groupData, all);
 const finished = all.filter((guide) => guide.status !== "draft");
 const drafts = all.filter((guide) => guide.status === "draft");
 
@@ -78,6 +83,60 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
     <p class="star">
       <StarLink look="button" />
     </p>
+
+    <nav class="map" aria-label="The guides by series">
+      <ul class="cells">
+        <li class="cell center" data-group="center">
+          <a class="cover" href={`${base}${map.center.page}`} tabindex="-1" aria-hidden="true">
+            <img
+              src={`${base}guides/${map.center.id}/cover.png`}
+              alt=""
+              width={map.center.cover.width}
+              height={map.center.cover.height}
+            />
+          </a>
+          <h2 class="center-title">
+            <a href={`${base}${map.center.page}`}>{map.center.title}</a>
+          </h2>
+          <p class="links">
+            <a class="btn btn-primary" href={`${base}${map.center.page}`}>
+              Read online
+            </a>
+            <a class="btn" href={`${base}guides/${map.center.pdf}`}>
+              PDF
+            </a>
+          </p>
+        </li>
+        {
+          map.groups.map((group) => (
+            <li class="cell" data-group={group.id} style={`--row: ${group.row}; --column: ${group.column}`}>
+              {/* Each group will get a small black-and-white illustration here, from "image" in groups.json. */}
+              {group.image && <img class="art" src={`${base}${group.image}`} alt="" />}
+              <h2 class="group-name">{group.name}</h2>
+              <ul class="titles">
+                {group.guides.map((guide) => (
+                  <li>
+                    <a href={`${base}${guide.page}`}>{guide.title}</a>
+                    {guide.status === "draft" && (
+                      <>
+                        {" "}
+                        <span class="note">Draft</span>
+                      </>
+                    )}
+                  </li>
+                ))}
+                {group.coming.map((title) => (
+                  <li class="coming">
+                    {title}{" "}
+                    <span class="note">Coming</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
     {
       [
@@ -184,6 +243,102 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
   }
   .star {
     margin: 0 0 2.5rem;
+  }
+
+  /* The map: a 3 x 3 grid of hairline cells, the catalog guide in the middle. The center comes first in the page,
+     so a screen reader and the one-column phone layout start there; on a wider screen each group takes its place
+     from --row and --column. The 1px gaps show the grid's background as the rules between cells. */
+  .map {
+    margin: 0 0 3.5rem;
+  }
+  .cells {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    background: var(--border);
+    list-style: none;
+  }
+  .cell {
+    grid-row: var(--row);
+    grid-column: var(--column);
+    padding: clamp(1rem, 2.5vw, 1.25rem) clamp(1rem, 2.5vw, 1.25rem) 1.5rem;
+    background: var(--bg);
+  }
+  .center {
+    position: relative;
+    grid-row: 2;
+    grid-column: 2;
+    /* One ink rule over the hairlines around it. */
+    box-shadow: 0 0 0 1px var(--text);
+  }
+  .center .cover {
+    display: block;
+    width: min(100%, 8rem);
+    margin: 0 0 1rem;
+  }
+  .center .cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+  }
+  .center-title {
+    margin: 0 0 1rem;
+    font-size: var(--text-lg);
+    line-height: 1.25;
+  }
+  .art {
+    display: block;
+    max-width: 100%;
+    height: 3rem;
+    margin: 0 0 0.75rem;
+  }
+  .group-name {
+    margin: 0 0 0.6rem;
+    font-size: var(--text-md);
+    line-height: 1.3;
+  }
+  .titles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .titles li {
+    margin: 0 0 0.45rem;
+    line-height: 1.35;
+  }
+  .titles li:last-child {
+    margin-bottom: 0;
+  }
+  .titles a {
+    text-decoration: none;
+  }
+  .titles a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+  .note {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .coming {
+    color: var(--muted);
+  }
+
+  /* On a phone the cells stack: the center first, then the groups in order. */
+  @media (max-width: 40rem) {
+    .cells {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cell,
+    .center {
+      grid-row: auto;
+      grid-column: auto;
+    }
   }
 
   /* The cover sits beside the heading, the blurb and the links. The last row takes any height the cover adds. */

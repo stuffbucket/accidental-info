@@ -1,0 +1,25 @@
+{
+  "center": "accidental-intelligence",
+  "groups": [
+    { "id": "agents", "name": "Agents", "guides": ["agents-harnesses-skills-tools"] },
+    { "id": "context", "name": "Context", "guides": ["context-windows"] },
+    {
+      "id": "extending-an-agent",
+      "name": "Extending an agent",
+      "guides": ["skills", "mcp", "plugins-and-marketplaces"]
+    },
+    {
+      "id": "harnesses-you-use",
+      "name": "Harnesses you use",
+      "guides": ["claude-code", "claude-desktop", "copilot-cli", "codex", "visual-studio-and-vs-code"]
+    },
+    { "id": "project-management", "name": "Project management", "guides": ["specs-and-reviews"] },
+    {
+      "id": "software-factories",
+      "name": "Software factories",
+      "guides": ["software-factories", "lights-off-software-factories"]
+    },
+    { "id": "checking-claims", "name": "Checking claims", "guides": [], "coming": ["Software Factory Claims"] },
+    { "id": "harness-engineering", "name": "Harness engineering", "guides": [], "coming": ["Harness Engineering"] }
+  ]
+}
