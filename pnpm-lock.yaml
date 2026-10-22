@@ -206,6 +206,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/pipeline
 
+  drafts/plugins-and-marketplaces:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
   drafts/skills:
     devDependencies:
       '@accidentalguide/pipeline':
@@ -289,6 +295,9 @@ importers:
       '@accidentalguide/pipeline':
         specifier: workspace:*
         version: link:../packages/pipeline
+      '@accidentalguide/plugins-and-marketplaces':
+        specifier: workspace:*
+        version: link:../drafts/plugins-and-marketplaces
       '@accidentalguide/skills':
         specifier: workspace:*
         version: link:../drafts/skills

@@ -44,7 +44,7 @@ the same text gives the same bytes.
 | File | What it's for |
 |---|---|
 | `guide.md` | Every word in the guide: titles, entries, tables, sources and footers. Edit this to change the text. |
-| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_ROWS`, `ENTRIES`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
+| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_BLOCKS`, `ENTRIES`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
 | `build_guide.py` | The PDF: page layout, colors, tiles, the tables and the margin check. |
 | `build_docx.py` | The Word document: layout in Word's terms and the embedded fonts. |
 | `fonts/texgyreheros-{regular,bold,italic}.otf` | TeX Gyre Heros 2.004, the body typeface, as originally distributed (OpenType with CFF outlines). |
@@ -61,25 +61,39 @@ that says which page it is: `{#why}`, five `{#entry}` sections, `{#where}`, `{#s
 `{#vs}`, `{#elsewhere}` and `{#sources}`. Each entry is `# Name {#entry num=01 mono=In}`.
 The order of sections in the file doesn't set the order of pages; the builders do.
 
+The entries, then the where, scopes, vs and elsewhere sections, go down the page one after
+another, and a new page starts only when the next one doesn't fit, so two short entries
+share a page. The cover and the Word document take the page numbers from the same packing
+(`PAGES` in `build_guide.py`).
+
 Within a section:
 
 - Paragraphs are separated by blank lines, and a paragraph can be wrapped over several
   lines.
 - `##` headings are the subheads. An entry has one table (Identify by, What, So what), then
   `## Confused with: Setting`, which names the thing it's confused with, and one paragraph.
-  The builders also accept an optional `## Field marks` table before it; this guide has none.
-- Tables are pipe tables. The where, scopes, vs and elsewhere pages print the header row.
+  The builders also accept an optional `## Field marks` table before it.
+- Tables are pipe tables. The where, scopes, vs and elsewhere sections print the header row.
   Tables the PDF prints without a header still need one in Markdown; those header rows
-  (`Term`, `Field`, `Source`) are only labels for whoever edits the file.
-- The where, scopes, vs and elsewhere pages each have one or more intro paragraphs, one
-  table, and exactly one closing paragraph after the table. In their tables, a row whose
-  first cell is empty continues the group above it: no rule and no tile.
+  (`Term`, `Field`, `Source`) are only labels for whoever edits the file. A two-column table
+  is printed as rows, label on the left, with a heavy rule over the first row and no rules
+  between rows.
+- The where, scopes, vs and elsewhere sections are paragraphs and one table, in any order.
+  In their tables, a row whose first cell is empty continues the group above it: no tile.
+- A block of lines that start with `> ` is a grey block: its paragraphs and tables are printed
+  on a light grey background, with no rules. Use it for the one table or passage on a page that
+  the reader should look at first.
+- A `> ` block whose first line is `> [!TIP]`, `> [!NOTE]` or `> [!WARNING]` is a callout:
+  one paragraph in an outlined box, led by "Tip.", "Note." or "Watch out." in bold. Use at most
+  one on a page, for one practical tip or warning.
+- In an entry, a field marks table in a grey block is printed as a grid of three columns, each
+  label over its short answer. Its Detail column can be left out.
 - The sources table has three columns: the source, its publisher, and its address (no
   `https://`), which is set in mono.
 - Names in `NAME2MONO` in `build_guide.py` get a tile wherever they label a row. The five
   parts get their colour. Any other name is plain text with no tile.
 
-Write the text plainly: no backticks or emphasis, and no `<`, `>` or `&`. The builders set
+Write the text plainly: no backticks or emphasis, and no `<`, `&`, or `>` other than the one that starts a grey block or callout line. The builders set
 paths, file names, setting names (`chat.…`, `github.…`) and chat syntax (`@mcp`, `#prompt:`)
 in mono by rule (`MONO_RE`), and bold each row's short answer.
 

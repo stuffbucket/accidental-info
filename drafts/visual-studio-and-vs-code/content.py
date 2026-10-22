@@ -28,17 +28,26 @@ from pathlib import Path
 SOURCE = Path(__file__).with_name("guide.md")
 
 HEADING = re.compile(r"^# (.*?) \{#([\w-]+)((?: [\w-]+=\S+?)*)\}$")
+# A '>' block that starts with one of these is a callout with that label. Any other '>' block
+# is a grey block.
+ALERTS = {"[!TIP]": "Tip", "[!NOTE]": "Note", "[!WARNING]": "Watch out"}
 
 
 class Section:
     """One '#' section of guide.md: its title, id, attributes and blocks in order.
-    A block is ("p", text), ("h2", text), ("table", header, rows) or ("diagram", lines)."""
+    A block is ("p", text), ("h2", text), ("table", header, rows), ("diagram", lines),
+    ("grey", blocks) for the paragraphs and tables in a '>' block, or ("callout", label, text)."""
 
     def __init__(self, title, sid, attrs):
         self.title, self.id, self.attrs, self.blocks = title, sid, attrs, []
 
     def all(self, kind):
-        return [b for b in self.blocks if b[0] == kind]
+        """Blocks of one kind, including those inside grey blocks."""
+        flat = [x for b in self.blocks for x in (b[1] if b[0] == "grey" else [b])]
+        return [b for b in flat if b[0] == kind]
+
+    def grey_tables(self):
+        return [(x[1], x[2]) for b in self.blocks if b[0] == "grey" for x in b[1] if x[0] == "table"]
 
     def paras(self):
         return [b[1] for b in self.all("p")]
@@ -68,15 +77,29 @@ def parse(text):
         i += 1
     sections = []
     para, table, fence = [], None, None
+    quote = None  # inside a '>' block: [callout label or None, its blocks]
+
+    def into():
+        return quote[1] if quote else sections[-1].blocks
 
     def flush():
         nonlocal para, table
         if para:
-            sections[-1].blocks.append(("p", " ".join(para)))
+            into().append(("p", " ".join(para)))
             para = []
         if table:
-            sections[-1].blocks.append(("table", table[0], table[1:]))
+            into().append(("table", table[0], table[1:]))
             table = None
+
+    def close_quote():
+        nonlocal quote
+        flush()
+        label, blocks = quote
+        quote = None
+        if label:  # a callout is one paragraph
+            sections[-1].blocks.append(("callout", label, " ".join(b[1] for b in blocks)))
+        else:
+            sections[-1].blocks.append(("grey", blocks))
 
     for line in lines[i:]:
         if fence is not None:
@@ -86,6 +109,15 @@ def parse(text):
             else:
                 fence.append(line)
             continue
+        if line.startswith(">"):
+            line = line[1:].removeprefix(" ")
+            if quote is None:
+                flush()
+                quote = [ALERTS.get(line.strip()), []]
+                if quote[0]:
+                    continue
+        elif quote is not None:
+            close_quote()
         m = HEADING.match(line)
         if m:
             flush()
@@ -112,6 +144,8 @@ def parse(text):
             if table:
                 flush()
             para.append(line.strip())
+    if quote is not None:
+        close_quote()
     flush()
     return meta, sections
 
@@ -141,12 +175,10 @@ if not re.fullmatch(r"\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?", VERSI
 # ---------------------------------------------------------------- terms page
 _s = section("why")
 WHY_TITLE = _s.title
-WHY_INTRO = _s.paras()
-_t = _s.tables()[0]
-WHY_HEAD = tuple(_t[0])
-WHY_ROWS = rows(_t)
+# The page is drawn block by block: paragraphs, the terms table, grey blocks and callouts.
+WHY_BLOCKS = _s.blocks
 # The summary the site shows for this guide. Not printed in the PDF.
-BLURB = WHY_INTRO[0]
+BLURB = _s.paras()[0]
 
 # ---------------------------------------------------------------- overview
 # Optional: this guide has no {#fit} page.
@@ -165,19 +197,20 @@ for _s in (s for s in SECTIONS if s.id == "entry"):
     ENTRIES.append(dict(
         num=_s.attrs["num"], mono=_s.attrs["mono"], name=_s.title,
         identify=_f["Identify by"], what=_f["What"], sowhat=_f["So what"],
-        marks=rows(_marks) if _marks else [],
+        # A field marks table may leave out the Detail column.
+        marks=[tuple(r) + ("",) * (3 - len(r)) for r in _marks[1]] if _marks else [],
+        marks_grey=_marks in _s.grey_tables(),
         confused=(next(h for h in _s.heads() if h.startswith("Confused with:"))
                   .removeprefix("Confused with:").strip(), _s.paras()[0]),
     ))
 
 # ---------------------------------------------------------------- table pages
-# A plain page: a title, one or more paragraphs, a table with a header row, and one closing
-# paragraph under the table. Used by {#where}, {#scopes}, {#vs} and {#elsewhere}.
+# A title and its blocks: paragraphs, a table with a header row, grey blocks and callouts.
+# Used by {#where}, {#scopes}, {#vs} and {#elsewhere}, drawn after the entries, sharing a page
+# when they fit.
 TABLE_PAGES = {}
 for _s in (s for s in SECTIONS if s.id in ("where", "scopes", "vs", "elsewhere")):
-    _t = _s.tables()[0]
-    TABLE_PAGES[_s.id] = dict(title=_s.title, intro=_s.paras()[:-1], cols=_t[0], rows=rows(_t),
-                              note=_s.paras()[-1])
+    TABLE_PAGES[_s.id] = dict(title=_s.title, blocks=_s.blocks)
 
 # ---------------------------------------------------------------- apart + other
 # Optional: the builders print this page only when guide.md has an {#apart} section.

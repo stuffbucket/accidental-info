@@ -5,7 +5,7 @@ subtitle: A pocket-sized guide to where GitHub Copilot’s agent setup lives, as
 running_footer: VS Code and Visual Studio
 edition: [Co]Lab · bstucker · October 2026
 cover_footer: October 2026
-version: 0.1.0
+version: 0.1.1
 ---
 
 # What can you set up<br/>in VS Code? {#why}
@@ -14,13 +14,13 @@ You can set up five things for GitHub Copilot’s agent in VS Code: instructions
 
 The default harness in VS Code is the Copilot harness, which reads .github/ in the repo and ~/.copilot/ in your home folder. Other harnesses read other places, noted where they differ. For the basics, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
 
-| Term | Meaning |
-|---|---|
-| Instructions file | Rules the agent follows, always or for matching files. |
-| Custom agent | A role with its own instructions, tools and model. |
-| Skill | Steps the agent loads when a task needs them. |
-| MCP server | A program that gives the agent more tools. |
-| Setting | A switch that changes what VS Code does or reads. |
+> | Term | Meaning |
+> |---|---|
+> | Instructions file | Rules the agent follows, always or for matching files. |
+> | Custom agent | A role with its own instructions, tools and model. |
+> | Skill | Steps the agent loads when a task needs them. |
+> | MCP server | A program that gives the agent more tools. |
+> | Setting | A switch that changes what VS Code does or reads. |
 
 # Instructions file {#entry num=01 mono=In}
 
@@ -86,27 +86,27 @@ A setting decides what VS Code does. An instructions file tells the agent how to
 
 The Copilot harness reads these places. Use the repo for what the team shares and your home folder for what’s only yours.
 
-| Thing | Scope | Location |
-|---|---|---|
-| Instructions file | Repo | .github/copilot-instructions.md |
-|  |  | AGENTS.md, from the root down to the working folder |
-|  |  | .github/instructions/*.instructions.md |
-|  | You | ~/.copilot/copilot-instructions.md |
-|  |  | ~/.copilot/instructions/*.instructions.md |
-|  | Organization | Copilot settings in your GitHub organization |
-| Custom agent | Repo | .github/agents/*.agent.md |
-|  | You | ~/.copilot/agents/*.agent.md |
-|  | Organization | agents/ in the organization’s .github-private repo |
-| Skill | Repo | .github/skills/ |
-|  |  | .agents/skills/ |
-|  | You | ~/.copilot/skills/ |
-|  |  | ~/.agents/skills/ |
-| MCP server | Repo | .mcp.json |
-|  | You | ~/.copilot/mcp-config.json |
-|  | Organization | A registry of approved servers, set in GitHub |
-| Setting | Repo | .vscode/settings.json |
-|  | You | Your user settings.json |
-|  | Organization | Policies set by an administrator |
+> | Thing | Scope | Location |
+> |---|---|---|
+> | Instructions file | Repo | .github/copilot-instructions.md |
+> |  |  | AGENTS.md, from the root down to the working folder |
+> |  |  | .github/instructions/*.instructions.md |
+> |  | You | ~/.copilot/copilot-instructions.md |
+> |  |  | ~/.copilot/instructions/*.instructions.md |
+> |  | Organization | Copilot settings in your GitHub organization |
+> | Custom agent | Repo | .github/agents/*.agent.md |
+> |  | You | ~/.copilot/agents/*.agent.md |
+> |  | Organization | agents/ in the organization’s .github-private repo |
+> | Skill | Repo | .github/skills/ |
+> |  |  | .agents/skills/ |
+> |  | You | ~/.copilot/skills/ |
+> |  |  | ~/.agents/skills/ |
+> | MCP server | Repo | .mcp.json |
+> |  | You | ~/.copilot/mcp-config.json |
+> |  | Organization | A registry of approved servers, set in GitHub |
+> | Setting | Repo | .vscode/settings.json |
+> |  | You | Your user settings.json |
+> |  | Organization | Policies set by an administrator |
 
 The Local harness also reads .vscode/mcp.json and files kept in your VS Code profile. The Claude harness reads .claude/ and ~/.claude/ instead.
 
@@ -122,7 +122,8 @@ Instructions add up, and settings override. Custom agents, skills and MCP server
 | MCP server | All are added, and nothing decides between two with the same name, so give each server its own. Your organization can limit which ones run. |
 | Setting | The later scope wins: Default, then User, then Workspace. An administrator’s policy wins over all three. |
 
-When two instructions files disagree, change the files so they agree. Neither the folder nor the load order settles it.
+> [!TIP]
+> When two instructions files disagree, change the files so they agree. Neither the folder nor the load order settles it.
 
 # What’s different<br/>in Visual Studio {#vs}
 
