@@ -1,0 +1,37 @@
+{
+  "name": "@accidentalguide/site",
+  "private": true,
+  "type": "module",
+  "description": "The Accidental Guides site (Astro + Starlight)",
+  "license": "MIT",
+  "scripts": {
+    "pages": "../.venv/bin/python scripts/guide_pages.py",
+    "dev": "../.venv/bin/python scripts/guide_pages.py && astro dev",
+    "build": "../.venv/bin/python scripts/guide_pages.py && astro build",
+    "preview": "astro preview",
+    "test": "../.venv/bin/python -m unittest discover -s scripts"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.5",
+    "astro": "7.3.5"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "devDependencies": {
+    "@accidentalguide/accidental-intelligence": "workspace:*",
+    "@accidentalguide/agents-harnesses-skills-tools": "workspace:*",
+    "@accidentalguide/claude-code": "workspace:*",
+    "@accidentalguide/claude-desktop": "workspace:*",
+    "@accidentalguide/codex": "workspace:*",
+    "@accidentalguide/context-windows": "workspace:*",
+    "@accidentalguide/copilot-cli": "workspace:*",
+    "@accidentalguide/lights-off-software-factories": "workspace:*",
+    "@accidentalguide/mcp": "workspace:*",
+    "@accidentalguide/pipeline": "workspace:*",
+    "@accidentalguide/skills": "workspace:*",
+    "@accidentalguide/software-factories": "workspace:*",
+    "@accidentalguide/specs-and-reviews": "workspace:*",
+    "@accidentalguide/visual-studio-and-vs-code": "workspace:*"
+  }
+}

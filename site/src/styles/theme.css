@@ -1,0 +1,34 @@
+/* Starlight in the guides' look: their typefaces, black ink on white, grey and hairlines, no colour accent. */
+@import "./fonts.css";
+
+:root {
+  --sl-font: "TeX Gyre Heros", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sl-font-mono: "Liberation Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  /* Dark (Starlight's default). */
+  --sl-color-accent-low: #2a2a2a;
+  --sl-color-accent: #bdbdbd;
+  --sl-color-accent-high: #ececec;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #ececec;
+  --sl-color-gray-2: #c8c8c8;
+  --sl-color-gray-3: #a3a3a3;
+  --sl-color-gray-4: #6f6f6f;
+  --sl-color-gray-5: #4a4a4a;
+  --sl-color-gray-6: #242424;
+  --sl-color-black: #161616;
+}
+:root[data-theme="light"] {
+  --sl-color-accent-low: #ececec;
+  --sl-color-accent: #111111;
+  --sl-color-accent-high: #111111;
+  --sl-color-white: #111111;
+  --sl-color-gray-1: #1f1f1f;
+  --sl-color-gray-2: #333333;
+  --sl-color-gray-3: #5f5f5f;
+  --sl-color-gray-4: #8a8a8a;
+  --sl-color-gray-5: #bdbdbd;
+  --sl-color-gray-6: #ececec;
+  --sl-color-gray-7: #f5f5f5;
+  --sl-color-black: #ffffff;
+}

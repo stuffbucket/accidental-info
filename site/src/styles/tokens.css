@@ -1,0 +1,39 @@
+/*
+ * The guides' colours, in light and dark: black ink, grey for secondary text and hairlines for rules. brand.css
+ * (the landing page) and the docs components import this file. Only custom properties live here, so it is safe to
+ * load next to Starlight's theme. The docs follow Starlight's theme switch, which always sets data-theme on <html>.
+ */
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #5f5f5f;
+  --faint: #8a8a8a;
+  --border: #bdbdbd;
+  --accent: #111111;
+  --accent-text: #ffffff;
+  --accent-soft: #ececec;
+  --font: "TeX Gyre Heros", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Liberation Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161616;
+    --text: #ececec;
+    --muted: #a3a3a3;
+    --faint: #7a7a7a;
+    --border: #4a4a4a;
+    --accent: #ececec;
+    --accent-text: #161616;
+    --accent-soft: #2a2a2a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161616;
+  --text: #ececec;
+  --muted: #a3a3a3;
+  --faint: #7a7a7a;
+  --border: #4a4a4a;
+  --accent: #ececec;
+  --accent-text: #161616;
+  --accent-soft: #2a2a2a;
+}

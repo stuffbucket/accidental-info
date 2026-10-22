@@ -1,7 +1,6 @@
 # The packages that build the guides, with hashes. These versions give a PDF that is
 # byte-identical to each guide's expected.sha256. To change a version, edit
 # requirements.in and run: pip-compile --generate-hashes --strip-extras requirements.in
---index-url https://packagefeedproxy.microsoft.io/pypi/simple/
 
 charset-normalizer==3.5.1 \
     --hash=sha256:00668ebb0609751758682eb0b5857e7c35b9f00e84dfdef062e103244ec94d45 \

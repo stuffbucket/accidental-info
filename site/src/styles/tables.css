@@ -1,0 +1,78 @@
+/*
+ * Markdown tables on the docs pages. Starlight lets a table wider than the column scroll sideways inside its own
+ * box (scripts/table-focus.mjs makes those boxes reachable from the keyboard). These rules keep that from
+ * happening as often.
+ */
+
+/* A long value with no spaces, such as a SHA-256 or a long path, may break onto the next line instead of
+   pushing the table wider than the page. Copying it still gives the whole value. scripts/table-focus.mjs marks
+   these with data-break; shorter names stay whole. */
+.sl-markdown-content :is(th, td) code[data-break]:not(:where(.not-content *)) {
+  overflow-wrap: anywhere;
+}
+
+/* Tables of six or more columns get less space between columns, so they fit beside
+   the open "On this page" panel. */
+.sl-markdown-content table:has(th:nth-child(6)):not(:where(.not-content *)) :is(th, td) {
+  padding-inline: 0.625rem;
+}
+.sl-markdown-content table:has(th:nth-child(6)):not(:where(.not-content *)) :is(th, td):first-child {
+  padding-inline-start: 0;
+}
+.sl-markdown-content table:has(th:nth-child(6)):not(:where(.not-content *)) :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+/* On a narrow screen a table of three or more columns becomes one card per row: each value on its own line,
+   with its column heading in front of it, as in "Words: 16". scripts/table-focus.mjs copies the headings onto
+   the cells of those tables as data-label; a table without them stays a table. The heading row is hidden from
+   view but kept for screen readers. */
+@media (max-width: 40rem) {
+  /* Here any code or link in a cell may break, so a two-column table of names and values, or of sources and
+     their addresses, fits too. */
+  .sl-markdown-content :is(th, td) :is(code, a):not(:where(.not-content *)) {
+    overflow-wrap: anywhere;
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) {
+    display: block;
+    overflow: visible;
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) :is(tbody, tr) {
+    display: block;
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* Starlight puts 1rem between blocks that follow each other; rows and cells are blocks here. */
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) :is(tr, td) {
+    margin-top: 0;
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) tr {
+    padding-block: 0.625rem;
+    border-bottom: 1px solid var(--sl-color-gray-5);
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) tr:first-child {
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) td {
+    display: block;
+    padding: 0.125rem 0;
+    border: 0;
+    /* Over the inline alignment that right-aligned columns get. */
+    text-align: start !important;
+    overflow-wrap: anywhere;
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) td::before {
+    content: attr(data-label) ": ";
+    color: var(--sl-color-white);
+    font-weight: 600;
+  }
+  .sl-markdown-content table:has(td[data-label]):not(:where(.not-content *)) td:not([data-label])::before {
+    content: none;
+  }
+}

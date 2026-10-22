@@ -1,0 +1,10 @@
+{
+  "name": "@accidentalguide/context-windows",
+  "private": true,
+  "scripts": {
+    "build": "../../.venv/bin/python ../../packages/pipeline/guide.py ."
+  },
+  "devDependencies": {
+    "@accidentalguide/pipeline": "workspace:*"
+  }
+}

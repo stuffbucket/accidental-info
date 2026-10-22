@@ -1,0 +1,6 @@
+# Tool versions for local work and CI. Package registries come from your own ~/.npmrc
+# and pip configuration; this repository sets none.
+[tools]
+node = "24.21.0"
+pnpm = "12.8.2"
+python = "3.14.7"

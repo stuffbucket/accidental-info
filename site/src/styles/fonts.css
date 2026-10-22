@@ -1,0 +1,23 @@
+/* The guides' typefaces, from public/fonts (their licenses are in public/fonts/licenses). */
+@font-face {
+  font-family: "TeX Gyre Heros";
+  src: url("/fonts/texgyreheros-regular.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "TeX Gyre Heros";
+  src: url("/fonts/texgyreheros-bold.otf") format("opentype");
+  font-weight: bold;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TeX Gyre Heros";
+  src: url("/fonts/texgyreheros-italic.otf") format("opentype");
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Liberation Mono";
+  src: url("/fonts/LiberationMono-Regular.ttf") format("truetype");
+  font-display: swap;
+}

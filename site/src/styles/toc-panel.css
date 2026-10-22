@@ -1,0 +1,185 @@
+/*
+ * Layout of the docs pages and the "On this page" panel (see components/starlight/TwoColumnContent.astro).
+ * Colours come from tokens.css when it is loaded; each one falls back to Starlight's own colour otherwise.
+ *
+ * The widths, and why:
+ * - Text stops at 70ch, about 700px here and close to the 45rem Starlight already uses. A ch is the width of a
+ *   zero, wider than most letters, so that is about 90 letters a line. Much wider and the eye loses its place
+ *   on the way back to the start of the next line.
+ * - Code, tables, figures and everything else that is not running text can use up to 72rem (1152px), about
+ *   130 columns of code. Anything wider scrolls sideways inside its own box.
+ * - The open panel is 16rem. At 13px most headings fit on one line and the longest wrap to two lines at
+ *   most. Starlight's own column is at least 18.75rem and grows with the window, mostly empty.
+ * - Closed, the panel takes no width. The page keeps a right gutter as wide as the toggle button and its
+ *   margin, so the button never sits on top of a wide table or code block.
+ */
+:root {
+  --toc-open-width: 16rem;
+  --toc-button-size: 1.75rem;
+  --toc-button-inset: 0.75rem;
+  --toc-measure: 70ch;
+  --toc-wide: 72rem;
+
+  --toc-bg: var(--bg, var(--sl-color-bg));
+  --toc-text: var(--text, var(--sl-color-white));
+  --toc-muted: var(--muted, var(--sl-color-gray-3));
+  --toc-faint: var(--faint, var(--sl-color-gray-5));
+  --toc-border: var(--border, var(--sl-color-hairline));
+  --toc-accent: var(--accent, var(--sl-color-text-accent));
+  --toc-accent-soft: var(--accent-soft, var(--sl-color-accent-low));
+}
+
+/* Starlight's own stacking context for the page content, which this component replaces. */
+.main-pane {
+  isolation: isolate;
+}
+
+/* Text keeps a readable line; the rest of the page can be wider. Splash pages (no sidebar) are left alone. */
+:root[data-has-sidebar] {
+  --sl-content-width: var(--toc-wide);
+}
+[data-has-sidebar]
+  .sl-markdown-content
+  > :where(p, ul, ol, dl, blockquote, details, aside, .sl-heading-wrapper, h1, h2, h3, h4, h5, h6) {
+  max-width: var(--toc-measure);
+}
+
+/* Below 72rem Starlight's dropdown at the top of the page is the only control. */
+.toc-toggle {
+  display: none;
+}
+
+@media (min-width: 72rem) {
+  /* Starlight's header lines its search box up with the start of the text using its own --__toc-width, which
+     its formula counts three times. A third of the panel's width keeps the two lined up; closed, the panel has
+     no width. If a later Starlight drops the variable, only the search box moves. */
+  :root[data-has-toc] {
+    --__toc-width: calc(var(--toc-open-width) / 3);
+  }
+  :root[data-has-toc][data-toc-panel="closed"] {
+    --__toc-width: 0rem;
+  }
+
+  .main-pane {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  /* On the content panels rather than the whole pane, so their dividing lines still run the full width. */
+  [data-toc-panel="closed"] .main-pane .content-panel {
+    padding-inline-end: max(var(--sl-content-pad-x), calc(var(--toc-button-size) + 2 * var(--toc-button-inset)));
+  }
+
+  .toc-aside {
+    order: 2;
+    flex: none;
+    width: var(--toc-open-width);
+  }
+  [data-toc-panel="closed"] .toc-aside {
+    display: none;
+  }
+
+  .toc-sidebar {
+    position: fixed;
+    top: 0;
+    inset-inline-end: 0;
+    width: var(--toc-open-width);
+    height: 100vh;
+    padding-top: var(--sl-nav-height);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    border-inline-start: 1px solid var(--toc-border);
+    background: var(--toc-bg);
+  }
+
+  /* One button for both states, at the top right below the header: in the panel's heading row when open, in
+     the page's right gutter when closed. Only shown once the inline script has run; without JavaScript the
+     panel stays open and needs no button. */
+  [data-toc-panel] .toc-toggle {
+    position: fixed;
+    top: calc(var(--sl-nav-height) + var(--toc-button-inset));
+    inset-inline-end: var(--toc-button-inset);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--toc-button-size);
+    height: var(--toc-button-size);
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--toc-border);
+    border-radius: 0.375rem;
+    background: var(--toc-bg);
+    color: var(--toc-muted);
+    cursor: pointer;
+  }
+  .toc-toggle:hover {
+    border-color: var(--toc-faint);
+    color: var(--toc-text);
+  }
+  .toc-toggle:focus-visible {
+    outline: 2px solid var(--toc-accent);
+    outline-offset: 2px;
+  }
+  .toc-toggle svg {
+    flex: none;
+  }
+  [dir="rtl"] .toc-toggle svg {
+    transform: scaleX(-1);
+  }
+
+  /* Open: a compact list. The heading row stays put while the list scrolls and leaves room on its right for
+     the button, so the button never covers a link. */
+  .toc-sidebar .right-sidebar-panel {
+    padding: 0 0.5rem 1.5rem;
+  }
+  .toc-sidebar .right-sidebar-panel .sl-container {
+    width: auto;
+    max-width: none;
+  }
+  .toc-sidebar .right-sidebar-panel h2 {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    box-sizing: content-box;
+    min-height: var(--toc-button-size);
+    margin: 0;
+    padding: var(--toc-button-inset) calc(var(--toc-button-size) + var(--toc-button-inset)) 0.5rem 0.25rem;
+    background: var(--toc-bg);
+    color: var(--toc-text);
+    font-size: var(--sl-text-sm);
+    line-height: 1.2;
+  }
+  /* Tighter than Starlight's list, but each link stays at least 24px tall, the smallest target WCAG 2.2 allows
+     for links stacked this close. */
+  .toc-sidebar .right-sidebar-panel a {
+    min-height: 1.5rem;
+    padding-block: 0.1875rem;
+    padding-inline: calc(0.75rem * var(--depth, 0) + 0.25rem) 0.25rem;
+    border-radius: 0.25rem;
+    color: var(--toc-muted);
+    line-height: 1.3;
+  }
+  .toc-sidebar .right-sidebar-panel a:hover {
+    color: var(--toc-text);
+  }
+  .toc-sidebar .right-sidebar-panel a[aria-current="true"] {
+    background: var(--toc-accent-soft);
+    color: var(--toc-accent);
+  }
+
+  /* Only after a click (the script sets data-toc-panel-toggled), not on every page load. */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-toc-panel="open"][data-toc-panel-toggled] .toc-sidebar {
+      animation: toc-panel-in 140ms ease-out;
+    }
+  }
+}
+
+@keyframes toc-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(0.5rem);
+  }
+}

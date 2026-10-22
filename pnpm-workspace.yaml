@@ -1,0 +1,13 @@
+packages:
+  - packages/*
+  - guides/*
+  - drafts/*
+  - site
+
+# Refuse any package, direct or indirect, published less than two weeks ago.
+minimumReleaseAge: 20160
+
+# Install scripts are refused unless listed here.
+allowBuilds:
+  esbuild: false
+  sharp: false

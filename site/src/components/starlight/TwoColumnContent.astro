@@ -1,0 +1,98 @@
+---
+/*
+ * Replaces Starlight's TwoColumnContent so the "On this page" panel on the right opens and closes from one
+ * icon button at the top right of the page, below the header. Closed, the panel takes no room at all and the
+ * page gets the width; open, it is a fixed 16rem and the button sits in the panel's heading row. The panel
+ * starts closed, and the viewer's choice is remembered in localStorage.
+ *
+ * Starlight's default right column grows with the window (600px at 1920 wide) while its links use about 270px,
+ * and the text column stays at 720px.
+ *
+ * Below 72rem Starlight shows its own "On this page" dropdown at the top of the page instead. The button only
+ * exists from 72rem up, so there is never more than one control. Pages without a table of contents get no
+ * button.
+ *
+ * To use this on another Starlight site (written for @astrojs/starlight 0.42), copy two files:
+ *   src/components/starlight/TwoColumnContent.astro   (this file)
+ *   src/styles/toc-panel.css
+ * and add to the starlight() options in astro.config.mjs:
+ *   components: { TwoColumnContent: "./src/components/starlight/TwoColumnContent.astro" },
+ * The tokens.css import below supplies this site's colours; drop it elsewhere and toc-panel.css falls back to
+ * Starlight's own colours. The small script that restores the saved state is in this file, so there is no
+ * separate head script to add.
+ */
+import "../../styles/tokens.css";
+import "../../styles/toc-panel.css";
+
+const { toc } = Astro.locals.starlightRoute;
+const label = Astro.locals.t("tableOfContents.onThisPage");
+---
+
+{/*
+  Runs while the browser is still reading the page, before the panel and the text below it exist, so they are
+  laid out once in the remembered state and nothing jumps. Without JavaScript the attribute is never set and the
+  panel simply stays open. Closed is the default, and the fallback when storage is blocked.
+*/}
+{
+  toc && (
+    <script is:inline>
+      (function () {
+        var state = "closed";
+        try {
+          if (localStorage.getItem("starlight-toc-panel") === "open") state = "open";
+        } catch (e) {}
+        document.documentElement.setAttribute("data-toc-panel", state);
+      })();
+    </script>
+  )
+}
+<div class="lg:sl-flex">
+  {
+    toc && (
+      <>
+        <aside class="right-sidebar-container toc-aside print:hidden" id="toc-panel">
+          <div class="toc-sidebar">
+            <slot name="right-sidebar" />
+          </div>
+        </aside>
+        <button
+          type="button"
+          class="toc-toggle print:hidden"
+          aria-controls="toc-panel"
+          aria-expanded="false"
+          aria-label={label}
+          title={label}
+        >
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <rect x="1.75" y="2.75" width="12.5" height="10.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <path d="M10 2.75v10.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </button>
+      </>
+    )
+  }
+  <div class="main-pane"><slot /></div>
+</div>
+
+<script>
+  // The button's state follows the attribute on <html>, which the inline script above set from storage.
+  const KEY = "starlight-toc-panel";
+  const root = document.documentElement;
+
+  document.querySelectorAll<HTMLButtonElement>(".toc-toggle").forEach((button) => {
+    const sync = () => button.setAttribute("aria-expanded", String(root.dataset.tocPanel === "open"));
+    sync();
+    button.addEventListener("click", () => {
+      const next = root.dataset.tocPanel === "open" ? "closed" : "open";
+      root.dataset.tocPanel = next;
+      root.dataset.tocPanelToggled = "";
+      try {
+        localStorage.setItem(KEY, next);
+      } catch {
+        // Storage can be blocked (private windows, strict settings). The panel still opens and closes; it just
+        // will not be remembered.
+      }
+      sync();
+    });
+  });
+</script>

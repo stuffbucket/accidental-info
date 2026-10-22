@@ -5,7 +5,7 @@ subtitle: A pocket-sized guide to agreeing on work as a team and checking when i
 running_footer: Specs and Reviews
 edition: [Co]Lab · bstucker · October 2026
 cover_footer: October 2026
-version: 0.2.0
+version: 0.3.0
 ---
 
 # How does work get<br/>from an idea to done? {#why}
@@ -16,161 +16,131 @@ team is one person doing most of the heavy lifting, you may not have needed much
 Once the work is actually shared, a spec, work items, a tracker, acceptance criteria and
 reviews keep everyone on the same page.
 
-You can keep a small job in your head when you’re doing it alone. Once other people are
-involved, or the work takes more than a few days, writing down the result you want gives
-everyone the same starting point, and that written description is the spec.
+You define the result in a spec, split it into work items, and keep them in a tracker. Before work
+starts, you agree on acceptance criteria, so the person doing it and the reviewer use the
+same test.
 
-A spec is usually too big for one person to finish, so you split it into work items. You
-keep them in a tracker so anyone can see who has what and what is stuck.
-
-You agree on acceptance criteria before the work starts so the person doing it and the
-person checking it use the same test. A software factory uses the same parts, and An
-Accidental Guide to: Software Factories explains what it does with them.
-
-| Term | Meaning |
-|---|---|
-| Spec | A written description of what you want built and why, agreed before work starts. |
-| Work item | One piece of the work, small enough for one person to finish, with a clear way to tell when it is done. |
-| Tracker | The shared list of work items that shows who has each one and its status. |
-| Acceptance criteria | The conditions the finished work has to meet, agreed before work starts. |
-| Review | A check by someone other than the person who did the work, ending in approval or a request for changes. |
+> | Term | Meaning |
+> |---|---|
+> | Spec | What you want built and why. |
+> | Work item | One piece of work one person can finish. |
+> | Tracker | The shared list of work, owners and statuses. |
+> | Acceptance criteria | Conditions the finished work must meet. |
+> | Review | Someone else checks, then approves or requests changes. |
 
 # How do the parts fit together? {#fit}
 
-Every step of the work updates the tracker. It shows who has each item and whether the
-work is in progress, in review or done, so anyone can look there instead of asking.
+Every step updates the tracker, so anyone can see who has each item and where it stands.
+Requested changes send the item back to in progress.
 
-The reviewer is someone other than the person who did the work. If the reviewer requests
-changes, the item goes back to in progress.
-
-When review keeps sending the same work back, the problem may have started earlier.
-The acceptance criteria may be open to interpretation, or the spec may not say enough
-about the intended result.
+> [!TIP]
+> When review keeps sending work back, check the acceptance criteria and the spec before
+> the work itself. One of them may be unclear.
 
 # Spec {#entry num=01 mono=Sp}
 
 | Field | Text |
 |---|---|
-| Identify by | A document, often called requirements, a design or a brief, that describes one result and why it’s wanted. |
+| Identify by | Requirements, a design or a brief in a shared document. |
 | What | A spec says what you want built and why. The spec also says what the work covers and leaves out. |
-| So what | A shared spec keeps everyone working toward the same result. The person asking for the work and the people doing it agree on the spec before they split it into work items. |
+| So what | A shared spec keeps everyone working toward the same result. The people asking and those doing the work agree before it is split up. |
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | The person asking for the work | The people doing it help write the spec and agree to it. |
-| Started by | A need or decision | A new product, feature, repair or other change needs a shared description. |
-| Lasts | While the decision applies | A small change may need a few lines. A product may need a longer document that changes over time. |
-| Kept in | A shared document | The spec may live in the tracker, with the project files or in a document linked from both. |
-| Can | Set a shared direction | Everyone can go back to the same description when a question comes up. |
-| Cannot | Cover what nobody wrote down | A missing case or limit leaves the people doing the work to guess. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | The person asking for the work |
+> | Kept in | A shared document |
+> | Cannot | Cover what nobody wrote down |
 
 ## Confused with: Work item
 
-A spec describes the whole result and the reason for it. A work item is one piece taken
-from that spec, small enough for one person to finish.
+A spec describes the whole result and why it’s wanted. A work item is one piece of that work, sized for one person.
 
 # Work item {#entry num=02 mono=Wi}
 
 | Field | Text |
 |---|---|
-| Identify by | A task, ticket, issue or story in a tracker, assigned to one person. |
-| What | A work item is one piece of a larger job. The item links back to the spec and includes its acceptance criteria, with enough detail for one person to finish it in days rather than weeks. |
-| So what | Smaller pieces make progress visible and expose problems early. One owner knows what to do next, while everyone else can see when the work stops moving. |
+| Identify by | A task, ticket, issue or story in a tracker. |
+| What | A work item is one piece of a larger job, small enough for one person to finish in days. The item links to the spec and holds its acceptance criteria. |
+| So what | Small work items show progress and problems early. Problems get fixed while they’re still small. |
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | One person | That person takes responsibility for moving the item to review. |
-| Started by | Splitting the spec | The people planning the work turn the agreed result into pieces that can be finished separately. |
-| Lasts | Until done or dropped | The item closes when its result is accepted, or when the work is no longer needed. |
-| Kept in | The tracker | The task, owner, status, criteria and links stay together. |
-| Can | Deliver useful results early | A finished item can be checked and used right away, before the rest of the work is done. |
-| Cannot | Replace a missing spec | A clear task can still miss the point if nobody wrote down what the whole thing is for. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | One person |
+> | Kept in | The tracker |
+> | Cannot | Replace a missing spec |
 
 ## Confused with: Milestone
 
-A milestone is a point in the schedule, such as a date or a release, by which a set of
-work items should be finished. It isn’t a piece of work itself.
+A milestone is a date or release for finishing several items, not work itself.
 
 # Tracker {#entry num=03 mono=Tr}
 
 | Field | Text |
 |---|---|
-| Identify by | A shared tool such as GitHub Issues, Jira or a spreadsheet, with a row or page for each work item. |
-| What | A tracker is the shared list of work items. Each item shows its owner and a status such as to do, in progress, in review or done. |
-| So what | One current tracker lets anyone see who has what, what is stuck and what has finished. The history also shows how a decision or status changed without relying on memory. |
+| Identify by | A shared tool such as GitHub Issues, Jira or a spreadsheet. |
+| What | A tracker is the shared list of work items. Each item has an owner and a status. |
+| So what | A current tracker makes progress visible. Anyone can see who has what, what is stuck and what is done. |
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | Everyone using it | Each person keeps the items they touch current, while a project lead maintains the overall list. |
-| Started by | The first work item | A tracker becomes useful as soon as work needs to be shared or followed. |
-| Lasts | The life of the project | The record remains useful after the last item closes. |
-| Kept in | One shared tool | Projects may use different tools, but each project needs one place people trust. |
-| Can | Show where work stands | Owners, statuses, links and past changes make progress and problems visible. |
-| Cannot | Judge the result | The tracker cannot tell whether work is good, and it becomes misleading when people stop updating it. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | Everyone using it |
+> | Kept in | One shared tool |
+> | Cannot | Judge the result |
 
 ## Confused with: Backlog
 
-A backlog is the work that has not started yet. It usually lives inside the tracker,
-which also holds work that is in progress, under review or done.
+A backlog holds unstarted work. A tracker also holds work in progress, review or done.
 
 # Acceptance criteria {#entry num=04 mono=Ac}
 
 | Field | Text |
 |---|---|
-| Identify by | Short statements about the result that can each be judged true or false. |
-| What | Acceptance criteria state what must be true for a work item to be accepted. A criterion might say that a user can reset a password from the sign-in page. |
-| So what | Agreed criteria give the person doing the work and the reviewer the same test. Writing them before work starts also exposes disagreements while they are easier to settle. |
+| Identify by | Short statements in the work item, each one true or false. |
+| What | Acceptance criteria state what must be true for a work item to be accepted. One might say that a user can reset a password from the sign-in page. |
+| So what | Agreed criteria give the person doing the work and the reviewer the same test. Set them before work starts. |
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | The person asking for the work | The person doing it agrees to the criteria, and the reviewer checks the work against them. |
-| Started by | Creating a work item | Each item gets the conditions that apply to its result. |
-| Lasts | Until the item closes | Criteria may be clarified before work begins, but changing them during the work changes the agreement. |
-| Kept in | The work item | Keeping the criteria beside the task gives the person doing the work and the reviewer one place to look. |
-| Can | Make acceptance concrete | A reviewer can check each statement instead of relying on a general impression. |
-| Cannot | Catch an unwritten case | Criteria only cover the conditions people thought to include. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | The person asking for the work |
+> | Kept in | The work item |
+> | Cannot | Catch an unwritten case |
 
 ## Confused with: Definition of done
 
-Acceptance criteria belong to one work item and describe its particular result. A
-definition of done is a standing checklist the team uses for every work item.
+Acceptance criteria apply to one item. A definition of done is a checklist for every item.
 
 # Review {#entry num=05 mono=Rv}
 
 | Field | Text |
 |---|---|
-| Identify by | A code review, design review or sign-off done by someone who did not do the work. |
-| What | A review checks finished work against its acceptance criteria. The reviewer either approves the result or requests specific changes. |
-| So what | A second person can spot a missed condition, a mistake or a result that solves the wrong problem. In software, the tool that holds the code can require an approval before a change goes in. |
+| Identify by | A code review, design review or sign-off in the work item. |
+| What | A review checks work against its acceptance criteria. The reviewer, who didn’t do the work, approves it or asks for specific changes. |
+| So what | A second person catches a missed condition or mistake. Mistakes are hard to see in your own work. |
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Owned by | The reviewer | Someone other than the person who did the work is responsible for the check. |
-| Started by | Work ready to check | The person doing the work asks for review after checking their own result. |
-| Lasts | Until a decision | Approval ends the review. A request for changes starts another round after the work is revised. |
-| Kept in | The work item | Comments, changes and the final decision stay with the record of the work. |
-| Can | Check the agreed result | The reviewer compares what was delivered with the acceptance criteria and explains any gap. |
-| Cannot | Find every problem | A reviewer can only check the work and evidence in front of them. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | The reviewer |
+> | Kept in | The work item |
+> | Cannot | Find every problem |
 
 ## Confused with: Approval
 
-A review is the check, and approval is the decision it ends in. If someone approves work
-without checking it, there was no review.
+A review is the check, and approval is the decision it can end in. If someone approves
+work without checking it, there was no review.
 
 # One work item,<br/>start to finish {#seq}
 
-Everything about one piece of work stays on its work item in the tracker, so the people
-involved never have to ask where it stands.
+The work item keeps its owner, status, criteria and review together in the tracker.
 
 ```diagram
 part Person asking |  | needs the result
@@ -192,31 +162,16 @@ msg 3 -> 1: approve and close
 msg 1 --> 0: work is done
 ```
 
-Approval closes the item when the result meets the agreed criteria. If the reviewer asks
-for changes, the item goes back to in progress with the reviewer’s comments on it, then
-comes back for review when it is fixed.
+Approval closes the item. A request for changes sends it back to in progress with the
+reviewer’s comments, then back to review.
 
-# More terms {#apart}
+# Easy to mix up {#apart}
 
-## Easy to mix up
-
-| Question | Answer |
-|---|---|
-| Spec or acceptance criteria? | The spec describes the whole intended result. Acceptance criteria state the conditions one finished work item must meet. |
-| Spec or plan? | A spec says what to build and why. A plan says who does which work items and when. |
-| Review or testing? | Testing checks behavior through planned steps or automated checks. Review lets another person judge the result and the evidence, which may include test results. |
-| Done or released? | Done means the work item was accepted. Released means its result has reached the people who will use it, which may happen later. |
-
-# Related terms {#other}
-
-| Term | Meaning |
-|---|---|
-| Blocked | A status for work that cannot move until something outside it changes, often a dependency. |
-| Status | A short label for where a work item stands, such as to do, in progress, in review or done. |
-| Owner | The person responsible for moving a work item to its next step. |
-| Dependency | Another piece of work that must finish before this work item can move forward. |
-| Scope | What the work covers and what it leaves out, usually stated in the spec. |
-| Priority | The agreed order for taking up work when several items are ready. |
+> | Question | Answer |
+> |---|---|
+> | Spec or acceptance criteria? | The spec covers the whole result. Acceptance criteria say what one finished item must meet. |
+> | Review or testing? | Testing checks behavior. Review lets another person judge the result and the evidence. |
+> | Done or released? | Done means the item was accepted. Released means its result has reached its users. |
 
 # Sources {#sources}
 

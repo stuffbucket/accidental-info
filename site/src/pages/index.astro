@@ -1,0 +1,261 @@
+---
+// The landing page: every guide in public/guides.json (written by scripts/guide_pages.py from each guide's
+// dist/), finished guides in the catalog's order and then the drafts, each with its cover, a link to read it here
+// and its PDF and Word files.
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import Plain from "../layouts/Plain.astro";
+
+interface Guide {
+  id: string;
+  title: string;
+  subtitle: string;
+  version: string;
+  blurb: string;
+  pdf: string;
+  docx: string | null;
+  pages: number;
+  status: "published" | "draft";
+}
+
+// The catalog's order. A guide not listed here goes at the end, in the order guides.json has it.
+const ORDER = [
+  "accidental-intelligence",
+  "agents-harnesses-skills-tools",
+  "specs-and-reviews",
+  "software-factories",
+  "lights-off-software-factories",
+];
+const rank = (id: string) => (ORDER.includes(id) ? ORDER.indexOf(id) : ORDER.length);
+
+// Astro runs from the site folder, in development and in the build.
+const publicDir = join(process.cwd(), "public");
+const read = (path: string) => {
+  try {
+    return readFileSync(join(publicDir, path));
+  } catch {
+    throw new Error(`public/${path} is missing: run pnpm build at the repository root`);
+  }
+};
+
+// The cover's width and height in pixels, from its PNG header. It is rendered at twice the size it is shown.
+const coverSize = (id: string) => {
+  const png = read(`guides/${id}/cover.png`);
+  return { width: png.readUInt32BE(16) / 2, height: png.readUInt32BE(20) / 2 };
+};
+
+const all = (JSON.parse(read("guides.json").toString()) as Guide[])
+  .map((guide, index) => ({
+    ...guide,
+    index,
+    cover: coverSize(guide.id),
+    page: `${guide.status === "draft" ? "drafts" : "guides"}/${guide.id}/`,
+  }))
+  .sort((a, b) => rank(a.id) - rank(b.id) || a.index - b.index);
+const finished = all.filter((guide) => guide.status !== "draft");
+const drafts = all.filter((guide) => guide.status === "draft");
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<Plain
+  title="Accidental Guides"
+  description="Short guides to AI coding agents and the ways teams use them to build software."
+>
+  <main>
+    <h1>Accidental Guides</h1>
+    <p class="lead">
+      Short guides to AI coding agents and the ways teams use them to build software. Each one answers one question,
+      a few parts at a time.
+    </p>
+
+    {
+      [
+        { id: "finished", heading: null, list: finished },
+        { id: "drafts", heading: "Drafts", list: drafts },
+      ]
+        .filter((group) => group.list.length)
+        .map((group) => (
+          <section id={group.id}>
+            {group.heading && (
+              <>
+                <h2 class="group">{group.heading}</h2>
+                <p class="group-lead">
+                  Guides still being written. Their words and parts may change, and{" "}
+                  <a href="https://github.com/stuffbucket/accidentalguide/issues">suggestions are welcome</a>.
+                </p>
+              </>
+            )}
+            {group.list.map((guide) => (
+              <article id={guide.id}>
+                <a class="cover" href={`${base}${guide.page}`} tabindex="-1" aria-hidden="true">
+                  <img
+                    src={`${base}guides/${guide.id}/cover.png`}
+                    alt=""
+                    width={guide.cover.width}
+                    height={guide.cover.height}
+                    loading="lazy"
+                  />
+                </a>
+                <div class="head">
+                  <h2>
+                    <a href={`${base}${guide.page}`}>{guide.title}</a>
+                  </h2>
+                  <p class="subtitle">{guide.subtitle}</p>
+                  <p class="meta">
+                    {guide.status === "draft" ? "Draft · " : ""}Version {guide.version} · {guide.pages} pages
+                  </p>
+                </div>
+                <p class="blurb">{guide.blurb}</p>
+                <p class="links">
+                  <a class="btn btn-primary" href={`${base}${guide.page}`}>
+                    Read online
+                  </a>
+                  <a class="btn" href={`${base}guides/${guide.pdf}`}>
+                    PDF
+                  </a>
+                  {guide.docx && (
+                    <a class="btn" href={`${base}guides/${guide.docx}`}>
+                      Word
+                    </a>
+                  )}
+                </p>
+              </article>
+            ))}
+          </section>
+        ))
+    }
+  </main>
+
+  <footer>
+    <span>MIT License</span>
+    <a href="https://github.com/stuffbucket/accidentalguide">Source on GitHub</a>
+  </footer>
+</Plain>
+
+<style>
+  main,
+  footer {
+    width: min(100% - 2 * var(--gutter), 48rem);
+    margin: 0 auto;
+  }
+  main {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 1rem;
+  }
+  h1 {
+    margin: 0 0 0.75rem;
+    font-size: var(--text-2xl);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .group {
+    margin: 3rem 0 0.5rem;
+    font-size: var(--text-xl);
+  }
+  .group-lead {
+    margin: 0 0 1.5rem;
+    max-width: 36rem;
+    color: var(--muted);
+  }
+  .group-lead a {
+    color: inherit;
+  }
+  .lead {
+    max-width: 36rem;
+    margin: 0 0 2.5rem;
+    color: var(--muted);
+    font-size: var(--text-lg);
+  }
+
+  /* The cover sits beside the heading, the blurb and the links. The last row takes any height the cover adds. */
+  article {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    column-gap: 1.75rem;
+    padding: 1.75rem 0 2.25rem;
+    border-top: 1px solid var(--text);
+  }
+  .cover {
+    grid-row: 1 / -1;
+    align-self: start;
+  }
+  .head,
+  .blurb,
+  .links {
+    grid-column: 2;
+  }
+  .cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+  }
+  h2 {
+    margin: 0 0 0.35rem;
+    font-size: var(--text-xl);
+    line-height: 1.2;
+  }
+  h2 a {
+    text-decoration: none;
+  }
+  h2 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+  .subtitle {
+    margin: 0 0 0.5rem;
+    color: var(--muted);
+    font-size: var(--text-lg);
+    line-height: 1.35;
+  }
+  .meta {
+    margin: 0 0 1rem;
+    color: var(--muted);
+    font: var(--text-sm) / 1.4 var(--mono);
+  }
+  .blurb {
+    margin: 0 0 1.25rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    padding: 1rem 0 3rem;
+    border-top: 1px solid var(--text);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  footer a {
+    color: var(--muted);
+  }
+
+  /* On a phone the cover sits beside the heading only, and the blurb and links take the full width below. */
+  @media (max-width: 36rem) {
+    article {
+      grid-template-columns: 6rem minmax(0, 1fr);
+      grid-template-rows: auto;
+      column-gap: 1rem;
+    }
+    .cover {
+      grid-row: 1;
+      margin-bottom: 1rem;
+    }
+    .head {
+      grid-column: 2;
+    }
+    .blurb,
+    .links {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

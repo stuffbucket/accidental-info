@@ -18,25 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      # Node, pnpm and Python at the versions in mise.toml.
+      - uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
         with:
-          python-version: "3.14"
-          cache: pip
-          cache-dependency-path: requirements.txt
-      - name: Install pinned packages
-        run: pip install --require-hashes -r requirements.txt
-      - name: Build the guides
-        run: |
-          python build.py | tee build.log
-          if grep -q "DIFFERS from expected.sha256" build.log; then
-            echo "::error::A guide's PDF differs from its expected.sha256"
-            exit 1
-          fi
-      - name: Build the site
-        run: python build_site.py
+          cache: true
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+      # Builds every guide (failing if a PDF differs from its expected.sha256), then the site.
+      - name: Build and test
+        run: pnpm turbo run build test
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          path: _site
+          path: site/dist
 
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

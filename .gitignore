@@ -1,6 +1,11 @@
 .venv/
 __pycache__/
+node_modules/
+.turbo/
 dist/
-_site/
-build.log
 .DS_Store
+# Written by site/scripts/guide_pages.py
+site/public/guides/
+site/public/guides.json
+site/src/content/docs/guides/
+site/src/content/docs/drafts/

@@ -1,84 +1,97 @@
 # Accidental Guides
 
-Short guides to how the AI systems we work with are put together. Read them at
-**https://stuffbucket.github.io/accidentalguide/**.
+Short guides to AI coding agents and the ways teams use them to build software. Each one
+answers one question, a few parts at a time, and uses one name for each thing in every
+guide.
 
-Each guide is a folder under `guides/` with its text in Markdown, its layouts and its
-fonts. `python build.py` (after installing `requirements.txt`) or `pnpm build` builds every
-guide into `dist/`:
-
-- `dist/<guide>.pdf` and `dist/<guide>.docx`, one of each per guide;
-- `dist/guides.json`, each guide's title, subtitle, edition, version, page count, blurb and files.
-
-`python build_site.py` then writes the site to `_site/`: an `index.html` that lists the
-guides from `guides.json`, with the PDFs, Word documents, a cover image of each guide and
-the fonts. `pnpm site` does both steps. The Pages workflow in `.github/workflows/pages.yml`
-runs the same build on every push to `main` and deploys `_site/` to GitHub Pages. It fails
-if a guide's PDF differs from its `expected.sha256`.
-
-`pnpm build` makes its own virtual environment in `.venv/` and installs the packages
-pinned with hashes in `requirements.txt`. To do it by hand:
-
-```sh
-python3 -m venv .venv
-.venv/bin/pip install --require-hashes -r requirements.txt
-.venv/bin/python build.py
-.venv/bin/python build_site.py
-```
-
-The build fails if a page has content past its bottom margin.
+**Read them at https://stuffbucket.github.io/accidentalguide/**, or download the PDF or
+Word document of each.
 
 ## Guides
 
-| Folder | Guide |
+<!-- guides:start -->
+| Guide | What it covers | Version | Download |
+| --- | --- | --- | --- |
+| [Accidental Intelligence](https://stuffbucket.github.io/accidentalguide/guides/accidental-intelligence/) | A pocket-sized guide to the Accidental Guides, as of October 2026. | 0.3.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/accidental-intelligence.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/accidental-intelligence.docx) |
+| [Agents, Harnesses, Skills, and Tools](https://stuffbucket.github.io/accidentalguide/guides/agents-harnesses-skills-tools/) | A pocket-sized guide to the AI coding systems of mid-October 2026 (morning edition). | 1.0.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/agents-harnesses-skills-tools.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/agents-harnesses-skills-tools.docx) |
+| [Specs and Reviews](https://stuffbucket.github.io/accidentalguide/guides/specs-and-reviews/) | A pocket-sized guide to agreeing on work as a team and checking when it’s done. | 0.3.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/specs-and-reviews.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/specs-and-reviews.docx) |
+| [Software Factories](https://stuffbucket.github.io/accidentalguide/guides/software-factories/) | A pocket-sized guide to software delivery run by coding agents, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/software-factories.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/software-factories.docx) |
+| [Lights-Off Software Factories](https://stuffbucket.github.io/accidentalguide/guides/lights-off-software-factories/) | A pocket-sized guide to software factories where nobody reads the code, as of October 2026. | 0.3.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/lights-off-software-factories.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/lights-off-software-factories.docx) |
+<!-- guides:end -->
+
+## Drafts
+
+Guides still being written, in `drafts/`. Their words and parts may change.
+[Suggestions are welcome](https://github.com/stuffbucket/accidentalguide/issues).
+
+<!-- drafts:start -->
+| Guide | What it covers | Version | Download |
+| --- | --- | --- | --- |
+| [Claude Code](https://stuffbucket.github.io/accidentalguide/drafts/claude-code/) | A pocket-sized guide to where Claude Code keeps its setup, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/claude-code.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/claude-code.docx) |
+| [Claude Desktop](https://stuffbucket.github.io/accidentalguide/drafts/claude-desktop/) | A pocket-sized guide to where Claude Desktop keeps its settings, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/claude-desktop.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/claude-desktop.docx) |
+| [OpenAI Codex](https://stuffbucket.github.io/accidentalguide/drafts/codex/) | A pocket-sized guide to where Codex keeps its setup, and which copy wins, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/codex.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/codex.docx) |
+| [Context Windows](https://stuffbucket.github.io/accidentalguide/drafts/context-windows/) | A pocket-sized guide to what fills a coding agent’s context window, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/context-windows.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/context-windows.docx) |
+| [GitHub Copilot CLI](https://stuffbucket.github.io/accidentalguide/drafts/copilot-cli/) | A pocket-sized guide to where Copilot CLI keeps its setup, and which copy wins, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/copilot-cli.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/copilot-cli.docx) |
+| [Model Context Protocol](https://stuffbucket.github.io/accidentalguide/drafts/mcp/) | A pocket-sized guide to MCP servers and clients, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/mcp.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/mcp.docx) |
+| [Agent Skills](https://stuffbucket.github.io/accidentalguide/drafts/skills/) | A pocket-sized guide to what a skill folder can hold, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/skills.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/skills.docx) |
+| [VS Code and Visual Studio](https://stuffbucket.github.io/accidentalguide/drafts/visual-studio-and-vs-code/) | A pocket-sized guide to where GitHub Copilot’s agent setup lives, as of October 2026. | 0.1.0 | [PDF](https://stuffbucket.github.io/accidentalguide/guides/visual-studio-and-vs-code.pdf) · [Word](https://stuffbucket.github.io/accidentalguide/guides/visual-studio-and-vs-code.docx) |
+<!-- drafts:end -->
+
+## How the guides are built
+
+This is a pnpm and Turborepo workspace:
+
+| Folder | What it holds |
 | --- | --- |
-| `guides/accidental-intelligence` | An Accidental Guide to… Accidental Intelligence (the catalog of the others) |
-| `guides/agents-harnesses-skills-tools` | An Accidental Guide to… Agents, Harnesses, Skills, and Tools |
-| `guides/lights-off-software-factories` | An Accidental Guide to… Lights-Off Software Factories |
-| `guides/software-factories` | An Accidental Guide to… Software Factories |
-| `guides/specs-and-reviews` | An Accidental Guide to… Specs and Reviews |
+| `guides/<slug>/` | A finished guide: `guide.md` (the text), `content.py` (reads it), `build_guide.py` (the PDF layout), `build_docx.py` (the Word layout), `fonts/` and `expected.sha256` |
+| `drafts/<slug>/` | A guide still being written, laid out the same way |
+| `packages/pipeline/` | Builds one guide into its `dist/`: the PDF, the Word document and `guide.json`. Also pins the Python packages and keeps the workspace's `package.json` files in step |
+| `site/` | The Astro and Starlight site. It turns each guide's text into a page, and its landing page lists every guide |
 
-## Editing a guide
+Tool versions are in `mise.toml`. Package registries come from your own `~/.npmrc` and pip
+configuration; the repository sets none.
 
-Change the text in the guide's `guide.md`, then build. Each guide's README describes
-its Markdown.
+```sh
+mise install            # Node, pnpm and Python
+pnpm install
+pnpm build              # every guide, then the site (site/dist/)
+pnpm test
+pnpm preview            # http://localhost:4321/accidentalguide/
+```
 
-Each `guide.md` has a `version:` in its front matter, in semver (such as `1.0.0`), which
-the cover and `guides.json` show; bump it when the guide's text changes. The build fails
-if a guide has no valid version.
+A guide's build fails if a page has content past its bottom margin, or if its PDF differs
+from its `expected.sha256`. The Pages workflow runs the same build on every push to `main`
+and deploys the site.
 
-## Text, layout and visuals
+### Editing a guide
 
-- **The Markdown holds the words**, and the data a diagram is drawn from, such as the
-  steps of a sequence diagram. It has no layout in it.
-- **Each output has its own layout:** `build_guide.py` for the PDF and `build_docx.py`
-  for the Word document.
-- **Visual rules are defined once,** in `build_guide.py`, and `build_docx.py` imports
-  them: the part colours, which words are set in mono, and which part of a row is bold.
-- **Diagrams are drawn once,** by the PDF build. The Word document places images of them
-  rendered from the built PDF, so the two never disagree.
-- **The PDF is the oracle.** Its build is deterministic and its hash is in
-  `expected.sha256`, so a change to the text pipeline or a builder that alters the PDF
+Change the text in the guide's `guide.md`, then build. Each guide's README describes its
+Markdown. Bump the `version:` in the front matter (semver) when the text changes, and
+write the new PDF's hash into `expected.sha256`.
+
+- **The Markdown holds the words**, and the data a diagram is drawn from. It has no layout
+  in it.
+- **Each output has its own layout:** `build_guide.py` for the PDF and `build_docx.py` for
+  the Word document, which imports the PDF's visual rules.
+- **Diagrams are drawn once,** by the PDF build. The Word document and the site use
+  images of them rendered from the built PDF, so they never disagree.
+- **The PDF is the oracle.** Its build is deterministic, so a change that alters the PDF
   shows up as a different hash.
 
-## Adding a guide
+### Adding a guide
 
-Add a folder under `guides/` with:
+Copy a guide folder into `drafts/<slug>/`, change its text, and run `pnpm sync` to add it
+to the workspace. When it's finished, move it to `guides/` and run `pnpm sync` again.
 
-- the guide's text, and a `content.py` that defines `TITLE`, `KICKER`, `SUBTITLE`,
-  `EDITION`, `VERSION` and `BLURB` (the paragraph the site shows) along with the rest of it;
-- `build_guide.py`, which takes the output path as its argument and prints
-  `wrote <path>: <n> pages`, then `no overflow` when every page fits;
-- optionally `build_docx.py`, which takes the built PDF and the output path.
+### Changing Python package versions
 
-## Changing package versions
-
-Edit `requirements.in`, then regenerate `requirements.txt` with
-`pip-compile --generate-hashes --strip-extras requirements.in`. A guide's PDF is
-byte-identical to its `expected.sha256` only with the versions it was built with.
+Edit `packages/pipeline/requirements.in`, then regenerate `requirements.txt` with
+`pip-compile --generate-hashes --strip-extras requirements.in`. A guide's PDF matches its
+`expected.sha256` only with the versions it was built with.
 
 ## License
 
 The code and the guides' text are under the MIT License in `LICENSE`. The fonts in each
-guide's `fonts/` folder keep their own licenses, in `fonts/licenses/`: TeX Gyre Heros under
-the GUST Font License and Liberation Mono under the GNU GPL v2 with its font exception.
+guide's `fonts/` folder, and their copies in `site/public/fonts/`, keep their own licenses,
+in `fonts/licenses/`: TeX Gyre Heros under the GUST Font License and Liberation Mono under
+the GNU GPL v2 with its font exception.
