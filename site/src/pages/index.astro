@@ -56,6 +56,7 @@ const finished = all.filter((guide) => guide.status !== "draft");
 const drafts = all.filter((guide) => guide.status === "draft");
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const repo = "https://github.com/stuffbucket/accidentalguide";
 ---
 
 <Plain
@@ -127,21 +128,27 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
           </section>
         ))
     }
+    <section id="write">
+      <h2 class="group">Write your own</h2>
+      <p class="group-lead">
+        The template is the guides’ layout as a Word document. Each place in it says what goes there: the reader’s
+        question, up to six parts, and the sources you read.
+      </p>
+      <p class="links">
+        <a class="btn" href={`${base}accidental-guide-template.docx`} download>Word template</a>
+      </p>
+      <p class="group-lead">
+        Use it for your own team or class. We publish a few guides from other writers, so{" "}
+        <a href={`${repo}/blob/main/CONTRIBUTING.md#sending-us-a-guide`}>read how to send one</a> before you start.
+      </p>
+    </section>
   </main>
-
-  <footer>
-    <span>MIT License</span>
-    <a href="https://github.com/stuffbucket/accidentalguide">Source on GitHub</a>
-  </footer>
 </Plain>
 
 <style>
-  main,
-  footer {
+  main {
     width: min(100% - 2 * var(--gutter), 48rem);
     margin: 0 auto;
-  }
-  main {
     padding: clamp(2rem, 6vw, 3.5rem) 0 1rem;
   }
   h1 {
@@ -228,17 +235,15 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     margin: 0;
   }
 
-  footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.25rem;
-    padding: 1rem 0 3rem;
+  #write {
+    padding-top: 1.75rem;
     border-top: 1px solid var(--text);
-    color: var(--muted);
-    font-size: var(--text-sm);
   }
-  footer a {
-    color: var(--muted);
+  #write .group {
+    margin-top: 0;
+  }
+  #write .links {
+    margin: 0 0 1.25rem;
   }
 
   /* On a phone the cover sits beside the heading only, and the blurb and links take the full width below. */

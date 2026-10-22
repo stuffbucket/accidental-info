@@ -29,6 +29,7 @@ which the site prints as text. Other fenced blocks (```skill) are written as cod
 """
 import importlib.util
 import json
+import os
 import re
 import shutil
 import sys
@@ -41,8 +42,9 @@ PUBLIC = ROOT / "site" / "public"
 CONTENT = ROOT / "site" / "src" / "content" / "docs"
 DOCS = CONTENT / "guides"
 DRAFT_DOCS = CONTENT / "drafts"
-BASE = "/accidentalguide"
-SITE = "https://stuffbucket.github.io" + BASE
+# Where the site is served; the Pages workflow sets these from actions/configure-pages.
+BASE = os.environ.get("SITE_BASE", "/accidentalguide").rstrip("/")
+SITE = os.environ.get("SITE_ORIGIN", "https://stuffbucket.github.io").rstrip("/") + BASE
 SCALE = 2
 FONTS = PUBLIC / "fonts"
 # Share images (og:image) for links on social sites and in chat: 1200 x 630, white, black text.

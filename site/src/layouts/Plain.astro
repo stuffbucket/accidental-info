@@ -1,6 +1,6 @@
 ---
-// Layout of the landing page: a slim header, the guides' look, and the light or dark theme the visitor picked in
-// the docs.
+// Layout of the landing page: a slim header, the guides' look, the light or dark theme the visitor picked in the
+// docs, and a footer with the licenses.
 import "../styles/brand.css";
 
 interface Props {
@@ -16,6 +16,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 // Sites that show a link's preview need absolute addresses.
 const url = new URL(Astro.url.pathname, Astro.site).href;
 const imageUrl = new URL(`${base}${image}`, Astro.site).href;
+const repo = "https://github.com/stuffbucket/accidentalguide";
 ---
 
 <!doctype html>
@@ -51,9 +52,33 @@ const imageUrl = new URL(`${base}${image}`, Astro.site).href;
     <header class="site-header">
       <a class="brand" href={base}>Accidental Guides</a>
       <nav aria-label="Site">
-        <a href="https://github.com/stuffbucket/accidentalguide">GitHub</a>
+        <a href={repo}>GitHub</a>
       </nav>
     </header>
     <slot />
+    <footer class="site-footer">
+      <span>
+        The guides’ text is under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, the code
+        under the <a href={`${repo}/blob/main/LICENSE`}>MIT License</a>.
+      </span>
+      <a href={repo}>Source on GitHub</a>
+    </footer>
   </body>
 </html>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    width: min(100% - 2 * var(--gutter), 48rem);
+    margin: 0 auto;
+    padding: 1rem 0 3rem;
+    border-top: 1px solid var(--text);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .site-footer a {
+    color: var(--muted);
+  }
+</style>

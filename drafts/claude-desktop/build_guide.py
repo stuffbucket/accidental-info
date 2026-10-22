@@ -83,7 +83,7 @@ TOKENS = {  # token: base hex
     "warning": "#FFCD29", "success": "#14AE5C", "assistive": "#E83FBF",
 }
 # The series rule: a part's family sets its colour, the same in every guide of the series
-# (contrib/accidental-guides/registry.md). Things that run are warning (yellow), things you
+# (packages/editorial/registry.md). Things that run are warning (yellow), things you
 # write down figjam (purple), things that check success (green), things an agent uses danger
 # (red-orange), decisions people make assistive (pink), and numbers and claims brand (blue).
 # A connector is an MCP server, so it has the MCP server's code, Mc.
@@ -753,7 +753,7 @@ ENTRY_PAGE = {part[1]: ENTRY_START + k for k, parts in enumerate(PAGES) for part
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)
-    c.setTitle(C.TITLE); c.setAuthor("bstucker"); c.setSubject(C.SUBTITLE)
+    c.setTitle(C.TITLE); c.setAuthor("Accidental Guides"); c.setSubject(C.SUBTITLE)
     page_cover(c); c.showPage()
     n = 2
     for fn in [{"why": page_why, "meaning": page_meaning, "fit": page_fit}[x] for x in FRONT_IDS]:

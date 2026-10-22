@@ -19,7 +19,7 @@
 # window) belong to An Accidental Guide to: Agents, Harnesses, Skills, and Tools and are never
 # redefined here. This guide's parts: instructions file, skill, MCP server, config file (the
 # settings concept, tile Se), permissions. Each part but the config file is defined in its
-# owning guide (contrib/accidental-guides/registry.md), so an entry covers only what is
+# owning guide (packages/editorial/registry.md), so an entry covers only what is
 # specific to Codex and names that guide. Paths are exact and come from OpenAI's Codex documentation, as of October
 # 2026. The sibling guides (Claude Code, Claude Desktop, GitHub Copilot CLI, Visual Studio
 # and VS Code) share this shape; name them with the colon form.

@@ -3,14 +3,14 @@
 This folder contains everything needed to build An Accidental Guide to… Model Context
 Protocol as a PDF, exactly, and as a Word document. It was copied from
 `lights-off-software-factories/`. The builds don't read any font or file from outside this folder, apart
-from the Python packages pinned in `../../requirements.txt`.
+from the Python packages pinned in `packages/pipeline/requirements.txt`.
 
 The text is in `guide.md`. Edit it to change the guide; see "The Markdown" below.
 
 ## Rebuild
 
-`pnpm build` in `packages/accidental-guides` builds this guide and the others into
-`dist/`. To build this one by hand, with the packages from `../../requirements.txt`
+`pnpm turbo run build --filter=@accidentalguide/mcp` at the repository root builds this guide
+into its `dist/`, and `pnpm build` builds every guide. To build this one by hand, with the packages from `packages/pipeline/requirements.txt`
 installed:
 
 ```sh
@@ -23,7 +23,7 @@ also pass an output path: `python3 build_guide.py /path/to/out.pdf`. When it fin
 script prints the page count, any page where content runs past the bottom margin, the
 file's SHA-256, and whether that hash matches `expected.sha256`.
 
-With the versions in `../../requirements.txt`, the rebuilt file is byte-identical to the shipped
+With the versions in `packages/pipeline/requirements.txt`, the rebuilt file is byte-identical to the shipped
 PDF. The script uses ReportLab's invariant mode, which fixes the creation date
 (31 Dec 1999) and document ID so they don't change between runs. With other versions of
 ReportLab, the pages usually look the same, but the bytes, and so the hash, may differ.
@@ -44,7 +44,7 @@ the same text gives the same bytes.
 | File | What it's for |
 |---|---|
 | `guide.md` | Every word in the guide: titles, entries, tables, sources and footers. Edit this to change the text. |
-| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_ROWS`, `ENTRIES`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
+| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_BLOCKS`, `ENTRIES`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
 | `build_guide.py` | The PDF: page layout, colors, tiles, the diagrams and the margin check. |
 | `build_docx.py` | The Word document: layout in Word's terms, the diagrams as images from the PDF, and the embedded fonts. |
 | `fonts/texgyreheros-{regular,bold,italic}.otf` | TeX Gyre Heros 2.004, the body typeface, as originally distributed (OpenType with CFF outlines). |
@@ -60,8 +60,13 @@ cover footer). After that, each `#` heading starts one part of the guide and end
 an id that says which part it is: `{#why}`, `{#fit}`, four `{#entry}` sections,
 `{#offer}`, `{#questions}` and `{#sources}`. The builders also print an `{#apart}` (with
 `{#other}`) page if guide.md has those sections. Each of the four entries
-is `# Name {#entry num=01 mono=Sv}`. The order of sections in the file doesn't set the
+is `# Name {#entry num=01 mono=Mc}`. The order of sections in the file doesn't set the
 order of pages; the builders do.
+
+The entries, then `{#offer}` and `{#questions}`, go down the page one after another, and a
+new page starts only when the next one doesn't fit, so two short entries share a page. The
+cover and the Word document take the page numbers from the same packing (`PAGES` in
+`build_guide.py`).
 
 Within a section:
 
@@ -72,13 +77,23 @@ Within a section:
 - Tables are pipe tables. Where the PDF prints a column header row, such as the tables on
   the offer and questions pages, the table's header row is what's printed. Tables the PDF
   prints without a header still need one in Markdown; those header rows (`Question`,
-  `Field`, `Term`, `Source`) are only labels for whoever edits the file.
-- The offer and questions pages each have zero or more intro paragraphs, one table, and
-  exactly one closing paragraph after the table.
+  `Field`, `Term`, `Source`) are only labels for whoever edits the file. A two-column table
+  is printed as rows, label on the left, with a heavy rule over the first row and no rules
+  between rows.
+- A block of lines that start with `> ` is a grey block: its paragraphs and tables are printed
+  on a light grey background, with no rules. Use it for the one table or passage on a page that
+  the reader should look at first.
+- A `> ` block whose first line is `> [!TIP]`, `> [!NOTE]` or `> [!WARNING]` is a callout:
+  one paragraph in an outlined box, led by "Tip.", "Note." or "Watch out." in bold. Use at most
+  one on a page, for one practical tip or warning.
+- In an entry, a field marks table in a grey block is printed as a grid of three columns, each
+  label over its short answer. Its Detail column can be left out.
+- The offer and questions sections each have zero or more intro paragraphs, one table, and
+  the paragraphs or callout after the table.
 - The sources table has three columns: the source, its date, and its address (no
   `https://`), which is set in mono.
 - Names in `NAME2MONO` in `build_guide.py` get a tile wherever they label a row. The four
-  parts get their colour. Any other name is plain text with no tile.
+  parts get their family's colour (`PART_FAMILY`). Any other name is plain text with no tile.
 - The overview diagram on "How the parts fit" is drawn in code in `page_fit()`, and its
   labels are the `FIT_*` strings in `build_guide.py`. `build_docx.py` finds it on the page through
   `fit_layout()`, so the two can't drift apart.
@@ -89,7 +104,7 @@ and commands in mono, and bold each row's short answer, by rule.
 ## About the converted fonts
 
 If the `heros-*.ttf` files are missing, `build_guide.py` regenerates them from the `.otf`
-files with fontTools, which is not in `../../requirements.txt` and has to be installed
+files with fontTools, which is not in `packages/pipeline/requirements.txt` and has to be installed
 for that. fontTools writes the current time into each converted font, and
 that timestamp ends up in the PDF, so a PDF built from regenerated fonts will look the
 same but won't match `expected.sha256`. Keep the shipped `.ttf` files if you need an

@@ -256,6 +256,12 @@ importers:
 
   packages/pipeline: {}
 
+  packages/template:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../pipeline
+
   site:
     dependencies:
       '@astrojs/starlight':

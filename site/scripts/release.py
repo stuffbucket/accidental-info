@@ -19,7 +19,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-SITE = "https://stuffbucket.github.io/accidentalguide"
+# Where the site is served; the Pages workflow sets these from actions/configure-pages.
+SITE = (os.environ.get("SITE_ORIGIN", "https://stuffbucket.github.io").rstrip("/")
+        + os.environ.get("SITE_BASE", "/accidentalguide").rstrip("/"))
 
 
 def tag(guide):

@@ -3,8 +3,8 @@ title: Accidental Intelligence
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to the Accidental Guides, as of October 2026.
 running_footer: Accidental Intelligence
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
 version: 0.3.0
 ---
 

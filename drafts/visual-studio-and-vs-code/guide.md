@@ -3,16 +3,16 @@ title: VS Code and Visual Studio
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where GitHub Copilot’s agent setup lives, as of October 2026.
 running_footer: VS Code and Visual Studio
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
-version: 0.1.1
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
+version: 0.2.0
 ---
 
 # What can you set up<br/>in VS Code? {#why}
 
-You can set up five things for GitHub Copilot’s agent in VS Code: instructions files, custom agents, skills, MCP servers and settings. Each one is a file or a setting, and each can belong to a repo, to you, or to your organization.
+You can set up five things for GitHub Copilot’s agent in VS Code: instructions files, custom agents, skills, MCP servers and settings. Each can belong to a repo, to you or to your organization.
 
-The default harness in VS Code is the Copilot harness, which reads .github/ in the repo and ~/.copilot/ in your home folder. Other harnesses read other places, noted where they differ. For the basics, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
+VS Code’s default harness, the Copilot harness, reads .github/ in the repo and ~/.copilot/ in your home folder. For the basics, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
 
 > | Term | Meaning |
 > |---|---|
@@ -20,67 +20,92 @@ The default harness in VS Code is the Copilot harness, which reads .github/ in t
 > | Custom agent | A role with its own instructions, tools and model. |
 > | Skill | Steps the agent loads when a task needs them. |
 > | MCP server | A program that gives the agent more tools. |
-> | Setting | A switch that changes what VS Code does or reads. |
+> | Setting | A switch or value that changes what VS Code does. |
 
 # Instructions file {#entry num=01 mono=In}
 
 | Field | Text |
 |---|---|
-| Identify by | .github/copilot-instructions.md, AGENTS.md, or a file ending in .instructions.md. |
-| What | An instructions file is text Copilot adds to your requests. copilot-instructions.md and AGENTS.md apply to every request, and a .instructions.md file can apply only to files that match its applyTo pattern. |
-| So what | Put the rules you’d otherwise repeat in every chat here. When one seems ignored, check where the file is and what its applyTo pattern matches. |
+| Identify by | copilot-instructions.md, AGENTS.md or a .instructions.md file. |
+| What | An instructions file is text Copilot adds to your requests. See An Accidental Guide to: Agents, Harnesses, Skills, and Tools. |
+| So what | Put rules you’d otherwise repeat in every chat here. An applyTo pattern makes a file apply only to matching files. |
+
+> | Field | Short answer |
+> |---|---|
+> | Loads | When it applies |
+> | Cannot | Settle a conflict |
 
 ## Confused with: Setting
 
-An instructions file tells the agent how to work. A setting changes what VS Code itself does.
+An instructions file tells the agent how to work. A setting changes what VS Code does.
 
 # Custom agent {#entry num=02 mono=Ag}
 
 | Field | Text |
 |---|---|
-| Identify by | A .agent.md file in .github/agents/, or a name in the Agent dropdown. |
-| What | A custom agent is a saved role with its own instructions, tools and model. You pick one from the Agent dropdown, and another agent can start it as a sub-agent. |
-| So what | Limiting a custom agent’s tools limits what it can change. While it’s selected, its instructions are added to your instructions files and win if the two conflict. |
+| Identify by | A .agent.md file, or a name in the Agent dropdown. |
+| What | A custom agent is a saved role with its own instructions, tools and model. See An Accidental Guide to: Agents, Harnesses, Skills, and Tools. |
+| So what | Limiting a custom agent’s tools limits what it can change. Give each agent only the tools its job needs. |
 
-## Confused with: Instructions file
+> | Field | Short answer |
+> |---|---|
+> | Loads | When picked or started |
+> | Cannot | Replace instructions |
 
-An instructions file applies to every request. A custom agent applies only while it’s selected or running. Custom agents used to be called chat modes, and .chatmode.md files can be renamed to .agent.md.
+## Confused with: Chat mode
+
+Chat mode is the old name for a custom agent, and a .chatmode.md file can be renamed to .agent.md.
 
 # Skill {#entry num=03 mono=Sk}
 
 | Field | Text |
 |---|---|
 | Identify by | A folder with a SKILL.md file whose name matches the folder. |
-| What | A skill is a written procedure in a folder. Only its name and description load at first, and the rest loads when your request matches or you type /skill-name. |
-| So what | A skill can hold long steps without taking up room until it’s needed. When a skill doesn’t run, check its description first. |
+| What | A skill is a written procedure in a folder. Type /skill-name to run one. See An Accidental Guide to: Agent Skills. |
+| So what | A skill’s steps take up no room until they’re needed. When a skill doesn’t run, check its description first. |
+
+> | Field | Short answer |
+> |---|---|
+> | Loads | Description first |
+> | Cannot | Add a tool |
 
 ## Confused with: Prompt file
 
-A prompt file, .github/prompts/*.prompt.md, is a saved prompt you run with /name. Prompt files only work in the Local harness, so VS Code suggests a skill instead.
+A prompt file (.prompt.md) is a saved prompt you run with /name. Only the Local harness runs them, so VS Code suggests a skill.
 
 # MCP server {#entry num=04 mono=Mc}
 
 | Field | Text |
 |---|---|
 | Identify by | An entry with a command or a URL in .mcp.json or ~/.copilot/mcp-config.json. |
-| What | An MCP server is a separate program that gives the agent more tools. The harness connects to it and passes the model’s tool calls to it. |
-| So what | A local MCP server can run code on your machine with your permissions. Add only servers you trust, and check whether your organization limits which ones you can use. |
+| What | An MCP server is a program that gives the agent more tools. Search @mcp in Extensions to find one. See An Accidental Guide to: Model Context Protocol. |
+| So what | A local MCP server runs code on your machine with your permissions. Add only servers you trust. |
+
+> | Field | Short answer |
+> |---|---|
+> | Loads | When it connects |
+> | Cannot | Act by itself |
 
 ## Confused with: Extension
 
-An extension adds features to VS Code itself. MCP servers are listed in the same Extensions view: search @mcp, then choose Install for yourself or Install in Workspace for the repo.
+An extension adds features to VS Code itself. MCP servers install from the same view, for you or for the workspace.
 
 # Setting {#entry num=05 mono=Se}
 
 | Field | Text |
 |---|---|
 | Identify by | A value in the Settings editor, your user settings or .vscode/settings.json. |
-| What | A setting is a switch or value that changes how VS Code behaves. Copilot’s settings turn features on and off, such as chat.useAgentSkills for skills. |
-| So what | When something works for a teammate and not for you, compare settings. Your user settings apply in every repo you open. |
+| What | A setting is a switch or value that changes how VS Code behaves. For example, chat.useAgentSkills turns skills on and off. |
+| So what | When something works for a teammate and not for you, compare your settings. Your user settings apply in every repo. |
 
-## Confused with: Instructions file
+> | Field | Short answer |
+> |---|---|
+> | Loads | From every scope |
+> | Cannot | Guide the agent |
 
-A setting decides what VS Code does. An instructions file tells the agent how to work.
+## Confused with: Policy
+
+A policy is a setting an administrator makes for your organization. It wins over your own settings.
 
 # Where things live {#where}
 
@@ -108,41 +133,37 @@ The Copilot harness reads these places. Use the repo for what the team shares an
 > |  | You | Your user settings.json |
 > |  | Organization | Policies set by an administrator |
 
-The Local harness also reads .vscode/mcp.json and files kept in your VS Code profile. The Claude harness reads .claude/ and ~/.claude/ instead.
+The Local harness also reads .vscode/mcp.json. The Claude harness reads .claude/ and ~/.claude/ instead.
 
 # How scopes combine {#scopes}
 
-Instructions add up, and settings override. Custom agents, skills and MCP servers from every scope are offered together.
+Instructions add up, and settings override.
 
 | Thing | When more than one scope has one |
 |---|---|
-| Instructions file | Every file that applies is added, and none ranks above another. |
-| Custom agent | All appear in the Agent dropdown. The selected agent’s instructions win a conflict. |
-| Skill | All are offered, and each loads when it matches or you name it. |
-| MCP server | All are added, and nothing decides between two with the same name, so give each server its own. Your organization can limit which ones run. |
-| Setting | The later scope wins: Default, then User, then Workspace. An administrator’s policy wins over all three. |
+| Instructions file | Every file that applies is added. None takes priority. |
+| Custom agent | The selected agent’s instructions win a conflict. |
+| MCP server | Give each server its own name. Your organization can limit which ones run. |
+| Setting | Default, then User, then Workspace, and the later one wins. An administrator’s policy wins over all three. |
 
 > [!TIP]
-> When two instructions files disagree, change the files so they agree. Neither the folder nor the load order settles it.
+> When two instructions files disagree, change them so they agree. The load order won’t settle it.
 
 # What’s different<br/>in Visual Studio {#vs}
 
-Visual Studio reads many of the same files, but not all, and keeps its settings in Tools › Options.
-
 | Thing | In Visual Studio |
 |---|---|
-| Instructions file | .github/copilot-instructions.md and .github/instructions/*.instructions.md. Visual Studio 2026 adds personal instructions in %USERPROFILE%/copilot-instructions.md. |
-| Prompt file | .github/prompts/*.prompt.md. Type / or #prompt: in chat. |
+| Instructions file | .github/copilot-instructions.md and .github/instructions/*.instructions.md. In Visual Studio 2026, personal instructions go in %USERPROFILE%/copilot-instructions.md. |
 | Custom agent | .github/agents/*.agent.md, or %USERPROFILE%\.github\agents for your own. Version 18.4 or later. |
 | Skill | The same folders as VS Code. Version 18.5 or later. |
-| MCP server | Reads %USERPROFILE%\.mcp.json, then .vs\mcp.json, .mcp.json, .vscode\mcp.json and .cursor\mcp.json in the solution folder. Browse in Extensions › MCP Registries… |
+| MCP server | %USERPROFILE%\.mcp.json, then .vs\mcp.json, .mcp.json, .vscode\mcp.json and .cursor\mcp.json in the solution folder. |
 | Setting | Tools › Options › GitHub › Copilot, where a checkbox turns instructions files on. |
 
-Visual Studio doesn’t list AGENTS.md as supported as of October 2026, so put rules both editors need in .github/copilot-instructions.md.
+Visual Studio doesn’t list AGENTS.md as supported, so put rules both editors need in .github/copilot-instructions.md.
 
 # Same thing elsewhere {#elsewhere}
 
-Other agent tools have the same kinds of setup in their own places. Copilot CLI uses the same Copilot harness, so it reads the same .github/ and ~/.copilot/ folders, but it doesn’t run prompt files.
+Copilot CLI uses the same Copilot harness, so it reads the same .github/ and ~/.copilot/ folders.
 
 | Thing | In the other tools |
 |---|---|
@@ -152,7 +173,7 @@ Other agent tools have the same kinds of setup in their own places. Copilot CLI 
 | MCP server | Claude Code: .mcp.json. Codex: ~/.codex/config.toml. Claude Desktop: Customize › Connectors. |
 | Setting | Claude Code: .claude/settings.json. Codex: ~/.codex/config.toml. |
 
-Each tool has its own guide: An Accidental Guide to: Claude Code, An Accidental Guide to: Claude Desktop, An Accidental Guide to: GitHub Copilot CLI and An Accidental Guide to: Codex.
+Each has its own guide: An Accidental Guide to: Claude Code, An Accidental Guide to: Claude Desktop, An Accidental Guide to: GitHub Copilot CLI and An Accidental Guide to: OpenAI Codex.
 
 # Sources {#sources}
 

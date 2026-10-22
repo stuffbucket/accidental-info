@@ -36,12 +36,13 @@ system-design-primer and coding-interview-university:
 4. **Releases.** Each guide version is a GitHub release with the PDF and Word files attached.
    Watchers get a notification, and the release page is something people can share.
 5. **Easy to contribute.** CONTRIBUTING.md, issue forms for "suggest a guide", "a word is
-   used two ways" and "this is wrong", and a label for good first issues.
+   used two ways" and "this is wrong", and a label for good first issues. A Word template
+   for writing a guide, and a "send a guide" form for the few we publish from other writers
+   (see "Submissions and AI slop").
 6. **Easy to share.** Open Graph images (the cover) for every page, short guide URLs,
    and a cover image in each release.
-7. **Easy to reuse.** A license for the text that lets people copy it into their own
-   training material with credit (CC BY 4.0 is the usual choice; the code stays MIT).
-   This is Brian's decision.
+7. **Easy to reuse.** The guides' text is under CC BY 4.0, so people can copy it into their
+   own training material with credit. The code stays MIT.
 8. **Translations.** The Markdown source makes translation a pull request per guide:
    `guides/<slug>/guide.<lang>.md`, built the same way.
 9. **Repository metadata.** Topics (ai, coding-agents, claude-code, codex, github-copilot,
@@ -55,6 +56,46 @@ Post one guide at a time, with the question it answers as the title:
 - X, Bluesky, LinkedIn, Mastodon
 - Newsletters that cover coding agents
 - Listings: awesome-claude-code, awesome-ai-agents and the other awesome lists for coding agents
+
+## Submissions and AI slop
+
+**The risk.** A popular repository attracts submissions a model wrote and nobody read. One
+takes minutes to generate and an hour to review: every fact checked against its source, every
+source opened. Enough of them and reviewing crowds out writing.
+
+curl went through this with security reports. In May 2025 its HackerOne form started asking
+whether AI was used, and reporters who sent AI slop were banned at once
+([The Register, 7 May 2025](https://www.theregister.com/security/2025/05/07/curl-takes-action-against-time-wasting-ai-bug-reports/267311)).
+By July 2025 about a fifth of its reports were AI slop and about one in twenty was genuine
+([Death by a thousand slops, 14 July 2025](https://daniel.haxx.se/blog/2025/07/14/death-by-a-thousand-slops/)).
+In January 2026 it ended its bug bounty, from 31 January, to remove the incentive to make up
+problems ([The end of the curl bug-bounty, 26 January 2026](https://daniel.haxx.se/blog/2026/01/26/the-end-of-the-curl-bug-bounty/)).
+curl still accepts reports made with AI help, if the reporter says so.
+
+**The policy,** in CONTRIBUTING.md under "Sending us a guide" and in the
+`send-a-guide.yml` form:
+
+- No rewards: no payment, prize or ranking.
+- A named person is accountable for every sentence and answers questions about it.
+- AI use is disclosed in the form. It isn't banned: our own guides are drafted with AI help
+  and checked line by line by a person, and the rule is the same for everyone.
+- Every fact has a source the submitter has read.
+- Submissions that are low effort or can't be checked are closed quickly, without comment
+  or debate.
+- Accounts that keep sending them are blocked.
+- Submissions get one line in the README and one short section on the site. Corrections and
+  topic suggestions come first.
+
+**If it gets bad,** in this order:
+
+1. Turn on GitHub's temporary interaction limits (repository Settings → Moderation options →
+   Interaction limits), which limit issues and pull requests to prior contributors or
+   collaborators for up to six months.
+2. Require an accepted issue before any pull request, and close pull requests without one.
+3. Close the form: remove `send-a-guide.yml` and the line about sending a guide from the site,
+   and keep the template for people writing for themselves.
+
+Each week, count the submissions received, closed and published, next to the other numbers.
 
 ## Measure
 

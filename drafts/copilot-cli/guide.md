@@ -3,9 +3,9 @@ title: GitHub Copilot CLI
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where Copilot CLI keeps its setup, and which copy wins, as of October 2026.
 running_footer: GitHub Copilot CLI
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
-version: 0.1.0
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
+version: 0.2.0
 ---
 
 # What can you set up<br/>in Copilot CLI? {#why}
@@ -29,16 +29,16 @@ Harnesses, Skills, and Tools.
 
 | Field | Text |
 |---|---|
-| Identify by | A Markdown file such as .github/copilot-instructions.md or AGENTS.md. |
-| What | An instructions file tells Copilot CLI about your project and how you want the work done. Copilot CLI reads every file that applies and adds them all to the session. |
-| So what | Put rules here that should hold in every session, such as how to run the tests. No file outranks another, so keep each rule in one place. |
+| Identify by | AGENTS.md or .github/copilot-instructions.md. |
+| What | Copilot CLI adds every instructions file that applies to the session. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains them. |
+| So what | Put rules for every session here. No file outranks another, so keep each rule in one place. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | At the start of a session | Changes reach the next session. |
-> | Check with | /instructions | Lists the files the session loaded and lets you turn one off. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | At the start of a session |
+> | Check with | /instructions |
 
 ## Confused with: Skill
 
@@ -48,16 +48,16 @@ A skill’s steps are read only when a task calls for them, so a long procedure 
 
 | Field | Text |
 |---|---|
-| Identify by | A folder with a SKILL.md file, such as .github/skills/release-notes/SKILL.md. |
-| What | A skill is a written procedure for one kind of task. Copilot CLI uses it when the skill’s description matches your request, or when you type its name, such as /release-notes. |
+| Identify by | A folder in .github/skills/ with a SKILL.md file. |
+| What | Copilot CLI uses a skill when your request matches its description, or when you type / and its name. An Accidental Guide to: Agent Skills explains skills. |
 | So what | A skill keeps the way you do a task in a file that can be reviewed and shared like code. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | Description first, steps when used |  |
-> | Check with | /skills | Lists the skills the session found. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | Description first |
+> | Check with | /skills |
 
 ## Confused with: Custom agent
 
@@ -68,16 +68,16 @@ with its own instructions and tools.
 
 | Field | Text |
 |---|---|
-| Identify by | An entry with a command or URL in ~/.copilot/mcp-config.json or .mcp.json. |
-| What | An MCP server is a separate program that gives Copilot CLI tools for another system, such as an issue tracker. GitHub’s own MCP server is built in and needs no setup. |
-| So what | Add a server when the work needs a system Copilot CLI can’t reach on its own. |
+| Identify by | An entry in ~/.copilot/mcp-config.json or .mcp.json. |
+| What | GitHub’s own MCP server is built in and needs no setup. An Accidental Guide to: Model Context Protocol explains MCP servers. |
+| So what | Add a server when the work needs a system Copilot CLI can’t reach on its own, such as an issue tracker. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | When the session starts | Servers in the repository load only in a trusted folder. |
-> | Check with | /mcp | Lists the servers and lets you add, turn off or remove one. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | When the session starts |
+> | Check with | /mcp |
 
 ## Confused with: Plugin
 
@@ -89,15 +89,15 @@ with it.
 | Field | Text |
 |---|---|
 | Identify by | A file such as .github/agents/reviewer.agent.md. |
-| What | A custom agent is a file that sets up an agent for one job, with its own instructions and tools. An Accidental Guide to: Agents, Harnesses, Skills, and Tools calls this an agent definition. |
+| What | Copilot CLI reads custom agents from your Copilot folder, the repository and your organization. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains agents. |
 | So what | You can pick one to run your session, or Copilot CLI can hand one part of a task. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | When you pick it or it’s handed work | The body becomes that agent’s instructions. |
-> | Check with | /agent | Lists the agents you can pick. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | When it runs |
+> | Check with | /agent |
 
 ## Confused with: Subagent
 
@@ -109,15 +109,15 @@ or a subagent.
 | Field | Text |
 |---|---|
 | Identify by | A settings.json file in ~/.copilot, or in .github/copilot in the repository. |
-| What | Settings hold your choices for how Copilot CLI runs, such as the model. Trusted folders are kept in config.json, and tools you’ve allowed to run without asking in permissions-config.json. |
+| What | Settings are the choices that control how Copilot CLI runs, such as the model. Trusted folders are kept in config.json, and tools you’ve allowed to run without asking in permissions-config.json. |
 | So what | Trust and approvals decide what Copilot CLI does without asking you first. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | When the session starts | Flags such as --allow-tool last for that run only. |
-> | Check with | /settings | Shows each setting and lets you change it. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | When the session starts |
+> | Check with | /settings |
 
 ## Confused with: Policy
 
@@ -131,12 +131,11 @@ directory instead.
 
 | Scope | Thing | Path |
 |---|---|---|
-| Just you | Instructions | ~/.copilot/copilot-instructions.md or ~/.copilot/instructions/ |
-| Just you | Skills | ~/.copilot/skills/ or ~/.agents/skills/ |
-| Just you | MCP servers | ~/.copilot/mcp-config.json |
-| Just you | Custom agents | ~/.copilot/agents/ |
-| Just you | Settings | ~/.copilot/settings.json; approvals in ~/.copilot/permissions-config.json; trusted folders in ~/.copilot/config.json |
-| Just you | Plugins | ~/.copilot/installed-plugins/ |
+| Your home folder | Instructions | ~/.copilot/copilot-instructions.md or ~/.copilot/instructions/ |
+| Your home folder | Skills | ~/.copilot/skills/ or ~/.agents/skills/ |
+| Your home folder | MCP servers | ~/.copilot/mcp-config.json |
+| Your home folder | Custom agents | ~/.copilot/agents/ |
+| Your home folder | Settings | ~/.copilot/settings.json, with approvals in permissions-config.json and trusted folders in config.json beside it |
 | This repository | Instructions | .github/copilot-instructions.md, .github/instructions/*.instructions.md, AGENTS.md, CLAUDE.md or GEMINI.md |
 | This repository | Skills | .github/skills/, .agents/skills/ or .claude/skills/ |
 | This repository | MCP servers | .github/mcp.json to share, or .mcp.json |
@@ -152,8 +151,7 @@ directory instead.
 
 # How do the places combine? {#combine}
 
-Instructions and hooks add up. Skills, MCP servers, custom agents and settings have one winner
-for each name or key.
+Instructions and hooks add up. Skills, MCP servers, custom agents and settings have one winner for each name or setting.
 
 > | Thing | When two places set it |
 > |---|---|
@@ -161,7 +159,7 @@ for each name or key.
 > | Skills | The first found wins: the repository’s, then yours, then a plugin’s. |
 > | MCP servers | From highest: --additional-mcp-config, a plugin, the repository, then ~/.copilot/mcp-config.json. |
 > | Custom agents | Yours wins, then the repository’s, a plugin’s, the organization’s, then the enterprise’s. |
-> | Settings | Later layers win: yours, the repository’s, settings.local.json, environment variables, then flags. Managed settings lock most keys. |
+> | Settings | Later layers win: yours, the repository’s, settings.local.json, environment variables, then flags. Managed settings win over most of them. |
 > | Hooks | Every hook runs. |
 
 > [!TIP]
@@ -170,20 +168,15 @@ for each name or key.
 
 # Same thing elsewhere {#elsewhere}
 
-The other tools keep the same kinds of setup under their own names. Copilot CLI also reads
-CLAUDE.md, .claude/skills/, .agents/skills/, .claude/agents/ and .mcp.json.
-
-| Copilot CLI | Claude Code | Claude Desktop | Codex | VS and VS Code |
+| Copilot CLI | Claude Code | Claude Desktop | Codex | VS Code and Visual Studio |
 |---|---|---|---|---|
-| Instructions file | CLAUDE.md | Instructions for Claude | AGENTS.md | Same file |
+| Instructions file | CLAUDE.md | Instructions | AGENTS.md | Same file |
 | Skill | Skills | Skills | Skills | Same folder |
 | MCP server | .mcp.json | Connectors | config.toml | Same file |
 | Custom agent | Subagents | None documented | Custom agents | Same folder |
 | Settings | settings.json | Settings | config.toml | IDE settings |
 
-Each of these has its own guide: An Accidental Guide to: Claude Code, An Accidental Guide to:
-Claude Desktop, An Accidental Guide to: Codex, and An Accidental Guide to: Visual Studio and VS
-Code.
+Each of these tools has its own guide: An Accidental Guide to: Claude Code, An Accidental Guide to: Claude Desktop, An Accidental Guide to: OpenAI Codex, and An Accidental Guide to: VS Code and Visual Studio.
 
 # Sources {#sources}
 

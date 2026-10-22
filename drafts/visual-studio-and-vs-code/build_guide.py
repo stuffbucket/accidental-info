@@ -83,7 +83,7 @@ TOKENS = {  # token: base hex
     "warning": "#FFCD29", "success": "#14AE5C", "assistive": "#E83FBF",
 }
 # Each color is one family, the same in every guide of the series
-# (contrib/accidental-guides/registry.md).
+# (packages/editorial/registry.md).
 FAMILY_TOKEN = {"Ru": "warning", "Wr": "figjam", "Ck": "success", "Us": "danger", "Dm": "assistive",
                 "Nu": "brand"}
 PART_FAMILY = {"In": "Wr", "Ag": "Ru", "Sk": "Wr", "Mc": "Us", "Se": "Dm"}
@@ -744,7 +744,7 @@ ENTRY_PAGE = {part[1]: ENTRY_START + k for k, parts in enumerate(PAGES) for part
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)
-    c.setTitle(C.TITLE); c.setAuthor("bstucker"); c.setSubject(C.SUBTITLE)
+    c.setTitle(C.TITLE); c.setAuthor("Accidental Guides"); c.setSubject(C.SUBTITLE)
     page_cover(c); c.showPage()
     n = 2
     for fn in [{"why": page_why, "meaning": page_meaning, "fit": page_fit}[x] for x in FRONT_IDS]:

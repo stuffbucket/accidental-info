@@ -4,7 +4,7 @@ This folder contains everything needed to build An Accidental Guide to… Accide
 Intelligence, the catalog of the Accidental Guides, as a PDF, exactly, and as a Word
 document. It was copied from `software-factories/` and keeps that guide's fonts, page size,
 type and helpers. The builds don't read any font or file from outside this folder, apart
-from the Python packages pinned in `../../requirements.txt`.
+from the Python packages pinned in `packages/pipeline/requirements.txt`.
 
 The text is in `guide.md`. Edit it to change the guide; see "The Markdown" below. The
 catalog doesn't read the other guides: when a guide changes its title, version or parts,
@@ -12,8 +12,8 @@ change its rows here by hand.
 
 ## Rebuild
 
-`pnpm build` in `packages/accidental-guides` builds this guide and the others into
-`dist/`. To build this one by hand, with the packages from `../../requirements.txt`
+`pnpm turbo run build --filter=@accidentalguide/accidental-intelligence` at the repository root builds this guide
+into its `dist/`, and `pnpm build` builds every guide. To build this one by hand, with the packages from `packages/pipeline/requirements.txt`
 installed:
 
 ```sh
@@ -26,7 +26,7 @@ an output path: `python3 build_guide.py /path/to/out.pdf`. When it finishes, the
 prints the page count, any page where content runs past the bottom margin, the file's
 SHA-256, and whether that hash matches `expected.sha256`.
 
-With the versions in `../../requirements.txt`, the rebuilt file is byte-identical to the
+With the versions in `packages/pipeline/requirements.txt`, the rebuilt file is byte-identical to the
 shipped PDF. The script uses ReportLab's invariant mode, which fixes the creation date
 (31 Dec 1999) and document ID so they don't change between runs. When you change the text
 on purpose, update `expected.sha256` with the new hash.

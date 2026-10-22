@@ -1,6 +1,7 @@
 {
   "name": "accidentalguide",
   "private": true,
+  "license": "(MIT AND CC-BY-4.0)",
   "packageManager": "pnpm@12.8.2",
   "scripts": {
     "build": "turbo run build",

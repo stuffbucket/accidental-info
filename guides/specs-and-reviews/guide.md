@@ -3,8 +3,8 @@ title: Specs and Reviews
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to agreeing on work as a team and checking when it’s done.
 running_footer: Specs and Reviews
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
 version: 0.4.0
 ---
 

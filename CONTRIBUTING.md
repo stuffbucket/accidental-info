@@ -1,6 +1,7 @@
 # Contributing
 
-Most changes start as an issue.
+Most changes start as an issue. Corrections and topic suggestions are the main way to help,
+and the quickest to act on.
 
 ## Suggest a guide
 
@@ -19,7 +20,50 @@ issue. Name the question the guide would answer, and who asks it.
 
 A small fix can also come as a pull request that changes the guide's `guide.md`.
 
+## Write your own
+
+The [Word template](https://accidental.info/accidental-guide-template.docx) is the guides'
+layout as a Word document. Each place in it says what goes there: the reader's question, up
+to six parts with their field marks, and the sources. Use it for your own team or class. The
+template's text is under CC BY 4.0, like the guides.
+
+## Sending us a guide
+
+We publish a few guides from other writers. Not many, because each one takes a long time to
+check.
+
+1. Write it in the [Word template](https://accidental.info/accidental-guide-template.docx):
+   one question, six parts at most, about a page each.
+2. Open a [Send a guide](https://github.com/stuffbucket/accidentalguide/issues/new?template=send-a-guide.yml)
+   issue and drag the `.docx` into the description field.
+
+What we check:
+
+- **A named person stands behind every sentence.** You wrote it or checked it, and you'll
+  answer questions about it.
+- **Every fact has a source you've read.** List them all. A link you haven't opened doesn't
+  count, and neither does a source that doesn't say what the guide says.
+- **It reads like the series.** Plain words, one name for each thing, and the rules under
+  [Voice](#voice).
+
+**AI.** Our own guides are drafted with AI help and then checked line by line by a person.
+You can work the same way. Say how you used AI in the form. What we won't take is text that
+nobody has checked: made-up facts, sources that don't exist, or answers to our questions
+that come straight from a chatbot.
+
+**We may close a submission without comment,** when it's hard to check, skips the template,
+or looks generated and unread. We don't debate closures. Accounts that keep sending that kind
+of thing get blocked.
+
+There's no payment, prize or ranking for submissions. By sending a guide you license it under
+CC BY 4.0, so we can edit, publish and translate it.
+
 ## Start a draft
+
+This is for people already writing with us. A guide from anyone else starts as a
+[Send a guide](https://github.com/stuffbucket/accidentalguide/issues/new?template=send-a-guide.yml)
+issue.
+
 
 Install the tools once:
 

@@ -3,9 +3,9 @@ title: Lights-Off Software Factories
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to software factories where nobody reads the code, as of October 2026.
 running_footer: Lights-Off Software Factories
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
-version: 0.3.0
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
+version: 0.4.0
 ---
 
 # What is a lights-off<br/>software factory? {#why}
@@ -31,91 +31,91 @@ Agent sessions write the code. Each change runs against scenarios the sessions c
 
 | Field | Text |
 |---|---|
-| Identify by | A user story kept outside the code and run from start to finish. |
-| What | A scenario describes someone using the software to get a result. A judge model decides whether each run would satisfy that user. |
-| So what | The agent session can’t see hidden scenarios, so it can’t write code that only passes them. |
+| Identify by | A user story run from start to finish. |
+| What | A scenario is a story of someone using the software. A judge model decides whether each run would satisfy that person. |
+| So what | Agent sessions never see the scenarios. An agent can’t write code that only passes a scenario it can’t see. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Owned by | People | Product and engineering people write each story. |
-> | Cannot | Cover a missing story | Behavior nobody put in a scenario may still be wrong. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | Product and engineering people |
+> | Cannot | Cover a missing story |
 
 ## Confused with: Test
 
-An acceptance test checks one fixed result and often lives beside the code, where an agent session can change it. A judge model assesses a scenario’s whole journey.
+An acceptance test checks one fixed result and often sits beside the code, where agent sessions can change it.
 
 # Digital twin {#entry num=02 mono=Dt}
 
 | Field | Text |
 |---|---|
-| Identify by | A working copy of an outside service’s API and observed behavior. |
-| What | A digital twin copies a service the software calls. The copy is built from the service’s API and observed edge cases, then checked against the real service. |
-| So what | Scenarios can run thousands of times without rate limits, usage costs or risk to real accounts. |
+| Identify by | A working copy of a service the software calls. |
+| What | A digital twin copies an outside service. The copy is built from its API and checked against the real service. |
+| So what | Scenarios can run thousands of times. There are no rate limits, usage costs or risks to real accounts. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Owned by | The factory team | The team records the service’s public behavior and keeps the copy current. |
-> | Cannot | Know behavior nobody observed | The copy can miss an edge case nobody has seen yet. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | The factory team |
+> | Cannot | Know behavior nobody observed |
 
 ## Confused with: Mock
 
-A mock returns canned answers for one test. A digital twin copies enough of a service’s behavior for many scenarios and is checked against the real service.
+A mock returns canned answers for one test. A digital twin acts like the real service across many scenarios.
 
 # Satisfaction {#entry num=03 mono=Sa}
 
 | Field | Text |
 |---|---|
-| Identify by | A percentage calculated from judged runs through all the scenarios. |
-| What | Satisfaction is the share of scenario runs that a judge model says would satisfy a user. The same scenario can go well on one run and badly on the next. |
-| So what | You can judge a change across many user journeys, with more to go on than one pass or fail. |
+| Identify by | A percentage worked out from judged scenario runs. |
+| What | Satisfaction is the share of runs a judge model accepts. The same scenario can pass on one run and fail the next. |
+| So what | You see how a change does across many user journeys. One pass or fail tells you much less. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Owned by | People | Product and engineering people choose the scenarios, judge and score needed for release. |
-> | Cannot | Speak for users or future maintainers | A high score doesn’t show what real users think or whether the code will be easy to change. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | Product and engineering people |
+> | Cannot | Speak for real users |
 
 ## Confused with: Passing tests
 
-Passing tests means the software produced the fixed result each test checks. Satisfaction says how often a judge model accepted the result across many runs.
+Passing tests means each test got the one result it checks. Satisfaction says how often a judge model accepted results across many runs.
 
 # Closed loop {#entry num=04 mono=Cl}
 
 | Field | Text |
 |---|---|
-| Identify by | Monitoring that files work items, followed by fixes that reach users with no person approving them. |
-| What | A closed loop carries failures from software in use back into the factory as work for agent sessions. The fix then goes through scenarios and release. |
-| So what | The factory can repair a failure after release without waiting for someone to file or approve the fix. |
+| Identify by | Fixes that reach users with nobody approving them. |
+| What | A closed loop turns failures in use into new work. Each fix then goes through the scenarios and out to users. |
+| So what | The factory can fix a failure after release. Nobody has to file the fix or approve it. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Owned by | The team that runs the software | The team chooses which signals create work and which changes may release automatically. |
-> | Cannot | Recover from every failure | The retry limit still stops work that agent sessions and checks can’t resolve. |
+> | Field | Short answer |
+> |---|---|
+> | Owned by | The team that runs the software |
+> | Cannot | Recover from every failure |
 
 ## Confused with: Feedback path
 
-A feedback path turns a failure into a work item, and a person still approves the fix at the gate. A closed loop releases the fix with no person approving it.
+A feedback path creates a work item, but a person approves the fix. A closed loop releases the fix without a person’s approval.
 
 # What has been shown? {#shown}
 
-As of October 2026 there are three published examples: a company that says it runs lights off, a startup that tried it and stopped, and a large build that came close.
+As of October 2026, three examples are public: a company that says it runs lights off, a startup that tried it and stopped, and a large build that came close.
 
 > | Claim | What has been shown |
 > |---|---|
-> | A factory runs lights off | One software company has said since February 2026 that no person writes or reviews its code. The company reports no defect rates, satisfaction numbers or shipped results. |
-> | Unread code stays maintainable | One startup stopped reading its code in July 2025. By November, changing the code was hard enough that a founder rewrote the core by hand over two weeks. The startup now reads the code. |
-> | Agents can do almost all review | A team at a large AI lab built a product with no hand-written code over five months and merged about 1,500 pull requests. Agents did most of the review. The team says it doesn’t know how the design will hold up over years. |
-> | The results are measured | No published study reports defect, incident or cost data for a factory where no person reads the code. |
+> | A factory runs lights off | Since February 2026, one software company has said nobody writes or reviews its code. The company reports no defect rates, satisfaction numbers or shipped results. |
+> | Unread code stays maintainable | In July 2025, one startup stopped reading its code. By November, the code was so hard to change that a founder spent two weeks rewriting the core by hand. The startup now reads the code. |
+> | Agents can do almost all review | A team at a large AI lab spent five months building a product with no hand-written code and merged about 1,500 pull requests. Agents did most of the review. The team says it doesn’t know how the design will hold up over the years. |
+> | The results are measured | No published study reports defect, incident or cost data from a factory where nobody reads the code. |
 
 > [!TIP]
-> When someone says their factory runs lights off, ask three questions: What has it shipped? How do they know the software works? What happens when the agents can’t fix a failure? An Accidental Guide to: Software Factory Claims explains how to read the answers.
+> When someone says their factory runs lights off, ask to see what it has shipped, the evidence that the software works, and the plan for failures the agents can’t fix. An Accidental Guide to: Software Factory Claims explains how to read the answers.
 
 # Sources {#sources}
 

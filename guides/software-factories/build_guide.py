@@ -627,7 +627,7 @@ def page_end(c):
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)
-    c.setTitle(C.TITLE); c.setAuthor("bstucker"); c.setSubject(C.SUBTITLE)
+    c.setTitle(C.TITLE); c.setAuthor("Accidental Guides"); c.setSubject(C.SUBTITLE)
     page_cover(c); c.showPage()
     n = 2
     for fn in [{"why": page_why, "meaning": page_meaning, "fit": page_fit}[x] for x in FRONT_IDS]:

@@ -1,0 +1,73 @@
+name: Send a guide
+description: A guide you wrote in the Word template, for us to consider publishing.
+title: "Send: "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We publish a few guides from other writers. Read [Sending us a guide](https://github.com/stuffbucket/accidentalguide/blob/main/CONTRIBUTING.md#sending-us-a-guide) first. We may close a submission without comment.
+  - type: textarea
+    id: file
+    attributes:
+      label: The guide
+      description: Drag your .docx into this field. Write it in the [Word template](https://accidental.info/accidental-guide-template.docx).
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: Giving a Toast
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: The question it answers
+      placeholder: What do I say when someone hands me a glass and a microphone?
+    validations:
+      required: true
+  - type: textarea
+    id: reader
+    attributes:
+      label: Who it's for
+      description: Who has this question, and when.
+      placeholder: Someone asked to speak at a friend's wedding who has never spoken in public.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Every source the guide uses, with its address. Only sources you have read.
+    validations:
+      required: true
+  - type: dropdown
+    id: ai
+    attributes:
+      label: How did you use AI?
+      options:
+        - Not at all
+        - To check or edit my writing
+        - To draft some or all of it
+    validations:
+      required: true
+  - type: textarea
+    id: ai-detail
+    attributes:
+      label: What the AI did
+      description: If you used AI, which tool and for which parts.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you send it
+      options:
+        - label: I wrote or checked every sentence and can answer questions about it.
+          required: true
+        - label: I read every source listed.
+          required: true
+        - label: The guide has no more than six parts, about a page each.
+          required: true
+        - label: I agree to license it under CC BY 4.0.
+          required: true

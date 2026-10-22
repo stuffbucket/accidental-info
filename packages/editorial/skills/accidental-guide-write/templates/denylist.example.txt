@@ -1,0 +1,19 @@
+# Names that must never appear in a published guide.
+#
+# One name per line. Matching ignores case. Anything after # is a comment.
+# Keep the real file outside every repository and never commit it. The lint reads
+# ~/.config/accidental-guides/denylist.txt by default:
+#
+#   mkdir -p ~/.config/accidental-guides
+#   cp denylist.example.txt ~/.config/accidental-guides/denylist.txt
+#
+# To keep it somewhere else, set ACCIDENTAL_GUIDE_DENYLIST to its path (several paths
+# separated by colons), or pass --deny FILE to lint_guide.py.
+#
+# Put here: non-public product, platform, team, project and tool names; internal host names
+# and URL fragments; code names; internal metric names. Public products are fine in a guide
+# and don't belong here. The entries below are made-up examples; replace them.
+
+ExampleInternalPlatform
+example-internal-host.example
+ExampleCodename

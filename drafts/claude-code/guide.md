@@ -3,16 +3,16 @@ title: Claude Code
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where Claude Code keeps its setup, as of October 2026.
 running_footer: Accidental Guide to Claude Code
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
-version: 0.1.1
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
+version: 0.2.1
 ---
 
 # What can you set up<br/>in Claude Code? {#why}
 
-Claude Code reads its setup from plain files, some in your home folder and some in the project. There are five kinds of setup: instructions files, skills, MCP servers, plugins and settings.
+Claude Code reads its setup from plain files, some in your home folder and some in the project. There are five kinds: instructions files, skills, MCP servers, plugins and settings.
 
-Each kind can be yours alone, shared with the project, or set by your organization, and each lives in a different place. For what skills, tools and MCP servers are, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
+Each kind can be yours alone, shared with the project, or set by your organization. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains the basics.
 
 > | Term | Meaning |
 > |---|---|
@@ -27,15 +27,15 @@ Each kind can be yours alone, shared with the project, or set by your organizati
 | Field | Text |
 |---|---|
 | Identify by | CLAUDE.md, or AGENTS.md. |
-| What | An instructions file holds what Claude Code should know in every session, such as build commands and conventions. AGENTS.md is read only when there’s no CLAUDE.md. |
+| What | An instructions file holds what Claude Code should know in every session. Claude Code reads AGENTS.md only when there’s no CLAUDE.md. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains instructions files. |
 | So what | Write down what you’d otherwise explain again each session. Run /init to start a CLAUDE.md. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | At the start of each session | Files from your working folder and every folder above it combine. |
-> | Cannot | Enforce a rule | To block an action, use a deny rule or a hook in settings. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | At every session start |
+> | Cannot | Enforce a rule |
 
 ## Confused with: Settings
 
@@ -46,15 +46,15 @@ Instructions are guidance the model reads. Settings are rules Claude Code enforc
 | Field | Text |
 |---|---|
 | Identify by | A folder with a SKILL.md file. |
-| What | A skill is a written procedure that Claude Code loads when a task needs it. You can also run one by name, such as /deploy. |
-| So what | Steps that matter only for some tasks belong in a skill, so they don’t take up room in every session. |
+| What | A skill is a written procedure that Claude Code loads when a task needs it, or when you type its name, such as /deploy. An Accidental Guide to: Agent Skills explains skills. |
+| So what | Steps needed only for some tasks belong in a skill, so they don’t fill every session. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | Name and description at startup | The rest loads when Claude Code or you call the skill. |
-> | Cannot | Add a tool | A skill that reads a database still needs a tool that reaches it. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | Description at startup |
+> | Cannot | Add a tool |
 
 ## Confused with: Instructions file
 
@@ -65,15 +65,15 @@ An instructions file loads in full every session. A skill loads in full only whe
 | Field | Text |
 |---|---|
 | Identify by | An entry under mcpServers, with a start command or a URL. |
-| What | An MCP server is a separate program that gives Claude Code tools for another system. Add one with claude mcp add. |
-| So what | Servers in a project’s .mcp.json ask for your approval before first use, so a cloned repository can’t connect servers without you. |
+| What | An MCP server is a separate program that gives Claude Code tools for another system. Add one with claude mcp add. An Accidental Guide to: Model Context Protocol explains MCP servers. |
+| So what | Servers in a project’s .mcp.json wait for your approval, so a cloned repository can’t connect them without you. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | When the session starts | Claude Code connects and gets the server’s list of tools. |
-> | Cannot | Act by itself | Nothing happens until the model calls one of the server’s tools. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | When the session starts |
+> | Cannot | Act on its own |
 
 ## Confused with: Plugin
 
@@ -84,34 +84,34 @@ A plugin can bring its own MCP server. You add or remove that server along with 
 | Field | Text |
 |---|---|
 | Identify by | A folder with .claude-plugin/plugin.json. |
-| What | A plugin packages skills, agent definitions, hooks and MCP servers to install as one unit. Most come from a marketplace, a catalog you add once with /plugin marketplace add. |
-| So what | An enabled plugin is part of every session, and what it runs, it runs as you. Check what a plugin adds before you install it. |
+| What | A plugin bundles skills, hooks and MCP servers. Most come from a marketplace. An Accidental Guide to: Plugins, Connectors, and Marketplaces explains plugins. |
+| So what | An enabled plugin is part of every session and runs as you. Check what a plugin adds before you install it. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | At startup, when enabled | An enabledPlugins entry in a settings file turns it on. |
-> | Cannot | Install itself for teammates | A project entry turns the plugin on for them, but each person still installs it once. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | At startup, if turned on |
+> | Cannot | Install for teammates |
 
 ## Confused with: Skill
 
-A skill is one folder you can copy in yourself. A plugin is a package, usually from a marketplace, that can carry many skills and other parts.
+A skill is one folder you can copy in yourself. A plugin is a package that can carry many skills and other parts.
 
 # Settings {#entry num=05 mono=Se}
 
 | Field | Text |
 |---|---|
 | Identify by | settings.json, settings.local.json or managed-settings.json. |
-| What | Settings are JSON files that control which commands run without asking, which hooks run and which plugins are on. |
-| So what | Permission rules allow, ask about or deny tool calls. Hooks are commands Claude Code runs at set points, such as before a tool call. |
+| What | Settings are JSON files that decide which commands run without asking, which hooks run and which plugins are on. |
+| So what | Permission rules allow, ask about or deny tool calls. Hooks run commands at set points, such as before a tool call. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Loads | At startup, and again on save | Claude Code watches the files, so most edits apply right away. |
-> | Cannot | Override your organization | Nothing in your own files changes a managed setting. |
+> | Field | Short answer |
+> |---|---|
+> | Loads | At startup and on save |
+> | Cannot | Override your organization |
 
 ## Confused with: Instructions file
 
@@ -119,7 +119,7 @@ Claude Code enforces settings. The model reads an instructions file as guidance.
 
 # Where do the<br/>files live? {#where}
 
-Most setup sits in two .claude/ folders, one in your home folder and one in the project. The group names are the scope names the Claude Code docs use.
+Most setup sits in two .claude/ folders, one in your home folder and one in the project.
 
 | User: you, in every project | Where |
 |---|---|
@@ -155,25 +155,25 @@ Some kinds add up across places. For others, one place wins.
 | Thing | When it’s set in more than one place |
 |---|---|
 | Settings | Highest first: managed, the --settings flag, local, project, user. Lists such as permission rules combine. |
-| Permission rules | All rules count. Deny is checked first, then ask, then allow, so a deny anywhere blocks the call. |
+| Permission rules | Deny is checked first, then ask, then allow, so a deny anywhere blocks the call. |
 | Hooks | All of them run. |
 | Instructions | All of them load. The file closest to where you started is read last. |
 | Skills | Same name: managed, then user, then project. Plugin skills carry the plugin’s name, so they don’t clash. |
-| MCP servers | Same name: local, then project, then user, then plugins. The whole entry comes from one place. |
+| MCP servers | Same name: local, then project, then user, then plugins. |
 | Plugins | Local, then project, then user. |
 
-Nothing in your own files or on the command line changes a managed setting. Run /status to see which managed source applies.
+Run /status to see which managed settings apply.
 
 # The same things<br/>in other tools {#elsewhere}
 
-Each of these tools has its own guide. The paths are as of October 2026.
+Each of these tools has its own guide.
 
 | Guide | What to look for there |
 |---|---|
-| An Accidental Guide to: Claude Desktop | Most setup is done in the app itself. Local MCP servers go in claude_desktop_config.json. |
+| An Accidental Guide to: Claude Desktop | Most setup is in the app. Local MCP servers go in claude_desktop_config.json. |
 | An Accidental Guide to: GitHub Copilot CLI | AGENTS.md or .github/copilot-instructions.md, .github/skills/, and ~/.copilot/ for settings and MCP servers. |
-| An Accidental Guide to: Codex | AGENTS.md, .agents/skills/, and ~/.codex/config.toml for settings and MCP servers. |
-| An Accidental Guide to: Visual Studio and VS Code | .github/copilot-instructions.md, .github/skills/ in VS Code, and a .mcp.json file for MCP servers. |
+| An Accidental Guide to: OpenAI Codex | AGENTS.md, .agents/skills/, and ~/.codex/config.toml for settings and MCP servers. |
+| An Accidental Guide to: VS Code and Visual Studio | .github/copilot-instructions.md, .github/skills/ in VS Code, and a .mcp.json file for MCP servers. |
 
 Codex, GitHub Copilot CLI and VS Code read AGENTS.md, and Claude Code reads it when there’s no CLAUDE.md. GitHub Copilot CLI and VS Code also read .claude/skills/.
 

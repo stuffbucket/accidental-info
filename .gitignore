@@ -10,3 +10,5 @@ site/public/guides.json
 site/public/social.png
 site/src/content/docs/guides/
 site/src/content/docs/drafts/
+# Written by site/scripts/copy_template.mjs
+site/public/accidental-guide-template.docx

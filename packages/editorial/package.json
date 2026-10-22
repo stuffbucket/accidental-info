@@ -1,0 +1,8 @@
+{
+  "name": "@accidentalguide/editorial",
+  "private": true,
+  "description": "The skills, concept registry and briefs used to plan, write, build and review the guides",
+  "scripts": {
+    "test": "python3 -m py_compile skills/*/scripts/*.py && for f in skills/*/scripts/*.sh; do bash -n \"$f\" || exit 1; done"
+  }
+}

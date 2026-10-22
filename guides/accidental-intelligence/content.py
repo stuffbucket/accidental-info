@@ -4,7 +4,7 @@
 # standard library only) into the names that build_guide.py and build_docx.py use, so
 # the layout code doesn't change when the text does. See README.md for the format.
 #
-# Voice: Brian's (see contrib/software-factories/sol/BRIEF-SERIES.md). Plain-spoken and
+# Voice: see packages/editorial/skills/accidental-guide-write/references/voice.md. Plain-spoken and
 # direct. Sentences run as long as the thought needs, without going staccato.
 # Contractions are fine. State the point, then the reason. No taglines, slogans, rhetorical
 # questions, embedded questions, vague stand-ins such as "around", "not X but Y", em-dash asides,

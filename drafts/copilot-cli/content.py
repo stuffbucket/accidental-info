@@ -17,7 +17,7 @@
 # basics (agent, harness, skill, tool, session, context window) belong to An Accidental
 # Guide to: Agents, Harnesses, Skills, and Tools and are never redefined here. This guide's
 # parts: instructions file, skill, MCP server, custom agent, settings. Each part but settings is
-# defined in its owning guide (contrib/accidental-guides/registry.md), so an entry covers only
+# defined in its owning guide (packages/editorial/registry.md), so an entry covers only
 # what is specific to Copilot CLI and names that guide. Paths are exact
 # and come from GitHub's documentation or the CLI's own help, as of October 2026. The
 # sibling guides (Claude Code, Claude Desktop, Codex, Visual Studio and VS Code) share this

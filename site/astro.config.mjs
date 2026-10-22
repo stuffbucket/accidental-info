@@ -4,13 +4,18 @@ import starlight from "@astrojs/starlight";
 
 import tableFocus from "./scripts/table-focus.mjs";
 
+// Where the site is served. The Pages workflow sets SITE_ORIGIN and SITE_BASE from actions/configure-pages, so
+// the site follows the repository's custom domain (https://accidental.info, at the root) once it is set.
+const origin = process.env.SITE_ORIGIN || "https://stuffbucket.github.io";
+const base = `${(process.env.SITE_BASE ?? "/accidentalguide").replace(/\/$/, "")}/`;
+
 // The share image for pages without their own. scripts/guide_pages.py writes it, and gives each guide's page its
 // own card in the page's front matter.
-const socialImage = "https://stuffbucket.github.io/accidentalguide/social.png";
+const socialImage = new URL(`${base}social.png`, origin).href;
 
 export default defineConfig({
-  site: "https://stuffbucket.github.io",
-  base: "/accidentalguide/",
+  site: origin,
+  base,
   integrations: [
     // Wide tables scroll sideways; this lets a keyboard reach and scroll them, and turns them into cards on a phone.
     tableFocus(),

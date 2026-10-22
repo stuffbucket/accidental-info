@@ -1,0 +1,12 @@
+{
+  "name": "@accidentalguide/template",
+  "private": true,
+  "description": "A Word template for writing an Accidental Guide, built with the guides' own layout",
+  "license": "(MIT AND CC-BY-4.0)",
+  "scripts": {
+    "build": "../../.venv/bin/python ../../packages/pipeline/guide.py . && ../../.venv/bin/python rename.py"
+  },
+  "devDependencies": {
+    "@accidentalguide/pipeline": "workspace:*"
+  }
+}

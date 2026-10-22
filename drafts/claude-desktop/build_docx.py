@@ -699,8 +699,8 @@ def build(pdf_path, out):
     page_end(doc)
 
     props = doc.core_properties
-    props.title, props.subject, props.author = C.TITLE, C.SUBTITLE, "bstucker"
-    props.last_modified_by, props.revision = "bstucker", 1
+    props.title, props.subject, props.author = C.TITLE, C.SUBTITLE, "Accidental Guides"
+    props.last_modified_by, props.revision = "Accidental Guides", 1
     # Fixed dates, like the PDF's invariant mode.
     props.created = props.modified = props.last_printed = datetime(1999, 12, 31)
     props.comments = props.keywords = props.category = ""

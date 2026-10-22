@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "pages": "../.venv/bin/python scripts/guide_pages.py",
-    "dev": "../.venv/bin/python scripts/guide_pages.py && astro dev",
-    "build": "../.venv/bin/python scripts/guide_pages.py && astro build",
+    "dev": "../.venv/bin/python scripts/guide_pages.py && node scripts/copy_template.mjs && astro dev",
+    "build": "../.venv/bin/python scripts/guide_pages.py && node scripts/copy_template.mjs && astro build",
     "preview": "astro preview",
     "test": "../.venv/bin/python -m unittest discover -s scripts"
   },

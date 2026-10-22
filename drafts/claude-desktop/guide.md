@@ -3,16 +3,16 @@ title: Claude Desktop
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where Claude Desktop keeps its settings, as of October 2026.
 running_footer: Claude Desktop
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
-version: 0.1.1
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
+version: 0.2.1
 ---
 
 # What can you set up<br/>in Claude Desktop? {#why}
 
-In Claude Desktop you can tell Claude how to answer you, save the steps for tasks you repeat, connect Claude to the apps you use, and choose what Claude may do without asking. Most of these settings belong to your Claude account and also apply on claude.ai. A few belong to this computer only.
+In Claude Desktop you can tell Claude how to answer you, save the steps for tasks you repeat, connect Claude to the apps you use, and choose what Claude may do without asking. Most of these settings belong to your Claude account and also apply on claude.ai.
 
-You’ll find them in Settings and in Customize, in the left sidebar. For what a skill, a tool and an MCP server are, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
+You’ll find them in Settings and in Customize, in the left sidebar. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains the basics.
 
 > | Term | Meaning |
 > |---|---|
@@ -26,15 +26,15 @@ You’ll find them in Settings and in Customize, in the left sidebar. For what a
 
 | Field | Text |
 |---|---|
-| Identify by | Settings > General, and Set project instructions on a project’s page. |
-| What | Instructions are text you write for Claude to follow. The ones in Settings apply to all your chats, and project instructions apply only inside that project. |
-| So what | Put a preference you always want in Settings, and one that matters for a single piece of work in that project. |
+| Identify by | Settings > General, or a project’s page. |
+| What | Instructions are text you write for Claude to follow, in all your chats or in one project. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains instructions. |
+| So what | Put a preference you always want in Settings, and one for a single piece of work in that project. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Works in | Web, desktop and mobile | Instructions belong to your account. |
+> | Field | Short answer |
+> |---|---|
+> | Works in | Web, desktop, mobile |
 
 ## Confused with: Memory
 
@@ -45,14 +45,14 @@ Memory is what Claude picks up from your chats, in Settings > Memory. Instructio
 | Field | Text |
 |---|---|
 | Identify by | Customize > Skills. |
-| What | A skill is a saved set of steps for one kind of task. Turn on an example skill or upload your own, and Claude follows the steps when that task comes up. |
-| So what | You explain a task once instead of in every chat. Your skills also load in Claude Code when you sign in with the same account. |
+| What | A skill is a saved set of steps for one kind of task, which Claude follows when that task comes up. An Accidental Guide to: Agent Skills explains skills. |
+| So what | You explain a task once instead of in every chat. Skills need Code execution, in Settings > Capabilities. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Works in | Web, desktop and Claude Code | Skills need Code execution and file creation, in Settings > Capabilities. |
+> | Field | Short answer |
+> |---|---|
+> | Works in | Web, desktop and Claude Code |
 
 ## Confused with: Instructions
 
@@ -63,32 +63,32 @@ Instructions apply to every chat. A skill’s steps apply only to its kind of ta
 | Field | Text |
 |---|---|
 | Identify by | Customize > Connectors, or the + button in the message box. |
-| What | A connector is an MCP server on the internet, usually for a service you sign in to. You add it once and it works wherever you use Claude. |
-| So what | For each of a connector’s tools you choose Always allow, Needs approval or Blocked. Free plans can add one custom connector. |
+| What | A connector is an MCP server on the internet, usually for a service you sign in to. An Accidental Guide to: Model Context Protocol explains MCP servers. |
+| So what | For each of a connector’s tools you choose Always allow, Needs approval or Blocked. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Works in | Web, desktop and mobile | Local files and apps need a local MCP server instead. |
+> | Field | Short answer |
+> |---|---|
+> | Works in | Web, desktop, mobile |
 
 ## Confused with: Desktop extension
 
-A desktop extension is a local MCP server in a .mcpb file, installed in Settings > Extensions. Extensions run on this computer and work only in Claude Desktop and Claude Code.
+A desktop extension is a local MCP server in a .mcpb file, installed in Settings > Extensions. Extensions work only on this computer.
 
 # Plugins {#entry num=04 mono=Pl}
 
 | Field | Text |
 |---|---|
 | Identify by | Customize > Plugins, on the Discover tab. |
-| What | A plugin is a package of skills, connectors and sub-agents. Plugins are saved to your account, not to your computer. |
-| So what | One install sets up what you need for a role. Your organization may install some plugins for you. |
+| What | A plugin is a package of skills, connectors and sub-agents, saved to your account. An Accidental Guide to: Plugins, Connectors, and Marketplaces explains plugins. |
+| So what | One install sets up what you need for a role. Plugins need a paid plan, and your organization may install some for you. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Works in | Chat, Cowork and Claude Code | Paid plans only. A plugin with a local MCP server needs the desktop app. |
+> | Field | Short answer |
+> |---|---|
+> | Works in | Chat, Cowork and Claude Code |
 
 ## Confused with: Skills
 
@@ -98,15 +98,15 @@ A skill is one set of steps. A plugin can hold several skills, plus connectors a
 
 | Field | Text |
 |---|---|
-| Identify by | Settings, from your initials in the lower left, and the permission setting in the message box. |
-| What | Settings holds your account’s preferences, such as General, Capabilities and Memory. Claude Desktop adds Extensions and Developer, which apply to this computer only. |
-| So what | The permission setting decides how much Claude does without asking. The default is Manual, where Claude asks before it acts. |
+| Identify by | Settings, under your initials, and the permission setting in the message box. |
+| What | Settings holds your account’s preferences, such as General, Capabilities and Memory. Extensions and Developer apply to this computer only. |
+| So what | The permission setting decides how much Claude does without asking. The default is Manual. |
 
 ## Field marks
 
-> | Field | Short answer | Detail |
-> |---|---|---|
-> | Works in | Your account and this computer | Owners and IT can turn some options off. |
+> | Field | Short answer |
+> |---|---|
+> | Works in | Account and computer |
 
 ## Confused with: Customize
 
@@ -114,7 +114,7 @@ Customize is where you add skills, connectors and plugins. Settings is where you
 
 # Where things live {#where}
 
-Most things live in your Claude account and show up wherever you sign in. A few live on this computer and work only in Claude Desktop.
+Most things live in your Claude account and show up wherever you sign in. A few live on this computer only.
 
 | What | Lives in | Where to find it |
 |---|---|---|
@@ -124,13 +124,12 @@ Most things live in your Claude account and show up wherever you sign in. A few 
 | Connectors | Account | Customize > Connectors, then a connector for its tool permissions |
 | Plugins | Account | Customize > Plugins |
 | Code execution | Account | Settings > Capabilities |
-| Folder access | This computer | Settings, under Trusted folders |
-| Desktop extensions | This computer | Settings > Extensions |
-| Local MCP servers | This computer | Settings > Developer > Edit Config<br/>macOS: ~/Library/Application Support/Claude/claude_desktop_config.json<br/>Windows: %APPDATA%\Claude\claude_desktop_config.json |
-| MCP logs | This computer | macOS: ~/Library/Logs/Claude<br/>Windows: %APPDATA%\Claude\logs |
-| Code tab | This computer | ~/.claude/settings.json and ~/.claude/skills, the same files Claude Code uses |
+| Folder access | Computer | Settings, under Trusted folders |
+| Desktop extensions | Computer | Settings > Extensions |
+| Local MCP servers | Computer | Settings > Developer > Edit Config<br/>macOS: ~/Library/Application Support/Claude/claude_desktop_config.json<br/>Windows: %APPDATA%\Claude\claude_desktop_config.json |
+| Code tab | Computer | ~/.claude/settings.json and ~/.claude/skills, the same files Claude Code uses |
 
-Chats and Cowork use what’s in Customize. The Code tab reads ~/.claude instead, like Claude Code; see An Accidental Guide to: Claude Code.
+Chats and Cowork use what’s in Customize. The Code tab reads ~/.claude, as Claude Code does. See An Accidental Guide to: Claude Code.
 
 > [!TIP]
 > After you edit claude_desktop_config.json, quit Claude Desktop completely and open it again.
@@ -147,7 +146,7 @@ On Free, Pro and Max plans you set everything yourself. On Team and Enterprise p
 | Desktop extensions | Install allowed ones | Connectors, Desktop tab: the allowlist |
 | Memory | Turn on or off | Capabilities: allow memory |
 
-On computers your company manages, IT can set the desktop app’s options in com.anthropic.claudefordesktop on macOS or HKLM\SOFTWARE\Policies\Claude on Windows, for example to turn off desktop extensions. These override the allowlist in the app. If something is missing, ask your owner.
+On computers your company manages, IT can set the desktop app’s options in com.anthropic.claudefordesktop on macOS or HKLM\SOFTWARE\Policies\Claude on Windows.
 
 # Same thing elsewhere {#elsewhere}
 
@@ -155,13 +154,13 @@ Coding tools keep the same kinds of things in their own files.
 
 | In Claude Desktop | Elsewhere |
 |---|---|
-| Instructions | CLAUDE.md in Claude Code, AGENTS.md in Codex, copilot-instructions.md or AGENTS.md in Copilot CLI and VS Code |
-| Skills | A folder with a SKILL.md file, in Claude Code under ~/.claude/skills. Codex, Copilot CLI and VS Code have skills too. |
+| Instructions | CLAUDE.md in Claude Code. AGENTS.md in Codex, Copilot CLI and VS Code. |
+| Skills | A folder with a SKILL.md file, under ~/.claude/skills in Claude Code. Codex, Copilot CLI and VS Code have skills too. |
 | Connectors | MCP servers: .mcp.json in Claude Code, ~/.codex/config.toml in Codex, the User or Workspace group in VS Code |
 | Plugins | Plugins in all four |
 | Settings and permissions | ~/.claude/settings.json in Claude Code, approval_policy and sandbox_mode in ~/.codex/config.toml |
 
-See An Accidental Guide to: Claude Code, An Accidental Guide to: GitHub Copilot CLI, An Accidental Guide to: Codex and An Accidental Guide to: Visual Studio and VS Code.
+See An Accidental Guide to: Claude Code, An Accidental Guide to: GitHub Copilot CLI, An Accidental Guide to: OpenAI Codex and An Accidental Guide to: VS Code and Visual Studio.
 
 # Sources {#sources}
 

@@ -1,0 +1,1566 @@
+{
+  "updated": "2026-10-22",
+  "source": "packages/editorial/registry.md",
+  "families": [
+    {
+      "key": "Ru",
+      "name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29"
+    },
+    {
+      "key": "Wr",
+      "name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF"
+    },
+    {
+      "key": "Ck",
+      "name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C"
+    },
+    {
+      "key": "Us",
+      "name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822"
+    },
+    {
+      "key": "Dm",
+      "name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF"
+    },
+    {
+      "key": "Nu",
+      "name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF"
+    }
+  ],
+  "reserved_codes": {
+    "Ru": "family tile in accidental-intelligence",
+    "Wr": "family tile in accidental-intelligence",
+    "Ck": "family tile in accidental-intelligence",
+    "Us": "family tile in accidental-intelligence",
+    "Dm": "family tile in accidental-intelligence",
+    "Nu": "family tile in accidental-intelligence"
+  },
+  "exceptions": [
+    {
+      "guide": "agents-harnesses-skills-tools",
+      "concept": "Harness",
+      "color_kept": "blue",
+      "family_color": "yellow"
+    },
+    {
+      "guide": "agents-harnesses-skills-tools",
+      "concept": "Agent",
+      "color_kept": "green",
+      "family_color": "yellow"
+    },
+    {
+      "guide": "agents-harnesses-skills-tools",
+      "concept": "Tool",
+      "color_kept": "pink",
+      "family_color": "red-orange"
+    }
+  ],
+  "concepts": [
+    {
+      "concept": "Model",
+      "code": "Mo",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "agents-harnesses-skills-tools",
+      "appears_in": [
+        {
+          "guide": "agents-harnesses-skills-tools",
+          "entry": "Model",
+          "num": "01",
+          "code_now": "Mo",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled",
+          "color_kept": "yellow",
+          "note": "base guide keeps its colors"
+        }
+      ]
+    },
+    {
+      "concept": "Harness",
+      "code": "Ha",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "agents-harnesses-skills-tools",
+      "appears_in": [
+        {
+          "guide": "agents-harnesses-skills-tools",
+          "entry": "Harness",
+          "num": "02",
+          "code_now": "Ha",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled",
+          "color_kept": "blue",
+          "note": "base guide keeps its colors"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Harness",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Agent",
+      "code": "Ag",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "agents-harnesses-skills-tools",
+      "appears_in": [
+        {
+          "guide": "agents-harnesses-skills-tools",
+          "entry": "Agent",
+          "num": "03",
+          "code_now": "Ag",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled",
+          "color_kept": "green",
+          "note": "base guide keeps its colors"
+        },
+        {
+          "guide": "copilot-cli",
+          "entry": "Custom agent",
+          "num": "04",
+          "code_now": "Ag",
+          "color_now": "yellow",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "visual-studio-and-vs-code",
+          "entry": "Custom agent",
+          "num": "02",
+          "code_now": "Ag",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Agent, Main agent",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Tool",
+      "code": "To",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "agents-harnesses-skills-tools",
+      "appears_in": [
+        {
+          "guide": "agents-harnesses-skills-tools",
+          "entry": "Tool",
+          "num": "05",
+          "code_now": "To",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled",
+          "color_kept": "pink",
+          "note": "base guide keeps its colors"
+        },
+        {
+          "guide": "plugins-and-marketplaces",
+          "entry": "Tools",
+          "num": "01",
+          "code_now": "Tl",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Tool",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Instructions file",
+      "code": "In",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "agents-harnesses-skills-tools",
+      "appears_in": [
+        {
+          "guide": "claude-code",
+          "entry": "Instructions file",
+          "num": "01",
+          "code_now": "In",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "claude-desktop",
+          "entry": "Instructions",
+          "num": "01",
+          "code_now": "In",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "codex",
+          "entry": "Instructions file",
+          "num": "01",
+          "code_now": "In",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "copilot-cli",
+          "entry": "Instructions file",
+          "num": "01",
+          "code_now": "In",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "visual-studio-and-vs-code",
+          "entry": "Instructions file",
+          "num": "01",
+          "code_now": "In",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "plugins-and-marketplaces",
+          "entry": "Instructions",
+          "num": "02",
+          "code_now": "In",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Instructions file",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Permissions",
+      "code": "Pe",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "agents-harnesses-skills-tools",
+      "appears_in": [
+        {
+          "guide": "codex",
+          "entry": "Permissions",
+          "num": "05",
+          "code_now": "Pe",
+          "color_now": "pink",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Permissions",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Settings",
+      "code": "Se",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": null,
+      "appears_in": [
+        {
+          "guide": "claude-code",
+          "entry": "Settings",
+          "num": "05",
+          "code_now": "Se",
+          "color_now": "pink",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "claude-desktop",
+          "entry": "Settings and permissions",
+          "num": "05",
+          "code_now": "Se",
+          "color_now": "pink",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "codex",
+          "entry": "Config file",
+          "num": "04",
+          "code_now": "Cf",
+          "color_now": "yellow",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "copilot-cli",
+          "entry": "Settings",
+          "num": "05",
+          "code_now": "Se",
+          "color_now": "pink",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "visual-studio-and-vs-code",
+          "entry": "Setting",
+          "num": "05",
+          "code_now": "Se",
+          "color_now": "pink",
+          "role": "reference",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Skill",
+      "code": "Sk",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "skills",
+      "appears_in": [
+        {
+          "guide": "agents-harnesses-skills-tools",
+          "entry": "Skill",
+          "num": "04",
+          "code_now": "Sk",
+          "color_now": "purple",
+          "role": "reference",
+          "tile": "filled",
+          "color_kept": "purple",
+          "note": "base guide keeps its colors"
+        },
+        {
+          "guide": "claude-code",
+          "entry": "Skill",
+          "num": "02",
+          "code_now": "Sk",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "claude-desktop",
+          "entry": "Skills",
+          "num": "02",
+          "code_now": "Sk",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "codex",
+          "entry": "Skill",
+          "num": "02",
+          "code_now": "Sk",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "copilot-cli",
+          "entry": "Skill",
+          "num": "02",
+          "code_now": "Sk",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "visual-studio-and-vs-code",
+          "entry": "Skill",
+          "num": "03",
+          "code_now": "Sk",
+          "color_now": "purple",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Skill",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Description",
+      "code": "Ds",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "skills",
+      "appears_in": [
+        {
+          "guide": "skills",
+          "entry": "Description",
+          "num": "01",
+          "code_now": "De",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Skill instructions",
+      "code": "Is",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "skills",
+      "appears_in": [
+        {
+          "guide": "skills",
+          "entry": "Instructions",
+          "num": "02",
+          "code_now": "In",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Script",
+      "code": "Sr",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "skills",
+      "appears_in": [
+        {
+          "guide": "skills",
+          "entry": "Script",
+          "num": "03",
+          "code_now": "Sc",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Reference file",
+      "code": "Rf",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "skills",
+      "appears_in": [
+        {
+          "guide": "skills",
+          "entry": "Reference file",
+          "num": "04",
+          "code_now": "Rf",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Asset",
+      "code": "At",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "skills",
+      "appears_in": [
+        {
+          "guide": "skills",
+          "entry": "Asset",
+          "num": "05",
+          "code_now": "As",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "MCP server",
+      "code": "Mc",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "mcp",
+      "appears_in": [
+        {
+          "guide": "mcp",
+          "entry": "Server",
+          "num": "01",
+          "code_now": "Sv",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "agents-harnesses-skills-tools",
+          "entry": "MCP server",
+          "num": "06",
+          "code_now": "Mc",
+          "color_now": "red-orange",
+          "role": "reference",
+          "tile": "filled",
+          "color_kept": "red-orange",
+          "note": "base guide keeps its colors"
+        },
+        {
+          "guide": "claude-code",
+          "entry": "MCP server",
+          "num": "03",
+          "code_now": "Mc",
+          "color_now": "purple",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "claude-desktop",
+          "entry": "Connectors",
+          "num": "03",
+          "code_now": "Cn",
+          "color_now": "purple",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "codex",
+          "entry": "MCP server",
+          "num": "03",
+          "code_now": "Mc",
+          "color_now": "purple",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "copilot-cli",
+          "entry": "MCP server",
+          "num": "03",
+          "code_now": "Mc",
+          "color_now": "purple",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "visual-studio-and-vs-code",
+          "entry": "MCP server",
+          "num": "04",
+          "code_now": "Mc",
+          "color_now": "yellow",
+          "role": "reference",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Client",
+      "code": "Ct",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "mcp",
+      "appears_in": [
+        {
+          "guide": "mcp",
+          "entry": "Client",
+          "num": "02",
+          "code_now": "Cl",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Server entry",
+      "code": "En",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "mcp",
+      "appears_in": [
+        {
+          "guide": "mcp",
+          "entry": "Server entry",
+          "num": "03",
+          "code_now": "Se",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Transport",
+      "code": "Tp",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "mcp",
+      "appears_in": [
+        {
+          "guide": "mcp",
+          "entry": "Transport",
+          "num": "04",
+          "code_now": "Tr",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Hook",
+      "code": "Hk",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "plugins-and-marketplaces",
+      "appears_in": [
+        {
+          "guide": "plugins-and-marketplaces",
+          "entry": "Hooks",
+          "num": "03",
+          "code_now": "Hk",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Plugin",
+      "code": "Pl",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "plugins-and-marketplaces",
+      "appears_in": [
+        {
+          "guide": "plugins-and-marketplaces",
+          "entry": "Packages",
+          "num": "04",
+          "code_now": "Pk",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "claude-code",
+          "entry": "Plugin",
+          "num": "04",
+          "code_now": "Pl",
+          "color_now": "yellow",
+          "role": "reference",
+          "tile": "filled"
+        },
+        {
+          "guide": "claude-desktop",
+          "entry": "Plugins",
+          "num": "04",
+          "code_now": "Pl",
+          "color_now": "yellow",
+          "role": "reference",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Marketplace",
+      "code": "Mk",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "plugins-and-marketplaces",
+      "appears_in": [
+        {
+          "guide": "plugins-and-marketplaces",
+          "entry": "Marketplaces",
+          "num": "05",
+          "code_now": "Mk",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Token",
+      "code": "Tk",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "context-windows",
+      "appears_in": [
+        {
+          "guide": "context-windows",
+          "entry": "Token",
+          "num": "01",
+          "code_now": "Tk",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Startup context",
+      "code": "St",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "context-windows",
+      "appears_in": [
+        {
+          "guide": "context-windows",
+          "entry": "Startup context",
+          "num": "02",
+          "code_now": "St",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Compaction",
+      "code": "Cp",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "context-windows",
+      "appears_in": [
+        {
+          "guide": "context-windows",
+          "entry": "Compaction",
+          "num": "03",
+          "code_now": "Cp",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "New session",
+      "code": "Ns",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "context-windows",
+      "appears_in": [
+        {
+          "guide": "context-windows",
+          "entry": "New session",
+          "num": "04",
+          "code_now": "Ns",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Spec",
+      "code": "Sp",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "specs-and-reviews",
+      "appears_in": [
+        {
+          "guide": "specs-and-reviews",
+          "entry": "Spec",
+          "num": "01",
+          "code_now": "Sp",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "software-factories",
+          "entry": "Spec",
+          "num": "01",
+          "code_now": "Sp",
+          "color_now": "blue",
+          "role": "reference",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Work item",
+      "code": "Wi",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "specs-and-reviews",
+      "appears_in": [
+        {
+          "guide": "specs-and-reviews",
+          "entry": "Work item",
+          "num": "02",
+          "code_now": "Wi",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "software-factories",
+          "entry": "Work item",
+          "num": "02",
+          "code_now": "Wi",
+          "color_now": "green",
+          "role": "reference",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Tracker",
+      "code": "Tr",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "specs-and-reviews",
+      "appears_in": [
+        {
+          "guide": "specs-and-reviews",
+          "entry": "Tracker",
+          "num": "03",
+          "code_now": "Tr",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Acceptance criteria",
+      "code": "Ac",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "specs-and-reviews",
+      "appears_in": [
+        {
+          "guide": "specs-and-reviews",
+          "entry": "Acceptance criteria",
+          "num": "04",
+          "code_now": "Ac",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Review",
+      "code": "Rv",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "specs-and-reviews",
+      "appears_in": [
+        {
+          "guide": "specs-and-reviews",
+          "entry": "Review",
+          "num": "05",
+          "code_now": "Rv",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Orchestrator",
+      "code": "Or",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "software-factories",
+      "appears_in": [
+        {
+          "guide": "software-factories",
+          "entry": "Orchestrator",
+          "num": "03",
+          "code_now": "Or",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Agent session",
+      "code": "As",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "software-factories",
+      "appears_in": [
+        {
+          "guide": "software-factories",
+          "entry": "Agent session",
+          "num": "04",
+          "code_now": "As",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Agent session",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Gate",
+      "code": "Ga",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "software-factories",
+      "appears_in": [
+        {
+          "guide": "software-factories",
+          "entry": "Gate",
+          "num": "05",
+          "code_now": "Ga",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "harness-engineering",
+          "entry": "Gate",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        },
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Gate",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Scenario",
+      "code": "Sn",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "lights-off-software-factories",
+      "appears_in": [
+        {
+          "guide": "lights-off-software-factories",
+          "entry": "Scenario",
+          "num": "01",
+          "code_now": "Sn",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Digital twin",
+      "code": "Dt",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "lights-off-software-factories",
+      "appears_in": [
+        {
+          "guide": "lights-off-software-factories",
+          "entry": "Digital twin",
+          "num": "02",
+          "code_now": "Dt",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Satisfaction",
+      "code": "Sa",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "lights-off-software-factories",
+      "appears_in": [
+        {
+          "guide": "lights-off-software-factories",
+          "entry": "Satisfaction",
+          "num": "03",
+          "code_now": "Sa",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Closed loop",
+      "code": "Cl",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "lights-off-software-factories",
+      "appears_in": [
+        {
+          "guide": "lights-off-software-factories",
+          "entry": "Closed loop",
+          "num": "04",
+          "code_now": "Cl",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Check",
+      "code": "Ch",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "harness-engineering",
+      "appears_in": [
+        {
+          "guide": "harness-engineering",
+          "entry": "Check",
+          "num": "01",
+          "code_now": "Ch",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Check",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Review agent",
+      "code": "Ra",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "harness-engineering",
+      "appears_in": [
+        {
+          "guide": "harness-engineering",
+          "entry": "Review agent",
+          "num": "02",
+          "code_now": "Ra",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Eval",
+      "code": "Ev",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "harness-engineering",
+      "appears_in": [
+        {
+          "guide": "harness-engineering",
+          "entry": "Eval",
+          "num": "03",
+          "code_now": "Ev",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Outer loop",
+      "code": "Ol",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "harness-engineering",
+      "appears_in": [
+        {
+          "guide": "harness-engineering",
+          "entry": "Outer loop",
+          "num": "04",
+          "code_now": "Ol",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Progress file",
+      "code": "Pf",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "harness-engineering",
+      "appears_in": [
+        {
+          "guide": "harness-engineering",
+          "entry": "Progress file",
+          "num": "05",
+          "code_now": "Pf",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Sandbox",
+      "code": "Sb",
+      "family": "Us",
+      "family_name": "Things an agent uses",
+      "color": "red-orange",
+      "token": "danger",
+      "hex": "#F24822",
+      "owner": "harness-engineering",
+      "appears_in": [
+        {
+          "guide": "harness-engineering",
+          "entry": "Sandbox",
+          "num": "06",
+          "code_now": "Sb",
+          "color_now": "red-orange",
+          "role": "owner",
+          "tile": "filled"
+        },
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Sandbox",
+          "num": null,
+          "code_now": null,
+          "color_now": "outline",
+          "role": "reference",
+          "tile": "outlined"
+        }
+      ]
+    },
+    {
+      "concept": "Accepted output",
+      "code": "Ao",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "running-a-software-factory",
+      "appears_in": [
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Accepted output",
+          "num": "01",
+          "code_now": "Ao",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Boundary",
+      "code": "Bd",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "running-a-software-factory",
+      "appears_in": [
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Boundary",
+          "num": "02",
+          "code_now": "Bd",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Identity",
+      "code": "Id",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "running-a-software-factory",
+      "appears_in": [
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Identity",
+          "num": "03",
+          "code_now": "Id",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Evidence",
+      "code": "Ed",
+      "family": "Ck",
+      "family_name": "Things that check",
+      "color": "green",
+      "token": "success",
+      "hex": "#14AE5C",
+      "owner": "running-a-software-factory",
+      "appears_in": [
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Evidence",
+          "num": "04",
+          "code_now": "Ed",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Back pressure",
+      "code": "Bp",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "running-a-software-factory",
+      "appears_in": [
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Back pressure",
+          "num": "05",
+          "code_now": "Bp",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Metric",
+      "code": "Me",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "running-a-software-factory",
+      "appears_in": [
+        {
+          "guide": "running-a-software-factory",
+          "entry": "Metric",
+          "num": "06",
+          "code_now": "Me",
+          "color_now": "red-orange",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Share of code",
+      "code": "Sc",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "software-factory-claims",
+      "appears_in": [
+        {
+          "guide": "software-factory-claims",
+          "entry": "Share of code",
+          "num": "01",
+          "code_now": "Sc",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Multiplier",
+      "code": "Mu",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "software-factory-claims",
+      "appears_in": [
+        {
+          "guide": "software-factory-claims",
+          "entry": "Multiplier",
+          "num": "02",
+          "code_now": "Mu",
+          "color_now": "green",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Benchmark",
+      "code": "Bm",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "software-factory-claims",
+      "appears_in": [
+        {
+          "guide": "software-factory-claims",
+          "entry": "Benchmark",
+          "num": "03",
+          "code_now": "Bm",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Demo",
+      "code": "De",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "software-factory-claims",
+      "appears_in": [
+        {
+          "guide": "software-factory-claims",
+          "entry": "Demo",
+          "num": "04",
+          "code_now": "De",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Headcount",
+      "code": "Hc",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "software-factory-claims",
+      "appears_in": [
+        {
+          "guide": "software-factory-claims",
+          "entry": "Headcount",
+          "num": "05",
+          "code_now": "Hc",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Dark factory",
+      "code": "Df",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "software-factory-claims",
+      "appears_in": [
+        {
+          "guide": "software-factory-claims",
+          "entry": "Dark factory",
+          "num": "06",
+          "code_now": "Df",
+          "color_now": "red-orange",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    }
+  ]
+}

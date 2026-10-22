@@ -566,7 +566,7 @@ def page_end(c):
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)
-    c.setTitle(C.TITLE); c.setAuthor("bstucker"); c.setSubject(C.SUBTITLE)
+    c.setTitle(C.TITLE); c.setAuthor("Accidental Guides"); c.setSubject(C.SUBTITLE)
     page_cover(c); c.showPage()
     n = 2
     for fn in (page_why, page_context, page_fit, page_legend):

@@ -16,6 +16,12 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    outputs:
+      origin: ${{ steps.pages.outputs.origin }}
+      base_path: ${{ steps.pages.outputs.base_path }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       # Node, pnpm and Python at the versions in mise.toml.
@@ -24,9 +30,16 @@ jobs:
           cache: true
       - name: Install packages
         run: pnpm install --frozen-lockfile
+      # Where Pages serves the site: https://stuffbucket.github.io/accidentalguide, or the custom domain
+      # (https://accidental.info, at the root) once one is set.
+      - id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       # Builds every guide (failing if a PDF differs from its expected.sha256), then the site.
       - name: Build and test
         run: pnpm turbo run build test
+        env:
+          SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
+          SITE_BASE: ${{ steps.pages.outputs.base_path }}
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site/dist
@@ -77,4 +90,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          SITE_ORIGIN: ${{ needs.build.outputs.origin }}
+          SITE_BASE: ${{ needs.build.outputs.base_path }}
           TARGET: ${{ github.sha }}

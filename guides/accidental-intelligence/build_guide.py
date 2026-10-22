@@ -81,7 +81,7 @@ TOKENS = {  # token: base hex
     "warning": "#FFCD29", "success": "#14AE5C", "assistive": "#E83FBF",
 }
 # The color families: each color is one kind of thing, the same for every guide in the series
-# (see contrib/software-factories/plan/colors.md). The catalog's own tiles are the six families,
+# (see packages/editorial/registry.md). The catalog's own tiles are the six families,
 # keyed as in guide.md; every part on the map takes its family's color. The family for each
 # color was picked to keep the most parts at the color they had under the entry-number rule.
 FAMILY_TOKEN = {"Ru": "warning", "Wr": "brand", "Ck": "figjam", "Us": "danger", "Dm": "success",
@@ -456,7 +456,7 @@ def page_end(c):
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)
-    c.setTitle(C.TITLE); c.setAuthor("bstucker"); c.setSubject(C.SUBTITLE)
+    c.setTitle(C.TITLE); c.setAuthor("Accidental Guides"); c.setSubject(C.SUBTITLE)
     page_cover(c); c.showPage()
     n = 2
     for fn in (page_why, page_start, page_colours, page_map):

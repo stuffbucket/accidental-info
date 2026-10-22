@@ -44,7 +44,7 @@ def hexof(color):
     return color.hexval()[2:].upper()
 
 
-INK, GREY, HAIR = hexof(G.INK), hexof(G.GREY), hexof(G.HAIR)
+INK, GREY, PANEL = hexof(G.INK), hexof(G.GREY), hexof(G.PANEL)
 
 
 # ---------- text ----------
@@ -201,15 +201,24 @@ def _margins(table, top=3.5, bottom=3, left=0, right=4):
     table._tbl.tblPr.append(mar)
 
 
-def grid(doc, col_widths, rows, header=None, size=6.6, pad=(3.5, 3)):
-    """A table laid out like the PDF's: no vertical lines, a heavy rule above the first
-    row and hairlines between rows, and an optional grey bold header. Each row is a list
-    of cell writers, functions that fill one cell's paragraph."""
+def _shade(cell, color):
+    shd = OxmlElement("w:shd")
+    shd.set(qn("w:val"), "clear")
+    shd.set(qn("w:color"), "auto")
+    shd.set(qn("w:fill"), color)
+    cell._tc.get_or_add_tcPr().append(shd)
+
+
+def grid(doc, col_widths, rows, header=None, size=6.6, pad=(3.5, 3), grey=False):
+    """A table laid out like the PDF's: no vertical lines and a heavy rule above the first
+    row, and an optional grey bold header. On a grey block (grey=True) the cells are shaded
+    and there is no rule. Each row is a list of cell writers, functions that fill one cell's
+    paragraph."""
     table = doc.add_table(rows=0, cols=len(col_widths))
     table.alignment = WD_TABLE_ALIGNMENT.LEFT
     table.autofit = False
     _no_borders(table)
-    _margins(table, top=pad[0], bottom=pad[1])
+    _margins(table, top=pad[0], bottom=pad[1], left=G.PAD if grey else 0)
     if header:
         cells = table.add_row().cells
         for j, h in enumerate(header):
@@ -218,7 +227,10 @@ def grid(doc, col_widths, rows, header=None, size=6.6, pad=(3.5, 3)):
     for i, row in enumerate(rows):
         cells = table.add_row().cells
         for j, write in enumerate(row):
-            _border(cells[j]._tc.get_or_add_tcPr(), "top", 1 if i == 0 else 0.3, INK if i == 0 else HAIR)
+            if grey:
+                _shade(cells[j], PANEL)
+            elif i == 0:
+                _border(cells[j]._tc.get_or_add_tcPr(), "top", 1, INK)
             p = cells[j].paragraphs[0]
             p.paragraph_format.line_spacing = Pt(size * 1.30)  # the PDF's cell leading
             write(p)
@@ -235,10 +247,43 @@ def tag_cell(name, size=6.6, bold=True):
     return lambda p: tagged(p, name, size, INK, bold)
 
 
-def rows_table(doc, items, size=7.0, label_w=G.LABW + G.GAP):
+def rows_table(doc, items, size=7.0, label_w=G.LABW + G.GAP, grey=False):
     """Label and text rows, like the PDF's row(): bold label on the left."""
     rest = G.W - label_w
-    grid(doc, [label_w, rest], [[text_cell(l, 6.8, bold=True), text_cell(t, size)] for l, t in items])
+    grid(doc, [label_w, rest], [[text_cell(l, 6.8, bold=True), text_cell(t, size)] for l, t in items],
+         grey=grey)
+
+
+def callout(doc, label, text):
+    """The PDF's callout(): one tip or warning in an outlined box, led by its label in bold."""
+    table = doc.add_table(rows=1, cols=1)
+    table.autofit = False
+    _no_borders(table)
+    _margins(table, top=G.PAD, bottom=G.PAD, left=G.PAD, right=G.PAD)
+    cell = table.rows[0].cells[0]
+    for edge in ("top", "left", "bottom", "right"):
+        _border(cell._tc.get_or_add_tcPr(), edge, 0.8, INK)
+    rich(cell.paragraphs[0], f"<b>{label}.</b> {text}", 7.0)
+    widths(table, [G.W])
+    para(doc, "", 2, space_after=4)
+
+
+def blocks(doc, items, grey=False):
+    """The PDF's blocks(): paragraphs, two-column tables as rows, grey blocks and callouts."""
+    for b in items:
+        if b[0] == "p":
+            p = para(doc, b[1], 7.0 if grey else 7.6, space_after=6)
+            if grey:  # a paragraph on a grey block is shaded like a table cell
+                shd = OxmlElement("w:shd")
+                for k, v in (("w:val", "clear"), ("w:color", "auto"), ("w:fill", PANEL)):
+                    shd.set(qn(k), v)
+                p._p.get_or_add_pPr().append(shd)
+        elif b[0] == "table":
+            rows_table(doc, b[2], grey=grey)
+        elif b[0] == "grey":
+            blocks(doc, b[1], grey=True)
+        elif b[0] == "callout":
+            callout(doc, b[1], b[2])
 
 
 def short_detail(short, detail):
@@ -378,7 +423,7 @@ def page_cover(doc):
         rich(p, e["name"], 7.6, bold=True)
         p = cell.add_paragraph()
         rich(p, "page ", 6.6, GREY)
-        field(p, f"PAGEREF {entry_ref(i)} \\h", str(G.ENTRY_START + i), 6.6)
+        field(p, f"PAGEREF {entry_ref(i)} \\h", str(G.ENTRY_PAGE[i]), 6.6)
 
 
 def cover_gap(lines):
@@ -393,49 +438,55 @@ def cover_gap(lines):
 
 def page_why(doc):
     heading(doc, C.WHY_TITLE)
-    for t in C.WHY_INTRO:
-        para(doc, t, 7.6, space_after=5)
-    grid(doc, [G.LABW + G.GAP, G.TW], [
-        [text_cell(term, 6.8, bold=True), text_cell(meaning, 7.0)] for term, meaning in C.WHY_ROWS
-    ], header=list(C.WHY_HEAD))
+    blocks(doc, C.WHY_BLOCKS)
 
 
-def table_page(doc, title, intro, cols, rows, widths, note):
-    """A plain concept page: title, paragraphs, a table with a header, and a closing note."""
+def table_page(doc, title, intro, cols, rows, widths, after):
+    """A concept section: title, paragraphs, a table with a header, and the blocks after it."""
     heading(doc, title)
     for t in intro:
         para(doc, t, 7.6, space_after=6)
     grid(doc, widths, [[tag_cell(r[0])] + [text_cell(v, 6.6) for v in r[1:]] for r in rows],
          header=cols)
-    para(doc, note, 7.0)
+    blocks(doc, after)
 
 
 def page_meaning(doc):
-    table_page(doc, C.MEAN_TITLE, C.MEAN_INTRO, C.MEAN_COLS, C.MEAN_ROWS, G.MEAN_WIDTHS, C.MEAN_NOTE)
+    table_page(doc, C.MEAN_TITLE, C.MEAN_INTRO, C.MEAN_COLS, C.MEAN_ROWS, G.MEAN_WIDTHS,
+               [("p", C.MEAN_NOTE)])
 
 
 def page_table(doc, sid):
     t = C.TABLE_PAGES[sid]
-    table_page(doc, t["title"], t["intro"], t["cols"], t["rows"], G.TABLE_WIDTHS[sid], t["note"])
+    table_page(doc, t["title"], t["intro"], t["cols"], t["rows"], G.TABLE_WIDTHS[sid], t["after"])
 
 
 def page_fit(doc, pdf):
     heading(doc, C.FIT_TITLE)
     diagram(doc, pdf, 2 + G.FRONT_IDS.index("fit"), fit_box())
-    for t in C.FIT_BODY:
-        para(doc, t, 7.6, space_after=5)
+    blocks(doc, C.FIT_BLOCKS)
 
 
-def page_entry(doc, i, e):
-    table = titled(doc, e["name"], e["mono"], size=24, number=e["num"])
+def entry(doc, i, e):
+    table = titled(doc, e["name"], e["mono"], size=20, number=e["num"], tile=G.ENTRY_TILE)
     bookmark(table.rows[0].cells[0].paragraphs[0], entry_ref(i))
     grid(doc, [G.LABW + G.GAP, G.TW], [
         [text_cell("Identify by", 6.8, bold=True), text_cell(e["identify"], 7.0)],
         [text_cell("What", 6.8, bold=True), text_cell(G.bold_first(e["what"]), 7.6)],
         [text_cell("So what", 6.8, bold=True), text_cell(G.bold_first(e["sowhat"]), 7.6)],
     ])
-    label(doc, "Field marks")
-    rows_table(doc, [(l, short_detail(s, d)) for l, s, d in e["marks"]])
+    if e["marks_grey"]:  # as the PDF's marks_grid(): three columns, each label over its short answer
+        def mark(l, s, d):
+            return lambda p: (rich(p, l, 6.8, GREY, bold=True), p.add_run().add_break(),
+                              rich(p, short_detail(s, d), 7.0))
+        marks, blank = e["marks"], (lambda p: None)
+        cells = [[mark(*m) for m in marks[k:k + 3]] for k in range(0, len(marks), 3)]
+        cells[-1] += [blank] * (3 - len(cells[-1]))
+        grid(doc, [G.W / 3] * 3, [[lambda p: rich(p, "Field marks", 6.8, GREY, bold=True), blank, blank]]
+             + cells, grey=True)
+    else:
+        label(doc, "Field marks")
+        rows_table(doc, [(l, short_detail(s, d)) for l, s, d in e["marks"]])
     other, test = e["confused"]
     grid(doc, [G.LABW + G.GAP, G.TW], [[
         text_cell("Confused with", 6.8, bold=True),
@@ -447,7 +498,7 @@ def page_seq(doc, pdf):
     titled(doc, C.SEQ_TITLE, G.SEQ_TILE)
     para(doc, C.SEQ_INTRO, 7.6, space_after=8)
     back = [x for x in ("seq",) if x in G.HAVE]
-    diagram(doc, pdf, G.ENTRY_START + len(C.ENTRIES) + back.index("seq"), seq_box())
+    diagram(doc, pdf, G.ENTRY_START + len(G.PAGES) + back.index("seq"), seq_box())
     para(doc, C.SEQ_NOTE, 7.0)
 
 
@@ -496,6 +547,17 @@ def page_apart(doc):
     rows_table(doc, C.APART_ROWS)
     heading(doc, C.OTHER_TITLE, level=2, size=11, space_after=3)
     rows_table(doc, C.OTHER_ROWS)
+
+
+def page_parts(doc, parts):
+    """One of the PDF's packed pages: entries and table sections, in the order G.PAGES has them."""
+    for k, part in enumerate(parts):
+        if k:
+            para(doc, "", 7.6, space_after=10)
+        if part[0] == "entry":
+            entry(doc, part[1], C.ENTRIES[part[1]])
+        else:
+            page_table(doc, part[0])
 
 
 def page_end(doc):
@@ -610,9 +672,8 @@ def build(pdf_path, out):
     # Pilot: only the pages whose section is in guide.md, as build_guide.py does.
     front = {"why": page_why, "meaning": page_meaning, "fit": lambda d: page_fit(d, pdf)}
     pages = [front[x] for x in G.FRONT_IDS]
-    pages += [lambda d, i=i, e=e: page_entry(d, i, e) for i, e in enumerate(C.ENTRIES)]
-    back = (("seq", lambda d: page_seq(d, pdf)), ("offer", lambda d: page_table(d, "offer")),
-            ("questions", lambda d: page_table(d, "questions")), ("flow", page_flow), ("side", page_side),
+    pages += [lambda d, parts=parts: page_parts(d, parts) for parts in G.PAGES]
+    back = (("seq", lambda d: page_seq(d, pdf)), ("flow", page_flow), ("side", page_side),
             ("apart", page_apart))
     pages += [fn for sid, fn in back if sid in G.HAVE]
     for k, fn in enumerate(pages):
@@ -624,8 +685,8 @@ def build(pdf_path, out):
     page_end(doc)
 
     props = doc.core_properties
-    props.title, props.subject, props.author = C.TITLE, C.SUBTITLE, "bstucker"
-    props.last_modified_by, props.revision = "bstucker", 1
+    props.title, props.subject, props.author = C.TITLE, C.SUBTITLE, "Accidental Guides"
+    props.last_modified_by, props.revision = "Accidental Guides", 1
     # Fixed dates, like the PDF's invariant mode.
     props.created = props.modified = props.last_printed = datetime(1999, 12, 31)
     props.comments = props.keywords = props.category = ""

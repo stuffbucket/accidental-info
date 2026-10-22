@@ -3,8 +3,8 @@ title: Agent Skills
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to what a skill folder can hold, as of October 2026.
 running_footer: Agent Skills
-edition: [Co]Lab · bstucker · October 2026
-cover_footer: October 2026
+edition: oops@accidental.info · CC BY 4.0 · October 2026
+cover_footer: hi@accidental.info · October 2026
 version: 0.2.0
 ---
 
