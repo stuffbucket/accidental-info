@@ -1,0 +1,22 @@
+{
+ "group": "agents",
+ "n": 1,
+ "commons": "File:Zadoc Dederick and Isaac Grass' Steam Man schematic.png",
+ "title": "Dederick & Grass 'Steam Carriage' (the Steam Man)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Zadoc_Dederick_and_Isaac_Grass%27_Steam_Man_schematic.png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Zadoc_Dederick_and_Isaac_Grass%27_Steam_Man_schematic.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 1179,
+ "h": 803,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Zadoc Dederick",
+ "date_meta": "1868",
+ "credit_meta": "http://davidbuckley.net/DB/HistoryMakers/1868DederickSteamMan.htm",
+ "desc_meta": "The sechematic version of Zadoc P. Dederick and Isaac Grass' Steam Man",
+ "license_templates": [
+  "PD-US-expired",
+  "PD-old-70"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{en|1=The sechematic version of Zadoc P. Dederick and Isaac Grass' Steam Man}}\n|date=1868\n|source=http://davidbuckley.net/DB/HistoryMakers/1868DederickSteamMan.htm\n|author=Zadoc Dederick\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-US-expired}}{{PD-old-70}}\n\n{{Uncategorized|year=2025|month=March|day=9}}",
+ "raw_path": "raw/agents/1/original.png"
+}

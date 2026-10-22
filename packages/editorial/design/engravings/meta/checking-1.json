@@ -1,0 +1,21 @@
+{
+ "group": "checking",
+ "n": 1,
+ "commons": "File:T3- d132 - Fig. 83. — Loupe.png",
+ "title": "Loupe (magnifying glass)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:T3-_d132_-_Fig._83._%E2%80%94_Loupe.png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/T3-_d132_-_Fig._83._%E2%80%94_Loupe.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 773,
+ "h": 1628,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Louis Figuier",
+ "date_meta": "1869",
+ "credit_meta": "Figuier - Les Merveilles de la science, 1867 - 1891, Tome 3.djvu",
+ "desc_meta": "Loupe",
+ "license_templates": [
+  "PD-old-100-1923"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{fr|1=Loupe}}\n|date=1869\n|source=Figuier - Les Merveilles de la science, 1867 - 1891, Tome 3.djvu\n|author={{Creator:Louis Figuier}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-100-1923}}\n\n[[Category:Les Merveilles de la science - Tome 3]]",
+ "raw_path": "raw/checking/1/original.png"
+}

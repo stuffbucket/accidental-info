@@ -1,0 +1,21 @@
+{
+ "group": "collection-games",
+ "n": 1,
+ "commons": "File:Tuerkischer schachspieler windisch4.jpg",
+ "title": "The Turk (Kempelen's chess automaton)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Tuerkischer_schachspieler_windisch4.jpg",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Tuerkischer_schachspieler_windisch4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 600,
+ "h": 523,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Wolfgang von Kempelen",
+ "date_meta": "",
+ "credit_meta": "Copper engraving from book\n\nOriginal Uploader was Schaelss (talk) at 11:12, 7. Apr 2004.",
+ "desc_meta": "The Turkish Chess Player",
+ "license_templates": [
+  "PD-old-auto-expired"
+ ],
+ "wikitext_head": "== {{int:filedesc}} ==\n{{Artwork\n| artist = {{Creator|wikidata=Q252041}}\n| description = [[:Category:The Turk|The Turkish Chess Player]]\n| medium = {{de|1=Zeitgenössischer Kupferstich}}\n| title = {{de|1=[[:de:Schachtürke|Türkischen Schachspielers]]}}\n| source = Copper engraving from book\n:{{Moved to commons|de|Schaelss|11:12, 7. Apr 2004}}\n}}\n{{Book\n|wikidata=Q118593427\n}}\n\n== {{int:license-header}} ==\n{{PD-old-auto-expired|deathyear=1793}}\n\n[[Category:The Turk]]\n[[Category:Darwin's Dangerous Idea]]\n[[Category:Karl Gottlieb von Windisch]]",
+ "raw_path": "raw/collection-games/1/original.jpg"
+}

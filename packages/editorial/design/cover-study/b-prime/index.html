@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B and B′ covers</title>
+<meta name="description" content="The narrowed cover choice for the Accidental Guides: B, the part grid, against B′, the part grid under a Unigrid band. Covers, shelves, thumbnails, a comparison and a recommendation.">
+<style>
+@font-face { font-family: "Heros"; src: url("../fonts/heros-regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Heros"; src: url("../fonts/heros-bold.ttf") format("truetype"); font-weight: 700; }
+:root {
+  color-scheme: light;
+  --ink: #111111;
+  --grey: #5f5f5f;
+  --soft: #8a8a8a;
+  --block: #ebebeb;
+  --paper: #ffffff;
+  --shelf: #ecece9;
+  --edge: #d6d6d4;
+  --measure: 38rem;
+  --gutter: 16px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 16px/1.5 "Heros", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-feature-settings: "kern";
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+img { display: block; max-width: 100%; height: auto; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter); }
+@media (min-width: 720px) { :root { --gutter: 40px; } }
+
+/* masthead */
+.mast { padding: 28px 0 0; display: flex; justify-content: space-between; gap: 16px; font-size: 13px; flex-wrap: wrap; }
+.mast span { color: var(--grey); }
+.hero { padding: 72px 0 40px; display: grid; gap: 32px; }
+@media (min-width: 960px) { .hero { grid-template-columns: 7fr 5fr; align-items: end; } }
+h1 { font-size: clamp(44px, 7vw, 92px); line-height: .98; letter-spacing: -.025em; margin: 0; font-weight: 700; }
+.hero .q { font-size: 15px; color: var(--grey); max-width: 30rem; margin: 0; }
+.hero .q b { color: var(--ink); }
+
+/* the short answer, on a grey block */
+.answer { background: var(--block); margin: 0 calc(var(--gutter) * -0.5); padding: 28px calc(var(--gutter) * .5 + 8px); display: grid; gap: 24px; }
+@media (min-width: 900px) { .answer { grid-template-columns: repeat(3, 1fr); margin: 0 -24px; padding: 32px 24px; } }
+.answer h2 { font-size: 13px; margin: 0 0 6px; letter-spacing: .02em; }
+.answer p { margin: 0; font-size: 15px; line-height: 1.45; }
+
+/* sections */
+section { padding: 88px 0 0; }
+.sec-head { display: grid; gap: 8px 32px; margin-bottom: 32px; }
+@media (min-width: 900px) { .sec-head { grid-template-columns: 3fr 9fr; } }
+.num { font-size: 13px; font-weight: 700; padding-top: 10px; }
+h2.t { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.08; letter-spacing: -.015em; margin: 0; }
+.lede { font-size: 18px; line-height: 1.45; max-width: var(--measure); margin: 14px 0 0; }
+.cols { display: grid; gap: 28px 40px; }
+@media (min-width: 900px) { .cols { grid-template-columns: 3fr 9fr; } }
+.prose { max-width: var(--measure); }
+.prose p { margin: 0 0 14px; }
+h3 { font-size: 15px; margin: 28px 0 8px; }
+.prose h3:first-child { margin-top: 0; }
+ul.plain { list-style: none; padding: 0; margin: 0 0 14px; }
+ul.plain li { padding-left: 18px; position: relative; margin-bottom: 8px; }
+ul.plain li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; background: var(--ink); }
+.small { font-size: 13px; color: var(--grey); }
+code { font-family: "Liberation Mono", Menlo, monospace; font-size: .86em; background: var(--block); padding: 1px 4px; }
+
+.rules { background: var(--block); padding: 18px 20px; margin: 0; font-size: 14px; }
+.rules b { display: block; font-size: 12px; margin-bottom: 6px; }
+.rules ol { margin: 0; padding-left: 18px; }
+.rules li { margin-bottom: 3px; }
+
+/* covers */
+.cover { margin: 0; }
+.cover img { width: 100%; outline: 1px solid var(--edge); }
+figcaption { font-size: 12px; color: var(--grey); margin-top: 8px; line-height: 1.35; }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--ink); margin-right: 6px; }
+
+/* B and B' in pairs */
+.pairs { display: grid; gap: 40px 40px; }
+@media (min-width: 900px) { .pairs { grid-template-columns: repeat(2, 1fr); } }
+.pair { margin: 0; }
+.pair-imgs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.pair-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 12px; font-size: 13px; }
+.pair-head b { font-size: 15px; }
+.pair-head span { color: var(--grey); }
+.pair-note { font-size: 13px; color: var(--grey); margin: 10px 0 0; line-height: 1.4; }
+.ab { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+
+.four { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (min-width: 900px) { .four { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+.two { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 600px; }
+
+/* shelves */
+.shelf { background: var(--shelf); margin: 0 calc(var(--gutter) * -1); overflow: hidden; }
+.shelf img { width: 100%; }
+@media (min-width: 1240px) { .shelf { margin: 0; } }
+.shelf-label { display: flex; align-items: baseline; gap: 12px; margin: 28px 0 8px; font-size: 13px; flex-wrap: wrap; }
+.shelf-label b { font-size: 15px; }
+.shelf-label span { color: var(--grey); }
+.thumbs { display: grid; gap: 6px; }
+.thumbs .lbl { font-size: 12px; font-weight: 700; margin-top: 10px; }
+.thumbs .lbl:first-child { margin-top: 0; }
+
+/* on the site: a mock of the collection row, covers at 120 px */
+.site { border: 1px solid var(--edge); padding: 24px; overflow-x: auto; }
+.site + .site { margin-top: 12px; }
+.site-which { font-size: 11px; font-weight: 700; color: var(--grey); margin: 0 0 14px; letter-spacing: .02em; }
+.site-coll { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.site-coll i { width: 14px; height: 14px; background: var(--ink); display: block; }
+.site-coll b { font-size: 20px; letter-spacing: -.01em; }
+.site-line { font-size: 14px; color: var(--grey); margin: 0 0 16px; }
+.site-row { display: flex; gap: 24px; min-width: 860px; }
+.site-row figure { margin: 0; width: 120px; flex: none; }
+.site-row img { width: 120px; outline: 1px solid var(--edge); }
+.site-row figcaption { font-size: 13px; color: var(--ink); font-weight: 700; margin-top: 10px; line-height: 1.3; }
+
+/* comparison table on a grey block, no rules between rows */
+.tt { background: var(--block); margin: 0 calc(var(--gutter) * -0.5); padding: 8px calc(var(--gutter) * .5); overflow-x: auto; }
+@media (min-width: 900px) { .tt { margin: 0 -24px; padding: 12px 24px; } }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 16px 10px 0; }
+thead th { font-size: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+tbody th { font-weight: 700; width: 17%; }
+tbody td { width: 31%; }
+tbody td.v { width: 21%; font-weight: 700; }
+td .n { display: block; font-weight: 400; color: var(--grey); font-size: 12.5px; line-height: 1.38; margin-top: 2px; }
+td.v .n { color: var(--grey); }
+.mark { display: inline-block; width: 9px; height: 9px; margin-right: 6px; vertical-align: 0; }
+.mark.b { border: 1.5px solid var(--ink); }
+.mark.bp { background: var(--ink); }
+.mark.eq { background: linear-gradient(90deg, var(--ink) 50%, transparent 50%); border: 1.5px solid var(--ink); }
+
+/* recommendation */
+.rec-block { border-top: 2px solid var(--ink); padding-top: 24px; }
+.decide { counter-reset: d; list-style: none; padding: 0; margin: 0; }
+.decide li { counter-increment: d; position: relative; padding-left: 36px; margin-bottom: 14px; }
+.decide li::before { content: counter(d, decimal-leading-zero); position: absolute; left: 0; top: 0; font-weight: 700; font-size: 13px; padding-top: 2px; }
+
+footer { margin: 120px 0 0; padding: 24px 0 48px; border-top: 2px solid var(--ink); font-size: 12.5px; color: var(--grey); display: grid; gap: 16px; }
+@media (min-width: 900px) { footer { grid-template-columns: 3fr 9fr; } }
+footer p { margin: 0 0 8px; max-width: 46rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast"><b>Accidental Guides</b><span>Design study, narrowed · 22 October 2026 · <a href="../index.html">The full study</a></span></header>
+
+<div class="hero">
+  <h1>B and B′</h1>
+  <p class="q"><b>Brian’s ask.</b> “The Unigrid band across the top and the option B part grid”, shown next to the existing B, “along with our comparison table evaluation with this narrowed design direction.”</p>
+</div>
+
+<div class="answer">
+  <div><h2>What B′ is</h2><p>B’s part grid, unchanged, under a fixed black band. The band carries the kicker, the collection, the guide’s number and the collection mark in its top row, and the title in white on its foot. The subtitle sits on white, between the band and the grid.</p></div>
+  <div><h2>What the band buys</h2><p>A series mark you can see at 96 px, a collection you can read from across the room, and a title that stays legible on the site. It doesn’t fix siblings: Claude Code and Claude Desktop still share a pattern, and only the title and number tell them apart.</p></div>
+  <div><h2>Recommendation</h2><p><b>B′.</b> It keeps everything that made B the pick and adds the shelf and thumbnail identity B was missing, for about 30 more lines in each builder. The costs are ink, print and the Word band, and they’re manageable.</p></div>
+</div>
+
+<!-- ============================================================ 1 -->
+<section id="band">
+  <div class="sec-head">
+    <div class="num">01 · The band</div>
+    <div>
+      <h2 class="t">Words in the band, the guide’s parts in the field</h2>
+      <p class="lede">Vignelli’s Unigrid puts the title in a black band and gives the rest of the sheet to the map and pictures. B′ does the same: the band holds everything you read, and the field holds the grid, which is the guide’s map.</p>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="prose"><h3>Rules</h3><p class="small">Same page, fonts, tiles and data as the study. Only the top of the cover changes.</p></div>
+    <div class="rules"><ol>
+      <li><b style="display: inline; font-size: 14px;">Band:</b> 150 pt, full bleed, black, the same height on every guide (28% of the page). Fixed, so the shelf has one horizon. It fits a three-line title: Agents, Smoke Detectors and Plugins all clear.</li>
+      <li><b style="display: inline; font-size: 14px;">Top row,</b> centred 24 pt below the top edge: <i>An Accidental Guide to…</i> in 9 pt bold white on the left; on the right, the collection name in 7.6 pt grey, the number in 9 pt bold white, then the collection mark, 16 pt, white, on the right margin, where Unigrid puts the Park Service arrowhead.</li>
+      <li><b style="display: inline; font-size: 14px;">Title:</b> 27/29 pt bold white, as today, set on the band’s foot: the last baseline always sits 16 pt above it. Short titles leave black above them; that space is the band, not a gap.</li>
+      <li><b style="display: inline; font-size: 14px;">Subtitle:</b> 9.4/12.2 pt ink on white, 12 pt below the band, at 80% of the measure.</li>
+      <li><b style="display: inline; font-size: 14px;">Grid:</b> B’s grid, unchanged (six 46 pt columns, column heads, two-tone tiles, labels beside), set 4 pt lower than B. The tallest title and subtitle still clear the column-head rule by 18 pt.</li>
+    </ol></div>
+  </div>
+
+  <div class="cols" style="margin-top: 48px;">
+    <div class="prose">
+      <h3>How the band was chosen</h3>
+      <p class="small">Four layouts were rendered and compared with B. Two survived; this is the pair.</p>
+    </div>
+    <div>
+      <div class="two">
+        <figure class="cover"><img src="img/thin/agents-harnesses-skills-tools.png" alt="Thin black band, 52 pt, with the title in black on white below it" loading="lazy"><figcaption><span class="tag">Tried</span>A thin 52 pt band, title on white. Lighter, but it reads as a website header over B, and a three-line title pushes its subtitle against the grid.</figcaption></figure>
+        <figure class="cover"><img src="img/b-prime/agents-harnesses-skills-tools.png" alt="The chosen 150 pt black band with the title in white inside it" loading="lazy"><figcaption><span class="tag">Chosen</span>The 150 pt band with the title inside, as Unigrid does it. Clear reading order, and the strongest shelf.</figcaption></figure>
+      </div>
+      <div class="prose" style="margin-top: 20px; max-width: 46rem;">
+        <ul class="plain">
+          <li><b>Title inside, not below.</b> With the title below, the band carries only small type, and at 120 px it becomes a black stripe with nothing to read. Inside, the title is the biggest, highest-contrast thing on the cover, which is what a thumbnail needs.</li>
+          <li><b>First tries collided.</b> A 56 pt band with B’s title spacing ran three-line subtitles into the column heads; a 168 pt band ran every subtitle into them. Setting the grid 4 pt lower and the band at 150 pt clears both.</li>
+          <li><b>Black, not the collection’s colour.</b> The optional colour band was skipped. The site’s collection colours (blue, yellow, red, green) are family colours too, so a yellow band over yellow <i>Runs</i> tiles would say two things at once, which is the problem the black marks fix. A coloured band would also compete with the grid, which is the only place colour belongs.</li>
+          <li><b>The marks fit.</b> ■ ▲ ● ◆ read well reversed out of black at 16 pt, and at 96 px they’re still about 5 px, enough to tell a triangle from a circle. The square is the weakest; reversed, it can look like an empty box.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="pairs">
+  <div class="sec-head">
+    <div class="num">02 · Covers</div>
+    <div>
+      <h2 class="t">The same eight guides, B on the left, B′ on the right</h2>
+      <p class="lede">The catalog, four AI guides, and one each from the house, the table and games. Real titles, subtitles, parts, families and page numbers, rendered at 324 × 540 pt, 2×.</p>
+    </div>
+  </div>
+
+  <div class="pairs">
+    <figure class="pair">
+      <div class="pair-head"><b>Accidental Intelligence</b><span>■ 00, the catalog</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/accidental-intelligence.png" alt="B: catalog cover, six family tiles on a diagonal, title in black on white" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/accidental-intelligence.png" alt="B prime: the same diagonal under a black band with the title in white" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">The diagonal is the key to every other cover. The band makes the catalog look like the rest of the series, not like a chart.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>Agents, Harnesses, Skills and Tools</b><span>■ 01</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/agents-harnesses-skills-tools.png" alt="B: three yellow Runs tiles, a purple Skill, two red Used tiles" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/agents-harnesses-skills-tools.png" alt="B prime: the same pattern under the band, three-line title in white" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">The tallest case: three title lines, two subtitle lines, six rows. It fits with 18 pt to spare.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>Context Windows</b><span>■ 10</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/context-windows.png" alt="B: a blue Counted tile top right, then purple, yellow tiles" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/context-windows.png" alt="B prime: same pattern under the band" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">Four parts, more white. In B the cover feels unfinished at the top right; the band balances the blue tile.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>Claude Code</b><span>■ 02</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/claude-code.png" alt="B: two purple, two red, one pink tile, one-line title" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/claude-code.png" alt="B prime: same pattern, one-line title on the foot of the band" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">One-line title: the band stays the same height and the title sits on its foot. In B this cover has a large empty middle.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>Specs and Reviews</b><span>■ 11</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/specs-and-reviews.png" alt="B: three purple Written tiles, one pink, one green" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/specs-and-reviews.png" alt="B prime: same pattern under the band" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">Mostly written-down things, one decision, one check. The pattern reads the same in both.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>Smoke Detectors That Chirp</b><span>▲ 01</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/chirping-smoke-detector.png" alt="B: two green Checks tiles then a staircase" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/chirping-smoke-detector.png" alt="B prime: same staircase under the band, white triangle mark" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">The house triangle, reversed out at 16 pt, is the first collection mark you notice.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>Grilled Cheese</b><span>● 02</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/grilled-cheese.png" alt="B: three red Used tiles and a pink Decided tile" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/grilled-cheese.png" alt="B prime: same pattern under the band, white circle mark" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">Where B′ costs most: a sandwich under a black slab. B is the friendlier of the two here.</figcaption>
+    </figure>
+    <figure class="pair">
+      <div class="pair-head"><b>The First Move in Chess</b><span>◆ 02</span></div>
+      <div class="ab"><span>B</span><span>B′</span></div>
+      <div class="pair-imgs">
+        <div class="cover"><img src="../img/b-grid/chess-first-move.png" alt="B: a red tile top right, two yellow tiles below left" loading="lazy"></div>
+        <div class="cover"><img src="img/b-prime/chess-first-move.png" alt="B prime: same pattern under the band, white diamond mark" loading="lazy"></div>
+      </div>
+      <figcaption class="pair-note">Three parts. The band gives a sparse cover a frame; in B the page is mostly white.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cols" style="margin-top: 72px;">
+    <div class="prose">
+      <h3>The sibling test</h3>
+      <p class="small">The study’s open problem with B: Claude Code and Claude Desktop cover the same five parts, so their patterns are identical.</p>
+    </div>
+    <div>
+      <div class="four">
+        <figure class="cover"><img src="../img/b-grid/claude-code.png" alt="B: Claude Code" loading="lazy"><figcaption><span class="tag">B</span>Claude Code</figcaption></figure>
+        <figure class="cover"><img src="img/b-extra/claude-desktop.png" alt="B: Claude Desktop, the same pattern as Claude Code" loading="lazy"><figcaption><span class="tag">B</span>Claude Desktop</figcaption></figure>
+        <figure class="cover"><img src="img/b-prime/claude-code.png" alt="B prime: Claude Code" loading="lazy"><figcaption><span class="tag">B′</span>Claude Code</figcaption></figure>
+        <figure class="cover"><img src="img/b-prime/claude-desktop.png" alt="B prime: Claude Desktop, same pattern, different title and number" loading="lazy"><figcaption><span class="tag">B′</span>Claude Desktop</figcaption></figure>
+      </div>
+      <p class="prose" style="margin-top: 20px; max-width: 46rem;">The band doesn’t solve it; nothing that draws only the parts can. It helps in two small ways: the title, the one thing that differs, becomes the strongest element on the cover, and the number (02, 03) moves into a place you can see at a glance. Short titles also change the band’s shape (one line or two on the foot), which tells siblings apart at thumbnail size better than B does. If that isn’t enough, the fix is per guide, not per direction: a one-word tag in the band, or a title that names the product first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="shelves">
+  <div class="sec-head">
+    <div class="num">03 · Shelves</div>
+    <div>
+      <h2 class="t">In a row, and at the size the site shows them</h2>
+      <p class="lede">The same formats as the study’s shelves: 240 px per cover at reading size, 96 px as thumbnails, then a mock of the site at about 120 px.</p>
+    </div>
+  </div>
+
+  <div class="shelf-label"><b>B · The part grid</b><span>Eight patterns, one system</span></div>
+  <div class="shelf"><img src="../img/shelves/b-grid.png" alt="Shelf of eight B covers" loading="lazy"></div>
+  <div class="shelf-label"><b>B′ · Band and part grid</b><span>Eight patterns, one system, one horizon</span></div>
+  <div class="shelf"><img src="img/shelves/b-prime.png" alt="Shelf of eight B prime covers: a continuous black band across the top" loading="lazy"></div>
+
+  <h3 style="margin-top: 56px;">At 96 px wide</h3>
+  <div class="cols" style="margin-top: 12px;">
+    <div class="prose small"><p>B’s patterns still read, but the covers are white cards with colour low down, and the titles are the first thing to go. In B′ the bands join into one line across the shelf, the titles stay readable as white shapes, and the four collection marks are visible.</p></div>
+    <div class="thumbs">
+      <div class="lbl">B</div>
+      <img src="../img/shelves/b-grid-thumb.png" alt="Thumbnail shelf: part grid" loading="lazy">
+      <div class="lbl">B′</div>
+      <img src="img/shelves/b-prime-thumb.png" alt="Thumbnail shelf: band and part grid" loading="lazy">
+    </div>
+  </div>
+
+  <h3 style="margin-top: 56px;">On the site, at 120 px</h3>
+  <div class="cols" style="margin-top: 12px;">
+    <div class="prose small"><p>A mock of the collection row on accidental.info, with the AI siblings side by side: the hardest case for identity. The page is drawn here in HTML; the covers are the real renders, scaled by the browser as the site does.</p><p>The study’s black square replaces the site’s blue collection badge.</p></div>
+    <div>
+      <div class="site">
+        <p class="site-which">B</p>
+        <div class="site-coll"><i></i><b>Accidental Intelligence</b></div>
+        <p class="site-line">Coding agents, and what to make of them.</p>
+        <div class="site-row">
+          <figure><img src="../img/b-all/accidental-intelligence.png" alt="" loading="lazy"><figcaption>Accidental Intelligence</figcaption></figure>
+          <figure><img src="../img/b-all/claude-code.png" alt="" loading="lazy"><figcaption>Claude Code</figcaption></figure>
+          <figure><img src="../img/b-all/claude-desktop.png" alt="" loading="lazy"><figcaption>Claude Desktop</figcaption></figure>
+          <figure><img src="../img/b-all/copilot-cli.png" alt="" loading="lazy"><figcaption>GitHub Copilot CLI</figcaption></figure>
+          <figure><img src="../img/b-all/codex.png" alt="" loading="lazy"><figcaption>OpenAI Codex</figcaption></figure>
+          <figure><img src="../img/b-all/specs-and-reviews.png" alt="" loading="lazy"><figcaption>Specs and Reviews</figcaption></figure>
+        </div>
+      </div>
+      <div class="site">
+        <p class="site-which">B′</p>
+        <div class="site-coll"><i></i><b>Accidental Intelligence</b></div>
+        <p class="site-line">Coding agents, and what to make of them.</p>
+        <div class="site-row">
+          <figure><img src="img/b-prime-all/accidental-intelligence.png" alt="" loading="lazy"><figcaption>Accidental Intelligence</figcaption></figure>
+          <figure><img src="img/b-prime-all/claude-code.png" alt="" loading="lazy"><figcaption>Claude Code</figcaption></figure>
+          <figure><img src="img/b-prime-all/claude-desktop.png" alt="" loading="lazy"><figcaption>Claude Desktop</figcaption></figure>
+          <figure><img src="img/b-prime-all/copilot-cli.png" alt="" loading="lazy"><figcaption>GitHub Copilot CLI</figcaption></figure>
+          <figure><img src="img/b-prime-all/codex.png" alt="" loading="lazy"><figcaption>OpenAI Codex</figcaption></figure>
+          <figure><img src="img/b-prime-all/specs-and-reviews.png" alt="" loading="lazy"><figcaption>Specs and Reviews</figcaption></figure>
+        </div>
+      </div>
+      <p class="small" style="margin-top: 12px;">Claude Code, Claude Desktop, Copilot CLI and Codex share most of a pattern in both. In B′ the white titles carry the difference; in B they are 10 px black type under a lot of white.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="comparison">
+  <div class="sec-head">
+    <div class="num">04 · Comparison</div>
+    <div>
+      <h2 class="t">B against B′, on the study’s criteria</h2>
+      <p class="lede">The criteria from the study’s trade-off table, narrowed to the two that are left, with the build and output questions that now decide it.</p>
+    </div>
+  </div>
+  <div class="tt">
+    <table>
+      <thead><tr><th>Criterion</th><th>B · Part grid</th><th>B′ · Band and part grid</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><th>Unity across the series</th>
+          <td>Strong<span class="n">Every cover is the same system by definition, but each is a white card; the unity is in the rules, and you see it only once you know them.</span></td>
+          <td>Strongest<span class="n">The same rules plus one fixed shape that never changes. On a shelf the bands join into one line, the way Unigrid brochures do in a rack.</span></td>
+          <td class="v"><i class="mark bp"></i>B′<span class="n">The band adds a unity you see before you read.</span></td></tr>
+        <tr><th>Identity per guide</th>
+          <td>Pattern, then title<span class="n">Claude Code and Claude Desktop are identical in the field; the title is 27 pt black on white among a lot of white.</span></td>
+          <td>Pattern, then title, then number<span class="n">Still identical patterns. The title is now white on black, the strongest thing on the cover, and the number sits where you can see it.</span></td>
+          <td class="v"><i class="mark eq"></i>B′, slightly<span class="n">Neither fixes siblings. B′ makes the one thing that differs easier to read.</span></td></tr>
+        <tr><th>Shelf identity</th>
+          <td>Good<span class="n">Distinct patterns, but the top half of every cover is a near-identical type block.</span></td>
+          <td>Strong<span class="n">Black band, white title, colour below: the series is recognisable from across a room, and the title is in the band, where the eye lands.</span></td>
+          <td class="v"><i class="mark bp"></i>B′</td></tr>
+        <tr><th>Thumbnail identity, 96–120 px</th>
+          <td>Fair<span class="n">The patterns survive; the titles and the series line don’t. A row of white cards, as the site is today, with colour low down.</span></td>
+          <td>Strong<span class="n">Titles stay readable as white shapes, the band says “Accidental Guide” at any size, and the marks are about 5 px.</span></td>
+          <td class="v"><i class="mark bp"></i>B′<span class="n">This was the problem the engravings were really solving.</span></td></tr>
+        <tr><th>Collection legibility</th>
+          <td>Weak<span class="n">A 6 pt black mark and 7 pt grey name in the top line. Legible in print, gone at thumbnail size.</span></td>
+          <td>Strong<span class="n">A 16 pt mark reversed out on the right margin, the Unigrid arrowhead’s place. ■ ▲ ● ◆ tell apart on a shelf.</span></td>
+          <td class="v"><i class="mark bp"></i>B′<span class="n">The square is the weakest mark, reversed.</span></td></tr>
+        <tr><th>Colour keeps one meaning</th>
+          <td>Yes, and teaches it</td>
+          <td>Yes, and teaches it<span class="n">The band is black, never a family colour. The colour-band variant was rejected for this reason.</span></td>
+          <td class="v"><i class="mark eq"></i>Even</td></tr>
+        <tr><th>Warmth</th>
+          <td>Calm<span class="n">Light and open; little charm, but nothing heavy. The warmth lives in the subtitles.</span></td>
+          <td>Firmer<span class="n">28% of the page is black. Authoritative, like a park map, but heavier for a reader who is already worried about a chirping alarm. The colour tiles look brighter against it.</span></td>
+          <td class="v"><i class="mark b"></i>B<span class="n">The real cost of B′. Grilled Cheese shows it most.</span></td></tr>
+        <tr><th>Cost in <code>build_guide.py</code></th>
+          <td>About 40 lines<span class="n">Replace the three-column tile loop in <code>page_cover()</code> with the grid; add the series line. Half a day in <code>packages/template</code>, then 24 copies.</span></td>
+          <td>About 70 lines<span class="n">B’s grid, plus one <code>rect()</code> for the band, the top row with mark and number, and the title set from the band’s foot (white, upward from a fixed baseline). The <code>check("cover", y)</code> becomes a check that the title fits the band. Add an hour or two.</span></td>
+          <td class="v"><i class="mark b"></i>B, narrowly<span class="n">Both are cover-only; same rollout, same <code>PART_FAMILY</code> migration for four older builders.</span></td></tr>
+        <tr><th>Cost in <code>build_docx.py</code></th>
+          <td>A 6 × 6 table<span class="n">Shaded cells for tiles, as <code>tile_cell()</code> already does; <code>cover_gap()</code> redone for the grid’s new top.</span></td>
+          <td>The same, plus a band<span class="n">A one-cell table shaded black, white runs for kicker and title, the mark as a character or a small shape. Full bleed needs a cover section with zero margins and its own <code>pgMar</code>; inside the margins it’s simple. <code>cover_gap()</code> becomes a fixed band height.</span></td>
+          <td class="v"><i class="mark b"></i>B<span class="n">Ship the Word band inside the margins first.</span></td></tr>
+        <tr><th>Word behaviour</th>
+          <td>Robust<span class="n">Text and a table; nothing moves if a font substitutes.</span></td>
+          <td>Fair<span class="n">A substituted font can push a three-line title out of a fixed-height band. Set the row height “at least”, not “exactly”, and accept a taller band in Word.</span></td>
+          <td class="v"><i class="mark b"></i>B</td></tr>
+        <tr><th>Print behaviour</th>
+          <td>Clean anywhere<span class="n">Little ink; nothing reaches the edge.</span></td>
+          <td>Edges and toner<span class="n">Home printers can’t print to the edge, so the band gets a white frame of 4–6 mm. A solid black block, 150 × 324 pt, on every printed copy. Fine in greyscale.</span></td>
+          <td class="v"><i class="mark b"></i>B<span class="n">Acceptable if the cover is mostly seen on screen, as it is.</span></td></tr>
+        <tr><th>Dark mode (site)</th>
+          <td>Reads as a white card<span class="n">On a dark page the cover is a bright rectangle, clearly an object.</span></td>
+          <td>Band merges<span class="n">The black band runs into a dark page, and the cover loses its top edge. Needs a 1 px light outline on cover images in dark mode, one line in <code>brand.css</code>.</span></td>
+          <td class="v"><i class="mark b"></i>B, with an easy fix for B′</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small" style="margin-top: 12px;"><i class="mark bp"></i>B′ better &nbsp; <i class="mark b"></i>B better &nbsp; <i class="mark eq"></i>even, or a slight lean. B′ wins every identity row; B wins every row about cost and output, each by a small, fixable margin.</p>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="recommendation">
+  <div class="sec-head">
+    <div class="num">05 · Recommendation</div>
+    <div>
+      <h2 class="t">Use B′, with the title in a black band</h2>
+      <p class="lede">The study picked B because the cover art is the guide’s own content. B′ keeps that untouched and fixes what B was weakest at: recognising the series, the collection and the title at the size the site shows them. Its costs are a heavier cover, about 30 more lines per builder, and a few output details (a print edge, a Word band, a dark-mode outline). Each of those is small and known; the identity gain isn’t available any other way at no cost per guide.</p>
+    </div>
+  </div>
+
+  <div class="cols rec-block">
+    <div class="prose"><h3>If warmth wins</h3></div>
+    <div class="prose">
+      <p>If the black reads as too stern for guides meant to calm people down, keep B. B′ is the same build plus the band, so the band can be added later, or tried on the site’s cover images first, without touching the grid.</p>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top: 32px;">
+    <div class="prose"><h3>What Brian needs to decide</h3></div>
+    <ol class="decide prose">
+      <li><b>B or B′.</b> The band for shelf and thumbnail identity, or the open white cover for warmth.</li>
+      <li><b>Title in the band or below it.</b> Recommended inside, as Unigrid does. The thin band with the title on white is the lighter fallback.</li>
+      <li><b>Numbers.</b> B′ puts the guide’s number in the band, in plain view. If it stays, numbers are permanent and never reused; if not, the band carries the mark and collection only.</li>
+      <li><b>The Word cover.</b> A band inside the margins (simple, recommended) or full bleed (a separate cover section).</li>
+      <li><b>Collection marks in black (white on the band), not colour.</b> Unchanged from the study, and B′ depends on it.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div><b style="color: var(--ink);">How this was made</b></div>
+  <div>
+    <p>B′ covers were drawn by <code>b-prime/scripts/bprime.py</code>, which imports the study’s <code>scripts/kit.py</code> and <code>scripts/covers.py</code> (page geometry, TeX Gyre Heros, the two-tone tile, the shelf format and <code>data.json</code> from <code>scripts/data.py</code>) and reuses B’s grid code unchanged apart from its height on the page. Everything is rendered with ReportLab at 324 × 540 pt and rasterised at 2× with pypdfium2, as the study’s covers are. B images are the study’s own, unchanged, from <code>../img</code>.</p>
+    <p>Rebuild: <code>~/github/stuffbucket/accidentalguide/.venv/bin/python b-prime/scripts/bprime.py</code></p>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

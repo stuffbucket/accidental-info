@@ -1,0 +1,21 @@
+{
+ "group": "context",
+ "n": 3,
+ "commons": "File:Lanterna magica.jpg",
+ "title": "Lanterna magica (Kircher)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Lanterna_magica.jpg",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Lanterna_magica.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 799,
+ "h": 507,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Athanasius Kircher",
+ "date_meta": "1671",
+ "credit_meta": "https://www.flickr.com/photos/116153022@N02/24172824450",
+ "desc_meta": "Illustration of a magic lantern contained in the work of 1671 Ars Magna Lucis et Umbrae by the mathematician Athanius Kircher.",
+ "license_templates": [
+  "PD-old-70-expired"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{en|1=Illustration of a magic lantern contained in the work of 1671 Ars Magna Lucis et Umbrae by the mathematician Athanius Kircher.}}\n|date=1671\n|source=https://www.flickr.com/photos/116153022@N02/24172824450\n|author=Athanasius Kircher\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-70-expired}}\n\n[[Category:Sciopticon]]\n[[Category:Ars magna lucis et umbrae]]",
+ "raw_path": "raw/context/3/original.jpg"
+}

@@ -1,0 +1,21 @@
+{
+ "group": "collection-ai",
+ "n": 2,
+ "commons": "File:Ferguson 0008 Orrery.jpg",
+ "title": "The Orrery, made by James Ferguson",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Ferguson_0008_Orrery.jpg",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Ferguson_0008_Orrery.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 3623,
+ "h": 2961,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "James Ferguson",
+ "date_meta": "1794-12-31",
+ "credit_meta": "https://archive.org/details/b28758948",
+ "desc_meta": "Plate from: Ferguson, James. 1794, Astronomy explained upon Sir Isaac Newton's principles, Ninth edn.",
+ "license_templates": [
+  "PD-old-70-1923"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{en|1=Plate from: Ferguson, James. 1794, Astronomy explained upon Sir Isaac Newton's principles, Ninth edn.}}\n|date=1794-12-31\n|source=https://archive.org/details/b28758948\n|author=James Ferguson\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-70-1923}}\n\n[[Category:James Ferguson (1710-1776)]]",
+ "raw_path": "raw/collection-ai/2/original.jpg"
+}

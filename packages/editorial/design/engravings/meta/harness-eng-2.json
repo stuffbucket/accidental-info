@@ -1,0 +1,21 @@
+{
+ "group": "harness-eng",
+ "n": 2,
+ "commons": "File:T5- d167 - Fig. 152. — Soupape de sûreté de Thomas Adams.png",
+ "title": "Soupape de sûreté de Thomas Adams",
+ "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d167_-_Fig._152._%E2%80%94_Soupape_de_s%C3%BBret%C3%A9_de_Thomas_Adams.png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/T5-_d167_-_Fig._152._%E2%80%94_Soupape_de_s%C3%BBret%C3%A9_de_Thomas_Adams.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 1468,
+ "h": 2506,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Louis Figuier",
+ "date_meta": "1891",
+ "credit_meta": "Figuier - Les Merveilles de la science, 1867 - 1891, Tome 5.djvu",
+ "desc_meta": "Soupape de sûreté de Thomas Adams (Coupe et élévation)",
+ "license_templates": [
+  "PD-old-100-1923"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{fr|1=Soupape de sûreté de Thomas Adams (Coupe et élévation)}}\n|date=1891\n|source=Figuier - Les Merveilles de la science, 1867 - 1891, Tome 5.djvu\n|author={{Creator:Louis Figuier}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-100-1923}}\n\n[[Category:Les Merveilles de la science - Tome 5]]",
+ "raw_path": "raw/harness-eng/2/original.png"
+}

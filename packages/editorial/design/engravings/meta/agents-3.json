@@ -1,0 +1,21 @@
+{
+ "group": "agents",
+ "n": 3,
+ "commons": "File:Racknitz - The Turk 3.jpg",
+ "title": "The Turk, with the hidden operator (Racknitz plate III)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_3.jpg",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Racknitz_-_The_Turk_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 2678,
+ "h": 2439,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Joseph Racknitz",
+ "date_meta": "1789",
+ "credit_meta": "Humboldt University Library",
+ "desc_meta": "From book that tried to explain the illusions behind the Kempelen chess playing automaton (known as The Turk) after making reconstructions of the device.",
+ "license_templates": [
+  "PD-Art"
+ ],
+ "wikitext_head": "== {{int:filedesc}} ==\n{{Information\n|Description=From book that tried to explain the illusions behind the Kempelen chess playing automaton (known as [[w:the Turk|The Turk]]) after making reconstructions of the device.\n|Source=[https://www.digi-hub.de/viewer/image/BV041097321/65/ Humboldt University Library]\n|Date=1789\n|Author=Joseph Racknitz\n|Permission=PD-Art\n|other_versions=\n}}\n\n== {{int:license-header}} ==\n{{PD-Art|PD-old-100}}\n\n[[Category:The Turk]]\n[[Category:Johann Wolfgang von Kempelen]]\n[[Category:History of robotics]]",
+ "raw_path": "raw/agents/3/original.jpg"
+}

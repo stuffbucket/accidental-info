@@ -1,0 +1,1286 @@
+{
+ "families": [
+  {
+   "key": "Ru",
+   "name": "Things that run",
+   "color": "yellow",
+   "token": "warning",
+   "hex": "#FFCD29"
+  },
+  {
+   "key": "Wr",
+   "name": "Things you write down",
+   "color": "purple",
+   "token": "figjam",
+   "hex": "#9747FF"
+  },
+  {
+   "key": "Ck",
+   "name": "Things that check",
+   "color": "green",
+   "token": "success",
+   "hex": "#14AE5C"
+  },
+  {
+   "key": "Us",
+   "name": "Things an agent uses",
+   "color": "red-orange",
+   "token": "danger",
+   "hex": "#F24822"
+  },
+  {
+   "key": "Dm",
+   "name": "Decisions people make",
+   "color": "pink",
+   "token": "assistive",
+   "hex": "#E83FBF"
+  },
+  {
+   "key": "Nu",
+   "name": "Numbers and claims",
+   "color": "blue",
+   "token": "brand",
+   "hex": "#0D99FF"
+  }
+ ],
+ "collections": [
+  {
+   "id": "intelligence",
+   "name": "Accidental Intelligence",
+   "line": "Coding agents, and what to make of them.",
+   "code": "Ai",
+   "guides": [
+    "accidental-intelligence",
+    "agents-harnesses-skills-tools",
+    "claude-code",
+    "claude-desktop",
+    "copilot-cli",
+    "codex",
+    "visual-studio-and-vs-code",
+    "skills",
+    "mcp",
+    "plugins-and-marketplaces",
+    "context-windows",
+    "specs-and-reviews",
+    "software-factories",
+    "lights-off-software-factories"
+   ]
+  },
+  {
+   "id": "around-the-house",
+   "name": "Around the house",
+   "line": "Small domestic emergencies.",
+   "code": "Ho",
+   "guides": [
+    "chirping-smoke-detector",
+    "loading-a-dishwasher",
+    "is-my-houseplant-dying"
+   ]
+  },
+  {
+   "id": "at-the-table",
+   "name": "At the table",
+   "line": "Food, drink, and standing up to speak.",
+   "code": "Ta",
+   "guides": [
+    "hosting-thanksgiving",
+    "grilled-cheese",
+    "ordering-wine",
+    "giving-a-toast"
+   ]
+  },
+  {
+   "id": "games",
+   "name": "Games",
+   "line": "How to start, and how it ends.",
+   "code": "Gm",
+   "guides": [
+    "first-dnd-game",
+    "chess-first-move",
+    "chess-last-move"
+   ]
+  }
+ ],
+ "guides": {
+  "accidental-intelligence": {
+   "slug": "accidental-intelligence",
+   "title": "Accidental Intelligence",
+   "lines": [
+    "Accidental",
+    "Intelligence"
+   ],
+   "subtitle": "A pocket-sized guide to the Accidental Guides, as of October 2026.",
+   "version": "0.3.0",
+   "status": "published",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Ru",
+     "name": "Things that run",
+     "family": "Ru",
+     "count": 7
+    },
+    {
+     "num": "02",
+     "key": "Wr",
+     "name": "Things you write down",
+     "family": "Wr",
+     "count": 6
+    },
+    {
+     "num": "03",
+     "key": "Ck",
+     "name": "Things that check",
+     "family": "Ck",
+     "count": 7
+    },
+    {
+     "num": "04",
+     "key": "Us",
+     "name": "Things an agent uses",
+     "family": "Us",
+     "count": 4
+    },
+    {
+     "num": "05",
+     "key": "Dm",
+     "name": "Decisions people make",
+     "family": "Dm",
+     "count": 5
+    },
+    {
+     "num": "06",
+     "key": "Nu",
+     "name": "Numbers and claims",
+     "family": "Nu",
+     "count": 7
+    }
+   ],
+   "collection": "intelligence",
+   "group": null,
+   "number": 0
+  },
+  "agents-harnesses-skills-tools": {
+   "slug": "agents-harnesses-skills-tools",
+   "title": "Agents, Harnesses, Skills, and Tools",
+   "lines": [
+    "Agents",
+    "Harnesses",
+    "Skills and Tools"
+   ],
+   "subtitle": "A pocket-sized guide to the AI coding systems of mid-October 2026 (morning edition).",
+   "version": "1.0.0",
+   "status": "published",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Mo",
+     "name": "Model",
+     "family": "Ru",
+     "page": 6
+    },
+    {
+     "num": "02",
+     "key": "Ha",
+     "name": "Harness",
+     "family": "Ru",
+     "page": 7
+    },
+    {
+     "num": "03",
+     "key": "Ag",
+     "name": "Agent",
+     "family": "Ru",
+     "page": 8
+    },
+    {
+     "num": "04",
+     "key": "Sk",
+     "name": "Skill",
+     "family": "Wr",
+     "page": 9
+    },
+    {
+     "num": "05",
+     "key": "To",
+     "name": "Tool",
+     "family": "Us",
+     "page": 10
+    },
+    {
+     "num": "06",
+     "key": "Mc",
+     "name": "MCP server",
+     "family": "Us",
+     "page": 11
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Agents",
+   "number": 1
+  },
+  "claude-code": {
+   "slug": "claude-code",
+   "title": "Claude Code",
+   "lines": [
+    "Claude Code"
+   ],
+   "subtitle": "A pocket-sized guide to where Claude Code keeps its setup, as of October 2026.",
+   "version": "0.2.1",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "In",
+     "name": "Instructions file",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "02",
+     "key": "Sk",
+     "name": "Skill",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "03",
+     "key": "Mc",
+     "name": "MCP server",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "04",
+     "key": "Pl",
+     "name": "Plugin",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "05",
+     "key": "Se",
+     "name": "Settings",
+     "family": "Dm",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Harnesses you use",
+   "number": 2
+  },
+  "claude-desktop": {
+   "slug": "claude-desktop",
+   "title": "Claude Desktop",
+   "lines": [
+    "Claude",
+    "Desktop"
+   ],
+   "subtitle": "A pocket-sized guide to where Claude Desktop keeps its settings, as of October 2026.",
+   "version": "0.2.1",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "In",
+     "name": "Instructions",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "02",
+     "key": "Sk",
+     "name": "Skills",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "03",
+     "key": "Mc",
+     "name": "Connectors",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "04",
+     "key": "Pl",
+     "name": "Plugins",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "05",
+     "key": "Se",
+     "name": "Settings and permissions",
+     "family": "Dm",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Harnesses you use",
+   "number": 3
+  },
+  "copilot-cli": {
+   "slug": "copilot-cli",
+   "title": "GitHub Copilot CLI",
+   "lines": [
+    "GitHub",
+    "Copilot CLI"
+   ],
+   "subtitle": "A pocket-sized guide to where Copilot CLI keeps its setup, and which copy wins, as of October 2026.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "In",
+     "name": "Instructions file",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "02",
+     "key": "Sk",
+     "name": "Skill",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "03",
+     "key": "Mc",
+     "name": "MCP server",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "04",
+     "key": "Ag",
+     "name": "Custom agent",
+     "family": "Ru",
+     "page": 4
+    },
+    {
+     "num": "05",
+     "key": "Se",
+     "name": "Settings",
+     "family": "Dm",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Harnesses you use",
+   "number": 4
+  },
+  "codex": {
+   "slug": "codex",
+   "title": "OpenAI Codex",
+   "lines": [
+    "OpenAI",
+    "Codex"
+   ],
+   "subtitle": "A pocket-sized guide to where Codex keeps its setup, and which copy wins, as of October 2026.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "In",
+     "name": "Instructions file",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "02",
+     "key": "Sk",
+     "name": "Skill",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "03",
+     "key": "Mc",
+     "name": "MCP server",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "04",
+     "key": "Se",
+     "name": "Config file",
+     "family": "Dm",
+     "page": 4
+    },
+    {
+     "num": "05",
+     "key": "Pe",
+     "name": "Permissions",
+     "family": "Dm",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Harnesses you use",
+   "number": 5
+  },
+  "visual-studio-and-vs-code": {
+   "slug": "visual-studio-and-vs-code",
+   "title": "VS Code and Visual Studio",
+   "lines": [
+    "VS Code and",
+    "Visual Studio"
+   ],
+   "subtitle": "A pocket-sized guide to where GitHub Copilot’s agent setup lives, as of October 2026.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "In",
+     "name": "Instructions file",
+     "family": "Wr",
+     "page": 3
+    },
+    {
+     "num": "02",
+     "key": "Ag",
+     "name": "Custom agent",
+     "family": "Ru",
+     "page": 3
+    },
+    {
+     "num": "03",
+     "key": "Sk",
+     "name": "Skill",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "04",
+     "key": "Mc",
+     "name": "MCP server",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "05",
+     "key": "Se",
+     "name": "Setting",
+     "family": "Dm",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Harnesses you use",
+   "number": 6
+  },
+  "skills": {
+   "slug": "skills",
+   "title": "Agent Skills",
+   "lines": [
+    "Agent",
+    "Skills"
+   ],
+   "subtitle": "A pocket-sized guide to what a skill folder can hold, as of October 2026.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Ds",
+     "name": "Description",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "02",
+     "key": "Is",
+     "name": "Skill instructions",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Sr",
+     "name": "Script",
+     "family": "Us",
+     "page": 6
+    },
+    {
+     "num": "04",
+     "key": "Rf",
+     "name": "Reference file",
+     "family": "Wr",
+     "page": 6
+    },
+    {
+     "num": "05",
+     "key": "At",
+     "name": "Asset",
+     "family": "Wr",
+     "page": 7
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Extending an agent",
+   "number": 7
+  },
+  "mcp": {
+   "slug": "mcp",
+   "title": "Model Context Protocol",
+   "lines": [
+    "Model",
+    "Context",
+    "Protocol"
+   ],
+   "subtitle": "A pocket-sized guide to MCP servers and clients, as of October 2026.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Mc",
+     "name": "MCP server",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Ct",
+     "name": "Client",
+     "family": "Ru",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "En",
+     "name": "Server entry",
+     "family": "Dm",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Tp",
+     "name": "Transport",
+     "family": "Us",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Extending an agent",
+   "number": 8
+  },
+  "plugins-and-marketplaces": {
+   "slug": "plugins-and-marketplaces",
+   "title": "Plugins, Connectors, and Marketplaces",
+   "lines": [
+    "Plugins,",
+    "Connectors, and",
+    "Marketplaces"
+   ],
+   "subtitle": "A pocket-sized guide to the names for things you add to a coding agent or AI app.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "To",
+     "name": "Tools",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "In",
+     "name": "Instructions",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Hk",
+     "name": "Hooks",
+     "family": "Ru",
+     "page": 6
+    },
+    {
+     "num": "04",
+     "key": "Pl",
+     "name": "Packages",
+     "family": "Us",
+     "page": 6
+    },
+    {
+     "num": "05",
+     "key": "Mk",
+     "name": "Marketplaces",
+     "family": "Wr",
+     "page": 7
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Extending an agent",
+   "number": 9
+  },
+  "context-windows": {
+   "slug": "context-windows",
+   "title": "Context Windows",
+   "lines": [
+    "Context",
+    "Windows"
+   ],
+   "subtitle": "A pocket-sized guide to what fills a coding agent’s context window, as of October 2026.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Tk",
+     "name": "Token",
+     "family": "Nu",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "St",
+     "name": "Startup context",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Cp",
+     "name": "Compaction",
+     "family": "Ru",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Ns",
+     "name": "New session",
+     "family": "Ru",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Context",
+   "number": 10
+  },
+  "specs-and-reviews": {
+   "slug": "specs-and-reviews",
+   "title": "Specs and Reviews",
+   "lines": [
+    "Specs and",
+    "Reviews"
+   ],
+   "subtitle": "A pocket-sized guide to agreeing on work as a team and checking when it’s done.",
+   "version": "0.4.0",
+   "status": "published",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Sp",
+     "name": "Spec",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Wi",
+     "name": "Work item",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Tr",
+     "name": "Tracker",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Ac",
+     "name": "Acceptance criteria",
+     "family": "Dm",
+     "page": 5
+    },
+    {
+     "num": "05",
+     "key": "Rv",
+     "name": "Review",
+     "family": "Ck",
+     "page": 6
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Project management",
+   "number": 11
+  },
+  "software-factories": {
+   "slug": "software-factories",
+   "title": "Software Factories",
+   "lines": [
+    "Software",
+    "Factories"
+   ],
+   "subtitle": "A pocket-sized guide to software delivery run by coding agents, as of October 2026.",
+   "version": "0.1.0",
+   "status": "published",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Sp",
+     "name": "Spec",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Wi",
+     "name": "Work item",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Or",
+     "name": "Orchestrator",
+     "family": "Ru",
+     "page": 6
+    },
+    {
+     "num": "04",
+     "key": "As",
+     "name": "Agent session",
+     "family": "Ru",
+     "page": 7
+    },
+    {
+     "num": "05",
+     "key": "Ga",
+     "name": "Gate",
+     "family": "Ck",
+     "page": 8
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Software factories",
+   "number": 12
+  },
+  "lights-off-software-factories": {
+   "slug": "lights-off-software-factories",
+   "title": "Lights-Off Software Factories",
+   "lines": [
+    "Lights-Off",
+    "Software",
+    "Factories"
+   ],
+   "subtitle": "A pocket-sized guide to software factories where nobody reads the code, as of October 2026.",
+   "version": "0.4.0",
+   "status": "published",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Sn",
+     "name": "Scenario",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Dt",
+     "name": "Digital twin",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Sa",
+     "name": "Satisfaction",
+     "family": "Ck",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Cl",
+     "name": "Closed loop",
+     "family": "Ru",
+     "page": 5
+    }
+   ],
+   "collection": "intelligence",
+   "group": "Software factories",
+   "number": 13
+  },
+  "chirping-smoke-detector": {
+   "slug": "chirping-smoke-detector",
+   "title": "Smoke Detectors That Chirp",
+   "lines": [
+    "Smoke",
+    "Detectors",
+    "That Chirp"
+   ],
+   "subtitle": "A pocket-sized guide to finding the smoke alarm that’s chirping, and making it stop.",
+   "version": "0.6.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Cr",
+     "name": "Chirp",
+     "family": "Ck",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Ld",
+     "name": "Indicator light",
+     "family": "Ck",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Ba",
+     "name": "Battery",
+     "family": "Us",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Hu",
+     "name": "Hush button",
+     "family": "Dm",
+     "page": 5
+    },
+    {
+     "num": "05",
+     "key": "Md",
+     "name": "Manufacture date",
+     "family": "Nu",
+     "page": 6
+    }
+   ],
+   "collection": "around-the-house",
+   "group": null,
+   "number": 1
+  },
+  "loading-a-dishwasher": {
+   "slug": "loading-a-dishwasher",
+   "title": "Loading a Dishwasher",
+   "lines": [
+    "Loading a",
+    "Dishwasher"
+   ],
+   "subtitle": "A pocket-sized guide to loading a dishwasher, and settling the arguments about it.",
+   "version": "0.5.1",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Bo",
+     "name": "Bottom rack",
+     "family": "Dm",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Tc",
+     "name": "Top rack",
+     "family": "Dm",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Cb",
+     "name": "Cutlery basket",
+     "family": "Dm",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Ar",
+     "name": "Spray arm",
+     "family": "Ru",
+     "page": 5
+    },
+    {
+     "num": "05",
+     "key": "Dg",
+     "name": "Detergent",
+     "family": "Us",
+     "page": 6
+    }
+   ],
+   "collection": "around-the-house",
+   "group": null,
+   "number": 2
+  },
+  "is-my-houseplant-dying": {
+   "slug": "is-my-houseplant-dying",
+   "title": "Is My Houseplant Dying?",
+   "lines": [
+    "Is My",
+    "Houseplant",
+    "Dying?"
+   ],
+   "subtitle": "A pocket-sized guide to light, watering and telling a thirsty plant from a drowning one.",
+   "version": "0.4.1",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Lt",
+     "name": "Light",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Wa",
+     "name": "Watering",
+     "family": "Dm",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Pt",
+     "name": "Pot",
+     "family": "Us",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Rt",
+     "name": "Roots",
+     "family": "Ck",
+     "page": 5
+    }
+   ],
+   "collection": "around-the-house",
+   "group": null,
+   "number": 3
+  },
+  "hosting-thanksgiving": {
+   "slug": "hosting-thanksgiving",
+   "title": "Hosting Thanksgiving",
+   "lines": [
+    "Hosting",
+    "Thanksgiving"
+   ],
+   "subtitle": "A pocket-sized guide to getting Thanksgiving dinner on the table, for 26 November 2026.",
+   "version": "0.4.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Tu",
+     "name": "Turkey size",
+     "family": "Nu",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Th",
+     "name": "Thawing",
+     "family": "Ru",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Ov",
+     "name": "Oven plan",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Tm",
+     "name": "Thermometer",
+     "family": "Ck",
+     "page": 5
+    },
+    {
+     "num": "05",
+     "key": "Hp",
+     "name": "Helpers",
+     "family": "Dm",
+     "page": 6
+    }
+   ],
+   "collection": "at-the-table",
+   "group": null,
+   "number": 1
+  },
+  "grilled-cheese": {
+   "slug": "grilled-cheese",
+   "title": "Grilled Cheese",
+   "lines": [
+    "Grilled",
+    "Cheese"
+   ],
+   "subtitle": "A pocket-sized guide to crisp bread and melted cheese.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Br",
+     "name": "Bread",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Cs",
+     "name": "Cheese",
+     "family": "Us",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Bu",
+     "name": "Butter",
+     "family": "Us",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "He",
+     "name": "Heat",
+     "family": "Dm",
+     "page": 6
+    }
+   ],
+   "collection": "at-the-table",
+   "group": null,
+   "number": 2
+  },
+  "ordering-wine": {
+   "slug": "ordering-wine",
+   "title": "Ordering Wine for the Table",
+   "lines": [
+    "Ordering Wine",
+    "for the Table"
+   ],
+   "subtitle": "A pocket-sized guide to ordering without knowing every name.",
+   "version": "0.1.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Wl",
+     "name": "Wine list",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Gr",
+     "name": "Grape",
+     "family": "Us",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Dy",
+     "name": "Dry",
+     "family": "Nu",
+     "page": 6
+    },
+    {
+     "num": "04",
+     "key": "Pr",
+     "name": "Price",
+     "family": "Dm",
+     "page": 7
+    },
+    {
+     "num": "05",
+     "key": "Ta",
+     "name": "Taste",
+     "family": "Ck",
+     "page": 8
+    }
+   ],
+   "collection": "at-the-table",
+   "group": null,
+   "number": 3
+  },
+  "giving-a-toast": {
+   "slug": "giving-a-toast",
+   "title": "Giving a Toast",
+   "lines": [
+    "Giving a",
+    "Toast"
+   ],
+   "subtitle": "A pocket-sized guide to PLACEHOLDER.",
+   "version": "0.1.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Op",
+     "name": "Opening",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Sy",
+     "name": "Story",
+     "family": "Wr",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Ll",
+     "name": "Last line",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Ln",
+     "name": "Length",
+     "family": "Nu",
+     "page": 5
+    }
+   ],
+   "collection": "at-the-table",
+   "group": null,
+   "number": 4
+  },
+  "first-dnd-game": {
+   "slug": "first-dnd-game",
+   "title": "Your First D&D Game",
+   "lines": [
+    "Your First",
+    "D&D Game"
+   ],
+   "subtitle": "A pocket-sized guide to sitting down at your first Dungeons & Dragons table, as of October 2026.",
+   "version": "0.4.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Gm",
+     "name": "Dungeon Master",
+     "family": "Dm",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Cs",
+     "name": "Character sheet",
+     "family": "Wr",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Di",
+     "name": "Dice",
+     "family": "Us",
+     "page": 6
+    },
+    {
+     "num": "04",
+     "key": "Tn",
+     "name": "Your turn",
+     "family": "Ru",
+     "page": 7
+    }
+   ],
+   "collection": "games",
+   "group": null,
+   "number": 1
+  },
+  "chess-first-move": {
+   "slug": "chess-first-move",
+   "title": "The First Move in Chess",
+   "lines": [
+    "The First Move",
+    "in Chess"
+   ],
+   "subtitle": "A pocket-sized guide to what to play first, as White or as Black.",
+   "version": "0.2.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Ce",
+     "name": "Center",
+     "family": "Us",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Dv",
+     "name": "Development",
+     "family": "Ru",
+     "page": 5
+    },
+    {
+     "num": "03",
+     "key": "Ca",
+     "name": "Castling",
+     "family": "Ru",
+     "page": 6
+    }
+   ],
+   "collection": "games",
+   "group": null,
+   "number": 2
+  },
+  "chess-last-move": {
+   "slug": "chess-last-move",
+   "title": "The Last Move in Chess",
+   "lines": [
+    "The Last Move",
+    "in Chess"
+   ],
+   "subtitle": "A pocket-sized guide to how a game of chess ends, and how to end one well.",
+   "version": "0.3.0",
+   "status": "draft",
+   "parts": [
+    {
+     "num": "01",
+     "key": "Kc",
+     "name": "Check",
+     "family": "Ck",
+     "page": 4
+    },
+    {
+     "num": "02",
+     "key": "Mt",
+     "name": "Checkmate",
+     "family": "Nu",
+     "page": 4
+    },
+    {
+     "num": "03",
+     "key": "Sm",
+     "name": "Stalemate",
+     "family": "Nu",
+     "page": 5
+    },
+    {
+     "num": "04",
+     "key": "Dw",
+     "name": "Draw",
+     "family": "Dm",
+     "page": 6
+    },
+    {
+     "num": "05",
+     "key": "Rs",
+     "name": "Resigning",
+     "family": "Dm",
+     "page": 7
+    }
+   ],
+   "collection": "games",
+   "group": null,
+   "number": 3
+  }
+ }
+}

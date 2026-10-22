@@ -1,0 +1,21 @@
+{
+ "group": "harnesses",
+ "n": 2,
+ "commons": "File:T5- d537 - Fig. 431. — clavier du télégraphe Baudot.png",
+ "title": "Clavier du télégraphe Baudot",
+ "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d537_-_Fig._431._%E2%80%94_clavier_du_t%C3%A9l%C3%A9graphe_Baudot.png",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/T5-_d537_-_Fig._431._%E2%80%94_clavier_du_t%C3%A9l%C3%A9graphe_Baudot.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 1412,
+ "h": 1684,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Louis Figuier",
+ "date_meta": "1891",
+ "credit_meta": "Figuier - Les Merveilles de la science, 1867 - 1891, Tome 5.djvu",
+ "desc_meta": "Manipulateur, ou clavier du télégraphe Baudot",
+ "license_templates": [
+  "PD-old-100-1923"
+ ],
+ "wikitext_head": "=={{int:filedesc}}==\n{{Information\n|description={{fr|1=Manipulateur, ou clavier du télégraphe Baudot}}\n|date=1891\n|source=Figuier - Les Merveilles de la science, 1867 - 1891, Tome 5.djvu\n|author={{Creator:Louis Figuier}}\n|permission=\n|other versions=\n}}\n\n=={{int:license-header}}==\n{{PD-old-100-1923}}\n\n[[Category:Les Merveilles de la science - Tome 5]]",
+ "raw_path": "raw/harnesses/2/original.png"
+}

@@ -1,0 +1,21 @@
+{
+ "group": "collection-games",
+ "n": 3,
+ "commons": "File:Racknitz - The Turk 1.jpg",
+ "title": "The Turk, open cabinet (Racknitz plate I)",
+ "source_url": "https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_1.jpg",
+ "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Racknitz_-_The_Turk_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+ "w": 2733,
+ "h": 2348,
+ "license": "Public domain",
+ "license_url": "",
+ "artist_meta": "Joseph Racknitz",
+ "date_meta": "1789",
+ "credit_meta": "Humboldt University Library",
+ "desc_meta": "From book that tried to explain the illusions behind the Kempelen chess playing automaton (known as The Turk) after making reconstructions of the device.",
+ "license_templates": [
+  "PD-Art"
+ ],
+ "wikitext_head": "== {{int:filedesc}} ==\n{{Information\n|Description=From book that tried to explain the illusions behind the Kempelen chess playing automaton (known as [[w:the Turk|The Turk]]) after making reconstructions of the device.\n|Source=[https://www.digi-hub.de/viewer/image/BV041097321/63/ Humboldt University Library]\n|Date=1789\n|Author=Joseph Racknitz\n|Permission=\n|other_versions=\n}}\n== {{int:license-header}} ==\n{{PD-Art|PD-old-100}}\n\n[[Category:The Turk]]\n[[Category:Johann Wolfgang von Kempelen]]",
+ "raw_path": "raw/collection-games/3/original.jpg"
+}

@@ -1,0 +1,705 @@
+[
+ {
+  "group": "collection-ai",
+  "n": 1,
+  "title": "Fragment of Babbage's Difference Engine",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Babbage_difference_engine_drawing.gif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/67/Babbage_difference_engine_drawing.gif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Harper's New Monthly Magazine, vol. 30, Dec 1864 ('Portion of Babbage's difference engine')",
+  "artist": "Benjamin Herschel Babbage (per Commons)",
+  "year": "1864",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Babbage_difference_engine_drawing.gif",
+  "license_templates": [
+   "PD-US"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-ai-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-ai-1.png",
+  "notes": "TOP PICK (Accidental Intelligence). The literal ancestor of the calculating machine; reads as 'machinery' even when dense. Busy at 175px, so give it the larger collection size.",
+  "status": "top-pick"
+ },
+ {
+  "group": "collection-ai",
+  "n": 2,
+  "title": "The Orrery, made by James Ferguson",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Ferguson_0008_Orrery.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Ferguson_0008_Orrery.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "James Ferguson, Astronomy Explained upon Sir Isaac Newton's Principles, 9th edn (1794)",
+  "artist": "James Ferguson",
+  "year": "1794",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Ferguson_0008_Orrery.jpg",
+  "license_templates": [
+   "PD-old-70-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-ai-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-ai-2.png",
+  "notes": "Ferguson's orrery. Elegant but wide and low; a faint vertical fold/tonal band survives thresholding. Title banner and caption cropped off.",
+  "status": "candidate"
+ },
+ {
+  "group": "collection-house",
+  "n": 1,
+  "title": "The 'Universal' wringer",
+  "source_url": "https://commons.wikimedia.org/wiki/File:The_%27Universal%27_wringer_%E2%80%A2_p326_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/The_%27Universal%27_wringer_%E2%80%A2_p326_%E2%80%A2_Scammell%27s_Cyclopedia.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.326",
+  "artist": "Unknown (signed 'Tuttle' engraver)",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:The_%27Universal%27_wringer_%E2%80%A2_p326_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-house-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-house-1.png",
+  "notes": "TOP PICK (Around the house). The 'Universal' clothes wringer: a bold, faintly absurd household contraption; strong silhouette at small size.",
+  "status": "top-pick"
+ },
+ {
+  "group": "collection-house",
+  "n": 2,
+  "title": "Sonnerie à trembleur (Breguet electric bell)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T2-_d166_-_Fig._77._%E2%80%94_Sonnerie_%C3%A0_trembleur.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/T2-_d166_-_Fig._77._%E2%80%94_Sonnerie_%C3%A0_trembleur.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 2, fig. 77",
+  "artist": "Unknown engraver for Figuier (Breguet apparatus)",
+  "year": "1868",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T2-_d166_-_Fig._77._%E2%80%94_Sonnerie_%C3%A0_trembleur.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-house-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-house-2.png",
+  "notes": "Electric trembler bell by Breguet: 'the thing that chirps'. Clean and legible.",
+  "status": "candidate"
+ },
+ {
+  "group": "collection-house",
+  "n": 3,
+  "title": "Plant vaporiser",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Plant_vaporiser_%E2%80%A2_p419_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Plant_vaporiser_%E2%80%A2_p419_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_%281897%29.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.419",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Plant_vaporiser_%E2%80%A2_p419_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-house-3.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-house-3.png",
+  "notes": "A man blowing through a homemade plant vaporiser. Funniest of the set (houseplant dying), but it includes a human face in profile.",
+  "status": "candidate"
+ },
+ {
+  "group": "collection-house",
+  "n": 4,
+  "title": "Wardian fern case",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Wardian_fern_case_%E2%80%A2_p422_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Wardian_fern_case_%E2%80%A2_p422_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_%281897%29.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.422",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Wardian_fern_case_%E2%80%A2_p422_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-house-4.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-house-4.png",
+  "notes": "Wardian fern case (a Victorian terrarium). Pretty, a bit leafy-dense.",
+  "status": "candidate"
+ },
+ {
+  "group": "collection-table",
+  "n": 1,
+  "title": "Epergne",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Epergne_%E2%80%A2_p309_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Epergne_%E2%80%A2_p309_%E2%80%A2_Scammell%27s_Cyclopedia.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.309",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Epergne_%E2%80%A2_p309_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-table-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-table-1.png",
+  "notes": "TOP PICK (At the table). Epergne (tiered table centrepiece): tall, elegant, unmistakably 'dinner party', crisp at small size.",
+  "status": "top-pick"
+ },
+ {
+  "group": "collection-table",
+  "n": 4,
+  "title": "Tipsy cake",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Tipsy_cake_%E2%80%A2_p197_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Tipsy_cake_%E2%80%A2_p197_%E2%80%A2_Scammell%27s_Cyclopedia.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.197",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Tipsy_cake_%E2%80%A2_p197_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-table-4.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-table-4.png",
+  "notes": "Tipsy cake on a fluted dish. Reads well, a little heavy; good as a backup.",
+  "status": "candidate"
+ },
+ {
+  "group": "collection-table",
+  "n": 2,
+  "title": "Ready for the Guests",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Ready_for_guests_%E2%80%A2_p312_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Ready_for_guests_%E2%80%A2_p312_%E2%80%A2_Scammell%27s_Cyclopedia.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Unknown authorUnknown author",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Ready_for_guests_%E2%80%A2_p312_%E2%80%A2_Scammell%27s_Cyclopedia.tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Scammell 'Ready for the Guests' laid table. Rejected: too wide and tiny at cover size.",
+  "status": "rejected"
+ },
+ {
+  "group": "collection-table",
+  "n": 3,
+  "title": "Wine-Drinking Cup with Vine and Grapes",
+  "source_url": "https://www.oldbookillustrations.com/illustrations/gille-tailpiece-grapes/",
+  "image_url": "https://www.oldbookillustrations.com/site/assets/high-res/1808/gille-tailpiece-grapes-rawscan.jpg",
+  "book": "Recueil des divers caractères, vignettes et ornemens de la fonderie et imprimerie de J.G. Gillé (Paris, 1808), ornament no. 1040",
+  "artist": "Unknown (J.-G. Gillé typefoundry)",
+  "year": "1808",
+  "license": "Public domain (US and life+70 countries, per Old Book Illustrations' status statement; credit requested)",
+  "license_url": "https://www.oldbookillustrations.com/illustrations/gille-tailpiece-grapes/",
+  "license_templates": null,
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Gillé 1808 typefounder's vignette, wine cup with vines (Old Book Illustrations). Rejected: wide and scrappy at cover size.",
+  "status": "rejected"
+ },
+ {
+  "group": "collection-games",
+  "n": 1,
+  "title": "The Turk (Kempelen's chess automaton)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Tuerkischer_schachspieler_windisch4.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Tuerkischer_schachspieler_windisch4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Copper engraving of Kempelen's Schachspieler (Commons file 'Tuerkischer schachspieler windisch4', i.e. from Karl Gottlieb von Windisch's 1783/84 Briefe über den Schachspieler); Commons gives source only as 'copper engraving from book'",
+  "artist": "After Wolfgang von Kempelen (per Commons)",
+  "year": "c.1783",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Tuerkischer_schachspieler_windisch4.jpg",
+  "license_templates": [
+   "PD-old-auto-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-games-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-games-1.png",
+  "notes": "TOP PICK (Games). Kempelen's chess automaton, 'the Turk': chess plus a fake machine with a person inside, which bridges to the AI collection. Only 600px source, so it is softer than the others. The figure wears an Orientalist 'Turk' costume, so check you're comfortable with that.",
+  "status": "top-pick"
+ },
+ {
+  "group": "collection-games",
+  "n": 2,
+  "title": "Chess board",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Chess_Board_%E2%80%A2_p1071_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Chess_Board_%E2%80%A2_p1071_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_%281897%29.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.1071",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Chess_Board_%E2%80%A2_p1071_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/collection-games-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/collection-games-2.png",
+  "notes": "Chess board set up for play. Very legible, but plainer, more of a diagram than an object.",
+  "status": "candidate"
+ },
+ {
+  "group": "collection-games",
+  "n": 3,
+  "title": "The Turk, open cabinet (Racknitz plate I)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_1.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Racknitz_-_The_Turk_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Joseph Racknitz",
+  "year": "1789",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_1.jpg",
+  "license_templates": [
+   "PD-Art"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Racknitz 1789 plate I. Rejected for the same reason (muddy).",
+  "status": "rejected"
+ },
+ {
+  "group": "agents",
+  "n": 2,
+  "title": "La poupée phonographe (Edison talking doll)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T6-_d658_-_Fig._476._%E2%80%94_La_poup%C3%A9e_phonographe.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/T6-_d658_-_Fig._476._%E2%80%94_La_poup%C3%A9e_phonographe.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 6 (1891), fig. 476",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T6-_d658_-_Fig._476._%E2%80%94_La_poup%C3%A9e_phonographe.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/agents-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/agents-2.png",
+  "notes": "TOP PICK (Agents), with caveats. Edison's phonograph talking doll: a machine dressed up as a person that talks back. Charming and a little uncanny. It has a faint vignette edge.",
+  "status": "top-pick"
+ },
+ {
+  "group": "agents",
+  "n": 1,
+  "title": "Dederick & Grass 'Steam Carriage' (the Steam Man)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Zadoc_Dederick_and_Isaac_Grass%27_Steam_Man_schematic.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Zadoc_Dederick_and_Isaac_Grass%27_Steam_Man_schematic.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Zadoc Dederick",
+  "year": "1868",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Zadoc_Dederick_and_Isaac_Grass%27_Steam_Man_schematic.png",
+  "license_templates": [
+   "PD-US-expired",
+   "PD-old-70"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Dederick & Grass 1868 'Steam Man' patent drawing (PD-US). Rejected: the figure's face reads as an ethnic caricature, and fine patent lines plus handwriting.",
+  "status": "rejected"
+ },
+ {
+  "group": "agents",
+  "n": 3,
+  "title": "The Turk, with the hidden operator (Racknitz plate III)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_3.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Racknitz_-_The_Turk_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Joseph Racknitz",
+  "year": "1789",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Racknitz_-_The_Turk_3.jpg",
+  "license_templates": [
+   "PD-Art"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Racknitz 1789 plate III (Turk with hidden operator). Rejected: the coloured plate with tiled floor turns into a grey block at cover size.",
+  "status": "rejected"
+ },
+ {
+  "group": "context",
+  "n": 1,
+  "title": "Appareil de projection (magic lantern)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T6-_d039_-_Fig._056_%E2%80%94_Appareil_de_projection.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b5/T6-_d039_-_Fig._056_%E2%80%94_Appareil_de_projection.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 6 (1891), fig. 56",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T6-_d039_-_Fig._056_%E2%80%94_Appareil_de_projection.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/context-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/context-1.png",
+  "notes": "TOP PICK (Context). A projection lantern (magic lantern for lectures): 'what gets put up on the screen'. Strong and legible.",
+  "status": "top-pick"
+ },
+ {
+  "group": "context",
+  "n": 5,
+  "title": "Lanterne Morgan pour agrandissements (projection lantern)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T6-_d038_-_Fig._054_%E2%80%94_Lanterne_Morgan_pour_agrandissements.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/14/T6-_d038_-_Fig._054_%E2%80%94_Lanterne_Morgan_pour_agrandissements.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 6 (1891), fig. 54",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T6-_d038_-_Fig._054_%E2%80%94_Lanterne_Morgan_pour_agrandissements.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/context-5.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/context-5.png",
+  "notes": "Morgan enlarging lantern with bellows: a wider, lower alternative.",
+  "status": "candidate"
+ },
+ {
+  "group": "context",
+  "n": 2,
+  "title": "Wooton patent desk",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Chester_A_Arthur_Wooton_Desk.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Chester_A_Arthur_Wooton_Desk.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "",
+  "year": "1882",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Chester_A_Arthur_Wooton_Desk.jpg",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Wooton patent desk (1882 mercantile register). Rejected: the low-res etching thresholds to blotches.",
+  "status": "rejected"
+ },
+ {
+  "group": "context",
+  "n": 3,
+  "title": "Lanterna magica (Kircher)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Lanterna_magica.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Lanterna_magica.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Athanasius Kircher",
+  "year": "1671",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Lanterna_magica.jpg",
+  "license_templates": [
+   "PD-old-70-expired"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Kircher's Lanterna magica (1671). Rejected: dense hatching, muddy.",
+  "status": "rejected"
+ },
+ {
+  "group": "context",
+  "n": 4,
+  "title": "Window gardening",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Window_gardening_%E2%80%A2_p420_%E2%80%A2_Scammel%27s_Cyclopedia.tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Window_gardening_%E2%80%A2_p420_%E2%80%A2_Scammel%27s_Cyclopedia.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Unknown authorUnknown author",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Window_gardening_%E2%80%A2_p420_%E2%80%A2_Scammel%27s_Cyclopedia.tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Scammell 'Window gardening' (1897). Rejected: too dense at cover size (a better fit for 'Around the house' anyway).",
+  "status": "rejected"
+ },
+ {
+  "group": "extending",
+  "n": 1,
+  "title": "Brace and bits",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Brace_and_bits_%E2%80%A2_p784_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Brace_and_bits_%E2%80%A2_p784_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_%281897%29.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.784",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Brace_and_bits_%E2%80%A2_p784_%E2%80%A2_Scammell%27s_Cyclopedia_of_Valuable_Receipts_(1897).tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/extending-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/extending-1.png",
+  "notes": "TOP PICK (Extending). Brace and interchangeable bits: one handle, swappable attachments, which is exactly the plugin/skill/MCP idea.",
+  "status": "top-pick"
+ },
+ {
+  "group": "extending",
+  "n": 2,
+  "title": "Early telephone switchboard",
+  "source_url": "https://commons.wikimedia.org/wiki/File:PSM_V70_D233_Early_telephone_switchboard.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/PSM_V70_D233_Early_telephone_switchboard.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Popular Science Monthly, vol. 70 (1907), 'Early telephone switchboard'",
+  "artist": "Unknown",
+  "year": "1907 (depicts c.1878 board)",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:PSM_V70_D233_Early_telephone_switchboard.png",
+  "license_templates": [
+   "PD-US"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/extending-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/extending-2.png",
+  "notes": "Early plug-and-peg telephone switchboard: 'connectors'. Thin and faint at small size.",
+  "status": "candidate"
+ },
+ {
+  "group": "extending",
+  "n": 3,
+  "title": "Commutateur à six directions",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T6-_d439_-_Fig._352._%E2%80%94_Commutateur,_%C3%A0_six_directions.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/T6-_d439_-_Fig._352._%E2%80%94_Commutateur%2C_%C3%A0_six_directions.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 6 (1891), fig. 352",
+  "artist": "Signed 'Poyet' (Louis Poyet)",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T6-_d439_-_Fig._352._%E2%80%94_Commutateur,_%C3%A0_six_directions.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/extending-3.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/extending-3.png",
+  "notes": "Six-way rotary switch (commutateur): pick which connection is live. Bold, dark block.",
+  "status": "candidate"
+ },
+ {
+  "group": "harnesses",
+  "n": 2,
+  "title": "Clavier du télégraphe Baudot",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d537_-_Fig._431._%E2%80%94_clavier_du_t%C3%A9l%C3%A9graphe_Baudot.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/T5-_d537_-_Fig._431._%E2%80%94_clavier_du_t%C3%A9l%C3%A9graphe_Baudot.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 5 (1891), fig. 431",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T5-_d537_-_Fig._431._%E2%80%94_clavier_du_t%C3%A9l%C3%A9graphe_Baudot.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/harnesses-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/harnesses-2.png",
+  "notes": "TOP PICK (Harnesses). Baudot telegraph keyboard with a paper copy-holder: a desk you type into that talks to a remote machine. Neatly 'CLI-ish'.",
+  "status": "top-pick"
+ },
+ {
+  "group": "harnesses",
+  "n": 1,
+  "title": "Thurber's Chirographer (1843 typewriter)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Skrifmaskin,_Thurbers_chirographer,_Nordisk_familjebok.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Skrifmaskin%2C_Thurbers_chirographer%2C_Nordisk_familjebok.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Nordisk familjebok, 2nd edn ('Uggleupplagan'), art. 'Skrifmaskin' (runeberg.org/nfce/0633, 1917); depicts Thurber's 1843 patent",
+  "artist": "Unknown (after Charles Thurber's 1843 patent)",
+  "year": "1843 design / 1917 print",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Skrifmaskin,_Thurbers_chirographer,_Nordisk_familjebok.png",
+  "license_templates": [
+   "PD-Ugglan"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/harnesses-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/harnesses-1.png",
+  "notes": "Thurber's Chirographer, an 1843 typewriter on carved legs. Delightfully odd 'contraption you sit at'. Fine lines read slightly light.",
+  "status": "candidate"
+ },
+ {
+  "group": "harnesses",
+  "n": 3,
+  "title": "Télégraphe Hughes (printing telegraph)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d549_-_Fig._442._%E2%80%94_T%C3%A9l%C3%A9graphe_Hughes.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/32/T5-_d549_-_Fig._442._%E2%80%94_T%C3%A9l%C3%A9graphe_Hughes.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 5 (1891), fig. 442",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T5-_d549_-_Fig._442._%E2%80%94_T%C3%A9l%C3%A9graphe_Hughes.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/harnesses-3.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/harnesses-3.png",
+  "notes": "Hughes printing telegraph, with a piano keyboard. Great object but wide, so small on the cover.",
+  "status": "candidate"
+ },
+ {
+  "group": "project",
+  "n": 1,
+  "title": "Theodolite",
+  "source_url": "https://commons.wikimedia.org/wiki/File:EB1911_-_Theodolite.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/EB1911_-_Theodolite.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Encyclopaedia Britannica, 11th edn, vol. 26, 'Surveying' (via Wikisource)",
+  "artist": "Anonymous",
+  "year": "1911",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:EB1911_-_Theodolite.png",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/project-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/project-1.png",
+  "notes": "TOP PICK (Project management). Theodolite: measuring and agreeing where things are. Tall and narrow but crisp.",
+  "status": "top-pick"
+ },
+ {
+  "group": "project",
+  "n": 2,
+  "title": "Copying press",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Copying_press_%E2%80%A2_p24_%E2%80%A2_Scammell%27s_Cyclopedia_20220402_0001.tif",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Copying_press_%E2%80%A2_p24_%E2%80%A2_Scammell%27s_Cyclopedia_20220402_0001.tif?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Henry B. Scammell, Cyclopedia of Valuable Receipts (St Louis: Planet Publishing, 1897), p.24",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Copying_press_%E2%80%A2_p24_%E2%80%A2_Scammell%27s_Cyclopedia_20220402_0001.tif",
+  "license_templates": [
+   "PD-US-expired"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/project-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/project-2.png",
+  "notes": "Letter-copying press: the Victorian way to keep a copy of what you agreed (version control!). Bold and clean, a wry alternative.",
+  "status": "candidate"
+ },
+ {
+  "group": "factories",
+  "n": 1,
+  "title": "Carpet loom with Jacquard attachment",
+  "source_url": "https://commons.wikimedia.org/wiki/File:PSM_V39_D325_Carpet_loom_with_jacquard_attachment.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/PSM_V39_D325_Carpet_loom_with_jacquard_attachment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Popular Science Monthly, vol. 39 (1891), 'Carpet loom with Jacquard attachment'",
+  "artist": "Unknown (signed engraver, lower left)",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:PSM_V39_D325_Carpet_loom_with_jacquard_attachment.jpg",
+  "license_templates": [
+   "PD-old"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/factories-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/factories-1.png",
+  "notes": "TOP PICK (Software factories). Jacquard loom: punched-card-programmed manufacturing, the ur-software-factory. Strong vertical silhouette.",
+  "status": "top-pick"
+ },
+ {
+  "group": "factories",
+  "n": 2,
+  "title": "Knowles open-shed fancy loom",
+  "source_url": "https://commons.wikimedia.org/wiki/File:PSM_V39_D324_Knowles_open_shed_fancy_loom.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/PSM_V39_D324_Knowles_open_shed_fancy_loom.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Popular Science Monthly, vol. 39 (1891), 'Knowles open shed fancy loom'",
+  "artist": "Unknown",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:PSM_V39_D324_Knowles_open_shed_fancy_loom.jpg",
+  "license_templates": [
+   "PD-old"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/factories-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/factories-2.png",
+  "notes": "Power loom, but wide and low, so it reads small.",
+  "status": "candidate"
+ },
+ {
+  "group": "checking",
+  "n": 1,
+  "title": "Loupe (magnifying glass)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T3-_d132_-_Fig._83._%E2%80%94_Loupe.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/T3-_d132_-_Fig._83._%E2%80%94_Loupe.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 3 (1869), fig. 83",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1869",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T3-_d132_-_Fig._83._%E2%80%94_Loupe.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/checking-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/checking-1.png",
+  "notes": "TOP PICK (Checking claims). The magnifying glass: the iconic 'look closer'. Cleanest image in the whole set.",
+  "status": "top-pick"
+ },
+ {
+  "group": "checking",
+  "n": 2,
+  "title": "Modern analytical short-beam balance",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Modern_Analytical_Short_Beam_Balance_-_From_%27Notes_on_Assaying,_etc%27_page_26_-_Date_of_Publishing_1897_-_British_Library.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Modern_Analytical_Short_Beam_Balance_-_From_%27Notes_on_Assaying%2C_etc%27_page_26_-_Date_of_Publishing_1897_-_British_Library.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Pierre de Peyster Ricketts & Edmund H. Miller, Notes on Assaying (New York, 1897), p.26 (British Library scan via Flickr Commons)",
+  "artist": "Unknown",
+  "year": "1897",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:Modern_Analytical_Short_Beam_Balance_-_From_%27Notes_on_Assaying,_etc%27_page_26_-_Date_of_Publishing_1897_-_British_Library.jpg",
+  "license_templates": [
+   "PD-old-70-1923",
+   "Flickr-no known copyright restrictions"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/checking-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/checking-2.png",
+  "notes": "Assayer's analytical short-beam balance in its glass case: literally 'assaying' claims. Text above/below cropped.",
+  "status": "candidate"
+ },
+ {
+  "group": "checking",
+  "n": 3,
+  "title": "Precision balance",
+  "source_url": "https://commons.wikimedia.org/wiki/File:EB1911_Weighing_Machines_-_Precision_Balance.jpg",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/EB1911_Weighing_Machines_-_Precision_Balance.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Encyclopaedia Britannica, 11th edn, vol. 28, p.469, 'Weighing Machines'",
+  "artist": "Unknown",
+  "year": "1911",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:EB1911_Weighing_Machines_-_Precision_Balance.jpg",
+  "license_templates": [
+   "PD-Britannica"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/checking-3.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/checking-3.png",
+  "notes": "Precision balance, a clean line diagram. 1911 is later and plainer than the others; 600px source.",
+  "status": "candidate"
+ },
+ {
+  "group": "harness-eng",
+  "n": 1,
+  "title": "Régulateur à force centrifuge (Denis)",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d070_-_Fig._056,_57._%E2%80%94_R%C3%A9gulateur_%C3%A0_force_centrifuge_(syst%C3%A8me_Denis).png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/T5-_d070_-_Fig._056%2C_57._%E2%80%94_R%C3%A9gulateur_%C3%A0_force_centrifuge_%28syst%C3%A8me_Denis%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 5 (1891), fig. 56 (Denis centrifugal governor)",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T5-_d070_-_Fig._056,_57._%E2%80%94_R%C3%A9gulateur_%C3%A0_force_centrifuge_(syst%C3%A8me_Denis).png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/harness-eng-1.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/harness-eng-1.png",
+  "notes": "TOP PICK (Harness engineering). Fly-ball centrifugal governor: the classic feedback regulator that keeps the engine from running away. Detail figures erased.",
+  "status": "top-pick"
+ },
+ {
+  "group": "harness-eng",
+  "n": 2,
+  "title": "Soupape de sûreté de Thomas Adams",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T5-_d167_-_Fig._152._%E2%80%94_Soupape_de_s%C3%BBret%C3%A9_de_Thomas_Adams.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/T5-_d167_-_Fig._152._%E2%80%94_Soupape_de_s%C3%BBret%C3%A9_de_Thomas_Adams.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": "Louis Figuier, Les Merveilles de la science (Paris: Furne, Jouvet et Cie, 1867-1891), tome 5 (1891), fig. 152",
+  "artist": "Unknown engraver for Figuier",
+  "year": "1891",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T5-_d167_-_Fig._152._%E2%80%94_Soupape_de_s%C3%BBret%C3%A9_de_Thomas_Adams.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": "/tmp/claude-ag/illustrations/clean/harness-eng-2.png",
+  "cover_png": "/tmp/claude-ag/illustrations/covers/harness-eng-2.png",
+  "notes": "Thomas Adams safety valve (section and elevation): guardrails. Bold, if a bit heavy.",
+  "status": "candidate"
+ },
+ {
+  "group": "harness-eng",
+  "n": 3,
+  "title": "Régulateur de Watt à force centrifuge",
+  "source_url": "https://commons.wikimedia.org/wiki/File:T1-_d102_-_R%C3%A9gulateur_de_Watt_%C3%A0_force_centrifuge.png",
+  "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/T1-_d102_-_R%C3%A9gulateur_de_Watt_%C3%A0_force_centrifuge.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "book": null,
+  "artist": "Louis Figuier",
+  "year": "2014-09-29 18:12:18",
+  "license": "Public domain",
+  "license_url": "https://commons.wikimedia.org/wiki/File:T1-_d102_-_R%C3%A9gulateur_de_Watt_%C3%A0_force_centrifuge.png",
+  "license_templates": [
+   "PD-old-100-1923"
+  ],
+  "clean_png": null,
+  "cover_png": null,
+  "notes": "Figuier Watt governor diagram (1867). Rejected: lettered schematic, thin at small size.",
+  "status": "rejected"
+ }
+]
