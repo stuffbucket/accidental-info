@@ -1,0 +1,194 @@
+{
+  "collections": [
+    {
+      "id": "intelligence",
+      "name": "Accidental Intelligence",
+      "line": "Coding agents, and what to make of them.",
+      "code": "Ai",
+      "colour": "blue",
+      "page": "intelligence/",
+      "catalog": "accidental-intelligence",
+      "codes": {
+        "accidental-intelligence": "Ai",
+        "agents-harnesses-skills-tools": "Ah",
+        "context-windows": "Cw",
+        "skills": "Sk",
+        "mcp": "Mc",
+        "plugins-and-marketplaces": "Pm",
+        "claude-code": "Cc",
+        "claude-desktop": "Cd",
+        "copilot-cli": "Gc",
+        "codex": "Cx",
+        "visual-studio-and-vs-code": "Vs",
+        "specs-and-reviews": "Sp",
+        "software-factories": "Sf",
+        "lights-off-software-factories": "Lo",
+        "software-factory-claims": "Fc",
+        "harness-engineering": "He"
+      },
+      "groups": [
+        {
+          "id": "agents",
+          "name": "Agents",
+          "colour": "yellow",
+          "guides": [
+            "agents-harnesses-skills-tools"
+          ]
+        },
+        {
+          "id": "harnesses-you-use",
+          "name": "Harnesses you use",
+          "colour": "pink",
+          "guides": [
+            "claude-code",
+            "claude-desktop",
+            "copilot-cli",
+            "codex",
+            "visual-studio-and-vs-code"
+          ]
+        },
+        {
+          "id": "extending-an-agent",
+          "name": "Extending an agent",
+          "colour": "red",
+          "guides": [
+            "skills",
+            "mcp",
+            "plugins-and-marketplaces"
+          ]
+        },
+        {
+          "id": "context",
+          "name": "Context",
+          "colour": "blue",
+          "guides": [
+            "context-windows"
+          ]
+        },
+        {
+          "id": "project-management",
+          "name": "Project management",
+          "colour": "purple",
+          "guides": [
+            "specs-and-reviews"
+          ]
+        },
+        {
+          "id": "software-factories",
+          "name": "Software factories",
+          "colour": "green",
+          "guides": [
+            "software-factories",
+            "lights-off-software-factories"
+          ]
+        },
+        {
+          "id": "checking-claims",
+          "name": "Checking claims",
+          "colour": "blue",
+          "guides": [],
+          "coming": [
+            {
+              "id": "software-factory-claims",
+              "title": "Software Factory Claims"
+            }
+          ]
+        },
+        {
+          "id": "harness-engineering",
+          "name": "Harness engineering",
+          "colour": "green",
+          "guides": [],
+          "coming": [
+            {
+              "id": "harness-engineering",
+              "title": "Harness Engineering"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "around-the-house",
+      "name": "Around the house",
+      "line": "Small domestic emergencies.",
+      "code": "Ho",
+      "colour": "yellow",
+      "guides": [],
+      "coming": [
+        {
+          "id": "chirping-smoke-detector",
+          "title": "Smoke Detectors That Chirp"
+        },
+        {
+          "id": "loading-a-dishwasher",
+          "title": "Loading a Dishwasher"
+        },
+        {
+          "id": "is-my-houseplant-dying",
+          "title": "Is My Houseplant Dying?"
+        }
+      ]
+    },
+    {
+      "id": "at-the-table",
+      "name": "At the table",
+      "line": "Food, drink, and standing up to speak.",
+      "code": "Ta",
+      "colour": "red",
+      "guides": [],
+      "coming": [
+        {
+          "id": "hosting-thanksgiving",
+          "title": "Hosting Thanksgiving"
+        },
+        {
+          "id": "grilled-cheese",
+          "title": "Grilled Cheese"
+        },
+        {
+          "id": "ordering-wine",
+          "title": "Ordering Wine for the Table"
+        },
+        {
+          "id": "giving-a-toast",
+          "title": "Giving a Toast"
+        }
+      ]
+    },
+    {
+      "id": "games",
+      "name": "Games",
+      "line": "How to start, and how it ends.",
+      "code": "Gm",
+      "colour": "green",
+      "guides": [],
+      "coming": [
+        {
+          "id": "first-dnd-game",
+          "title": "Your First D&D Game"
+        },
+        {
+          "id": "chess-first-move",
+          "title": "The First Move in Chess"
+        },
+        {
+          "id": "chess-last-move",
+          "title": "The Last Move in Chess"
+        },
+        {
+          "id": "chess-scholars-mate",
+          "title": "Stopping Scholar’s Mate"
+        },
+        {
+          "id": "chess-caro-kann",
+          "title": "The Caro-Kann for Black"
+        },
+        {
+          "id": "chess-problem-positions",
+          "title": "Getting Out of Trouble in Chess"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { existsSync, readFileSync } from "node:fs";
 
 import tableFocus from "./scripts/table-focus.mjs";
 
@@ -8,6 +9,36 @@ import tableFocus from "./scripts/table-focus.mjs";
 // the site follows the repository's custom domain (https://accidental.info, at the root) once it is set.
 const origin = process.env.SITE_ORIGIN || "https://stuffbucket.github.io";
 const base = `${(process.env.SITE_BASE ?? "/accidentalguide").replace(/\/$/, "")}/`;
+
+// The sidebar: one group per collection in src/data/collections.json, its guides in the order listed there (a
+// collection with a map: its catalog, then each group's guides). scripts/guide_pages.py writes a page for each built
+// guide under src/content/docs/guides/ (finished) or drafts/ (a draft); a listed guide without a page yet is
+// skipped, and so is a collection with none. src/lib/collections.mjs checks the list itself when the landing page
+// is built.
+const docs = new URL("./src/content/docs/", import.meta.url);
+const { collections } = JSON.parse(readFileSync(new URL("./src/data/collections.json", import.meta.url), "utf8"));
+const listed = (collection) => {
+  const lists = collection.groups ? [{ guides: [collection.catalog] }, ...collection.groups] : [collection];
+  return lists.flatMap((list) => [...(list.guides ?? []), ...(list.coming ?? []).map((guide) => guide.id)]);
+};
+const pageItem = (id) => {
+  if (existsSync(new URL(`guides/${id}.md`, docs))) return { slug: `guides/${id}` };
+  // A draft says so on its page ("Draft · Version…"); the sidebar lists it like any other guide.
+  if (existsSync(new URL(`drafts/${id}.md`, docs))) return { slug: `drafts/${id}` };
+  return null;
+};
+const sidebar = [
+  { label: "All guides", link: `${base}guides/` },
+  ...collections
+    .map((collection) => ({
+      label: collection.name,
+      items: [
+        ...(collection.page ? [{ label: "The map", link: `${base}${collection.page}` }] : []),
+        ...listed(collection).map(pageItem).filter(Boolean),
+      ],
+    }))
+    .filter((group) => group.items.some((item) => "slug" in item)),
+];
 
 // The share image for pages without their own. scripts/guide_pages.py writes it, and gives each guide's page its
 // own card in the page's front matter.
@@ -24,7 +55,7 @@ export default defineConfig({
     tableFocus(),
     starlight({
       title: "Accidental Guides",
-      description: "Short guides to AI coding agents and the ways teams use them to build software.",
+      description: "Short guides to things you were apparently meant to know already.",
       head: [
         { tag: "meta", attrs: { property: "og:image", content: socialImage } },
         { tag: "meta", attrs: { property: "og:image:width", content: "1200" } },
@@ -40,11 +71,7 @@ export default defineConfig({
       },
       // The guides' typefaces and colours, and tables that do not scroll sideways where it can be helped.
       customCss: ["./src/styles/theme.css", "./src/styles/tables.css"],
-      // scripts/guide_pages.py writes one page per guide with `sidebar.order` set, in the catalog's order.
-      sidebar: [
-        { label: "Guides", items: [{ autogenerate: { directory: "guides" } }] },
-        { label: "Drafts", items: [{ autogenerate: { directory: "drafts" } }] },
-      ],
+      sidebar,
     }),
   ],
 });

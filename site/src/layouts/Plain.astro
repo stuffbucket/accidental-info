@@ -1,6 +1,7 @@
 ---
-// Layout of the landing page: a slim header, the guides' look, the light or dark theme the visitor picked in the
-// docs, and a footer with the licenses, the source and "Leave a star".
+// Layout of the site's own pages (the landing page, the map page and the list of all guides): a slim header, the
+// guides' look, the light or dark theme the visitor picked in the docs, and a footer with who makes the guides, the
+// address to write to, the licenses, the source and "Leave a star".
 import "../styles/brand.css";
 import StarLink from "../components/StarLink.astro";
 
@@ -53,32 +54,44 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
     <header class="site-header">
       <a class="brand" href={base}>Accidental Guides</a>
       <nav aria-label="Site">
-        <a href={repo}>GitHub</a>
+        <a href={`${base}guides/`}>All guides</a>
+        <StarLink look="link" />
       </nav>
     </header>
     <slot />
     <footer class="site-footer">
-      <span>
+      <p>A person writes and reviews every guide. AI does the grunt work.</p>
+      <p class="links">
+        <a href="mailto:hi@accidental.info">hi@accidental.info</a>
+        <a href={repo}>Source on GitHub</a>
+        <StarLink look="link" />
+      </p>
+      <p>
         The guides’ text is under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, the code
         under the <a href={`${repo}/blob/main/LICENSE`}>MIT License</a>.
-      </span>
-      <a href={repo}>Source on GitHub</a>
-      <StarLink look="link" />
+      </p>
     </footer>
   </body>
 </html>
 
 <style>
   .site-footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.25rem;
-    width: min(100% - 2 * var(--gutter), 48rem);
+    display: grid;
+    gap: 0.4rem;
+    width: min(100% - 2 * var(--gutter), var(--page));
     margin: 0 auto;
-    padding: 1rem 0 3rem;
-    border-top: 1px solid var(--text);
+    padding: 1.25rem 0 3rem;
+    border-top: 1px solid var(--border);
     color: var(--muted);
     font-size: var(--text-sm);
+  }
+  .site-footer p {
+    margin: 0;
+  }
+  .site-footer .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
   }
   .site-footer a {
     color: var(--muted);

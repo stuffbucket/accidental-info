@@ -1,14 +1,14 @@
 ---
 /*
- * "Leave a star": a link to the repository on GitHub. Used on the landing page (src/pages/index.astro and
- * src/layouts/Plain.astro) and at the foot of every guide's page (src/components/starlight/Footer.astro).
+ * "Leave a star": a link to the repository on GitHub. Used in the header and footer of the site's own pages
+ * (src/layouts/Plain.astro) and at the foot of every guide's page (src/components/starlight/Footer.astro).
  *
  * Without JavaScript it is a plain link that opens the repository in a new tab. With it, a click opens the
  * repository in a small window over the page, so the guide stays where it was. If the browser blocks the window,
  * the link opens a new tab as usual.
  *
- * look: "button" is the landing page's .btn (brand.css), "link" a plain text link that takes the colours around
- * it, and "starlight" a small bordered link in Starlight's colours.
+ * look: "button" is a .btn (brand.css), "link" a plain text link that takes the colours around it, and
+ * "starlight" a small bordered link in Starlight's colours.
  */
 interface Props {
   look: "button" | "link" | "starlight";

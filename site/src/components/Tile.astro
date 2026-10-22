@@ -1,0 +1,55 @@
+---
+/*
+ * A collection's tile on the landing page, drawn like the part tiles on a guide's cover: a coloured square with two
+ * letters and a darker band along the bottom holding its number. Its words are repeated next to it in ink, so the
+ * tile itself is hidden from screen readers. Its size is --size (4.75rem unless set).
+ */
+interface Props {
+  code: string;
+  colour: { base: string; band: string; ink: string };
+  // The number in the band ("01").
+  number: string;
+}
+
+const { code, colour, number } = Astro.props;
+---
+
+<span
+  class="tile"
+  style={`--tile: ${colour.base}; --band: ${colour.band}; --tile-ink: ${colour.ink}`}
+  aria-hidden="true"
+>
+  <span class="code">{code}</span>
+  <span class="band">{number}</span>
+</span>
+
+<style>
+  /* Sized by its width (--size); the letters and the band scale with it. */
+  .tile {
+    --size: 4.75rem;
+    display: inline-grid;
+    grid-template-rows: 1fr 26%;
+    flex: none;
+    width: var(--size);
+    aspect-ratio: 1;
+    background: var(--tile);
+    color: var(--tile-ink);
+    line-height: 1;
+    container-type: inline-size;
+  }
+  .code {
+    align-self: center;
+    padding: 0 10cqi;
+    font-size: 37cqi;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+  }
+  .band {
+    display: flex;
+    align-items: center;
+    padding: 0 10cqi;
+    background: var(--band);
+    font-size: 13cqi;
+    font-weight: bold;
+  }
+</style>
