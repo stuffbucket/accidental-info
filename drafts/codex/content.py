@@ -17,8 +17,10 @@
 # share one set of config files, and Codex Cloud where settings differ): where its setup lives
 # and how the places combine. The basics (agent, harness, skill, tool, session, context
 # window) belong to An Accidental Guide to: Agents, Harnesses, Skills, and Tools and are never
-# redefined here. This guide's own parts: instructions file, skill, MCP server, config file,
-# permissions. Paths are exact and come from OpenAI's Codex documentation, as of October
+# redefined here. This guide's parts: instructions file, skill, MCP server, config file (the
+# settings concept, tile Se), permissions. Each part but the config file is defined in its
+# owning guide (contrib/accidental-guides/registry.md), so an entry covers only what is
+# specific to Codex and names that guide. Paths are exact and come from OpenAI's Codex documentation, as of October
 # 2026. The sibling guides (Claude Code, Claude Desktop, GitHub Copilot CLI, Visual Studio
 # and VS Code) share this shape; name them with the colon form.
 
@@ -28,17 +30,26 @@ from pathlib import Path
 SOURCE = Path(__file__).with_name("guide.md")
 
 HEADING = re.compile(r"^# (.*?) \{#([\w-]+)((?: [\w-]+=\S+?)*)\}$")
+# A '>' block that starts with one of these is a callout with that label. Any other '>' block
+# is a grey block.
+ALERTS = {"[!TIP]": "Tip", "[!NOTE]": "Note", "[!WARNING]": "Watch out"}
 
 
 class Section:
     """One '#' section of guide.md: its title, id, attributes and blocks in order.
-    A block is ("p", text), ("h2", text), ("table", header, rows) or ("diagram", lines)."""
+    A block is ("p", text), ("h2", text), ("table", header, rows), ("diagram", lines),
+    ("grey", blocks) for the paragraphs and tables in a '>' block, or ("callout", label, text)."""
 
     def __init__(self, title, sid, attrs):
         self.title, self.id, self.attrs, self.blocks = title, sid, attrs, []
 
     def all(self, kind):
-        return [b for b in self.blocks if b[0] == kind]
+        """Blocks of one kind, including those inside grey blocks."""
+        flat = [x for b in self.blocks for x in (b[1] if b[0] == "grey" else [b])]
+        return [b for b in flat if b[0] == kind]
+
+    def grey_tables(self):
+        return [(x[1], x[2]) for b in self.blocks if b[0] == "grey" for x in b[1] if x[0] == "table"]
 
     def paras(self):
         return [b[1] for b in self.all("p")]
@@ -68,15 +79,29 @@ def parse(text):
         i += 1
     sections = []
     para, table, fence = [], None, None
+    quote = None  # inside a '>' block: [callout label or None, its blocks]
+
+    def into():
+        return quote[1] if quote else sections[-1].blocks
 
     def flush():
         nonlocal para, table
         if para:
-            sections[-1].blocks.append(("p", " ".join(para)))
+            into().append(("p", " ".join(para)))
             para = []
         if table:
-            sections[-1].blocks.append(("table", table[0], table[1:]))
+            into().append(("table", table[0], table[1:]))
             table = None
+
+    def close_quote():
+        nonlocal quote
+        flush()
+        label, blocks = quote
+        quote = None
+        if label:  # a callout is one paragraph
+            sections[-1].blocks.append(("callout", label, " ".join(b[1] for b in blocks)))
+        else:
+            sections[-1].blocks.append(("grey", blocks))
 
     for line in lines[i:]:
         if fence is not None:
@@ -86,6 +111,15 @@ def parse(text):
             else:
                 fence.append(line)
             continue
+        if line.startswith(">"):
+            line = line[1:].removeprefix(" ")
+            if quote is None:
+                flush()
+                quote = [ALERTS.get(line.strip()), []]
+                if quote[0]:
+                    continue
+        elif quote is not None:
+            close_quote()
         m = HEADING.match(line)
         if m:
             flush()
@@ -112,6 +146,8 @@ def parse(text):
             if table:
                 flush()
             para.append(line.strip())
+    if quote is not None:
+        close_quote()
     flush()
     return meta, sections
 
@@ -141,12 +177,10 @@ if not re.fullmatch(r"\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?", VERSI
 # ---------------------------------------------------------------- terms page
 _s = section("why")
 WHY_TITLE = _s.title
-WHY_INTRO = _s.paras()
-_t = _s.tables()[0]
-WHY_HEAD = tuple(_t[0])
-WHY_ROWS = rows(_t)
+# The page is drawn block by block: paragraphs, the terms table, grey blocks and callouts.
+WHY_BLOCKS = _s.blocks
 # The summary the site shows for this guide. Not printed in the PDF.
-BLURB = WHY_INTRO[0]
+BLURB = _s.paras()[0]
 
 # ---------------------------------------------------------------- overview
 # Optional: the builders print this page only when guide.md has a {#fit} section.
@@ -163,32 +197,20 @@ for _s in (s for s in SECTIONS if s.id == "entry"):
     ENTRIES.append(dict(
         num=_s.attrs["num"], mono=_s.attrs["mono"], name=_s.title,
         identify=_f["Identify by"], what=_f["What"], sowhat=_f["So what"],
-        marks=rows(_marks),
+        # A field marks table may leave out the Detail column.
+        marks=[tuple(r) + ("",) * (3 - len(r)) for r in _marks[1]],
+        marks_grey=_marks in _s.grey_tables(),
         confused=(_s.heads()[1].removeprefix("Confused with:").strip(), _s.paras()[0]),
     ))
 
-# ---------------------------------------------------------------- table pages
-# A plain page: a title, one or more paragraphs, a table with a header row, and one closing
-# paragraph under the table. Used by {#combine} and {#elsewhere}, and by {#levels} or {#shown}
-# if guide.md has them.
-TABLE_PAGES = {}
-for _s in (s for s in SECTIONS if s.id in ("levels", "shown", "combine", "elsewhere")):
-    # With two tables, the first is printed above the main one (the order of the config layers
-    # on the combine page), and the last is the main table.
-    _ts = _s.tables()
-    _t = _ts[-1]
-    TABLE_PAGES[_s.id] = dict(title=_s.title, intro=_s.paras()[:-1], cols=_t[0], rows=rows(_t),
-                              note=_s.paras()[-1],
-                              pre=(_ts[0][0], rows(_ts[0])) if len(_ts) > 1 else None)
-
-# ---------------------------------------------------------------- where things live
-# A title, intro paragraphs, one table of Scope, Thing, Path rows, and one closing paragraph.
-# The builders print a grey label each time the Scope changes, so keep each scope's rows
-# together.
-if any(s.id == "where" for s in SECTIONS):
-    _s = section("where")
-    _t = _s.tables()[0]
-    WHERE = dict(title=_s.title, intro=_s.paras()[:-1], rows=rows(_t), note=_s.paras()[-1])
+# ---------------------------------------------------------------- table sections
+# A title and its blocks in order: paragraphs, tables with a header row, grey blocks and
+# callouts. Used by {#where}, {#combine} and {#elsewhere}, and by {#levels} or {#shown} if
+# guide.md has them. They follow the entries and share a page when they fit. The table in
+# {#where} has Scope, Thing and Path columns, and the builders print a grey label each time
+# the Scope changes, so keep each scope's rows together.
+TABLE_PAGES = {s.id: dict(title=s.title, blocks=s.blocks)
+               for s in SECTIONS if s.id in ("levels", "shown", "where", "combine", "elsewhere")}
 
 # ---------------------------------------------------------------- apart + other
 # Optional: the builders print this page only when guide.md has an {#apart} section.

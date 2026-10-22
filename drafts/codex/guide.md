@@ -14,13 +14,13 @@ You can give Codex standing instructions, skills, MCP servers, settings and perm
 
 Most of these files live in your Codex home folder, ~/.codex unless CODEX_HOME says otherwise, or in your project. An Accidental Guide to: Agents, Harnesses, Skills, and Tools explains the basics.
 
-| Term | Meaning |
-|---|---|
-| Instructions file | Guidance Codex reads at the start of every session. |
-| Skill | Steps for one kind of task, read when the task comes up. |
-| MCP server | A program that gives Codex tools for another system. |
-| Config file | The file that holds settings such as the model and MCP servers. |
-| Permissions | What commands may change, and when Codex stops to ask you. |
+> | Term | Meaning |
+> |---|---|
+> | Instructions file | Guidance Codex reads at the start of every session. |
+> | Skill | Steps for one kind of task, read when the task comes up. |
+> | MCP server | A program that gives Codex tools for another system. |
+> | Config file | The file that holds settings such as the model and MCP servers. |
+> | Permissions | What commands may change, and when Codex stops to ask you. |
 
 # Instructions file {#entry num=01 mono=In}
 
@@ -32,10 +32,10 @@ Most of these files live in your Codex home folder, ~/.codex unless CODEX_HOME s
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | At the start of a session | Yours first, then the project’s. |
-| Add with | /init | Writes a starter AGENTS.md for the project. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | At the start of a session | Yours first, then the project’s. |
+> | Add with | /init | Writes a starter AGENTS.md for the project. |
 
 ## Confused with: Skill
 
@@ -51,10 +51,10 @@ Codex reads an instructions file every session. A skill’s steps are read only 
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | In two steps | Name and description at the start, steps when used. |
-| Check with | /skills | Shows the skills you can use. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | In two steps | Name and description at the start, steps when used. |
+> | Check with | /skills | Shows the skills you can use. |
 
 ## Confused with: Plugin
 
@@ -70,16 +70,16 @@ A plugin packages skills, MCP servers and hooks to install together, using /plug
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Add with | codex mcp add | Writes the entry into config.toml for you. |
-| Check with | /mcp | Shows the servers Codex is connected to. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Add with | codex mcp add | Writes the entry into config.toml for you. |
+> | Check with | /mcp | Shows the servers Codex is connected to. |
 
 ## Confused with: Tool
 
 The MCP server is the program. The tools it offers are what Codex calls.
 
-# Config file {#entry num=04 mono=Cf}
+# Config file {#entry num=04 mono=Se}
 
 | Field | Text |
 |---|---|
@@ -89,10 +89,10 @@ The MCP server is the program. The tools it offers are what Codex calls.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | At the start | Restart Codex after a change. |
-| Override with | -c key=value | Changes one setting for one run. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | At the start | Restart Codex after a change. |
+> | Override with | -c key=value | Changes one setting for one run. |
 
 ## Confused with: Requirements file
 
@@ -108,10 +108,10 @@ Your config.toml sets defaults you can change. An administrator’s requirements
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Network | Off by default | Turn it on with network_access under sandbox_workspace_write. |
-| Change with | /permissions | During a session, or start Codex with --sandbox and --ask-for-approval. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Network | Off by default | Turn it on with network_access under sandbox_workspace_write. |
+> | Change with | /permissions | During a session, or start Codex with --sandbox and --ask-for-approval. |
 
 ## Confused with: Rules
 
@@ -138,31 +138,33 @@ Your own files apply in every project. A project’s files travel with its repos
 | Codex Cloud | Environment | Settings, Codex Cloud, Environments |
 | Codex Cloud | Skills | the repository’s skills only; personal skills aren’t synced |
 
-Codex reads a project’s .codex folder only after you trust the project, so a repository you just cloned can’t change your settings, hooks or rules.
+> [!NOTE]
+> Codex reads a project’s .codex folder only after you trust the project, so a repository you just cloned can’t change your settings, hooks or rules.
 
 # How do the places combine? {#combine}
 
 For a config file setting, the first place on this list that sets a value wins.
 
-| Config file | Where the value comes from, strongest first |
-|---|---|
-| 1 | A flag or -c on the command line |
-| 2 | The project’s .codex/config.toml closest to where you work |
-| 3 | A profile picked with --profile |
-| 4 | Your ~/.codex/config.toml |
-| 5 | Your organization’s defaults |
-| 6 | Codex’s built-in defaults |
+> | Config file | Where the value comes from, strongest first |
+> |---|---|
+> | 1 | A flag or -c on the command line |
+> | 2 | The project’s .codex/config.toml closest to where you work |
+> | 3 | A profile picked with --profile |
+> | 4 | Your ~/.codex/config.toml |
+> | 5 | Your organization’s defaults |
+> | 6 | Codex’s built-in defaults |
+>
+> | Other setup | When two places set it |
+> |---|---|
+> | Instructions | Codex joins them, yours first, then the project’s from the root down, so the closest file has the last word. Codex stops reading at 32 KiB by default. |
+> | Skills | Codex offers all of them. Two with the same name both appear. |
+> | MCP servers | Servers can be in your config.toml or a project’s, and a setting for the same server follows the order above. |
+> | Hooks | Codex keeps all of them. |
+> | Rules | The strictest match wins: forbidden, then prompt, then allow. |
+> | Requirements | Limits an administrator sets. Your files can’t override them. |
 
-| Other setup | When two places set it |
-|---|---|
-| Instructions | Codex joins them, yours first, then the project’s from the root down, so the closest file has the last word. Codex stops reading at 32 KiB by default. |
-| Skills | Codex offers all of them. Two with the same name both appear. |
-| MCP servers | Servers can be in your config.toml or a project’s, and a setting for the same server follows the order above. |
-| Hooks | Codex keeps all of them. |
-| Rules | The strictest match wins: forbidden, then prompt, then allow. |
-| Requirements | Limits an administrator sets. Your files can’t override them. |
-
-When a setting isn’t what you expect, check the list from the top.
+> [!TIP]
+> When a setting isn’t what you expect, check the list from the top.
 
 # Same thing elsewhere {#elsewhere}
 

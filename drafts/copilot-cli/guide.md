@@ -17,13 +17,13 @@ disagree, Copilot CLI has a rule for which one wins.
 The words agent, skill, tool and session are explained in An Accidental Guide to: Agents,
 Harnesses, Skills, and Tools.
 
-| Term | Meaning |
-|---|---|
-| Instructions file | Rules about your project, read in every session. |
-| Skill | Steps for one kind of task, read when it comes up. |
-| MCP server | A program that adds tools for another system. |
-| Custom agent | A separate agent with its own job and tools. |
-| Settings | How Copilot CLI runs, including trust and approvals. |
+> | Term | Meaning |
+> |---|---|
+> | Instructions file | Rules about your project, read in every session. |
+> | Skill | Steps for one kind of task, read when it comes up. |
+> | MCP server | A program that adds tools for another system. |
+> | Custom agent | A separate agent with its own job and tools. |
+> | Settings | How Copilot CLI runs, including trust and approvals. |
 
 # Instructions file {#entry num=01 mono=In}
 
@@ -35,10 +35,10 @@ Harnesses, Skills, and Tools.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | At the start of a session | Changes reach the next session. |
-| Check with | /instructions | Lists the files the session loaded and lets you turn one off. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | At the start of a session | Changes reach the next session. |
+> | Check with | /instructions | Lists the files the session loaded and lets you turn one off. |
 
 ## Confused with: Skill
 
@@ -54,10 +54,10 @@ A skill’s steps are read only when a task calls for them, so a long procedure 
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | Description first, steps when used |  |
-| Check with | /skills | Lists the skills the session found. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | Description first, steps when used |  |
+> | Check with | /skills | Lists the skills the session found. |
 
 ## Confused with: Custom agent
 
@@ -74,10 +74,10 @@ with its own instructions and tools.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | When the session starts | Servers in the repository load only in a trusted folder. |
-| Check with | /mcp | Lists the servers and lets you add, turn off or remove one. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | When the session starts | Servers in the repository load only in a trusted folder. |
+> | Check with | /mcp | Lists the servers and lets you add, turn off or remove one. |
 
 ## Confused with: Plugin
 
@@ -94,10 +94,10 @@ with it.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | When you pick it or it’s handed work | The body becomes that agent’s instructions. |
-| Check with | /agent | Lists the agents you can pick. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | When you pick it or it’s handed work | The body becomes that agent’s instructions. |
+> | Check with | /agent | Lists the agents you can pick. |
 
 ## Confused with: Subagent
 
@@ -114,10 +114,10 @@ or a subagent.
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | When the session starts | Flags such as --allow-tool last for that run only. |
-| Check with | /settings | Shows each setting and lets you change it. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | When the session starts | Flags such as --allow-tool last for that run only. |
+> | Check with | /settings | Shows each setting and lets you change it. |
 
 ## Confused with: Policy
 
@@ -146,25 +146,27 @@ directory instead.
 | Your organization | Custom agents | agents/ in the organization’s .github or .github-private repository |
 | Your organization | Policies | copilot/managed-settings.json in the .github-private repository, plus policies an administrator sets on GitHub |
 
-As of October 2026, custom instructions that an organization sets on GitHub don’t reach Copilot
-CLI. The CLI reads only the instruction files in your Copilot folder and in the repository.
+> [!NOTE]
+> As of October 2026, custom instructions that an organization sets on GitHub don’t reach Copilot
+> CLI. The CLI reads only the instruction files in your Copilot folder and in the repository.
 
 # How do the places combine? {#combine}
 
 Instructions and hooks add up. Skills, MCP servers, custom agents and settings have one winner
 for each name or key.
 
-| Thing | When two places set it |
-|---|---|
-| Instructions | Every file that applies is used, and none outranks another. |
-| Skills | The first found wins: the repository’s, then yours, then a plugin’s. |
-| MCP servers | From highest: --additional-mcp-config, a plugin, the repository, then ~/.copilot/mcp-config.json. |
-| Custom agents | Yours wins, then the repository’s, a plugin’s, the organization’s, then the enterprise’s. |
-| Settings | Later layers win: yours, the repository’s, settings.local.json, environment variables, then flags. Managed settings lock most keys. |
-| Hooks | Every hook runs. |
+> | Thing | When two places set it |
+> |---|---|
+> | Instructions | Every file that applies is used, and none outranks another. |
+> | Skills | The first found wins: the repository’s, then yours, then a plugin’s. |
+> | MCP servers | From highest: --additional-mcp-config, a plugin, the repository, then ~/.copilot/mcp-config.json. |
+> | Custom agents | Yours wins, then the repository’s, a plugin’s, the organization’s, then the enterprise’s. |
+> | Settings | Later layers win: yours, the repository’s, settings.local.json, environment variables, then flags. Managed settings lock most keys. |
+> | Hooks | Every hook runs. |
 
-Repository MCP servers, hooks and plugin settings load only after you trust the folder. /env
-shows everything the session loaded.
+> [!TIP]
+> Repository MCP servers, hooks and plugin settings load only after you trust the folder. /env
+> shows everything the session loaded.
 
 # Same thing elsewhere {#elsewhere}
 
