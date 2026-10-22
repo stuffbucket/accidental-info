@@ -1,0 +1,19 @@
+---
+/*
+ * Replaces Starlight's Footer to add "Leave a star" (src/components/StarLink.astro) below the previous and next
+ * links at the foot of every guide's page. Starlight's own footer is rendered unchanged above it.
+ */
+import Default from "@astrojs/starlight/components/Footer.astro";
+import StarLink from "../StarLink.astro";
+---
+
+<Default><slot /></Default>
+<p class="star-row print:hidden">
+  <StarLink look="starlight" />
+</p>
+
+<style>
+  .star-row {
+    margin: 2rem 0 0;
+  }
+</style>

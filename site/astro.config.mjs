@@ -16,6 +16,9 @@ const socialImage = new URL(`${base}social.png`, origin).href;
 export default defineConfig({
   site: origin,
   base,
+  // A short address for the PDFs and Word files to link to. Astro writes a page that sends the reader on (a meta
+  // refresh, a canonical link and a plain link to follow), marked noindex and left out of the sitemap.
+  redirects: { "/star": "https://github.com/stuffbucket/accidentalguide" },
   integrations: [
     // Wide tables scroll sideways; this lets a keyboard reach and scroll them, and turns them into cards on a phone.
     tableFocus(),
@@ -30,8 +33,11 @@ export default defineConfig({
       ],
       social: [{ icon: "github", label: "GitHub", href: "https://github.com/stuffbucket/accidentalguide" }],
       // The "On this page" panel opens and closes from an icon button, and closed it gives the page its room
-      // (see the component).
-      components: { TwoColumnContent: "./src/components/starlight/TwoColumnContent.astro" },
+      // (see the component). The footer adds "Leave a star" below the previous and next links.
+      components: {
+        TwoColumnContent: "./src/components/starlight/TwoColumnContent.astro",
+        Footer: "./src/components/starlight/Footer.astro",
+      },
       // The guides' typefaces and colours, and tables that do not scroll sideways where it can be helped.
       customCss: ["./src/styles/theme.css", "./src/styles/tables.css"],
       // scripts/guide_pages.py writes one page per guide with `sidebar.order` set, in the catalog's order.

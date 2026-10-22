@@ -1,0 +1,164 @@
+---
+/*
+ * "Leave a star": a link to the repository on GitHub, with its star count once the page has loaded. Used on the
+ * landing page (src/pages/index.astro and src/layouts/Plain.astro) and at the foot of every guide's page
+ * (src/components/starlight/Footer.astro).
+ *
+ * Without JavaScript it is a plain link that opens the repository in a new tab. With it, a click opens the
+ * repository in a small window over the page, so the guide stays where it was; when that window closes, the count
+ * is fetched again. If the browser blocks the window, the link opens a new tab as usual.
+ *
+ * The count comes from GitHub's public API in the browser (never at build time), which allows 60 requests an hour
+ * from one address, so it is kept in sessionStorage for a few minutes. If the request fails, the link shows no
+ * number.
+ *
+ * look: "button" is the landing page's .btn (brand.css), "link" a plain text link that takes the colours around
+ * it, and "starlight" a small bordered link in Starlight's colours.
+ */
+interface Props {
+  look: "button" | "link" | "starlight";
+}
+
+const { look } = Astro.props;
+const repo = "https://github.com/stuffbucket/accidentalguide";
+---
+
+<a
+  class:list={[look === "button" ? "btn" : `star-${look}`]}
+  href={repo}
+  target="_blank"
+  rel="noopener"
+  aria-label="Leave a star on GitHub"
+  data-star-link
+>
+  <span>Leave a star<span class="star-count" data-star-count></span></span>
+</a>
+
+<style>
+  .star-count:empty {
+    display: none;
+  }
+  .star-link {
+    color: inherit;
+  }
+  .star-starlight {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0.375rem 0.875rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.375rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    line-height: 1.2;
+    text-decoration: none;
+  }
+  .star-starlight:hover {
+    border-color: var(--sl-color-gray-2);
+    color: var(--sl-color-white);
+  }
+  .star-starlight:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  const API = "https://api.github.com/repos/stuffbucket/accidentalguide";
+  const KEY = "accidentalguide-stars";
+  // How long a fetched count is shown before it is fetched again.
+  const FRESH_MS = 5 * 60 * 1000;
+  // The window over the page, in CSS pixels; smaller on smaller screens.
+  const WIDTH = 960;
+  const HEIGHT = 720;
+
+  const links = document.querySelectorAll<HTMLAnchorElement>("a[data-star-link]");
+
+  const cached = (): number | null => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(KEY) ?? "null");
+      if (typeof saved?.count === "number" && Date.now() - saved.at < FRESH_MS) return saved.count;
+    } catch {
+      // Storage can be blocked or hold something else; fetch instead.
+    }
+    return null;
+  };
+
+  const remember = (count: number) => {
+    try {
+      sessionStorage.setItem(KEY, JSON.stringify({ count, at: Date.now() }));
+    } catch {
+      // Not remembered; the next page fetches again.
+    }
+  };
+
+  const show = (count: number | null) => {
+    links.forEach((link) => {
+      const label = link.querySelector("[data-star-count]");
+      // No number until there is one to show.
+      if (count === null || count === 0) {
+        if (label) label.textContent = "";
+        link.setAttribute("aria-label", "Leave a star on GitHub");
+        return;
+      }
+      if (label) label.textContent = ` · ${count.toLocaleString("en-US")}`;
+      link.setAttribute(
+        "aria-label",
+        `Leave a star on GitHub, ${count.toLocaleString("en-US")} ${count === 1 ? "star" : "stars"}`,
+      );
+    });
+  };
+
+  // `again` skips the saved count and asks GitHub, revalidating the browser's cached copy.
+  const load = async (again = false) => {
+    const saved = again ? null : cached();
+    if (saved !== null) return show(saved);
+    try {
+      const response = await fetch(API, { cache: again ? "no-cache" : "default" });
+      if (!response.ok) throw new Error(String(response.status));
+      const { stargazers_count: count } = await response.json();
+      if (typeof count !== "number") throw new Error("no count");
+      remember(count);
+      show(count);
+    } catch {
+      // Offline, rate-limited or blocked: keep a count already shown, or show none.
+      if (again) return;
+      show(null);
+    }
+  };
+
+  const open = (link: HTMLAnchorElement, event: MouseEvent) => {
+    // Let the browser handle a middle click or a modified click (new tab, new window, download).
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const width = Math.min(WIDTH, screen.availWidth);
+    const height = Math.min(HEIGHT, screen.availHeight);
+    const left = Math.max(0, window.screenX + (window.outerWidth - width) / 2);
+    const top = Math.max(0, window.screenY + (window.outerHeight - height) / 2);
+    const features = `popup=yes,width=${width},height=${height},left=${Math.round(left)},top=${Math.round(top)}`;
+    // Opened blank first so it can be cut loose from this page (what rel="noopener" does for the link) while
+    // this page can still see when it closes.
+    const popup = window.open("", "accidentalguide-star", features);
+    if (!popup) return; // Blocked: the link opens a new tab instead.
+    event.preventDefault();
+    try {
+      popup.opener = null;
+    } catch {
+      // Already showing GitHub from an earlier click.
+    }
+    popup.location.href = link.href;
+    popup.focus();
+
+    const opened = Date.now();
+    const watch = window.setInterval(() => {
+      if (!popup.closed) return;
+      window.clearInterval(watch);
+      load(true);
+      // A window reported closed straight away was most likely cut off by GitHub's page, not closed by the
+      // reader; fetch again when the reader comes back to this one.
+      if (Date.now() - opened < 2000) window.addEventListener("focus", () => load(true), { once: true });
+    }, 500);
+  };
+
+  links.forEach((link) => link.addEventListener("click", (event) => open(link, event)));
+  if (links.length) load();
+</script>

@@ -9,6 +9,9 @@ mistakes and the text's license, and the PDF's and Word document's author is the
     edition: oops@accidental.info · CC BY 4.0 · <month>
     author "Accidental Guides" in build_guide.py and build_docx.py
 
+The builders link the end page's oops@ address with mailto: and add the colophon's
+"Leave a star: accidental.info/star" line themselves, so this doesn't touch them for that.
+
 <month> is the last part of the guide's current edition, such as "October 2026". A
 folder that already has the imprint is left as it is. The PDF is then built once to a
 temporary file and its hash written to expected.sha256, so the guide's own build checks

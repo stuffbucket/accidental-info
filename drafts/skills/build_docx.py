@@ -76,6 +76,16 @@ def _run(par, text, size, color, bold, italic, font=SANS):
     return r
 
 
+def hyperlink(par, text, url, size, color, font=SANS):
+    """A run that is a link to url, set like the runs around it."""
+    r = _run(par, text, size, color, False, False, font)
+    h = OxmlElement("w:hyperlink")
+    h.set(qn("r:id"), par.part.relate_to(url, RT.HYPERLINK, is_external=True))
+    r._r.addprevious(h)
+    h.append(r._r)
+    return r
+
+
 def para(container, text="", size=7.6, color=INK, bold=False, space_after=4, leading=None, italic=False):
     par = container.add_paragraph()
     pf = par.paragraph_format
@@ -590,7 +600,9 @@ def page_end(doc):
     para(doc, C.KICKER, 6.4, GREY, space_after=1)
     para(doc, C.TITLE, 7.6, bold=True, space_after=1)
     para(doc, C.SUBTITLE, 6.4, GREY, space_after=1)
-    para(doc, "Set in TeX Gyre Heros. Built with python-docx.", 6.4, GREY, space_after=0)
+    para(doc, "Set in TeX Gyre Heros. Built with python-docx.", 6.4, GREY, space_after=1)
+    p = para(doc, G.STAR_LABEL, 6.4, GREY, space_after=0)
+    hyperlink(p, G.STAR_TEXT, G.STAR_URL, 5.9, GREY, MONO)
 
 
 # ---------- document setup ----------
@@ -648,8 +660,9 @@ def start_numbering(section, start):
     sect.append(num)
 
 
-def ruled_footer(section, text):
-    """The cover's and end page's footer: a heavy rule, then grey text, as the PDF has."""
+def ruled_footer(section, text, mail=False):
+    """The cover's and end page's footer: a heavy rule, then grey text, as the PDF has. With
+    mail, the address the text starts with is a mailto: link."""
     f = section.footer
     f.is_linked_to_previous = False
     p = f.paragraphs[0]
@@ -659,6 +672,10 @@ def ruled_footer(section, text):
         top.set(qn(k), v)
     bdr.append(top)
     p._p.get_or_add_pPr().append(bdr)
+    address = text.split(" · ")[0]
+    if mail and "@" in address:
+        hyperlink(p, address, f"mailto:{address}", 6.4, GREY)
+        text = text[len(address):]
     _run(p, text, 6.4, GREY, False, False)
 
 
@@ -690,7 +707,7 @@ def build(pdf_path, out):
             new_page(doc)
         fn(doc)
     end = doc.add_section(WD_SECTION.NEW_PAGE)
-    ruled_footer(end, C.EDITION)
+    ruled_footer(end, C.EDITION, mail=True)
     page_end(doc)
 
     props = doc.core_properties

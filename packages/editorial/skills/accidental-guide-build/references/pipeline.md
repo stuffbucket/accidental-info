@@ -66,7 +66,10 @@ Copy a guide that builds with `scripts/new_guide.py`. Pick the model by the page
 `lights-off-software-factories` (why, fit, four entries, table pages, sources) or
 `specs-and-reviews` (adds grey blocks, callouts, packed pages and a sequence diagram). The
 script copies the folder, renames the slug in the builders and README, sets `COVER_LINES`
-from the title, and sets the title and `version: 0.1.0` in `guide.md`. Then change by hand:
+from the title, and sets the title and `version: 0.1.0` in `guide.md`. The copied builders
+already put the end page's star link (`Leave a star: accidental.info/star`, linked to
+https://accidental.info/star/) in the colophon and make the footer's address a `mailto:`
+link, in the PDF and the Word document; leave them. Then change by hand:
 
 | File | Change |
 |---|---|

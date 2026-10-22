@@ -1,7 +1,8 @@
 ---
 // Layout of the landing page: a slim header, the guides' look, the light or dark theme the visitor picked in the
-// docs, and a footer with the licenses.
+// docs, and a footer with the licenses, the source and "Leave a star".
 import "../styles/brand.css";
+import StarLink from "../components/StarLink.astro";
 
 interface Props {
   title: string;
@@ -62,6 +63,7 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
         under the <a href={`${repo}/blob/main/LICENSE`}>MIT License</a>.
       </span>
       <a href={repo}>Source on GitHub</a>
+      <StarLink look="link" />
     </footer>
   </body>
 </html>

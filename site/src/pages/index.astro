@@ -5,6 +5,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import Plain from "../layouts/Plain.astro";
+import StarLink from "../components/StarLink.astro";
 
 interface Guide {
   id: string;
@@ -70,6 +71,9 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
     <p class="lead">
       Short guides to AI coding agents and the ways teams use them to build software. Each one answers one question,
       a few parts at a time.
+    </p>
+    <p class="star">
+      <StarLink look="button" />
     </p>
 
     {
@@ -171,9 +175,12 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
   }
   .lead {
     max-width: 36rem;
-    margin: 0 0 2.5rem;
+    margin: 0 0 1.25rem;
     color: var(--muted);
     font-size: var(--text-lg);
+  }
+  .star {
+    margin: 0 0 2.5rem;
   }
 
   /* The cover sits beside the heading, the blurb and the links. The last row takes any height the cover adds. */

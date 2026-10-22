@@ -597,6 +597,15 @@ def source_line(date, address):
         return f"{date} · {address}"
     return f'{date} · <font name="Mono" size="{URL.fontSize}">{address}</font>'
 
+STAR_LABEL, STAR_TEXT, STAR_URL = "Leave a star: ", "accidental.info/star", "https://accidental.info/star/"
+
+def link(c, x, y, text, font, size, url):
+    """Draw text at (x, y) in the current colour and make just that text a link to url."""
+    c.setFont(font, size)
+    c.drawString(x, y, text)
+    w = pdfmetrics.stringWidth(text, font, size)
+    c.linkURL(url, (x, y - 0.25 * size, x + w, y + 0.8 * size), relative=0, thickness=0)
+
 def page_end(c):
     """End page: sources at the top, colophon at the bottom. No page number."""
     y = title(c, C.END_TITLE)
@@ -621,9 +630,18 @@ def page_end(c):
     c.setFillColor(GREY); c.setFont("Sans", 6.4)
     c.drawString(ML, yb - 31, C.SUBTITLE)
     c.drawString(ML, yb - 40, "Set in TeX Gyre Heros. Built with ReportLab.")
+    c.drawString(ML, yb - 49, STAR_LABEL)
+    link(c, ML + pdfmetrics.stringWidth(STAR_LABEL, "Sans", 6.4), yb - 49, STAR_TEXT,
+         "Mono", 5.9, STAR_URL)  # mono at the size of the sources' addresses
     rule(c, MB + 4, weight=1, color=INK)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
-    c.drawString(ML, MB - 6, C.EDITION)
+    mail = C.EDITION.split(" · ")[0]
+    if "@" in mail:  # the address for mistakes opens a new email
+        link(c, ML, MB - 6, mail, "Sans", 6.4, f"mailto:{mail}")
+        c.setFont("Sans", 6.4)
+        c.drawString(ML + pdfmetrics.stringWidth(mail, "Sans", 6.4), MB - 6, C.EDITION[len(mail):])
+    else:
+        c.drawString(ML, MB - 6, C.EDITION)
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)
