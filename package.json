@@ -1,0 +1,8 @@
+{
+  "name": "accidentalguide",
+  "private": true,
+  "scripts": {
+    "build": "python3 -m venv .venv && .venv/bin/pip install -q --require-hashes -r requirements.txt && .venv/bin/python build.py",
+    "site": "python3 -m venv .venv && .venv/bin/pip install -q --require-hashes -r requirements.txt && .venv/bin/python build.py && .venv/bin/python build_site.py"
+  }
+}

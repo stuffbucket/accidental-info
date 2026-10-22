@@ -1,0 +1,603 @@
+"""Build the pocket guide as a Word document.
+
+Run from anywhere:  python3 build_docx.py GUIDE.pdf [output.docx]
+
+The text comes from content.py (which reads guide.md), the same as the PDF. The visual
+rules come from build_guide.py, so the two outputs share them: the family colours and
+which words are set in mono. The two diagrams, the reading order and the map of parts,
+are drawn once, by the PDF build, and placed here as images rendered from GUIDE.pdf,
+which must be the PDF built from the same text.
+
+The document uses the PDF's page size and margins, starts each PDF page on a new page,
+and embeds the PDF's fonts. Output is deterministic: the same input gives the same bytes.
+"""
+import io
+import os
+import re
+import sys
+import uuid
+import zipfile
+from datetime import datetime
+
+from docx import Document
+from docx.enum.section import WD_SECTION
+from docx.enum.table import WD_ROW_HEIGHT_RULE, WD_TABLE_ALIGNMENT
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_LINE_SPACING, WD_TAB_ALIGNMENT
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
+from docx.opc.packuri import PackURI
+from docx.opc.part import Part
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+from docx.shared import Pt, RGBColor
+import pypdfium2 as pdfium
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_guide as G  # the PDF's layout constants and visual rules
+import content as C
+
+SANS = "TeX Gyre Heros"
+MONO = "Liberation Mono"
+
+
+def hexof(color):
+    """A ReportLab colour as RRGGBB."""
+    return color.hexval()[2:].upper()
+
+
+INK, GREY, HAIR = hexof(G.INK), hexof(G.GREY), hexof(G.HAIR)
+
+
+# ---------- text ----------
+def rich(par, text, size, color=INK, bold=False, italic=False):
+    """Add text to a paragraph: <b>…</b> spans in bold, and the words the PDF sets in mono
+    (MONO_RE) in Liberation Mono at 90% size."""
+    for i, chunk in enumerate(re.split(r"</?b>", text)):
+        if not chunk:
+            continue
+        pos = 0
+        for m in G.MONO_RE.finditer(chunk):
+            _run(par, chunk[pos:m.start()], size, color, bold or i % 2 == 1, italic)
+            _run(par, m.group(1), size * 0.9, color, bold or i % 2 == 1, italic, MONO)
+            pos = m.end()
+        _run(par, chunk[pos:], size, color, bold or i % 2 == 1, italic)
+    return par
+
+
+def _run(par, text, size, color, bold, italic, font=SANS):
+    if not text:
+        return None
+    r = par.add_run(text)
+    r.font.size = Pt(size)
+    r.font.bold = bold
+    r.font.italic = italic
+    r.font.color.rgb = RGBColor.from_string(color)
+    if font != SANS:
+        r.font.name = font
+    return r
+
+
+def para(container, text="", size=7.6, color=INK, bold=False, space_after=4, leading=None, italic=False):
+    par = container.add_paragraph()
+    pf = par.paragraph_format
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(space_after)
+    pf.line_spacing = Pt(leading or size * 1.37)
+    rich(par, text, size, color, bold, italic)
+    return par
+
+
+def heading(doc, text, level=1, size=17, space_after=8):
+    """A page title or subhead, as a Word heading so it shows in the navigation pane.
+    '<br/>' in a title is a line break, as in the PDF."""
+    par = doc.add_heading(level=level)
+    pf = par.paragraph_format
+    pf.space_before = Pt(0)
+    pf.space_after = Pt(space_after)
+    pf.line_spacing = Pt(size * 1.12)
+    pf.keep_with_next = True
+    for i, line in enumerate(text.split("<br/>")):
+        if i:
+            par.add_run().add_break(WD_BREAK.LINE)
+        _run(par, line, size, INK, True, False)
+    return par
+
+
+# ---------- tiles ----------
+TILE_DPI = 600
+_tiles = {}
+
+
+def tile_png(key, size, number=None):
+    """A part's tile as a PNG: drawn by the PDF build's avatar() on a canvas the size of
+    the tile, then rendered, so every tile in the Word document is the PDF's tile."""
+    if (key, size, number) not in _tiles:
+        buf = io.BytesIO()
+        c = G.canvas.Canvas(buf, pagesize=(size, size), invariant=1)
+        G.avatar(c, key, 0, 0, size, number=number)
+        c.save()
+        pdf = pdfium.PdfDocument(buf.getvalue())
+        img = pdf[0].render(scale=TILE_DPI / 72).to_pil()
+        pdf.close()
+        out = io.BytesIO()
+        img.save(out, format="PNG", optimize=True)
+        _tiles[(key, size, number)] = out.getvalue()
+    return io.BytesIO(_tiles[(key, size, number)])
+
+
+def badge(par, key, size=9, gap=True):
+    """A small tile inline with text, as the PDF's tag() draws it: lowered to sit on the
+    text, and the line allowed to grow to fit it rather than clip it."""
+    r = par.add_run()
+    r.add_picture(tile_png(key, size), width=Pt(size))
+    pos = OxmlElement("w:position")
+    pos.set(qn("w:val"), str(-round(size * 0.5)))  # half-points: down by a quarter of the tile
+    r._r.get_or_add_rPr().append(pos)
+    par.paragraph_format.line_spacing_rule = WD_LINE_SPACING.AT_LEAST
+    if gap:
+        _run(par, "\u2002", 6, INK, False, False)
+
+
+def tagged(par, name, size, color=INK, bold=True, tile=9):
+    """A part name with its tile in front, if it has one, as the PDF's tag() does."""
+    key = G.NAME2MONO.get(name)
+    if key:  # a name that isn't one of the parts has no tile
+        badge(par, key, tile)
+    rich(par, name, size, color, bold)
+
+
+# ---------- tables ----------
+def _border(tc_pr, edge, size_pt, color):
+    borders = tc_pr.find(qn("w:tcBorders"))
+    if borders is None:
+        borders = OxmlElement("w:tcBorders")
+        tc_pr.append(borders)
+    el = OxmlElement(f"w:{edge}")
+    el.set(qn("w:val"), "single" if size_pt else "nil")
+    el.set(qn("w:sz"), str(int(round(size_pt * 8))))
+    el.set(qn("w:space"), "0")
+    el.set(qn("w:color"), color)
+    borders.append(el)
+
+
+def _no_borders(table):
+    tbl_pr = table._tbl.tblPr
+    borders = OxmlElement("w:tblBorders")
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:val"), "nil")
+        borders.append(el)
+    tbl_pr.append(borders)
+
+
+def widths(table, ws):
+    """Set column widths on the grid, the table and each cell, so every reader agrees."""
+    for j, w in enumerate(ws):
+        table.columns[j].width = Pt(w)
+        for cell in table.columns[j].cells:
+            cell.width = Pt(w)
+    tbl_w = table._tbl.tblPr.find(qn("w:tblW"))
+    if tbl_w is None:
+        tbl_w = OxmlElement("w:tblW")
+        table._tbl.tblPr.append(tbl_w)
+    tbl_w.set(qn("w:w"), str(int(sum(ws) * 20)))
+    tbl_w.set(qn("w:type"), "dxa")
+    layout = OxmlElement("w:tblLayout")
+    layout.set(qn("w:type"), "fixed")
+    table._tbl.tblPr.append(layout)
+
+
+def _margins(table, top=3.5, bottom=3, left=0, right=4):
+    mar = OxmlElement("w:tblCellMar")
+    for edge, v in (("top", top), ("left", left), ("bottom", bottom), ("right", right)):
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:w"), str(int(v * 20)))
+        el.set(qn("w:type"), "dxa")
+        mar.append(el)
+    table._tbl.tblPr.append(mar)
+
+
+def grid(doc, col_widths, rows, header=None, size=6.6, pad=(3.5, 3)):
+    """A table laid out like the PDF's: no vertical lines, a heavy rule above the first
+    row and hairlines between rows, and an optional grey bold header. Each row is a list
+    of cell writers, functions that fill one cell's paragraph."""
+    table = doc.add_table(rows=0, cols=len(col_widths))
+    table.alignment = WD_TABLE_ALIGNMENT.LEFT
+    table.autofit = False
+    _no_borders(table)
+    _margins(table, top=pad[0], bottom=pad[1])
+    if header:
+        cells = table.add_row().cells
+        for j, h in enumerate(header):
+            p = cells[j].paragraphs[0]
+            rich(p, h, size, GREY, bold=True)
+    for i, row in enumerate(rows):
+        cells = table.add_row().cells
+        for j, write in enumerate(row):
+            _border(cells[j]._tc.get_or_add_tcPr(), "top", 1 if i == 0 else 0.3, INK if i == 0 else HAIR)
+            p = cells[j].paragraphs[0]
+            p.paragraph_format.line_spacing = Pt(size * 1.30)  # the PDF's cell leading
+            write(p)
+    widths(table, col_widths)
+    para(doc, "", 2, space_after=2)  # Word needs a paragraph between tables; keep it small
+    return table
+
+
+def text_cell(text, size=7.0, color=INK, bold=False):
+    return lambda p: rich(p, text, size, color, bold)
+
+
+def tag_cell(name, size=6.6, bold=True):
+    return lambda p: tagged(p, name, size, INK, bold)
+
+
+def rows_table(doc, items, size=7.0, label_w=G.LABW + G.GAP):
+    """Label and text rows, like the PDF's row(): bold label on the left."""
+    rest = G.W - label_w
+    grid(doc, [label_w, rest], [[text_cell(l, 6.8, bold=True), text_cell(t, size)] for l, t in items])
+
+
+def tile_cell(cell, key, size, number=None, align=WD_ALIGN_PARAGRAPH.RIGHT):
+    """A part's large tile in a table cell, as the image the PDF build draws."""
+    p = cell.paragraphs[0]
+    p.alignment = align
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    p.add_run().add_picture(tile_png(key, size, number), width=Pt(size))
+
+
+def field(par, instr, cached, size, color=GREY, bold=False):
+    """A Word field, such as PAGE or PAGEREF, showing `cached` until Word updates it."""
+    def fld(kind):
+        r = par.add_run()
+        el = OxmlElement("w:fldChar")
+        el.set(qn("w:fldCharType"), kind)
+        r._r.append(el)
+    fld("begin")
+    r = par.add_run()
+    it = OxmlElement("w:instrText")
+    it.set(qn("xml:space"), "preserve")
+    it.text = f" {instr} "
+    r._r.append(it)
+    fld("separate")
+    _run(par, cached, size, color, bold, False)
+    fld("end")
+
+
+
+# ---------- diagrams ----------
+def diagram(doc, pdf, page_no, box):
+    """Place one region of a page of the built PDF as an image. box is (x0, y0, x1, y1)
+    in PDF points, origin bottom-left."""
+    x0, y0, x1, y1 = box
+    page = pdf[page_no - 1]
+    bitmap = page.render(scale=300 / 72, crop=(x0, y0, G.PW - x1, G.PH - y1))
+    buf = io.BytesIO()
+    bitmap.to_pil().save(buf, format="PNG", optimize=True)
+    buf.seek(0)
+    p = doc.add_paragraph()
+    p.paragraph_format.space_after = Pt(8)
+    p.add_run().add_picture(buf, width=Pt(x1 - x0))
+
+
+
+def start_box():
+    """The reading-order diagram, from the PDF's own start_layout()."""
+    top, _rows, bottom, _cols = G.start_layout()
+    return (G.ML - 2, bottom - 2, G.PW - G.MR + 2, top + 2)
+
+
+def map_box():
+    """The map of parts, from the PDF's own map_layout()."""
+    top, bottom = G.map_layout()
+    return (G.ML - 2, bottom - 2, G.PW - G.MR + 2, top + 2)
+
+
+# ---------- pages ----------
+
+
+def page_cover(doc):
+    para(doc, C.KICKER, 9, bold=True, space_after=6)
+    # The PDF sets the title on the lines in COVER_LINES.
+    lines = list(G.COVER_LINES)
+    t = doc.add_paragraph(style="Title")
+    t.paragraph_format.line_spacing = Pt(29)
+    t.paragraph_format.space_after = Pt(8)
+    for i, line in enumerate(lines):
+        if i:
+            t.add_run().add_break(WD_BREAK.LINE)
+        _run(t, line, 27, INK, True, False)
+    # The PDF puts the grid of tiles at a fixed height near the bottom of the page.
+    para(doc, C.SUBTITLE, 8.6, space_after=cover_gap(lines), leading=11.8)
+    size = 38
+    table = doc.add_table(rows=2, cols=3)
+    table.autofit = False
+    _no_borders(table)
+    _margins(table, top=0, bottom=0, left=0, right=0)
+    widths(table, [G.W / 3] * 3)
+    for row in table.rows:
+        row.height = Pt(80)
+        row.height_rule = WD_ROW_HEIGHT_RULE.EXACTLY
+    for i, f in enumerate(C.FAMILIES):
+        cell = table.rows[i // 3].cells[i % 3]
+        tile_cell(cell, f["key"], size, align=WD_ALIGN_PARAGRAPH.LEFT)
+        p = cell.add_paragraph()
+        p.paragraph_format.space_before = Pt(3)
+        rich(p, f["name"], 7.6, bold=True)
+        p = cell.add_paragraph()
+        rich(p, f"{len(G.members(f['key']))} parts", 6.6, GREY)
+
+
+def cover_gap(lines):
+    """Space between the subtitle and the tile grid, from the PDF's page_cover() layout:
+    the grid's top is at y=214."""
+    st = G.ParagraphStyle("t", fontName="Sans-Bold", fontSize=27, leading=29)
+    _, th = G.Paragraph("<br/>".join(lines), st).wrap(G.W, 1000)
+    _, sh = G.Paragraph(G.mono(C.SUBTITLE, G.LEAD.fontSize), G.LEAD).wrap(G.W * 0.8, 1000)
+    subtitle_bottom = G.PH - G.MT - 22 - th - 8 - sh
+    return max(0, subtitle_bottom - 214)
+
+
+def table_page(doc, title, intro, cols, rows, widths):
+    """A plain page: title, paragraphs and a table with a header."""
+    heading(doc, title)
+    for t in intro:
+        para(doc, t, 7.6, space_after=6)
+    grid(doc, widths, [[tag_cell(r[0])] + [text_cell(v, 6.6) for v in r[1:]] for r in rows],
+         header=cols)
+
+
+def page_why(doc):
+    table_page(doc, C.WHY_TITLE, C.WHY_INTRO, C.WHY_COLS, C.WHY_ROWS, G.WHY_WIDTHS)
+
+
+def page_start(doc, pdf):
+    heading(doc, C.START_TITLE)
+    diagram(doc, pdf, 3, start_box())
+    para(doc, C.START_NOTE, 7.0, space_after=10)
+    grid(doc, G.START_WIDTHS, [[tag_cell(a), text_cell(b, 6.6)] for a, b in C.START_ROWS],
+         header=C.START_COLS)
+
+
+def page_colours(doc):
+    heading(doc, C.COL_TITLE)
+    for t in C.COL_INTRO:
+        para(doc, t, 7.6, space_after=6)
+
+    def family(f):
+        def write(p):
+            rich(p, f["name"], 7.0, bold=True)
+            p.add_run().add_break()
+            rich(p, f["holds"], 7.0)
+            p.add_run().add_break()
+            rich(p, ", ".join(G.members(f["key"])), 6.6, GREY)
+        return write
+
+    grid(doc, [G.FAM_TILE + 10, G.W - G.FAM_TILE - 10], [
+        [lambda p, k=f["key"]: p.add_run().add_picture(tile_png(k, G.FAM_TILE), width=Pt(G.FAM_TILE)),
+         family(f)] for f in C.FAMILIES], pad=(5, 5))
+    para(doc, C.COL_NOTE, 7.0)
+
+
+def page_map(doc, pdf):
+    heading(doc, C.MAP_TITLE)
+    para(doc, C.MAP_INTRO, 7.6, space_after=6)
+    diagram(doc, pdf, 5, map_box())
+    para(doc, C.MAP_NOTE, 7.0)
+
+
+def page_cards(doc, pg):
+    heading(doc, pg["title"])
+    for card in pg["cards"]:
+        h = heading(doc, card["name"], level=2, size=11, space_after=3)
+        _run(h, f"   version {G.VERSION_OF[card['name']]}", 6.4, GREY, False, False)
+        parts = ", ".join(p["name"] for p in C.PARTS if p["guide"] == card["name"])
+        rows_table(doc, [("Parts", parts)] + card["rows"])
+
+
+def page_end(doc):
+    heading(doc, C.END_TITLE)
+    for t in C.END_INTRO:
+        para(doc, t, 7.6, space_after=6)
+    para(doc, "", 7.6, space_after=180)
+    p = para(doc, "", 7.6, space_after=6)
+    for k, f in enumerate(C.FAMILIES):
+        badge(p, f["key"], 20, gap=False)
+        if k < len(C.FAMILIES) - 1:
+            _run(p, "\u2009", 6, INK, False, False)
+    para(doc, C.KICKER, 6.4, GREY, space_after=1)
+    para(doc, C.TITLE, 7.6, bold=True, space_after=1)
+    para(doc, C.SUBTITLE, 6.4, GREY, space_after=1)
+    para(doc, "Set in TeX Gyre Heros. Built with python-docx.", 6.4, GREY, space_after=0)
+
+
+# ---------- document setup ----------
+def setup(doc):
+    s = doc.sections[0]
+    s.page_width, s.page_height = Pt(G.PW), Pt(G.PH)
+    s.left_margin, s.right_margin = Pt(G.ML), Pt(G.MR)
+    s.top_margin, s.bottom_margin = Pt(G.MT), Pt(G.MB)
+    s.footer_distance = Pt(G.MB - 22)
+    s.header_distance = Pt(12)
+    for name in ("Normal", "Title", "Heading 1", "Heading 2"):
+        st = doc.styles[name]
+        st.font.name = SANS
+        st.font.color.rgb = RGBColor.from_string(INK)
+        rpr = st.element.get_or_add_rPr()
+        fonts = rpr.find(qn("w:rFonts"))
+        for attr in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
+            fonts.set(qn(attr), SANS)
+        for attr in ("w:asciiTheme", "w:hAnsiTheme", "w:cstheme", "w:eastAsiaTheme"):
+            fonts.attrib.pop(qn(attr), None)
+    doc.styles["Normal"].font.size = Pt(7.6)
+    doc.styles["Normal"].paragraph_format.space_after = Pt(0)
+    for name in ("Title", "Heading 1", "Heading 2"):
+        st = doc.styles[name]
+        # Bold is a toggle in Word: bold in both the style and the run can cancel out. The
+        # runs set it, so the styles don't.
+        st.font.bold = None
+        st.paragraph_format.space_before = Pt(0)
+        pbdr = st.element.get_or_add_pPr().find(qn("w:pBdr"))
+        if pbdr is not None:  # the template's Title has a rule under it; the guide doesn't
+            pbdr.getparent().remove(pbdr)
+
+
+def running_footer(section):
+    f = section.footer
+    f.is_linked_to_previous = False
+    p = f.paragraphs[0]
+    p.paragraph_format.tab_stops.add_tab_stop(Pt(G.W), alignment=WD_TAB_ALIGNMENT.RIGHT)
+    _run(p, C.RUNNING_FOOTER, 6, GREY, False, False)
+    _run(p, "\t", 6, GREY, False, False)
+    field(p, "PAGE", "2", 6)
+
+
+def start_numbering(section, start):
+    """Number the section's pages from `start`. pgNumType has a fixed place in sectPr."""
+    num = OxmlElement("w:pgNumType")
+    num.set(qn("w:start"), str(start))
+    after = ("cols", "formProt", "vAlign", "noEndnote", "titlePg", "textDirection", "bidi",
+             "rtlGutter", "docGrid", "printerSettings", "sectPrChange")
+    sect = section._sectPr
+    for child in sect:
+        if child.tag in [qn(f"w:{a}") for a in after]:
+            child.addprevious(num)
+            return
+    sect.append(num)
+
+
+def ruled_footer(section, text):
+    """The cover's and end page's footer: a heavy rule, then grey text, as the PDF has."""
+    f = section.footer
+    f.is_linked_to_previous = False
+    p = f.paragraphs[0]
+    bdr = OxmlElement("w:pBdr")
+    top = OxmlElement("w:top")
+    for k, v in (("w:val", "single"), ("w:sz", "8"), ("w:space", "4"), ("w:color", INK)):
+        top.set(qn(k), v)
+    bdr.append(top)
+    p._p.get_or_add_pPr().append(bdr)
+    _run(p, text, 6.4, GREY, False, False)
+
+
+def new_page(doc):
+    doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
+
+
+def build(pdf_path, out):
+    doc = Document()
+    setup(doc)
+    pdf = pdfium.PdfDocument(pdf_path)
+
+    page_cover(doc)
+    ruled_footer(doc.sections[0], f"{C.COVER_FOOTER} · Version {C.VERSION}")
+    body = doc.add_section(WD_SECTION.NEW_PAGE)
+    running_footer(body)
+    start_numbering(body, 2)
+
+    pages = [page_why, lambda d: page_start(d, pdf), page_colours, lambda d: page_map(d, pdf)]
+    pages += [lambda d, pg=pg: page_cards(d, pg) for pg in C.CARD_PAGES]
+    for k, fn in enumerate(pages):
+        if k:
+            new_page(doc)
+        fn(doc)
+    end = doc.add_section(WD_SECTION.NEW_PAGE)
+    ruled_footer(end, C.EDITION)
+    page_end(doc)
+
+    props = doc.core_properties
+    props.title, props.subject, props.author = C.TITLE, C.SUBTITLE, "bstucker"
+    props.last_modified_by, props.revision = "bstucker", 1
+    # Fixed dates, like the PDF's invariant mode.
+    props.created = props.modified = props.last_printed = datetime(1999, 12, 31)
+    props.comments = props.keywords = props.category = ""
+
+    drop_thumbnail(doc)
+    embed_fonts(doc)
+    buf = io.BytesIO()
+    doc.save(buf)
+    write_fixed(buf.getvalue(), out)
+    pdf.close()
+    return 2 + len(pages)
+
+
+def drop_thumbnail(doc):
+    """python-docx's template carries a stock thumbnail image; the guide has none."""
+    rels = doc.part.package.rels
+    for rid, rel in list(rels.items()):
+        if rel.reltype == RT.THUMBNAIL:
+            del rels[rid]
+
+
+# ---------- embedded fonts ----------
+FONTS = [  # (family, style element, file)
+    (SANS, "embedRegular", "heros-regular.ttf"),
+    (SANS, "embedBold", "heros-bold.ttf"),
+    (SANS, "embedItalic", "heros-italic.ttf"),
+    (MONO, "embedRegular", "LiberationMono-Regular.ttf"),
+]
+
+
+def obfuscate(data, key):
+    """ECMA-376 font obfuscation: XOR the first 32 bytes with the key GUID's bytes, read
+    from the end of its hex digits."""
+    hexkey = key.strip("{}").replace("-", "")
+    k = bytes(int(hexkey[30 - 2 * i:32 - 2 * i], 16) for i in range(16))
+    head = bytes(b ^ k[i % 16] for i, b in enumerate(data[:32]))
+    return head + data[32:]
+
+
+def embed_fonts(doc):
+    """Embed the PDF's fonts so Word shows the document in them. The keys are derived from
+    the font names, so they are the same on every build."""
+    package = doc.part.package
+    table_part = next(p for p in package.iter_parts() if p.partname == "/word/fontTable.xml")
+    from lxml import etree
+    root = etree.fromstring(table_part.blob)
+    w = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    for n, (family, element, filename) in enumerate(FONTS, 1):
+        key = "{" + str(uuid.uuid5(uuid.NAMESPACE_URL, f"accidental-guides/{filename}")).upper() + "}"
+        with open(os.path.join(G.FONT_DIR, filename), "rb") as f:
+            blob = obfuscate(f.read(), key)
+        part = Part(PackURI(f"/word/fonts/font{n}.odttf"),
+                    "application/vnd.openxmlformats-officedocument.obfuscatedFont", blob, package)
+        rid = table_part.relate_to(part, RT.FONT)
+        font = root.find(f"{{{w}}}font[@{{{w}}}name='{family}']")
+        if font is None:
+            font = etree.SubElement(root, f"{{{w}}}font", {f"{{{w}}}name": family})
+        etree.SubElement(font, f"{{{w}}}{element}", {f"{{{r}}}id": rid, f"{{{w}}}fontKey": key})
+    table_part._blob = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone=True)
+
+    settings = doc.settings.element
+    before = ["writeProtection", "view", "zoom", "removePersonalInformation", "removeDateAndTime",
+              "doNotDisplayPageBoundaries", "displayBackgroundShape", "printPostScriptOverText",
+              "printFractionalCharacterWidth", "printFormsData"]
+    index = 0
+    for i, child in enumerate(settings):
+        if etree.QName(child).localname in before:
+            index = i + 1
+    settings.insert(index, OxmlElement("w:embedTrueTypeFonts"))
+    # The template declares Word 2010; declare the current format so Word doesn't open the
+    # document in Compatibility Mode.
+    for cs in settings.iter(qn("w:compatSetting")):
+        if cs.get(qn("w:name")) == "compatibilityMode":
+            cs.set(qn("w:val"), "15")
+
+
+def write_fixed(data, out):
+    """Rewrite the .docx zip with fixed entry times, so the same input gives the same bytes."""
+    src = zipfile.ZipFile(io.BytesIO(data))
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for info in src.infolist():
+            fixed = zipfile.ZipInfo(info.filename, date_time=(1999, 12, 31, 0, 0, 0))
+            fixed.compress_type = zipfile.ZIP_DEFLATED
+            fixed.external_attr = 0o644 << 16
+            dst.writestr(fixed, src.read(info.filename))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        sys.exit("usage: build_docx.py GUIDE.pdf [output.docx]")
+    pdf_path = sys.argv[1]
+    out = sys.argv[2] if len(sys.argv) > 2 else "accidental-intelligence.docx"
+    pages = build(pdf_path, out)
+    print(f"wrote {out}: {pages} pages")
