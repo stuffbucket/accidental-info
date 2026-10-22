@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<title>Black rook</title>
+<g stroke-linejoin="round" stroke-linecap="round">
+<path d="M23.2 89 L76.8 89 C78.57 89 80 87.57 80 85.8 L80 83.2 C80 81.43 78.57 80 76.8 80 L23.2 80 C21.43 80 20 81.43 20 83.2 L20 85.8 C20 87.57 21.43 89 23.2 89 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M31 80 L69 80 L66 43 L34 43 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M30.5 45 L69.5 45 C70.33 45 71 44.33 71 43.5 L71 38 C71 37.17 70.33 36.5 69.5 36.5 L30.5 36.5 C29.67 36.5 29 37.17 29 38 L29 43.5 C29 44.33 29.67 45 30.5 45 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M27.5 37 L72.5 37 L72.5 16 L64.5 16 L64.5 22.5 L55.5 22.5 L55.5 16 L44.5 16 L44.5 22.5 L35.5 22.5 L35.5 16 L27.5 16 Z" fill="#1d1d1b" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M23 79 L77 79" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+<path d="M31 43.2 L69 43.2" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+<path d="M31 38 L69 38" fill="none" stroke="#f3efe8" stroke-width="1.87"/>
+</g>
+</svg>

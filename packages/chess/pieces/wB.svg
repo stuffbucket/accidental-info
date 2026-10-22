@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<title>White bishop</title>
+<g stroke-linejoin="round" stroke-linecap="round">
+<path d="M26.2 89 L73.8 89 C75.57 89 77 87.57 77 85.8 L77 83.2 C77 81.43 75.57 80 73.8 80 L26.2 80 C24.43 80 23 81.43 23 83.2 L23 85.8 C23 87.57 24.43 89 26.2 89 Z" fill="#ffffff" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M31 80 C37.9 73.5 42.5 69.6 42.5 54 L57.5 54 C57.5 69.6 62.1 73.5 69 80 Z" fill="#ffffff" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M37.9 57 L62.1 57 C63.43 57 64.5 55.93 64.5 54.6 L64.5 53.4 C64.5 52.07 63.43 51 62.1 51 L37.9 51 C36.57 51 35.5 52.07 35.5 53.4 L35.5 54.6 C35.5 55.93 36.57 57 37.9 57 Z" fill="#ffffff" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M39 51 C30.5 41 36 27 50 15.5 C64 27 69.5 41 61 51 Z" fill="#ffffff" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M54.6 12.5 C54.6 9.96 52.54 7.9 50 7.9 C47.46 7.9 45.4 9.96 45.4 12.5 C45.4 15.04 47.46 17.1 50 17.1 C52.54 17.1 54.6 15.04 54.6 12.5 Z" fill="#ffffff" stroke="#1d1d1b" stroke-width="3.4"/>
+<path d="M56.5 29 L47 39.5" fill="none" stroke="#1d1d1b" stroke-width="3.06"/>
+</g>
+</svg>

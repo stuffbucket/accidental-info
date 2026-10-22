@@ -1,0 +1,12 @@
+{
+  "name": "@accidentalguide/chess",
+  "private": true,
+  "description": "Chess diagrams for the guides: boards from a FEN, from White's or Black's side, with the series' own piece illustrations",
+  "license": "(MIT AND CC-BY-4.0)",
+  "scripts": {
+    "test": "../../.venv/bin/python test_chessdiagram.py"
+  },
+  "devDependencies": {
+    "@accidentalguide/pipeline": "workspace:*"
+  }
+}
