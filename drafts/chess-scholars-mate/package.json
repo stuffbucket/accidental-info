@@ -1,0 +1,10 @@
+{
+  "name": "@accidentalguide/chess-scholars-mate",
+  "private": true,
+  "scripts": {
+    "build": "../../.venv/bin/python ../../packages/pipeline/guide.py ."
+  },
+  "devDependencies": {
+    "@accidentalguide/pipeline": "workspace:*"
+  }
+}
