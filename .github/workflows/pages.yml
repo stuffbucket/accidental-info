@@ -32,8 +32,17 @@ jobs:
         run: pnpm install --frozen-lockfile
       # Where Pages serves the site: https://stuffbucket.github.io/accidentalguide, or the custom domain
       # (https://accidental.info, at the root) once one is set.
-      - id: pages
+      - id: configure
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      # Pages reports http:// for a custom domain until it enforces HTTPS; the site is always served
+      # over HTTPS (through Cloudflare), so its links and share images use https://.
+      - id: pages
+        run: |
+          echo "origin=${ORIGIN/#http:/https:}" >> "$GITHUB_OUTPUT"
+          echo "base_path=$BASE_PATH" >> "$GITHUB_OUTPUT"
+        env:
+          ORIGIN: ${{ steps.configure.outputs.origin }}
+          BASE_PATH: ${{ steps.configure.outputs.base_path }}
       # Builds every guide (failing if a PDF differs from its expected.sha256), then the site.
       - name: Build and test
         run: pnpm turbo run build test
