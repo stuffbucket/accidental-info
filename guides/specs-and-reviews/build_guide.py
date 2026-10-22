@@ -82,11 +82,12 @@ TOKENS = {  # token: base hex
     "brand": "#0D99FF", "figjam": "#9747FF", "danger": "#F24822",
     "warning": "#FFCD29", "success": "#14AE5C", "assistive": "#E83FBF",
 }
-# The series rule: the entry number sets the colour, in every guide of the series, so a writer
-# doesn't have to look it up and the thumb tabs and cover grid look the same in each guide.
-# 01 brand, 02 success, 03 figjam, 04 warning, 05 assistive, 06 danger. The token names carry
-# no meaning.
-PART_TOKEN = {"Sp": "brand", "Wi": "success", "Tr": "figjam", "Ac": "warning", "Rv": "assistive"}
+# Each color is one family, the same in every guide of the series
+# (contrib/accidental-guides/registry.md).
+FAMILY_TOKEN = {"Ru": "warning", "Wr": "figjam", "Ck": "success", "Us": "danger", "Dm": "assistive",
+                "Nu": "brand"}
+PART_FAMILY = {"Sp": "Wr", "Wi": "Wr", "Tr": "Wr", "Ac": "Dm", "Rv": "Ck"}
+PART_TOKEN = {k: FAMILY_TOKEN[f] for k, f in PART_FAMILY.items()}
 def colors(mono_key):
     t = PART_TOKEN[mono_key]; base = TOKENS[t]
     fg = INK if t == "warning" else white

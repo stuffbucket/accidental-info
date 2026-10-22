@@ -5,7 +5,7 @@ subtitle: A pocket-sized guide to agreeing on work as a team and checking when i
 running_footer: Specs and Reviews
 edition: [Co]Lab · bstucker · October 2026
 cover_footer: October 2026
-version: 0.3.0
+version: 0.4.0
 ---
 
 # How does work get<br/>from an idea to done? {#why}
@@ -13,7 +13,7 @@ version: 0.3.0
 When several people share the work on one thing, they need to agree on what they’re
 making, who is doing which part and when each part is finished. If your experience of a
 team is one person doing most of the heavy lifting, you may not have needed much of this.
-Once the work is actually shared, a spec, work items, a tracker, acceptance criteria and
+Once the work is shared, a spec, work items, a tracker, acceptance criteria and
 reviews keep everyone on the same page.
 
 You define the result in a spec, split it into work items, and keep them in a tracker. Before work
@@ -102,7 +102,7 @@ A backlog holds unstarted work. A tracker also holds work in progress, review or
 | Field | Text |
 |---|---|
 | Identify by | Short statements in the work item, each one true or false. |
-| What | Acceptance criteria state what must be true for a work item to be accepted. One might say that a user can reset a password from the sign-in page. |
+| What | Acceptance criteria state what must be true for a work item to be accepted. For example, a user can reset a password from the sign-in page. |
 | So what | Agreed criteria give the person doing the work and the reviewer the same test. Set them before work starts. |
 
 ## Field marks
