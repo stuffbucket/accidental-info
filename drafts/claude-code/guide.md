@@ -5,7 +5,7 @@ subtitle: A pocket-sized guide to where Claude Code keeps its setup, as of Octob
 running_footer: Accidental Guide to Claude Code
 edition: [Co]Lab · bstucker · October 2026
 cover_footer: October 2026
-version: 0.1.0
+version: 0.1.1
 ---
 
 # What can you set up<br/>in Claude Code? {#why}
@@ -14,13 +14,13 @@ Claude Code reads its setup from plain files, some in your home folder and some 
 
 Each kind can be yours alone, shared with the project, or set by your organization, and each lives in a different place. For what skills, tools and MCP servers are, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
 
-| Term | Meaning |
-|---|---|
-| Instructions file | Text added to every session, such as build commands. |
-| Skill | A written procedure, loaded when a task needs it. |
-| MCP server | A program that gives Claude Code tools for another system. |
-| Plugin | A package of skills, MCP servers and hooks, installed together. |
-| Settings | JSON files for permissions, hooks and other behavior. |
+> | Term | Meaning |
+> |---|---|
+> | Instructions file | Text added to every session, such as build commands. |
+> | Skill | A written procedure, loaded when a task needs it. |
+> | MCP server | A program that gives Claude Code tools for another system. |
+> | Plugin | A package of skills, MCP servers and hooks, installed together. |
+> | Settings | JSON files for permissions, hooks and other behavior. |
 
 # Instructions file {#entry num=01 mono=In}
 
@@ -32,10 +32,10 @@ Each kind can be yours alone, shared with the project, or set by your organizati
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | At the start of each session | Files from your working folder and every folder above it combine. |
-| Cannot | Enforce a rule | To block an action, use a deny rule or a hook in settings. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | At the start of each session | Files from your working folder and every folder above it combine. |
+> | Cannot | Enforce a rule | To block an action, use a deny rule or a hook in settings. |
 
 ## Confused with: Settings
 
@@ -51,10 +51,10 @@ Instructions are guidance the model reads. Settings are rules Claude Code enforc
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | Name and description at startup | The rest loads when Claude Code or you call the skill. |
-| Cannot | Add a tool | A skill that reads a database still needs a tool that reaches it. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | Name and description at startup | The rest loads when Claude Code or you call the skill. |
+> | Cannot | Add a tool | A skill that reads a database still needs a tool that reaches it. |
 
 ## Confused with: Instructions file
 
@@ -70,10 +70,10 @@ An instructions file loads in full every session. A skill loads in full only whe
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | When the session starts | Claude Code connects and gets the server’s list of tools. |
-| Cannot | Act by itself | Nothing happens until the model calls one of the server’s tools. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | When the session starts | Claude Code connects and gets the server’s list of tools. |
+> | Cannot | Act by itself | Nothing happens until the model calls one of the server’s tools. |
 
 ## Confused with: Plugin
 
@@ -89,10 +89,10 @@ A plugin can bring its own MCP server. You add or remove that server along with 
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | At startup, when enabled | An enabledPlugins entry in a settings file turns it on. |
-| Cannot | Install itself for teammates | A project entry turns the plugin on for them, but each person still installs it once. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | At startup, when enabled | An enabledPlugins entry in a settings file turns it on. |
+> | Cannot | Install itself for teammates | A project entry turns the plugin on for them, but each person still installs it once. |
 
 ## Confused with: Skill
 
@@ -108,10 +108,10 @@ A skill is one folder you can copy in yourself. A plugin is a package, usually f
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Loads | At startup, and again on save | Claude Code watches the files, so most edits apply right away. |
-| Cannot | Override your organization | Nothing in your own files changes a managed setting. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Loads | At startup, and again on save | Claude Code watches the files, so most edits apply right away. |
+> | Cannot | Override your organization | Nothing in your own files changes a managed setting. |
 
 ## Confused with: Instructions file
 
@@ -145,7 +145,8 @@ Most setup sits in two .claude/ folders, one in your home folder and one in the 
 | MCP servers | managed-mcp.json in that folder |
 | Settings | managed-settings.json in that folder, or a policy from MDM or the admin console |
 
-/status shows which settings files loaded, /context the instructions files, /mcp the servers and /plugin the plugins.
+> [!TIP]
+> /status shows which settings files loaded, /context the instructions files, /mcp the servers and /plugin the plugins.
 
 # Which one wins? {#scopes}
 

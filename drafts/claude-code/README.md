@@ -42,7 +42,7 @@ the same text gives the same bytes.
 | File | What it's for |
 |---|---|
 | `guide.md` | Every word in the guide: titles, entries, tables, sources and footers. Edit this to change the text. |
-| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_ROWS`, `ENTRIES`, `WHERE_GROUPS`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
+| `content.py` | Reads `guide.md` into the names both builders use, such as `WHY_BLOCKS`, `ENTRIES`, `WHERE_GROUPS`, `TABLE_PAGES` and `END_SOURCES`, and `BLURB`, the paragraph the site shows. |
 | `build_guide.py` | The PDF: page layout, colors, tiles and the margin check. |
 | `build_docx.py` | The Word document: layout in Word's terms and the embedded fonts. |
 | `fonts/texgyreheros-{regular,bold,italic}.otf` | TeX Gyre Heros 2.004, the body typeface, as originally distributed (OpenType with CFF outlines). |
@@ -59,6 +59,11 @@ that says which page it is: `{#why}`, five `{#entry}` sections, `{#where}`, `{#s
 `{#elsewhere}` and `{#sources}`. Each entry is `# Name {#entry num=01 mono=In}`. The order
 of sections in the file doesn't set the order of pages; the builders do.
 
+The entries, then `{#where}`, `{#scopes}` and `{#elsewhere}`, go down the page one after
+another, and a new page starts only when the next one doesn't fit, so two short entries share
+a page. The cover and the Word document take the page numbers from the same packing (`PAGES`
+in `build_guide.py`).
+
 Within a section:
 
 - Paragraphs are separated by blank lines, and a paragraph can be wrapped over several
@@ -69,11 +74,20 @@ Within a section:
   the scopes and elsewhere pages, the table's header row is what's printed. Tables the PDF
   prints without a header still need one in Markdown; those header rows (`Question`,
   `Field`, `Term`, `Source`) are only labels for whoever edits the file.
-- The where page has one or more paragraphs, then one table per scope, then exactly one
-  closing paragraph. Each table's first header cell is the scope's label, which is printed;
-  the second header cell is only a label for editors.
-- The scopes and elsewhere pages each have one or more intro paragraphs, one table, and
-  exactly one closing paragraph after the table.
+- The where section has one or more paragraphs, then one table per scope, then any closing
+  paragraphs or a callout. Each table's first header cell is the scope's label, which is
+  printed; the second header cell is only a label for editors.
+- The scopes and elsewhere sections each have one or more intro paragraphs, one table, and
+  any closing paragraphs or a callout after the table.
+- A block of lines that start with `> ` is a grey block: its paragraphs and tables are printed
+  on a light grey background, with no rules. The terms table on the first page is one.
+- A `> ` block whose first line is `> [!TIP]`, `> [!NOTE]` or `> [!WARNING]` is a callout:
+  one paragraph in an outlined box, led by "Tip.", "Note." or "Watch out." in bold. Use at most
+  one on a page, for one practical tip or warning.
+- In an entry, a field marks table in a grey block is printed as a grid of three columns, each
+  label over its short answer. Its Detail column can be left out.
+- A two-column table is printed as rows, label on the left, with a heavy rule over the first
+  row and no rules between rows.
 - The sources table has three columns: the source, its date, and its address (no
   `https://`), which is set in mono.
 - Names in `NAME2MONO` in `build_guide.py` get a tile wherever they label a row. The five

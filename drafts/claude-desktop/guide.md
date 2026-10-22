@@ -5,7 +5,7 @@ subtitle: A pocket-sized guide to where Claude Desktop keeps its settings, as of
 running_footer: Claude Desktop
 edition: [Co]Lab · bstucker · October 2026
 cover_footer: October 2026
-version: 0.1.0
+version: 0.1.1
 ---
 
 # What can you set up<br/>in Claude Desktop? {#why}
@@ -14,13 +14,13 @@ In Claude Desktop you can tell Claude how to answer you, save the steps for task
 
 You’ll find them in Settings and in Customize, in the left sidebar. For what a skill, a tool and an MCP server are, see An Accidental Guide to: Agents, Harnesses, Skills, and Tools.
 
-| Term | Meaning |
-|---|---|
-| Instructions | What you want Claude to know in every chat, or in one project. |
-| Skills | Saved steps Claude follows for one kind of task. |
-| Connectors | An MCP server you add so Claude can reach another app or service. |
-| Plugins | A package of skills, connectors and sub-agents. |
-| Settings and permissions | Your preferences, and how much Claude may do before it asks. |
+> | Term | Meaning |
+> |---|---|
+> | Instructions | What you want Claude to know in every chat, or in one project. |
+> | Skills | Saved steps Claude follows for one kind of task. |
+> | Connectors | An MCP server you add so Claude can reach another app or service. |
+> | Plugins | A package of skills, connectors and sub-agents. |
+> | Settings and permissions | Your preferences, and how much Claude may do before it asks. |
 
 # Instructions {#entry num=01 mono=In}
 
@@ -32,9 +32,9 @@ You’ll find them in Settings and in Customize, in the left sidebar. For what a
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Works in | Web, desktop and mobile | Instructions belong to your account. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Works in | Web, desktop and mobile | Instructions belong to your account. |
 
 ## Confused with: Memory
 
@@ -50,15 +50,15 @@ Memory is what Claude picks up from your chats, in Settings > Memory. Instructio
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Works in | Web, desktop and Claude Code | Skills need Code execution and file creation, in Settings > Capabilities. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Works in | Web, desktop and Claude Code | Skills need Code execution and file creation, in Settings > Capabilities. |
 
 ## Confused with: Instructions
 
 Instructions apply to every chat. A skill’s steps apply only to its kind of task.
 
-# Connectors {#entry num=03 mono=Cn}
+# Connectors {#entry num=03 mono=Mc}
 
 | Field | Text |
 |---|---|
@@ -68,9 +68,9 @@ Instructions apply to every chat. A skill’s steps apply only to its kind of ta
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Works in | Web, desktop and mobile | Local files and apps need a local MCP server instead. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Works in | Web, desktop and mobile | Local files and apps need a local MCP server instead. |
 
 ## Confused with: Desktop extension
 
@@ -86,9 +86,9 @@ A desktop extension is a local MCP server in a .mcpb file, installed in Settings
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Works in | Chat, Cowork and Claude Code | Paid plans only. A plugin with a local MCP server needs the desktop app. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Works in | Chat, Cowork and Claude Code | Paid plans only. A plugin with a local MCP server needs the desktop app. |
 
 ## Confused with: Skills
 
@@ -104,9 +104,9 @@ A skill is one set of steps. A plugin can hold several skills, plus connectors a
 
 ## Field marks
 
-| Field | Short answer | Detail |
-|---|---|---|
-| Works in | Your account and this computer | Owners and IT can turn some options off. |
+> | Field | Short answer | Detail |
+> |---|---|---|
+> | Works in | Your account and this computer | Owners and IT can turn some options off. |
 
 ## Confused with: Customize
 
@@ -130,7 +130,10 @@ Most things live in your Claude account and show up wherever you sign in. A few 
 | MCP logs | This computer | macOS: ~/Library/Logs/Claude<br/>Windows: %APPDATA%\Claude\logs |
 | Code tab | This computer | ~/.claude/settings.json and ~/.claude/skills, the same files Claude Code uses |
 
-After you edit claude_desktop_config.json, quit Claude Desktop completely and open it again. Chats and Cowork use what’s in Customize. The Code tab reads ~/.claude instead, like Claude Code; see An Accidental Guide to: Claude Code.
+Chats and Cowork use what’s in Customize. The Code tab reads ~/.claude instead, like Claude Code; see An Accidental Guide to: Claude Code.
+
+> [!TIP]
+> After you edit claude_desktop_config.json, quit Claude Desktop completely and open it again.
 
 # Your account or<br/>your organization? {#account}
 
