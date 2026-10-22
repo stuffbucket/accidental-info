@@ -1,6 +1,7 @@
 ---
 /*
- * Replaces Starlight's Footer to add "Leave a star" (src/components/StarLink.astro) below the previous and next
+ * Replaces Starlight's Footer to add a line on who writes the guides and "Leave a star"
+ * (src/components/StarLink.astro) below the previous and next
  * links at the foot of every guide's page. Starlight's own footer is rendered unchanged above it.
  */
 import Default from "@astrojs/starlight/components/Footer.astro";
@@ -8,12 +9,18 @@ import StarLink from "../StarLink.astro";
 ---
 
 <Default><slot /></Default>
+<p class="made-by">A person writes and reviews every guide. AI does the grunt work.</p>
 <p class="star-row print:hidden">
   <StarLink look="starlight" />
 </p>
 
 <style>
-  .star-row {
+  .made-by {
     margin: 2rem 0 0;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+  }
+  .star-row {
+    margin: 1rem 0 0;
   }
 </style>

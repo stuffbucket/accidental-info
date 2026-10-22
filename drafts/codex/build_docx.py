@@ -615,7 +615,7 @@ def page_end(doc):
     para(doc, C.KICKER, 6.4, GREY, space_after=1)
     para(doc, C.TITLE, 7.6, bold=True, space_after=1)
     para(doc, C.SUBTITLE, 6.4, GREY, space_after=1)
-    para(doc, "Set in TeX Gyre Heros. Built with python-docx.", 6.4, GREY, space_after=1)
+    para(doc, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros.", 6.4, GREY, space_after=1)
     p = para(doc, G.STAR_LABEL, 6.4, GREY, space_after=0)
     hyperlink(p, G.STAR_TEXT, G.STAR_URL, 5.9, GREY, MONO)
 

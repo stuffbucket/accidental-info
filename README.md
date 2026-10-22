@@ -4,6 +4,9 @@ Short guides to AI coding agents and the ways teams use them to build software. 
 answers one question, a few parts at a time, and uses one name for each thing in every
 guide.
 
+A person writes and reviews every guide. AI does the grunt work: finding sources, rough
+drafts and the builds.
+
 **Read them at https://stuffbucket.github.io/accidentalguide/**, or download the PDF or
 Word document of each.
 

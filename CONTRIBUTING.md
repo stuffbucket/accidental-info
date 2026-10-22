@@ -46,8 +46,9 @@ What we check:
 - **It reads like the series.** Plain words, one name for each thing, and the rules under
   [Voice](#voice).
 
-**AI.** Our own guides are drafted with AI help and then checked line by line by a person.
-You can work the same way. Say how you used AI in the form. What we won't take is text that
+**AI.** A person writes and reviews every one of our guides, and AI does the grunt work:
+finding sources, rough drafts and the builds. Every line is checked by that person before
+it's published. You can work the same way. Say how you used AI in the form. What we won't take is text that
 nobody has checked: made-up facts, sources that don't exist, or answers to our questions
 that come straight from a chatbot.
 

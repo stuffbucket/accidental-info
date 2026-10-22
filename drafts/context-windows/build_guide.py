@@ -747,7 +747,7 @@ def page_end(c):
     c.drawString(ML, yb - 22, C.TITLE)
     c.setFillColor(GREY); c.setFont("Sans", 6.4)
     c.drawString(ML, yb - 31, C.SUBTITLE)
-    c.drawString(ML, yb - 40, "Set in TeX Gyre Heros. Built with ReportLab.")
+    c.drawString(ML, yb - 40, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros.")
     c.drawString(ML, yb - 49, STAR_LABEL)
     link(c, ML + pdfmetrics.stringWidth(STAR_LABEL, "Sans", 6.4), yb - 49, STAR_TEXT,
          "Mono", 5.9, STAR_URL)  # mono at the size of the sources' addresses
