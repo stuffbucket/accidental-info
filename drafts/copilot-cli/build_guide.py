@@ -292,8 +292,9 @@ def family_colors(fam):
 
 
 def family_tile(c, key, fam, x, y, size, number=None):
-    """A part's two-tone tile in its family's colour; (x, y) is the lower-left corner."""
-    base, dark, fg = family_colors(fam)
+    """A part's two-tone tile on the cover; (x, y) is the lower-left corner. It takes the colour the
+    part has on its own pages, so the cover and the pages agree; the family only places it."""
+    base, dark, fg = colors(key) if key in PART_TOKEN else family_colors(fam)
     c.setFillColor(base); c.rect(x, y, size, size, stroke=0, fill=1)
     band = size * 0.26
     c.setFillColor(dark); c.rect(x, y, size, band, stroke=0, fill=1)
