@@ -164,10 +164,13 @@ const tally = (collection: (typeof collections)[number]) =>
   h1 span {
     display: block;
   }
+  /* The series' line, the site's only serif, as on the guides' covers and end pages. */
   .line {
     max-width: 22em;
     margin: 0 0 clamp(2.5rem, 6vw, 3.5rem);
-    font-size: 1.25rem;
+    font-family: "Newsreader", Georgia, serif;
+    font-style: italic;
+    font-size: 1.5rem;
     line-height: 1.35;
   }
   /* Four tiles across the page's eight columns, each starting on a cover's column. */
