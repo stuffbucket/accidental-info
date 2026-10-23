@@ -33,7 +33,7 @@ Run every command from the repository root. `GUIDE` is the guide folder (`drafts
    Use `specs-and-reviews` as the source instead if the plan needs grey blocks, callouts,
    packed pages or a sequence diagram. The script sets the public imprint in the front
    matter (`edition: oops@accidental.info · CC BY 4.0 · <Month Year>` and
-   `cover_footer: hi@accidental.info · <Month Year>`) and the author "Accidental Guides" in
+   `cover_footer: friend@accidental.info · <Month Year>`) and the author "Accidental Guides" in
    the builders.
 3. Run `pnpm sync` to add the folder to the workspace. It writes the guide's
    `package.json` and the lists of guides in `README.md` and `site/package.json`.

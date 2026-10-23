@@ -36,6 +36,7 @@ import build_guide as G  # the PDF's layout constants and visual rules
 import content as C
 
 SANS = "TeX Gyre Heros"
+SERIF = "Newsreader"
 MONO = "Liberation Mono"
 
 
@@ -603,7 +604,7 @@ def page_end(doc):
     para(doc, C.KICKER, 6.4, GREY, space_after=1)
     para(doc, C.TITLE, 7.6, bold=True, space_after=1)
     para(doc, C.SUBTITLE, 6.4, GREY, space_after=1)
-    para(doc, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros.", 6.4, GREY, space_after=1)
+    para(doc, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros and Newsreader.", 6.4, GREY, space_after=1)
     p = para(doc, G.STAR_LABEL, 6.4, GREY, space_after=0)
     hyperlink(p, G.STAR_TEXT, G.STAR_URL, 5.9, GREY, MONO)
 
@@ -668,7 +669,11 @@ def ruled_footer(section, text, mail=False):
     mail, the address the text starts with is a mailto: link."""
     f = section.footer
     f.is_linked_to_previous = False
-    p = f.paragraphs[0]
+    line = f.paragraphs[0]  # the series' line, right-aligned above the rule, as in the PDF
+    line.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    line.paragraph_format.space_after = Pt(3)
+    _run(line, G.TAGLINE, 9, INK, False, True, SERIF)
+    p = f.add_paragraph()
     bdr = OxmlElement("w:pBdr")
     top = OxmlElement("w:top")
     for k, v in (("w:val", "single"), ("w:sz", "8"), ("w:space", "4"), ("w:color", INK)):
@@ -743,6 +748,7 @@ FONTS = [  # (family, style element, file)
     (SANS, "embedBold", "heros-bold.ttf"),
     (SANS, "embedItalic", "heros-italic.ttf"),
     (MONO, "embedRegular", "LiberationMono-Regular.ttf"),
+    (SERIF, "embedItalic", "newsreader-italic.ttf"),
 ]
 
 

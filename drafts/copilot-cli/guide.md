@@ -4,7 +4,7 @@ kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where Copilot CLI keeps its setup, and which copy wins, as of October 2026.
 running_footer: GitHub Copilot CLI
 edition: oops@accidental.info · CC BY 4.0 · October 2026
-cover_footer: hi@accidental.info · October 2026
+cover_footer: friend@accidental.info · October 2026
 version: 0.2.0
 ---
 

@@ -19,7 +19,7 @@ What it does:
   - in guide.md (copied, or taken from --guide-md), sets title to the new title, version to
     0.1.0, and the public imprint:
         edition: oops@accidental.info · CC BY 4.0 · <Month Year>
-        cover_footer: hi@accidental.info · <Month Year>
+        cover_footer: friend@accidental.info · <Month Year>
     with this month unless --month is given.
 
 It then prints what still has to change by hand, and the next steps (pnpm sync, then the
@@ -150,7 +150,7 @@ def main():
     set_key(lines, "title", args.title)
     set_key(lines, "version", "0.1.0")
     set_key(lines, "edition", f"oops@accidental.info · CC BY 4.0 · {args.month}")
-    set_key(lines, "cover_footer", f"hi@accidental.info · {args.month}")
+    set_key(lines, "cover_footer", f"friend@accidental.info · {args.month}")
     (dst / "guide.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     rel = dst.relative_to(root) if dst.is_relative_to(root) else dst

@@ -4,7 +4,7 @@ kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to sitting down at your first Dungeons & Dragons table, as of October 2026.
 running_footer: Your First D&D Game
 edition: oops@accidental.info · CC BY 4.0 · October 2026
-cover_footer: hi@accidental.info · October 2026
+cover_footer: friend@accidental.info · October 2026
 version: 0.4.0
 ---
 

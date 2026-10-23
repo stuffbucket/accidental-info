@@ -56,6 +56,7 @@ for s in ("regular", "bold", "italic"):
 pdfmetrics.registerFont(TTFont("Sans", f"{FONT_DIR}/heros-regular.ttf"))
 pdfmetrics.registerFont(TTFont("Sans-Bold", f"{FONT_DIR}/heros-bold.ttf"))
 pdfmetrics.registerFont(TTFont("Sans-Italic", f"{FONT_DIR}/heros-italic.ttf"))
+pdfmetrics.registerFont(TTFont("Serif-Italic", f"{FONT_DIR}/newsreader-italic.ttf"))
 pdfmetrics.registerFont(TTFont("Mono", MONO))
 addMapping("Sans", 0, 0, "Sans"); addMapping("Sans", 1, 0, "Sans-Bold")
 addMapping("Sans", 0, 1, "Sans-Italic"); addMapping("Sans", 1, 1, "Sans-Bold")
@@ -270,6 +271,7 @@ def page_cover(c):
     rule(c, MB + 4, weight=1, color=INK)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
     c.drawString(ML, MB - 6, f"{C.COVER_FOOTER} · Version {C.VERSION}")
+    tagline(c)
     check("cover", y)
 
 def page_why(c, n):
@@ -627,6 +629,14 @@ def source_line(date, address):
 
 STAR_LABEL, STAR_TEXT, STAR_URL = "Leave a star: ", "accidental.info/star", "https://accidental.info/star/"
 
+TAGLINE = "My friend has a lot of questions."
+
+def tagline(c):
+    """The series' line, right-aligned above the footer's rule on the cover and the end page.
+    It is the only serif in a guide: Newsreader Italic."""
+    c.setFillColor(INK); c.setFont("Serif-Italic", 9)
+    c.drawRightString(ML + W, MB + 15, TAGLINE)
+
 def link(c, x, y, text, font, size, url):
     """Draw text at (x, y) in the current colour and make just that text a link to url."""
     c.setFont(font, size)
@@ -657,11 +667,13 @@ def page_end(c):
     c.drawString(ML, yb - 22, C.TITLE)
     c.setFillColor(GREY); c.setFont("Sans", 6.4)
     c.drawString(ML, yb - 31, C.SUBTITLE)
-    c.drawString(ML, yb - 40, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros.")
+    c.drawString(ML, yb - 40, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros and Newsreader.")
     c.drawString(ML, yb - 49, STAR_LABEL)
     link(c, ML + pdfmetrics.stringWidth(STAR_LABEL, "Sans", 6.4), yb - 49, STAR_TEXT,
          "Mono", 5.9, STAR_URL)  # mono at the size of the sources' addresses
     rule(c, MB + 4, weight=1, color=INK)
+    c.setFont("Sans", 6.4); c.setFillColor(GREY)
+    tagline(c)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
     mail = C.EDITION.split(" · ")[0]
     if "@" in mail:  # the address for mistakes opens a new email

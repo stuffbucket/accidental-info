@@ -4,7 +4,7 @@ kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to software delivery run by coding agents, as of October 2026.
 running_footer: Software Factories
 edition: oops@accidental.info · CC BY 4.0 · October 2026
-cover_footer: hi@accidental.info · October 2026
+cover_footer: friend@accidental.info · October 2026
 version: 0.1.0
 ---
 

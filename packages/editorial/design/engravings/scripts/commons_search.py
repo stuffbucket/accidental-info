@@ -5,7 +5,7 @@ usage: python -I commons_search.py OUTDIR "query" [limit]
 import json, os, re, sys, urllib.parse, urllib.request, io
 from PIL import Image, ImageDraw
 
-UA = "AccidentalGuideResearch/0.1 (illustration shortlist; contact hi@accidental.info)"
+UA = "AccidentalGuideResearch/0.1 (illustration shortlist; contact friend@accidental.info)"
 API = "https://commons.wikimedia.org/w/api.php"
 
 

@@ -21,3 +21,9 @@
   src: url("/fonts/LiberationMono-Regular.ttf") format("truetype");
   font-display: swap;
 }
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-italic.woff2") format("woff2");
+  font-style: italic;
+  font-display: swap;
+}

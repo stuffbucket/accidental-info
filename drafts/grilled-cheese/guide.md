@@ -4,7 +4,7 @@ kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to crisp bread and melted cheese.
 running_footer: Grilled Cheese
 edition: oops@accidental.info · CC BY 4.0 · October 2026
-cover_footer: hi@accidental.info · October 2026
+cover_footer: friend@accidental.info · October 2026
 version: 0.3.0
 ---
 

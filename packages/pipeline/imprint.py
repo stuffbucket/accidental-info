@@ -5,7 +5,7 @@ Usage: python imprint.py <guide folder> [<guide folder> ...]
 The cover's footer gets the general address, the end page's footer the address for
 mistakes and the text's license, and the PDF's and Word document's author is the series:
 
-    cover_footer: hi@accidental.info · <month>
+    cover_footer: friend@accidental.info · <month>
     edition: oops@accidental.info · CC BY 4.0 · <month>
     author "Accidental Guides" in build_guide.py and build_docx.py
 
@@ -23,7 +23,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-HI = "hi@accidental.info"
+HI = "friend@accidental.info"
 OOPS = "oops@accidental.info"
 LICENSE = "CC BY 4.0"
 AUTHOR = "Accidental Guides"
