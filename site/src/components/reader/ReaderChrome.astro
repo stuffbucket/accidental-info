@@ -4,12 +4,16 @@
  *
  * Top left: back to all guides, and the guide's title. Top right: the guide as a web page, the PDF and the Word
  * document to download, and a menu with the home page and "Leave a star". Bottom: the previous and next page with
- * the page readout, and zoom out, zoom in and fit with the zoom readout.
+ * the page readout, zoom out, zoom in and fit with the zoom readout, and the layout switch. Also here, for the
+ * engine to move in front of the first page: a tall back chevron (.reader-back), styled on its own.
  *
  * The reader's engine finds the controls by their data attributes: the buttons by data-reader-action ("prev",
- * "next", "zoom-out", "zoom-in", "fit"), and the readouts it writes by data-reader-page ("3 / 9") and
+ * "next", "zoom-out", "zoom-in", "fit", "layout", "back"), and the readouts it writes by data-reader-page ("3 / 9") and
  * data-reader-zoom ("125%"). It sets data-layout, data-scrolling and data-zooming on <html>, which fade the bars
  * while the pages move and turn the page arrows to match the layout.
+ *
+ * The layout button names itself from whichever of its two labels data-layout shows ("Read top to bottom" side by
+ * side, "Read left to right" stacked), so the engine needn't update it.
  *
  * The icons are drawn here on a 20px grid with a 1.5px stroke in the text colour.
  */
@@ -41,6 +45,11 @@ const icon = {
   minus: '<path d="M4.5 10h11"/>',
   plus: '<path d="M10 4.5v11"/><path d="M4.5 10h11"/>',
   fit: '<path d="M3.5 7.5v-3a1 1 0 0 1 1-1h3"/><path d="M12.5 3.5h3a1 1 0 0 1 1 1v3"/><path d="M16.5 12.5v3a1 1 0 0 1-1 1h-3"/><path d="M7.5 16.5h-3a1 1 0 0 1-1-1v-3"/>',
+  // A rectangle's top right corner with a quarter turn around it, the arrow pointing left (side by side) or down
+  // (stacked); data-layout shows one head.
+  layout:
+    '<path d="M2.75 10.75h5.5a1 1 0 0 1 1 1v5.5"/><path d="M15.75 10.75A6.5 6.5 0 0 0 9.25 4.25"/>' +
+    '<path class="reader-layout-h" d="M11.5 2 9.25 4.25 11.5 6.5"/><path class="reader-layout-v" d="M13.5 8.5l2.25 2.25L18 8.5"/>',
 };
 const svg = {
   class: "reader-icon",
@@ -58,6 +67,21 @@ const svg = {
 ---
 
 <div class="reader-chrome">
+  <button class="reader-back" type="button" data-reader-action="back" aria-label="Back">
+    <svg
+      viewBox="0 0 24 48"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M17 6 7 24l10 18" vector-effect="non-scaling-stroke"></path>
+    </svg>
+  </button>
+
   <div class="reader-bar reader-bar--start">
     <a class="reader-btn" href={`${base}guides/`} aria-label="All guides" data-tip="All guides">
       <svg {...svg} set:html={icon.back} />
@@ -118,6 +142,12 @@ const svg = {
     </button>
     <button class="reader-btn" type="button" data-reader-action="fit" aria-label="Fit to window" data-tip="Fit to window">
       <svg {...svg} set:html={icon.fit} />
+    </button>
+    <span class="reader-sep" aria-hidden="true"></span>
+    <button class="reader-btn reader-layout" type="button" data-reader-action="layout" data-tip="Read top to bottom">
+      <svg {...svg} set:html={icon.layout} />
+      <span class="sr-only reader-layout-h">Read top to bottom</span>
+      <span class="sr-only reader-layout-v">Read left to right</span>
     </button>
   </div>
 </div>
