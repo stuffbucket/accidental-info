@@ -2,6 +2,8 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
+    // Makes the shared ../../.venv, outside this package, which a cache hit couldn't restore. So it always runs;
+    // it takes a second or two when the venv is already up to date.
     "build": {
       "cache": false,
       "outputs": []

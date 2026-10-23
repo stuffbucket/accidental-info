@@ -1,0 +1,284 @@
+# Build an Astro site and deploy it to GitHub Pages, keeping what didn't change between runs.
+#
+# A reusable workflow: call it from a repository's own workflow with `uses:` and the inputs below. Nothing in it
+# names this repository, so another Astro site can call it as it is:
+#
+#   jobs:
+#     site:
+#       uses: stuffbucket/accidentalguide/.github/workflows/astro-pages.yml@<sha> # or ./.github/... in this repo
+#       permissions: { contents: read, pages: write, id-token: write }
+#       with:
+#         site-dir: site
+#         deploy: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+#
+# What makes it fast:
+#   - The toolchain comes from mise (or setup-node), with the tools and the package store cached.
+#   - Build caches are restored before the build and saved after it, one entry per commit, restored from the
+#     newest entry with the same lockfiles: Astro's cache (<site-dir>/node_modules/.astro), Turborepo's local cache
+#     when `turbo` is on (pruned to this run's tasks, so it doesn't grow), and any `cache-paths` of the caller's.
+#   - Builds of the same branch cancel older ones; deploys never cancel each other, so a deploy is never cut off.
+#   - Pull requests build and test without uploading anything; only a deploying run uploads the Pages artifact.
+#
+# The site's address: actions/configure-pages gives the origin and base path Pages serves the site at (the
+# custom domain, if one is set). They reach the build as SITE_ORIGIN and SITE_BASE (names set by `origin-env` and
+# `base-env`), for astro.config's `site` and `base`, and come back out as outputs.
+name: Astro to Pages
+
+on:
+  workflow_call:
+    inputs:
+      site-dir:
+        description: The Astro project's folder, relative to the repository root.
+        type: string
+        default: "."
+      dist-dir:
+        description: The built site to deploy. Default <site-dir>/dist.
+        type: string
+        default: ""
+      toolchain:
+        description: '"mise" (tool versions from mise.toml / .tool-versions) or "node" (actions/setup-node).'
+        type: string
+        default: mise
+      node-version-file:
+        description: With toolchain "node", where the Node version is (.nvmrc, .node-version or package.json).
+        type: string
+        default: package.json
+      package-manager:
+        description: pnpm, npm or yarn.
+        type: string
+        default: pnpm
+      install-command:
+        description: Default "pnpm install --frozen-lockfile", "npm ci" or "yarn install --immutable".
+        type: string
+        default: ""
+      build-command:
+        description: Run from the repository root. Default "<package-manager> run build" in site-dir.
+        type: string
+        default: ""
+      cache-paths:
+        description: More paths to keep between runs, one per line (a Python venv, generated images, ...).
+        type: string
+        default: ""
+      cache-key-files:
+        description: Files, one glob per line, whose change starts the caches afresh (lockfiles, tool versions).
+        type: string
+        default: |
+          pnpm-lock.yaml
+          package-lock.json
+          yarn.lock
+          mise.toml
+          .tool-versions
+      turbo:
+        description: Keep Turborepo's local cache (.turbo/cache), pruned to the tasks of this run.
+        type: boolean
+        default: false
+      lfs:
+        description: Check out Git LFS files.
+        type: boolean
+        default: false
+      force-https:
+        description: Use https:// for the site's origin even while Pages reports http:// for a custom domain.
+        type: boolean
+        default: true
+      origin-env:
+        description: The environment variable the build reads the site's origin from.
+        type: string
+        default: SITE_ORIGIN
+      base-env:
+        description: The environment variable the build reads the base path from.
+        type: string
+        default: SITE_BASE
+      deploy:
+        description: Upload the site and deploy it to Pages. Usually only for pushes to the default branch.
+        type: boolean
+        default: false
+      artifact-name:
+        description: Also upload these build files as an artifact with this name (for a later job), if set.
+        type: string
+        default: ""
+      artifact-path:
+        description: The files for artifact-name, one path or glob per line.
+        type: string
+        default: ""
+    outputs:
+      origin:
+        description: The site's origin, such as https://example.com.
+        value: ${{ jobs.build.outputs.origin }}
+      base_path:
+        description: The site's base path, such as /repo or an empty string.
+        value: ${{ jobs.build.outputs.base_path }}
+      page_url:
+        description: The deployed site's address, when it was deployed.
+        value: ${{ jobs.deploy.outputs.page_url }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # A newer push to the same branch or pull request replaces this build.
+    concurrency:
+      group: ${{ github.workflow }}-build-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      pages: read
+    outputs:
+      origin: ${{ steps.pages.outputs.origin }}
+      base_path: ${{ steps.pages.outputs.base_path }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: ${{ inputs.lfs }}
+          persist-credentials: false
+
+      - id: plan
+        name: Plan the build
+        shell: bash
+        env:
+          SITE_DIR: ${{ inputs.site-dir }}
+          DIST_DIR: ${{ inputs.dist-dir }}
+          PM: ${{ inputs.package-manager }}
+          INSTALL: ${{ inputs.install-command }}
+          BUILD: ${{ inputs.build-command }}
+          PATHS: ${{ inputs.cache-paths }}
+          KEY_FILES: ${{ inputs.cache-key-files }}
+          TURBO: ${{ inputs.turbo }}
+        run: |
+          case "$PM" in
+            pnpm) install="pnpm install --frozen-lockfile" ;;
+            npm) install="npm ci" ;;
+            yarn) install="yarn install --immutable" ;;
+            *) echo "::error::package-manager must be pnpm, npm or yarn, not '$PM'"; exit 1 ;;
+          esac
+          {
+            echo "install=${INSTALL:-$install}"
+            echo "build=${BUILD:-cd \"$SITE_DIR\" && $PM run build}"
+            echo "dist=${DIST_DIR:-${SITE_DIR%/}/dist}"
+            # One generation per set of lockfiles and tool versions; within it, one entry per commit.
+            mapfile -t globs < <(printf '%s\n' "$KEY_FILES" | sed '/^[[:space:]]*$/d')
+            echo "generation=$(git ls-files -z -- "${globs[@]}" | xargs -0 -r sha256sum | sha256sum | cut -c1-16)"
+            echo "paths<<EOF"
+            echo "${SITE_DIR%/}/node_modules/.astro"
+            [ "$TURBO" = true ] && echo ".turbo/cache"
+            printf '%s\n' "$PATHS" | sed '/^[[:space:]]*$/d'
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      # The toolchain: mise installs the versions the repository pins (and caches them), or setup-node does.
+      - if: inputs.toolchain == 'mise'
+        uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
+        with:
+          cache: true
+      - if: inputs.toolchain == 'node' && inputs.package-manager == 'pnpm'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - if: inputs.toolchain == 'node'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ${{ inputs.node-version-file }}
+          cache: ${{ inputs.package-manager }}
+
+      # setup-node caches the package store itself; with mise, keep pnpm's store here.
+      - id: store
+        if: inputs.toolchain == 'mise' && inputs.package-manager == 'pnpm'
+        shell: bash
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+      - if: steps.store.outputs.path
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.store.outputs.path }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-${{ runner.os }}-
+
+      - id: restore
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.plan.outputs.paths }}
+          key: build-${{ runner.os }}-${{ steps.plan.outputs.generation }}-${{ github.sha }}
+          restore-keys: build-${{ runner.os }}-${{ steps.plan.outputs.generation }}-
+
+      - name: Install packages
+        shell: bash
+        env:
+          INSTALL: ${{ steps.plan.outputs.install }}
+        run: eval "$INSTALL"
+
+      - id: configure
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - id: pages
+        name: Site address
+        shell: bash
+        env:
+          ORIGIN: ${{ steps.configure.outputs.origin }}
+          BASE_PATH: ${{ steps.configure.outputs.base_path }}
+          FORCE_HTTPS: ${{ inputs.force-https }}
+          ORIGIN_ENV: ${{ inputs.origin-env }}
+          BASE_ENV: ${{ inputs.base-env }}
+        run: |
+          [ "$FORCE_HTTPS" = true ] && ORIGIN="${ORIGIN/#http:/https:}"
+          echo "origin=$ORIGIN" >> "$GITHUB_OUTPUT"
+          echo "base_path=$BASE_PATH" >> "$GITHUB_OUTPUT"
+          { echo "$ORIGIN_ENV=$ORIGIN"; echo "$BASE_ENV=$BASE_PATH"; } >> "$GITHUB_ENV"
+
+      - id: build
+        name: Build
+        shell: bash
+        env:
+          # Turborepo writes a summary of the run, which the prune step reads.
+          TURBO_RUN_SUMMARY: ${{ inputs.turbo }}
+          BUILD: ${{ steps.plan.outputs.build }}
+        run: eval "$BUILD"
+
+      # Keep only the cache entries this run used, so the cache stays the size of one build.
+      - if: inputs.turbo && steps.build.outcome == 'success'
+        name: Prune the Turborepo cache
+        shell: bash
+        run: |
+          summary=$(find .turbo/runs -name '*.json' -printf '%T@ %p\n' 2>/dev/null | sort -n | tail -1 | cut -d' ' -f2-)
+          if [ -z "$summary" ] || [ ! -d .turbo/cache ]; then exit 0; fi
+          jq -r '.tasks[].hash' "$summary" | sort -u > "$RUNNER_TEMP/keep"
+          find .turbo/cache -maxdepth 1 -type f | while read -r f; do
+            hash=$(basename "$f"); hash=${hash%%[.-]*}
+            grep -qxF "$hash" "$RUNNER_TEMP/keep" || rm -f "$f"
+          done
+          rm -rf .turbo/runs
+          du -sh .turbo/cache
+
+      - if: steps.build.outcome == 'success' && steps.restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.plan.outputs.paths }}
+          key: build-${{ runner.os }}-${{ steps.plan.outputs.generation }}-${{ github.sha }}
+
+      - if: inputs.deploy
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ${{ steps.plan.outputs.dist }}
+      - if: inputs.artifact-name != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    if: inputs.deploy
+    needs: build
+    runs-on: ubuntu-latest
+    # Deploys queue rather than cancel: a deploy cut off halfway can leave Pages stuck.
+    concurrency:
+      group: ${{ github.workflow }}-deploy
+      cancel-in-progress: false
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

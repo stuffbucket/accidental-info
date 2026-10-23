@@ -513,14 +513,27 @@ def site_card(covers):
 
 # The reader (src/pages/read/[id].astro) shows every page as an image, sharp at three times its size in points.
 PAGE_SCALE = 3
+# Rendered pages kept by the PDF's hash, so a build renders only the guides whose PDF changed. CI keeps this
+# folder between runs; delete it to render everything again.
+PAGE_CACHE = ROOT / "site" / "node_modules" / ".cache" / "guide-pages"
 
 
-def render_pages(pdf, out_dir):
-    """Every page of the PDF as page-01.webp, page-02.webp, ... (lossless, so the text stays crisp)."""
+def render_pages(pdf, pdf_path, out_dir):
+    """Every page of the PDF as page-01.webp, page-02.webp, ... (lossless, so the text stays crisp). Returns the
+    cache folder it used."""
+    import hashlib
+    key = hashlib.sha256(f"{PAGE_SCALE}:".encode() + pdf_path.read_bytes()).hexdigest()[:24]
+    cached = PAGE_CACHE / key
+    names = [f"page-{i + 1:02d}.webp" for i in range(len(pdf))]
+    if not all((cached / n).exists() for n in names):
+        cached.mkdir(parents=True, exist_ok=True)
+        for i, name in enumerate(names):
+            image = pdf[i].render(scale=PAGE_SCALE).to_pil().convert("RGB")
+            image.save(cached / name, lossless=True, method=4)
     out_dir.mkdir(parents=True, exist_ok=True)
-    for i in range(len(pdf)):
-        image = pdf[i].render(scale=PAGE_SCALE).to_pil().convert("RGB")
-        image.save(out_dir / f"page-{i + 1:02d}.webp", lossless=True, method=4)
+    for name in names:
+        shutil.copyfile(cached / name, out_dir / name)
+    return cached
 
 
 def save_png(image, path):
@@ -567,6 +580,7 @@ def main():
     (PUBLIC / "guides.json").write_text(json.dumps(guides, indent=2, ensure_ascii=False) + "\n",
                                         encoding="utf-8")
 
+    used = set()
     for g, folder in found:
         gid = g["id"]
         dist = folder / "dist"
@@ -581,7 +595,7 @@ def main():
             render_png(pdf, 1, out_dir / "cover.png")
             if len(pdf) != g["pages"]:
                 sys.exit(f"{gid}: guide.json says {g['pages']} pages, the PDF has {len(pdf)}")
-            render_pages(pdf, out_dir)
+            used.add(render_pages(pdf, dist / g["pdf"], out_dir))
             with Image.open(out_dir / "cover.png") as cover:
                 save_png(guide_card(cover, g["title"], g["subtitle"]), out_dir / "card.png")
             texts = page_texts(pdf)
@@ -614,6 +628,10 @@ def main():
         (docs / f"{gid}.md").write_text(page, encoding="utf-8")
         shown = ", ".join(str(n) for n in sorted(set(diagram_pages.values()) | ({fit_page} - {None})))
         print(f"{gid}: {len(sections)} sections, diagram pages: {shown or 'none'}")
+    # Keep only this build's renders, so the cache doesn't grow with every edit.
+    for old in (PAGE_CACHE.iterdir() if PAGE_CACHE.is_dir() else []):
+        if old not in used:
+            shutil.rmtree(old)
     finished = [g["id"] for g in sorted(guides, key=lambda g: order[g["id"]]) if g.get("status") != "draft"]
     covers = [Image.open(PUBLIC / "guides" / gid / "cover.png") for gid in finished]
     save_png(site_card(covers), PUBLIC / "social.png")
