@@ -39,7 +39,7 @@ are they an expert. These are 5 minute reads, tops."
   "as of <Month Year>".
 - **Front matter:** `version: 0.1.0`, `kicker: An Accidental Guide to…`, a short, balanced
   title, and the public imprint: `edition: oops@accidental.info · CC BY 4.0 · <Month Year>`
-  and `cover_footer: hi@accidental.info · <Month Year>`.
+  and `cover_footer: friend@accidental.info · <Month Year>`.
 
 ## How to build it
 

@@ -55,7 +55,7 @@ export default defineConfig({
     tableFocus(),
     starlight({
       title: "Accidental Guides",
-      description: "Short guides to things you were apparently meant to know already.",
+      description: "My friend has a lot of questions.",
       head: [
         { tag: "meta", attrs: { property: "og:image", content: socialImage } },
         { tag: "meta", attrs: { property: "og:image:width", content: "1200" } },

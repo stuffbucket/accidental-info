@@ -15,7 +15,7 @@ kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to software factories where nobody reads the code, as of October 2026.
 running_footer: Lights-Off Software Factories
 edition: oops@accidental.info · CC BY 4.0 · October 2026
-cover_footer: hi@accidental.info · October 2026
+cover_footer: friend@accidental.info · October 2026
 version: 0.3.0
 ---
 ```
@@ -27,7 +27,7 @@ version: 0.3.0
 | `subtitle` | Cover and site. "A pocket-sized guide to …, as of <Month Year>." |
 | `running_footer` | Footer on every inner page. Usually the title. |
 | `edition` | The end page footer and the site: `oops@accidental.info · CC BY 4.0 · <Month Year>`, the address for mistakes, the text's license and the month. |
-| `cover_footer` | The cover's footer: `hi@accidental.info · <Month Year>`. |
+| `cover_footer` | The cover's footer: `friend@accidental.info · <Month Year>`. |
 | `version` | Semver. The build fails without a valid one. |
 
 ## Sections

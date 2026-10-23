@@ -1,7 +1,7 @@
 """List files in Commons categories (titles only). usage: python -I commons_cat.py "Category:Foo" ["Category:Bar" ...]"""
 import json, sys, urllib.parse, urllib.request
 
-UA = "AccidentalGuideResearch/0.1 (illustration shortlist; contact hi@accidental.info)"
+UA = "AccidentalGuideResearch/0.1 (illustration shortlist; contact friend@accidental.info)"
 API = "https://commons.wikimedia.org/w/api.php"
 
 

@@ -5,7 +5,7 @@ CANDIDATES_JSON: list of {group, n, commons} or {group, n, url, ...}
 """
 import json, os, re, sys, urllib.error, urllib.parse, urllib.request
 
-UA = "AccidentalGuideResearch/0.1 (illustration shortlist; contact hi@accidental.info)"
+UA = "AccidentalGuideResearch/0.1 (illustration shortlist; contact friend@accidental.info)"
 API = "https://commons.wikimedia.org/w/api.php"
 
 
