@@ -1,0 +1,200 @@
+---
+// A guide's reader: the PDF's pages, one after another along the window's longer side. In a window wider than it
+// is tall they run left to right, and the mouse wheel and the down arrow move through them sideways; in a window
+// taller than it is wide they run top to bottom. A click on a guide anywhere on the site comes here. The pages are
+// rendered from the PDF by scripts/guide_pages.py (public/guides/<id>/page-01.webp, ...).
+import Plain from "../../layouts/Plain.astro";
+import { base, loadGuides, type Guide } from "../../lib/guides";
+
+export function getStaticPaths() {
+  return loadGuides().map((guide) => ({ params: { id: guide.id }, props: { guide } }));
+}
+
+const { guide } = Astro.props as { guide: Guide };
+const pages = Array.from({ length: guide.pages }, (_, i) => i + 1);
+const file = (n: number) => `${base}guides/${guide.id}/page-${String(n).padStart(2, "0")}.webp`;
+---
+
+<Plain
+  title={`${guide.title} · Accidental Guides`}
+  description={guide.subtitle}
+  image={`guides/${guide.id}/card.png`}
+  imageAlt={`The cover of ${guide.title}`}
+  footer={false}
+>
+  <div class="bar">
+    <h1>
+      {guide.title}
+      {guide.status === "draft" && <span class="muted"> · Draft</span>}
+    </h1>
+    <p class="links">
+      <a href={`${base}${guide.page}`}>Web page</a>
+      <a href={`${base}guides/${guide.pdf}`}>PDF</a>
+      {guide.docx && <a href={`${base}guides/${guide.docx}`}>Word</a>}
+    </p>
+  </div>
+  <main class="pages" tabindex="0" aria-label={`${guide.title}, ${guide.pages} pages`}>
+    {
+      pages.map((n) => (
+        <img
+          id={`page-${n}`}
+          src={file(n)}
+          alt={`Page ${n} of ${guide.pages}`}
+          width={guide.cover.width}
+          height={guide.cover.height}
+          loading={n <= 3 ? "eager" : "lazy"}
+          decoding="async"
+        />
+      ))
+    }
+  </main>
+</Plain>
+
+<script>
+  const pages = document.querySelector<HTMLElement>(".pages")!;
+  const images = [...pages.querySelectorAll("img")];
+  const wide = matchMedia("(orientation: landscape)");
+  const smooth = matchMedia("(prefers-reduced-motion: no-preference)");
+
+  // The page nearest the start of the scroll, kept so a turn of the window lands on the same page.
+  let current = 0;
+  const nearest = () => {
+    const start = wide.matches ? pages.getBoundingClientRect().left : 0;
+    let best = 0;
+    let gap = Infinity;
+    images.forEach((img, i) => {
+      const box = img.getBoundingClientRect();
+      const d = Math.abs((wide.matches ? box.left : box.top) - start);
+      if (d < gap) [best, gap] = [i, d];
+    });
+    return best;
+  };
+  const show = (i: number, animate = true) => {
+    current = Math.max(0, Math.min(images.length - 1, i));
+    images[current].scrollIntoView({
+      behavior: animate && smooth.matches ? "smooth" : "auto",
+      block: "start",
+      inline: "start",
+    });
+  };
+
+  pages.addEventListener("scroll", () => (current = nearest()), { passive: true });
+  addEventListener("scroll", () => !wide.matches && (current = nearest()), { passive: true });
+  wide.addEventListener("change", () => requestAnimationFrame(() => show(current, false)));
+
+  // In a wide window an up-and-down wheel moves the pages sideways.
+  addEventListener(
+    "wheel",
+    (e) => {
+      if (!wide.matches || e.ctrlKey || Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pages.clientWidth : 1;
+      pages.scrollLeft += e.deltaY * unit;
+      e.preventDefault();
+    },
+    { passive: false },
+  );
+
+  // In a wide window the keys that go down a page go to the next page, and the keys that go up to the one before.
+  addEventListener("keydown", (e) => {
+    if (!wide.matches || e.altKey || e.ctrlKey || e.metaKey) return;
+    const step = { ArrowDown: 1, ArrowRight: 1, PageDown: 1, " ": e.shiftKey ? -1 : 1, ArrowUp: -1, ArrowLeft: -1, PageUp: -1 }[e.key];
+    if (e.key === "Home") show(0);
+    else if (e.key === "End") show(images.length - 1);
+    else if (step) show(nearest() + step);
+    else return;
+    e.preventDefault();
+  });
+
+  // A link to #page-4 opens on that page.
+  const linked = images.findIndex((img) => `#${img.id}` === location.hash);
+  if (linked > 0) show(linked, false);
+  pages.focus({ preventScroll: true });
+</script>
+
+<style>
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1.5rem;
+    width: min(100% - 2 * var(--gutter), var(--page));
+    margin: 0 auto;
+    padding-bottom: 0.75rem;
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: 1.3;
+  }
+  .muted {
+    color: var(--muted);
+    font-weight: normal;
+  }
+  .links {
+    display: flex;
+    gap: 1.25rem;
+    margin: 0 0 0 auto;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .links a {
+    color: inherit;
+  }
+  .links a:hover {
+    color: var(--text);
+  }
+  .pages {
+    display: flex;
+    gap: 1rem;
+    padding: 0 var(--gutter) var(--gutter);
+    outline: none;
+  }
+  .pages img {
+    display: block;
+    flex: none;
+    background: #fff;
+    /* Inside the page, so the scrolling box can't clip it. */
+    outline: 1px solid var(--border);
+    outline-offset: -1px;
+  }
+
+  /* Wider than tall: the pages fill the height left under the header and run left to right. */
+  @media (orientation: landscape) {
+    :global(body) {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    .pages {
+      flex: 1;
+      min-height: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x proximity;
+      /* The first page starts under the title. */
+      --inset: max(var(--gutter), (100vw - var(--page)) / 2);
+      padding-inline: var(--inset);
+      scroll-padding-inline: var(--inset);
+    }
+    .pages img {
+      width: auto;
+      height: 100%;
+      scroll-snap-align: start;
+    }
+  }
+
+  /* Taller than wide: the pages fill the width, up to a comfortable size, and run top to bottom. */
+  @media (orientation: portrait) {
+    .pages {
+      flex-direction: column;
+      align-items: center;
+    }
+    .pages img {
+      width: 100%;
+      max-width: 40rem;
+      height: auto;
+    }
+  }
+</style>

@@ -11,9 +11,11 @@ interface Props {
   // The share image, a path under the base (1200 x 630), and its alt text.
   image: string;
   imageAlt: string;
+  // The reader fills the window with the guide's pages, so it leaves the footer out.
+  footer?: boolean;
 }
 
-const { title, description, image, imageAlt } = Astro.props;
+const { title, description, image, imageAlt, footer = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 // Sites that show a link's preview need absolute addresses.
 const url = new URL(Astro.url.pathname, Astro.site).href;
@@ -59,6 +61,7 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
       </nav>
     </header>
     <slot />
+    {footer && (
     <footer class="site-footer">
       <p>A person writes and reviews every guide. AI does the grunt work.</p>
       <p class="links">
@@ -71,6 +74,7 @@ const repo = "https://github.com/stuffbucket/accidentalguide";
         under the <a href={`${repo}/blob/main/LICENSE`}>MIT License</a>.
       </p>
     </footer>
+    )}
   </body>
 </html>
 

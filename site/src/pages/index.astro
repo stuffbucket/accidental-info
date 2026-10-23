@@ -83,7 +83,7 @@ const tally = (collection: (typeof collections)[number]) =>
               {collection.shelf.map(({ guide, coming }) =>
                 guide ? (
                   <li class="book">
-                    <a href={`${base}${guide.page}`}>
+                    <a href={`${base}${guide.reader}`}>
                       <img
                         class="cover"
                         src={`${base}guides/${guide.id}/cover.png`}
