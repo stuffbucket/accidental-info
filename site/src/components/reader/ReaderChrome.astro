@@ -1,0 +1,123 @@
+---
+/*
+ * The reader's controls, floating over the pages so they take no room from them (src/styles/reader.css).
+ *
+ * Top left: back to all guides, and the guide's title. Top right: the guide as a web page, the PDF and the Word
+ * document to download, and a menu with the home page and "Leave a star". Bottom: the previous and next page with
+ * the page readout, and zoom out, zoom in and fit with the zoom readout.
+ *
+ * The reader's engine finds the controls by their data attributes: the buttons by data-reader-action ("prev",
+ * "next", "zoom-out", "zoom-in", "fit"), and the readouts it writes by data-reader-page ("3 / 9") and
+ * data-reader-zoom ("125%"). It sets data-layout, data-scrolling and data-zooming on <html>, which fade the bars
+ * while the pages move and turn the page arrows to match the layout.
+ *
+ * The icons are drawn here on a 20px grid with a 1.5px stroke in the text colour.
+ */
+import "../../styles/brand.css";
+import "../../styles/reader.css";
+import StarLink from "../StarLink.astro";
+import { base, type Guide } from "../../lib/guides";
+
+interface Props {
+  guide: Guide;
+}
+
+const { guide } = Astro.props;
+
+const icon = {
+  back: '<path d="M16 10H4"/><path d="M9 5 4 10l5 5"/>',
+  // A globe: the guide as a page on the web.
+  web: '<circle cx="10" cy="10" r="7.25"/><path d="M2.75 10h14.5"/><path d="M10 2.75c-1.9 2-2.85 4.4-2.85 7.25s.95 5.25 2.85 7.25"/><path d="M10 2.75c1.9 2 2.85 4.4 2.85 7.25s-.95 5.25-2.85 7.25"/>',
+  // A page with its corner turned down, and the format's letters under it.
+  pdf:
+    '<path d="M4.75 9.75v-5.5a1.5 1.5 0 0 1 1.5-1.5h5.5l3.5 3.5v3.5"/><path d="M11.75 2.75v3.5h3.5"/>' +
+    '<path d="M4.25 17.5v-5h1.5a1.25 1.25 0 0 1 0 2.5h-1.5"/><path d="M8.75 12.5v5h.5a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2z"/><path d="M15.75 12.5H13v5"/><path d="M13 15h2.25"/>',
+  word:
+    '<path d="M4.75 9.75v-5.5a1.5 1.5 0 0 1 1.5-1.5h5.5l3.5 3.5v3.5"/><path d="M11.75 2.75v3.5h3.5"/>' +
+    '<path d="M4.25 12.5v5h.5a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2z"/><rect x="8.625" y="12.5" width="2.75" height="5" rx="1.375"/><path d="M15.75 13.25a1.375 1.375 0 0 0-1.375-.75 1.375 1.375 0 0 0-1.375 1.375v2.25a1.375 1.375 0 0 0 1.375 1.375 1.375 1.375 0 0 0 1.375-.75"/>',
+  more: '<circle cx="4.5" cy="10" r=".75"/><circle cx="10" cy="10" r=".75"/><circle cx="15.5" cy="10" r=".75"/>',
+  prev: '<path d="m12 5-5 5 5 5"/>',
+  next: '<path d="m8 5 5 5-5 5"/>',
+  minus: '<path d="M4.5 10h11"/>',
+  plus: '<path d="M10 4.5v11"/><path d="M4.5 10h11"/>',
+  fit: '<path d="M3.5 7.5v-3a1 1 0 0 1 1-1h3"/><path d="M12.5 3.5h3a1 1 0 0 1 1 1v3"/><path d="M16.5 12.5v3a1 1 0 0 1-1 1h-3"/><path d="M7.5 16.5h-3a1 1 0 0 1-1-1v-3"/>',
+};
+const svg = {
+  class: "reader-icon",
+  viewBox: "0 0 20 20",
+  width: 20,
+  height: 20,
+  fill: "none",
+  stroke: "currentColor",
+  "stroke-width": 1.5,
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "aria-hidden": "true",
+  focusable: "false",
+} as const;
+---
+
+<div class="reader-chrome">
+  <div class="reader-bar reader-bar--start">
+    <a class="reader-btn" href={`${base}guides/`} aria-label="All guides" data-tip="All guides">
+      <svg {...svg} set:html={icon.back} />
+    </a>
+    <h1 class="reader-title">
+      <span class="reader-title-text">{guide.title}</span>
+      {guide.status === "draft" && <span class="reader-draft">Draft</span>}
+    </h1>
+  </div>
+
+  <div class="reader-bar reader-bar--end">
+    <a class="reader-btn" href={`${base}${guide.page}`} aria-label="Read as a web page" data-tip="Read as a web page">
+      <svg {...svg} set:html={icon.web} />
+    </a>
+    <a class="reader-btn" href={`${base}guides/${guide.pdf}`} download aria-label="Download the PDF" data-tip="Download the PDF">
+      <svg {...svg} set:html={icon.pdf} />
+    </a>
+    {
+      guide.docx && (
+        <a
+          class="reader-btn"
+          href={`${base}guides/${guide.docx}`}
+          download
+          aria-label="Download the Word document"
+          data-tip="Download the Word document"
+        >
+          <svg {...svg} set:html={icon.word} />
+        </a>
+      )
+    }
+    <span class="reader-sep" aria-hidden="true"></span>
+    <button class="reader-btn" type="button" popovertarget="reader-menu" aria-label="More" data-tip="More">
+      <svg {...svg} set:html={icon.more} />
+    </button>
+  </div>
+
+  <nav class="reader-menu" id="reader-menu" popover aria-label="Site">
+    <a href={base}>Home</a>
+    <a href={`${base}guides/`}>All guides</a>
+    <StarLink look="link" />
+  </nav>
+
+  <div class="reader-bar reader-bar--controls" role="group" aria-label="Pages and zoom">
+    <button class="reader-btn reader-turn" type="button" data-reader-action="prev" aria-label="Previous page" data-tip="Previous page">
+      <svg {...svg} set:html={icon.prev} />
+    </button>
+    <output class="reader-readout reader-readout--page" data-reader-page>1 / {guide.pages}</output>
+    <button class="reader-btn reader-turn" type="button" data-reader-action="next" aria-label="Next page" data-tip="Next page">
+      <svg {...svg} set:html={icon.next} />
+    </button>
+    <span class="reader-sep" aria-hidden="true"></span>
+    <button class="reader-btn" type="button" data-reader-action="zoom-out" aria-label="Zoom out" data-tip="Zoom out">
+      <svg {...svg} set:html={icon.minus} />
+    </button>
+    <output class="reader-readout reader-readout--zoom" data-reader-zoom>100%</output>
+    <button class="reader-btn" type="button" data-reader-action="zoom-in" aria-label="Zoom in" data-tip="Zoom in">
+      <svg {...svg} set:html={icon.plus} />
+    </button>
+    <button class="reader-btn" type="button" data-reader-action="fit" aria-label="Fit to window" data-tip="Fit to window">
+      <svg {...svg} set:html={icon.fit} />
+    </button>
+  </div>
+</div>
