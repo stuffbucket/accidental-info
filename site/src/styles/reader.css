@@ -19,7 +19,7 @@
      Side by side the pages keep the whole height, and the bars float over their top and bottom margins. */
   --reader-pad-block: var(--reader-pad);
   --page-shadow: var(--shadow-1);
-  --page-radius: 1px;
+  --page-radius: 5px; /* slight, like a card's corner; the page clips its canvases to it */
   /* The bars: how far they sit from the window's sides, their controls' size and the gap inside them. */
   --chrome-inset: 0.75rem;
   --chrome-control: var(--control-h-sm);

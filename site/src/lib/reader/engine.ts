@@ -707,6 +707,11 @@ export function mountReader(viewport: HTMLElement, opts: ReaderOptions): Reader 
     const before = pages.map((p) => ({ x: p.x - sx, y: p.y - sy }));
     const oldW = pageW, oldH = pageH;
     const was = layout;
+    // A turn always lands at fit: the pages scale from the old zoom to it as they turn (s0 below).
+    cancelAnimationFrame(zoomAnim);
+    zoomTarget = 0;
+    const refit = zoom !== 1;
+    zoom = 1;
 
     computeLayout(zoom);
     applyLayout();
@@ -714,6 +719,7 @@ export function mountReader(viewport: HTMLElement, opts: ReaderOptions): Reader 
     current = keep;
     emit("layout");
     emit("page");
+    if (refit) emit("zoom");
 
     const animate = o?.animate !== false && typeof track.animate === "function";
     if (!animate) return queueRender(true);
