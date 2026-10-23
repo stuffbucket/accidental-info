@@ -18,6 +18,10 @@
       "env": [
         "SITE_ORIGIN",
         "SITE_BASE"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!notes/**"
       ]
     },
     "test": {
