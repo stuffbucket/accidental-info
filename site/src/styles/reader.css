@@ -1,0 +1,512 @@
+/*
+ * The reader's look: the canvas, the pages on it, the scrollbar, and the controls floating over both
+ * (src/components/reader/ReaderChrome.astro). Builds on brand.css and tokens.css.
+ *
+ * The engine lays the pages out (.reader-page inside .reader-viewport) and sizes them with the variables below;
+ * this file only gives them their look. It sets data-layout ("horizontal" or "vertical"), data-scrolling and
+ * data-zooming on <html>.
+ *
+ * Layers, bottom to top: the toned canvas, the white pages (--shadow-1), the bars (--shadow-2), the menu and the
+ * tooltips (--shadow-3).
+ */
+
+:root {
+  --reader-bg: var(--canvas);
+  /* Space between the window's sides and the pages, and between the pages. */
+  --reader-pad: 1.5rem;
+  --reader-gap: 2.5rem;
+  /* Before the first page and after the last, along the scroll in a vertical layout: room to clear the bars.
+     Side by side the pages keep the whole height, and the bars float over their top and bottom margins. */
+  --reader-pad-block: var(--reader-pad);
+  --page-shadow: var(--shadow-1);
+  --page-radius: 1px;
+  /* The bars: how far they sit from the window's sides, their controls' size and the gap inside them. */
+  --chrome-inset: 0.75rem;
+  --chrome-control: var(--control-h-sm);
+  --chrome-pad: 0.25rem;
+  --chrome-radius: 0.625rem;
+  --chrome-blur: saturate(1.6) blur(16px);
+  --scroll-thumb: rgb(0 0 0 / 0.18);
+  --scroll-thumb-hover: rgb(0 0 0 / 0.38);
+  /* The overlay scrollbar: a thin thumb inside a 24px target, a little wider under the pointer or a drag. */
+  --scrollbar-hit: 1.5rem;
+  --scrollbar-thin: 6px;
+  --scrollbar-wide: 9px;
+  /* The back chevron in front of the cover: its width (twice as tall) and its colour at rest and under the pointer. */
+  --reader-back-w: clamp(1.5rem, 3.2vh, 2rem);
+  --reader-back-ink: var(--faint);
+  --reader-back-ink-hover: var(--text);
+  /* One ease for things that move in response to the reader. */
+  --ease-reader: cubic-bezier(0.45, 0, 0.55, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --scroll-thumb: rgb(255 255 255 / 0.16);
+    --scroll-thumb-hover: rgb(255 255 255 / 0.36);
+  }
+}
+:root[data-theme="dark"] {
+  --scroll-thumb: rgb(255 255 255 / 0.16);
+  --scroll-thumb-hover: rgb(255 255 255 / 0.36);
+}
+:root[data-layout="vertical"] {
+  --reader-pad-block: calc(2 * var(--chrome-inset) + var(--chrome-control) + 2 * var(--chrome-pad));
+}
+/* Phones: the site's 16px gutter. */
+@media (max-width: 40rem) {
+  :root {
+    --reader-pad: 1rem;
+    --reader-gap: 1.5rem;
+    --chrome-inset: 1rem;
+  }
+}
+/* Touch: 44px targets. */
+@media (pointer: coarse) {
+  :root {
+    --chrome-control: var(--control-h);
+    --chrome-pad: 0.125rem;
+  }
+}
+
+/* The reader fills the window; the site's header line would only repeat the controls. */
+body:has(.reader-chrome) {
+  background: var(--reader-bg);
+}
+body:has(.reader-chrome) > .site-header {
+  display: none;
+}
+
+/* The canvas and the pages. */
+.reader-viewport {
+  background: var(--reader-bg);
+  outline: none;
+  /* Quiet scrollbar: a thin thumb on a clear track. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+}
+.reader-viewport:hover {
+  scrollbar-color: var(--scroll-thumb-hover) transparent;
+}
+.reader-viewport::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: transparent;
+}
+.reader-viewport::-webkit-scrollbar-track,
+.reader-viewport::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.reader-viewport::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--scroll-thumb) padding-box;
+}
+.reader-viewport:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-hover);
+}
+.reader-viewport::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+}
+.reader-page {
+  background: var(--paper);
+  border-radius: var(--page-radius);
+  box-shadow: var(--page-shadow);
+}
+
+/* The controls: three bars over the pages, which take no room from them. */
+.reader-chrome {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--text);
+  font: var(--text-ui) / var(--leading-ui) var(--font);
+  letter-spacing: var(--tracking-ui);
+}
+.reader-bar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  max-width: calc(100% - 2 * var(--chrome-inset));
+  padding: var(--chrome-pad);
+  border-radius: var(--chrome-radius);
+  background: var(--glass);
+  box-shadow: 0 0 0 1px var(--glass-edge), var(--shadow-2);
+  -webkit-backdrop-filter: var(--chrome-blur);
+  backdrop-filter: var(--chrome-blur);
+  pointer-events: auto;
+  transition:
+    opacity 200ms ease,
+    translate 200ms ease;
+}
+.reader-bar--start {
+  top: max(var(--chrome-inset), env(safe-area-inset-top));
+  left: max(var(--chrome-inset), env(safe-area-inset-left));
+  /* Room for the bar on the right and a gap. */
+  max-width: calc(100% - 2 * var(--chrome-inset) - 4 * var(--chrome-control) - 3 * var(--chrome-pad) - 1.5rem);
+}
+.reader-bar--end {
+  top: max(var(--chrome-inset), env(safe-area-inset-top));
+  right: max(var(--chrome-inset), env(safe-area-inset-right));
+}
+.reader-bar--controls {
+  bottom: max(var(--chrome-inset), env(safe-area-inset-bottom));
+  left: 50%;
+  translate: -50% 0;
+}
+
+/* While the pages scroll the bars step aside; a pointer over a bar, or focus in it, keeps it. While zooming the
+   bottom bar stays, to show the zoom. */
+:root[data-scrolling]:not([data-zooming]) .reader-bar:not(:hover, :focus-within),
+:root[data-zooming] .reader-bar:not(.reader-bar--controls, :hover, :focus-within) {
+  opacity: 0;
+  pointer-events: none;
+}
+/* While the pages turn between layouts every bar steps aside, even under the pointer: their blurred glass over
+   moving pages costs frames. */
+:root[data-rotating] .reader-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-scrolling] .reader-bar--start:not(:hover, :focus-within),
+  :root[data-scrolling] .reader-bar--end:not(:hover, :focus-within),
+  :root[data-zooming] .reader-bar--start:not(:hover, :focus-within),
+  :root[data-zooming] .reader-bar--end:not(:hover, :focus-within) {
+    translate: 0 -0.5rem;
+  }
+  :root[data-scrolling]:not([data-zooming]) .reader-bar--controls:not(:hover, :focus-within) {
+    translate: -50% 0.5rem;
+  }
+}
+
+.reader-btn {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--chrome-control);
+  height: var(--chrome-control);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--chrome-radius) - var(--chrome-pad));
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 120ms ease;
+}
+.reader-btn:hover,
+.reader-chrome:has(.reader-menu:popover-open) [popovertarget] {
+  background: var(--glass-hover);
+}
+.reader-btn:active {
+  background: var(--glass-edge);
+}
+.reader-btn:focus-visible,
+.reader-menu a:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+.reader-btn:disabled {
+  color: var(--faint);
+  cursor: default;
+  background: transparent;
+}
+.reader-icon {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+/* Pages that run top to bottom turn the page arrows to point up and down. */
+:root[data-layout="vertical"] .reader-turn .reader-icon {
+  rotate: 90deg;
+}
+
+.reader-sep {
+  flex: none;
+  width: 1px;
+  height: 1.25rem;
+  margin: 0 0.25rem;
+  background: var(--glass-edge);
+}
+
+.reader-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0 0.75rem 0 0.375rem;
+  font-size: var(--text-ui);
+  font-weight: bold;
+  line-height: var(--leading-ui);
+  letter-spacing: var(--tracking-ui);
+}
+.reader-title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reader-draft {
+  flex: none;
+  color: var(--muted);
+  font-weight: normal;
+}
+
+.reader-readout {
+  flex: none;
+  min-width: 3.5rem;
+  padding: 0 0.25rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+.reader-readout--zoom {
+  min-width: 3rem;
+}
+:root[data-zooming] .reader-readout--zoom {
+  color: var(--text);
+}
+
+/* The menu under the top right bar: the home page, all guides and "Leave a star". */
+.reader-menu {
+  position: fixed;
+  inset: auto;
+  top: calc(max(var(--chrome-inset), env(safe-area-inset-top)) + var(--chrome-control) + 2 * var(--chrome-pad) + 0.5rem);
+  right: max(var(--chrome-inset), env(safe-area-inset-right));
+  min-width: 11rem;
+  margin: 0;
+  padding: var(--chrome-pad);
+  border: 0;
+  border-radius: var(--chrome-radius);
+  background: var(--glass);
+  box-shadow: 0 0 0 1px var(--glass-edge), var(--shadow-3);
+  -webkit-backdrop-filter: var(--chrome-blur);
+  backdrop-filter: var(--chrome-blur);
+  color: var(--text);
+  font: var(--text-ui) / var(--leading-ui) var(--font);
+  letter-spacing: var(--tracking-ui);
+}
+.reader-menu:popover-open {
+  display: grid;
+}
+.reader-menu a {
+  display: flex;
+  align-items: center;
+  min-height: var(--chrome-control);
+  padding: 0 0.75rem;
+  border-radius: calc(var(--chrome-radius) - var(--chrome-pad));
+  color: inherit;
+  text-decoration: none;
+}
+.reader-menu a:hover {
+  background: var(--glass-hover);
+}
+
+/* Tooltips, for a pointer that can hover and for keyboard focus: under the top bars, over the bottom one. */
+@media (hover: hover) {
+  .reader-btn[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + var(--chrome-pad) + 0.5rem);
+    left: 50%;
+    z-index: 1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    background: var(--text);
+    box-shadow: var(--shadow-3);
+    color: var(--bg);
+    font: var(--text-xs) / var(--leading-xs) var(--font);
+    letter-spacing: var(--tracking-xs);
+    white-space: nowrap;
+    opacity: 0;
+    translate: -50% -0.25rem;
+    pointer-events: none;
+    transition:
+      opacity 120ms ease,
+      translate 120ms ease;
+  }
+  .reader-btn[data-tip]:hover::after,
+  .reader-btn[data-tip]:focus-visible::after {
+    opacity: 1;
+    translate: -50% 0;
+    transition-delay: 400ms;
+  }
+  .reader-btn[data-tip]:focus-visible::after {
+    transition-delay: 0ms;
+  }
+  /* Kept inside the window at the edges. */
+  .reader-bar--start .reader-btn[data-tip]::after {
+    left: 0;
+    translate: 0 -0.25rem;
+  }
+  .reader-bar--start .reader-btn[data-tip]:is(:hover, :focus-visible)::after {
+    translate: 0 0;
+  }
+  .reader-bar--end .reader-btn[data-tip]::after {
+    right: 0;
+    left: auto;
+    translate: 0 -0.25rem;
+  }
+  .reader-bar--end .reader-btn[data-tip]:is(:hover, :focus-visible)::after {
+    translate: 0 0;
+  }
+  .reader-bar--controls .reader-btn[data-tip]::after {
+    top: auto;
+    bottom: calc(100% + var(--chrome-pad) + 0.5rem);
+    translate: -50% 0.25rem;
+  }
+  .reader-bar--controls .reader-btn[data-tip]:is(:hover, :focus-visible)::after {
+    translate: -50% 0;
+  }
+  .reader-chrome:has(.reader-menu:popover-open) [popovertarget]::after {
+    display: none;
+  }
+}
+
+/* The layout switch: one head of the turn arrow and one label at a time, by data-layout. Side by side (or before
+   the engine has said) the arrow points left and the button says "Read top to bottom". */
+.reader-layout path.reader-layout-h,
+.reader-layout path.reader-layout-v {
+  transition: opacity 300ms var(--ease-reader);
+}
+:root[data-layout="vertical"] .reader-layout path.reader-layout-h,
+:root:not([data-layout="vertical"]) .reader-layout path.reader-layout-v {
+  opacity: 0;
+}
+:root[data-layout="vertical"] .reader-layout span.reader-layout-h,
+:root:not([data-layout="vertical"]) .reader-layout span.reader-layout-v {
+  display: none;
+}
+:root[data-layout="vertical"] .reader-layout[data-tip]::after {
+  content: "Read left to right";
+}
+
+/* The back chevron. The engine places it in front of the cover, so it carries its own look wherever it is. */
+.reader-back {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--reader-back-ink);
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color 220ms var(--ease-reader),
+    translate 220ms var(--ease-reader);
+}
+.reader-back svg {
+  display: block;
+  width: var(--reader-back-w);
+  height: calc(2 * var(--reader-back-w));
+  overflow: visible;
+}
+.reader-back:hover {
+  color: var(--reader-back-ink-hover);
+  translate: -3px 0;
+}
+.reader-back:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 0;
+  color: var(--reader-back-ink-hover);
+}
+:root[data-layout="vertical"] .reader-back {
+  display: none;
+}
+
+/* The engine's overlay scrollbar: a clear track, 24px across, and a thin thumb drawn in the middle of it. The
+   engine sizes and moves .reader-scrollbar-thumb along the track, sets data-dragging on the track during a drag,
+   and hides the track with data-hidden (sliding it whichever way it likes through transform). */
+.reader-scrollbar {
+  position: absolute;
+  z-index: 5;
+  background: transparent;
+  touch-action: none;
+  transition:
+    opacity 200ms var(--ease-reader),
+    transform 200ms var(--ease-reader);
+}
+.reader-scrollbar[data-axis="x"] {
+  height: var(--scrollbar-hit);
+}
+.reader-scrollbar[data-axis="y"] {
+  width: var(--scrollbar-hit);
+}
+.reader-scrollbar[data-hidden] {
+  opacity: 0;
+  pointer-events: none;
+}
+.reader-scrollbar-thumb {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  cursor: default;
+}
+.reader-scrollbar[data-axis="x"] .reader-scrollbar-thumb {
+  top: 0;
+  bottom: 0;
+}
+.reader-scrollbar[data-axis="y"] .reader-scrollbar-thumb {
+  left: 0;
+  right: 0;
+}
+.reader-scrollbar-thumb::before {
+  content: "";
+  border-radius: 999px;
+  background: var(--scroll-thumb);
+  transition:
+    background-color 150ms var(--ease-reader),
+    width 150ms var(--ease-reader),
+    height 150ms var(--ease-reader);
+}
+.reader-scrollbar[data-axis="x"] .reader-scrollbar-thumb::before {
+  width: 100%;
+  height: var(--scrollbar-thin);
+}
+.reader-scrollbar[data-axis="y"] .reader-scrollbar-thumb::before {
+  width: var(--scrollbar-thin);
+  height: 100%;
+}
+.reader-scrollbar:hover .reader-scrollbar-thumb::before,
+.reader-scrollbar[data-dragging] .reader-scrollbar-thumb::before {
+  background: var(--scroll-thumb-hover);
+}
+.reader-scrollbar[data-axis="x"]:is(:hover, [data-dragging]) .reader-scrollbar-thumb::before {
+  height: var(--scrollbar-wide);
+}
+.reader-scrollbar[data-axis="y"]:is(:hover, [data-dragging]) .reader-scrollbar-thumb::before {
+  width: var(--scrollbar-wide);
+}
+
+/* Very narrow windows keep the controls and drop the title. */
+@media (max-width: 22rem) {
+  .reader-title {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-bar,
+  .reader-btn,
+  .reader-btn[data-tip]::after {
+    transition: none;
+  }
+  /* The chevron only changes colour; the scrollbar only fades. */
+  .reader-back:hover {
+    translate: none;
+  }
+  .reader-scrollbar {
+    transition: opacity 200ms linear;
+  }
+}

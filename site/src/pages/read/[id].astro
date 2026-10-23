@@ -1,9 +1,11 @@
 ---
-// A guide's reader: the PDF's pages, one after another along the window's longer side. In a window wider than it
-// is tall they run left to right, and the mouse wheel and the down arrow move through them sideways; in a window
-// taller than it is wide they run top to bottom. A click on a guide anywhere on the site comes here. The pages are
-// rendered from the PDF by scripts/guide_pages.py (public/guides/<id>/page-01.webp, ...).
+// A guide's reader: the PDF's pages along the window's longer side, painted from the PDF so they stay sharp at any
+// zoom (src/lib/reader/engine.ts). The pages fill the whole window and the chrome floats over them
+// (components/reader/ReaderChrome.astro, styles/reader.css). Without JavaScript, or if PDF.js fails, the pages'
+// images (public/guides/<id>/page-01.webp, ..., from scripts/guide_pages.py) stay as a plain list.
 import Plain from "../../layouts/Plain.astro";
+import ReaderChrome from "../../components/reader/ReaderChrome.astro";
+import "../../styles/reader.css";
 import { base, loadGuides, type Guide } from "../../lib/guides";
 
 export function getStaticPaths() {
@@ -12,7 +14,8 @@ export function getStaticPaths() {
 
 const { guide } = Astro.props as { guide: Guide };
 const pages = Array.from({ length: guide.pages }, (_, i) => i + 1);
-const file = (n: number) => `${base}guides/${guide.id}/page-${String(n).padStart(2, "0")}.webp`;
+const pageDir = `${base}guides/${guide.id}/`;
+const file = (n: number) => `${pageDir}page-${String(n).padStart(2, "0")}.webp`;
 ---
 
 <Plain
@@ -22,179 +25,126 @@ const file = (n: number) => `${base}guides/${guide.id}/page-${String(n).padStart
   imageAlt={`The cover of ${guide.title}`}
   footer={false}
 >
-  <div class="bar">
-    <h1>
-      {guide.title}
-      {guide.status === "draft" && <span class="muted"> · Draft</span>}
-    </h1>
-    <p class="links">
-      <a href={`${base}${guide.page}`}>Web page</a>
-      <a href={`${base}guides/${guide.pdf}`}>PDF</a>
-      {guide.docx && <a href={`${base}guides/${guide.docx}`}>Word</a>}
-    </p>
-  </div>
-  <main class="pages" tabindex="0" aria-label={`${guide.title}, ${guide.pages} pages`}>
-    {
-      pages.map((n) => (
-        <img
-          id={`page-${n}`}
-          src={file(n)}
-          alt={`Page ${n} of ${guide.pages}`}
-          width={guide.cover.width}
-          height={guide.cover.height}
-          loading={n <= 3 ? "eager" : "lazy"}
-          decoding="async"
-        />
-      ))
-    }
+  <main
+    class="reader reader-viewport"
+    id="reader"
+    aria-label={`${guide.title}, ${guide.pages} pages`}
+    data-pdf={`${base}guides/${guide.pdf}`}
+    data-pages={guide.pages}
+    data-aspect={guide.cover.width / guide.cover.height}
+    data-page-dir={pageDir}
+    data-home={base}
+  >
+    <div class="reader-fallback">
+      {
+        pages.map((n) => (
+          <img
+            id={`page-${n}`}
+            src={file(n)}
+            alt={`Page ${n} of ${guide.pages}`}
+            width={guide.cover.width}
+            height={guide.cover.height}
+            loading={n <= 2 ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ))
+      }
+    </div>
   </main>
+  <ReaderChrome guide={guide} />
 </Plain>
 
 <script>
-  const pages = document.querySelector<HTMLElement>(".pages")!;
-  const images = [...pages.querySelectorAll("img")];
-  const wide = matchMedia("(orientation: landscape)");
-  const smooth = matchMedia("(prefers-reduced-motion: no-preference)");
+  import { mountReader, type Reader } from "../../lib/reader/engine";
 
-  // The page nearest the start of the scroll, kept so a turn of the window lands on the same page.
-  let current = 0;
-  const nearest = () => {
-    const start = wide.matches ? pages.getBoundingClientRect().left : 0;
-    let best = 0;
-    let gap = Infinity;
-    images.forEach((img, i) => {
-      const box = img.getBoundingClientRect();
-      const d = Math.abs((wide.matches ? box.left : box.top) - start);
-      if (d < gap) [best, gap] = [i, d];
+  const viewport = document.getElementById("reader")!;
+  const { pdf, pages, aspect, pageDir } = viewport.dataset;
+  let reader: Reader | null = null;
+  try {
+    reader = mountReader(viewport, {
+      url: pdf!,
+      pageCount: Number(pages),
+      pageAspect: Number(aspect),
+      placeholder: (n) => `${pageDir}page-${String(n).padStart(2, "0")}.webp`,
     });
-    return best;
-  };
-  const show = (i: number, animate = true) => {
-    current = Math.max(0, Math.min(images.length - 1, i));
-    images[current].scrollIntoView({
-      behavior: animate && smooth.matches ? "smooth" : "auto",
-      block: "start",
-      inline: "start",
+  } catch (err) {
+    // The plain list of page images stays.
+    console.error("reader: could not start", err);
+  }
+
+  if (reader) {
+    const r = reader;
+    const actions: Record<string, () => void> = {
+      "zoom-in": () => r.zoomIn(),
+      "zoom-out": () => r.zoomOut(),
+      fit: () => r.fit(),
+      prev: () => r.prev(),
+      next: () => r.next(),
+      layout: () => r.setLayout(r.layout === "horizontal" ? "vertical" : "horizontal", { animate: true }),
+      // Back where the visitor came from on this site, or else the home page.
+      back: () => {
+        let sameSite = false;
+        try {
+          sameSite = !!document.referrer && new URL(document.referrer).origin === location.origin;
+        } catch {}
+        if (sameSite && history.length > 1) history.back();
+        else location.href = viewport.dataset.home!;
+      },
+    };
+    document.addEventListener("click", (e) => {
+      const button = (e.target as Element | null)?.closest<HTMLElement>("[data-reader-action]");
+      const act = button && actions[button.dataset.readerAction ?? ""];
+      if (act) {
+        e.preventDefault();
+        act();
+      }
     });
-  };
-
-  pages.addEventListener("scroll", () => (current = nearest()), { passive: true });
-  addEventListener("scroll", () => !wide.matches && (current = nearest()), { passive: true });
-  wide.addEventListener("change", () => requestAnimationFrame(() => show(current, false)));
-
-  // In a wide window an up-and-down wheel moves the pages sideways.
-  addEventListener(
-    "wheel",
-    (e) => {
-      if (!wide.matches || e.ctrlKey || Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pages.clientWidth : 1;
-      pages.scrollLeft += e.deltaY * unit;
-      e.preventDefault();
-    },
-    { passive: false },
-  );
-
-  // In a wide window the keys that go down a page go to the next page, and the keys that go up to the one before.
-  addEventListener("keydown", (e) => {
-    if (!wide.matches || e.altKey || e.ctrlKey || e.metaKey) return;
-    const step = { ArrowDown: 1, ArrowRight: 1, PageDown: 1, " ": e.shiftKey ? -1 : 1, ArrowUp: -1, ArrowLeft: -1, PageUp: -1 }[e.key];
-    if (e.key === "Home") show(0);
-    else if (e.key === "End") show(images.length - 1);
-    else if (step) show(nearest() + step);
-    else return;
-    e.preventDefault();
-  });
-
-  // A link to #page-4 opens on that page.
-  const linked = images.findIndex((img) => `#${img.id}` === location.hash);
-  if (linked > 0) show(linked, false);
-  pages.focus({ preventScroll: true });
+    const pageOut = document.querySelectorAll<HTMLElement>("[data-reader-page]");
+    const zoomOut = document.querySelectorAll<HTMLElement>("[data-reader-zoom]");
+    const showPage = () => pageOut.forEach((el) => (el.textContent = `${r.page} / ${r.pageCount}`));
+    const showZoom = () => zoomOut.forEach((el) => (el.textContent = `${Math.round(r.zoom * 100)}%`));
+    r.on("page", showPage);
+    r.on("zoom", showZoom);
+    showPage();
+    showZoom();
+    // For tests and the console.
+    (window as any).reader = r;
+  }
 </script>
 
 <style>
-  .bar {
+  /* The reader fills the window; the site's header gives way to the chrome. */
+  :global(.site-header) {
+    display: none;
+  }
+  :global(html),
+  :global(body) {
+    height: 100%;
+    overflow: hidden;
+  }
+  .reader {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+  /* Without the engine: the pages' images, one under the other. */
+  .reader-fallback {
+    height: 100%;
+    overflow: auto;
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.25rem 1.5rem;
-    width: min(100% - 2 * var(--gutter), var(--page));
-    margin: 0 auto;
-    padding-bottom: 0.75rem;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--reader-gap, 1rem);
+    padding: var(--reader-pad, 1rem);
   }
-  h1 {
-    margin: 0;
-    font-size: var(--text-lg);
-    line-height: 1.3;
+  .reader-fallback[hidden] {
+    display: none;
   }
-  .muted {
-    color: var(--muted);
-    font-weight: normal;
-  }
-  .links {
-    display: flex;
-    gap: 1.25rem;
-    margin: 0 0 0 auto;
-    color: var(--muted);
-    font-size: var(--text-sm);
-  }
-  .links a {
-    color: inherit;
-  }
-  .links a:hover {
-    color: var(--text);
-  }
-  .pages {
-    display: flex;
-    gap: 1rem;
-    padding: 0 var(--gutter) var(--gutter);
-    outline: none;
-  }
-  .pages img {
+  .reader-fallback img {
     display: block;
-    flex: none;
+    width: 100%;
+    max-width: 40rem;
+    height: auto;
     background: #fff;
-    /* Inside the page, so the scrolling box can't clip it. */
-    outline: 1px solid var(--border);
-    outline-offset: -1px;
-  }
-
-  /* Wider than tall: the pages fill the height left under the header and run left to right. */
-  @media (orientation: landscape) {
-    :global(body) {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      height: 100dvh;
-      overflow: hidden;
-    }
-    .pages {
-      flex: 1;
-      min-height: 0;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x proximity;
-      /* The first page starts under the title. */
-      --inset: max(var(--gutter), (100vw - var(--page)) / 2);
-      padding-inline: var(--inset);
-      scroll-padding-inline: var(--inset);
-    }
-    .pages img {
-      width: auto;
-      height: 100%;
-      scroll-snap-align: start;
-    }
-  }
-
-  /* Taller than wide: the pages fill the width, up to a comfortable size, and run top to bottom. */
-  @media (orientation: portrait) {
-    .pages {
-      flex-direction: column;
-      align-items: center;
-    }
-    .pages img {
-      width: 100%;
-      max-width: 40rem;
-      height: auto;
-    }
   }
 </style>

@@ -11,8 +11,29 @@
   --text-lg: 1.125rem; /* the lead, subtitles */
   --text-xl: 1.5rem; /* guide titles */
   --text-2xl: clamp(2rem, 6vw, 2.75rem); /* the page title */
+  --text-xs: 0.75rem; /* tooltips, small labels */
+  --text-ui: 0.8125rem; /* the reader's bars: title, readouts, menu */
+  /* Line heights for each step, on a 4px rhythm. */
+  --leading-xs: 1rem;
+  --leading-ui: 1.25rem;
+  --leading-sm: 1.25rem;
+  --leading-md: 1.5rem;
+  --leading-lg: 1.75rem;
+  --leading-xl: 2rem;
+  --leading-2xl: 3rem;
+  /* Tracking: slightly open at small sizes, tighter as the type grows. */
+  --tracking-xs: 0.02em;
+  --tracking-ui: 0.01em;
+  --tracking-sm: 0.005em;
+  --tracking-md: 0;
+  --tracking-lg: -0.005em;
+  --tracking-xl: -0.012em;
+  --tracking-2xl: -0.02em;
+  /* Newsreader Italic is for the tagline only; everything else is set in --font. */
+  --font-tagline: "Newsreader", Georgia, serif;
   /* Controls share one height. */
   --control-h: 2.75rem;
+  --control-h-sm: 2rem; /* compact controls with a fine pointer; --control-h on touch */
   --radius: 0.125rem;
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--text);
   /* Space between the window's sides and the content. */
