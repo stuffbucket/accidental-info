@@ -62,7 +62,7 @@ const counts = {
         class="hub"
         style={`left: ${pct(plan.cover.x, WIDTH)}; top: ${pct(plan.cover.y, plan.height)}; width: ${pct(plan.cover.width, WIDTH)}`}
       >
-        <a class="cover" href={`${base}${map.center.page}`} tabindex="-1" aria-hidden="true">
+        <a class="cover" href={`${base}${map.center.reader}`} tabindex="-1" aria-hidden="true">
           <img
             src={`${base}guides/${map.center.id}/cover.png`}
             alt=""
@@ -70,7 +70,7 @@ const counts = {
             height={map.center.cover.height}
           />
         </a>
-        <a class="hub-title" href={`${base}${map.center.page}`}>{map.center.title}</a>
+        <a class="hub-title" href={`${base}${map.center.reader}`}>{map.center.title}</a>
       </div>
 
       <ol class="groups">
@@ -88,7 +88,7 @@ const counts = {
                   {group.entries.map(({ guide, coming }) =>
                     guide ? (
                       <li class:list={["guide", state(guide)]}>
-                        <a href={`${base}${guide.page}`}>
+                        <a href={`${base}${guide.reader}`}>
                           <span class="tile" aria-hidden="true">
                             {map.codes[guide.id]}
                           </span>

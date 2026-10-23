@@ -16,9 +16,11 @@ export interface Guide {
   docx: string | null;
   pages: number;
   status: "published" | "draft";
-  // The cover's size in CSS pixels, and the guide's page under the base ("guides/<id>/" or "drafts/<id>/").
+  // The cover's size in CSS pixels, the guide's web page under the base ("guides/<id>/" or "drafts/<id>/"),
+  // and its reader, which shows the PDF's pages ("read/<id>/"). A click on a guide goes to its reader.
   cover: { width: number; height: number };
   page: string;
+  reader: string;
 }
 
 export interface Coming {
@@ -82,6 +84,7 @@ export function loadGuides(): Guide[] {
     ...guide,
     cover: coverSize(guide.id),
     page: `${guide.status === "draft" ? "drafts" : "guides"}/${guide.id}/`,
+    reader: `read/${guide.id}/`,
   }));
 }
 
