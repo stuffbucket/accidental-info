@@ -1,0 +1,44 @@
+/* STUB: replaced by reader/design */
+/* The reader's look: the space around the pages, and the chrome floating over them. */
+:root {
+  --reader-pad: 24px;
+  --reader-gap: 40px;
+}
+@media (max-width: 600px), (max-height: 500px) {
+  :root {
+    --reader-pad: 10px;
+    --reader-gap: 24px;
+  }
+}
+.reader {
+  background: var(--accent-soft);
+}
+.reader-chrome {
+  position: fixed;
+  z-index: 10;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+:root[data-scrolling] .reader-chrome {
+  opacity: 0.4;
+}
+.reader-back {
+  width: 44px;
+  height: 88px;
+  font-size: 2rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}

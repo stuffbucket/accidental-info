@@ -1,0 +1,26 @@
+---
+/* STUB: replaced by reader/design */
+// The reader's controls, floating over the pages. The page wires them by data attributes:
+// [data-reader-action="zoom-in|zoom-out|fit|prev|next|layout|back"] buttons, and [data-reader-page] and [data-reader-zoom] outputs.
+import { base, type Guide } from "../../lib/guides";
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+---
+
+<button class="reader-back" type="button" data-reader-action="back" aria-label="Back">‹</button>
+<nav class="reader-chrome" aria-label="Reader">
+  <a href={base}>Accidental Guides</a>
+  <span>{guide.title}</span>
+  <button type="button" data-reader-action="prev" aria-label="Previous page">‹</button>
+  <output data-reader-page>1 / {guide.pages}</output>
+  <button type="button" data-reader-action="next" aria-label="Next page">›</button>
+  <button type="button" data-reader-action="zoom-out" aria-label="Zoom out">−</button>
+  <output data-reader-zoom>100%</output>
+  <button type="button" data-reader-action="zoom-in" aria-label="Zoom in">+</button>
+  <button type="button" data-reader-action="fit">Fit</button>
+  <button type="button" data-reader-action="layout">Layout</button>
+  <a href={`${base}guides/${guide.pdf}`}>PDF</a>
+</nav>
