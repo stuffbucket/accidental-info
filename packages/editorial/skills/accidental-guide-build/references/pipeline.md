@@ -56,9 +56,11 @@ request. On every push to `main` the Pages workflow builds and deploys the site,
 GitHub release for each guide version that doesn't have one yet.
 
 `pnpm sync` runs `packages/pipeline/workspace.py`. Run it after you add, rename or move a
-guide folder: it writes the guide's `package.json`, the site's list of guides, and the
-guides and drafts tables in `README.md` from each `guide.md`'s front matter. `pnpm test`
-fails if they're out of step.
+guide folder, or after you change `site/src/data/collections.json`: it writes the guide's
+`package.json`, the site's list of guides, and the guides and drafts tables in `README.md`
+from each `guide.md`'s front matter, and the cover's `collection`, `collection_mark` and
+`number` into each `guide.md` from `collections.json`. `pnpm test` fails if they're out of
+step, or if a guide isn't listed in `collections.json`.
 
 ## Making a new guide folder
 
@@ -66,7 +68,8 @@ Copy a guide that builds with `scripts/new_guide.py`. Pick the model by the page
 `lights-off-software-factories` (why, fit, four entries, table pages, sources) or
 `specs-and-reviews` (adds grey blocks, callouts, packed pages and a sequence diagram). The
 script copies the folder, renames the slug in the builders and README, sets `COVER_LINES`
-from the title, and sets the title and `version: 0.1.0` in `guide.md`. The copied builders
+from the title, and sets the title, `version: 0.1.0` and the cover's collection and number in
+`guide.md`. The copied builders
 already put the end page's star link (`Leave a star: accidental.info/star`, linked to
 https://accidental.info/star/) in the colophon and make the footer's address a `mailto:`
 link, in the PDF and the Word document; leave them. Then change by hand:
@@ -74,7 +77,7 @@ link, in the PDF and the Word document; leave them. Then change by hand:
 | File | Change |
 |---|---|
 | `content.py` | The voice comment at the top (writers read it). Slots for any section added or dropped. Slots are taken by position, so a section's shape and its slots change together. |
-| `build_guide.py` | `PART_TOKEN` (tile key to colour), `NAME2MONO` (every spelling of each part name that gets a tile, plurals included), `MONO_RE` (literals for this topic, such as `.json` or `.toml`), the `FIT_*` labels and `page_fit()`, the page order in `build()`. |
+| `build_guide.py` | `PART_FAMILY` (tile key to family, which sets the tile's colour and its column on the cover), `NAME2MONO` (every spelling of each part name that gets a tile, plurals included), `MONO_RE` (literals for this topic, such as `.json` or `.toml`), the `FIT_*` labels and `page_fit()`, the page order in `build()`. |
 | `build_docx.py` | The page order, and `fit_box()` or `fit_layout()` if the overview diagram moved. If the PDF's diagram moves and these don't, the Word document places a wrongly cropped image and nothing fails. |
 | `README.md` | The title, "copied from", and the Markdown section if the guide adds constructs. |
 

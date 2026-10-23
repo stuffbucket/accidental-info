@@ -20,7 +20,7 @@ illustrations: the only pictures are the part tiles and the diagrams.
 
 | Page | What you should see |
 |---|---|
-| Cover | Kicker in small bold, the title on two or three lines at 27 pt, the subtitle, one tile per key concept with its name and page, a heavy rule and the date and version at the foot |
+| Cover | A black band 150 pt deep across the top, edge to edge: the kicker in small white bold, the collection's name in grey, the guide's number and the collection's mark on the right, and the title in white at 27 pt on two or three lines, set on the band's foot. Below it the subtitle, the six families in a row under a thin rule (filled where the guide has parts in that family), one row per key concept with its tile in its family's column and its name and page beside it, the tagline, a heavy rule and the date and version at the foot |
 | Terms page | Two or three short paragraphs, then the terms as rows (on a grey block in newer builders) |
 | Overview | The diagram: part tiles as nodes with a bold name and grey caption, arrows with grey labels, plain text for things that aren't parts. One short paragraph |
 | Entry | Corner tile (the part's colour, its key and number), thumb tab on the right edge stepped down by entry number, the name, Identify by, What and So what with the first sentence bold, the field marks, Confused with |
