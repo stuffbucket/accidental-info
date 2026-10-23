@@ -511,6 +511,18 @@ def site_card(covers):
     return canvas
 
 
+# The reader (src/pages/read/[id].astro) shows every page as an image, sharp at three times its size in points.
+PAGE_SCALE = 3
+
+
+def render_pages(pdf, out_dir):
+    """Every page of the PDF as page-01.webp, page-02.webp, ... (lossless, so the text stays crisp)."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for i in range(len(pdf)):
+        image = pdf[i].render(scale=PAGE_SCALE).to_pil().convert("RGB")
+        image.save(out_dir / f"page-{i + 1:02d}.webp", lossless=True, method=4)
+
+
 def save_png(image, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path, optimize=True)
@@ -567,6 +579,9 @@ def main():
         pdf = pypdfium2.PdfDocument(str(dist / g["pdf"]))
         try:
             render_png(pdf, 1, out_dir / "cover.png")
+            if len(pdf) != g["pages"]:
+                sys.exit(f"{gid}: guide.json says {g['pages']} pages, the PDF has {len(pdf)}")
+            render_pages(pdf, out_dir)
             with Image.open(out_dir / "cover.png") as cover:
                 save_png(guide_card(cover, g["title"], g["subtitle"]), out_dir / "card.png")
             texts = page_texts(pdf)
