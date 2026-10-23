@@ -5,6 +5,9 @@ subtitle: A pocket-sized guide to PLACEHOLDER, as of Month 2026.
 running_footer: PLACEHOLDER Short Title
 edition: oops@accidental.info · CC BY 4.0 · Month 2026
 cover_footer: friend@accidental.info · Month 2026
+collection: PLACEHOLDER Collection
+collection_mark: square
+number: 00
 version: 0.1.0
 ---
 

@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to what a skill folder can hold, as of October 20
 running_footer: Agent Skills
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.2.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 07
+version: 0.3.0
 ---
 
 # What’s in a skill? {#why}

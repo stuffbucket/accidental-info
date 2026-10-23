@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to where GitHub Copilot’s agent setup lives, as
 running_footer: VS Code and Visual Studio
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.2.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 06
+version: 0.3.0
 ---
 
 # What can you set up<br/>in VS Code? {#why}

@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to software delivery run by coding agents, as of 
 running_footer: Software Factories
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.1.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 12
+version: 0.2.0
 ---
 
 # What is a software factory? {#why}

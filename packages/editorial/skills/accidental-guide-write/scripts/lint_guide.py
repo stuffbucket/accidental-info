@@ -104,7 +104,8 @@ PEOPLE_RULES = [
 ROW_START = re.compile(r"^(It|Its|It’s|They|Their|This|These)\b")
 HEADING = re.compile(r"^# (.*?) \{#([\w-]+)[^}]*\}\s*$")
 SEMVER = re.compile(r"^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
-REQUIRED = ("title", "kicker", "subtitle", "running_footer", "edition", "cover_footer", "version")
+REQUIRED = ("title", "kicker", "subtitle", "running_footer", "edition", "cover_footer", "collection",
+            "collection_mark", "number", "version")
 
 
 def load_deny(paths):

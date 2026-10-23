@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to spotting the four-move checkmate, and making i
 running_footer: Stopping Scholar’s Mate
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.2.0
+collection: Games
+collection_mark: diamond
+number: 04
+version: 0.3.0
 ---
 
 # What is<br/>Scholar’s Mate? {#why}

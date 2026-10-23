@@ -8,7 +8,7 @@ fit, cut words.
 
 | Page | Section id | What it holds | Words |
 |---|---|---|---|
-| Cover | front matter | Kicker, title on two or three lines, subtitle, one tile per key concept with its page | about 50 |
+| Cover | front matter | Black band with the kicker, collection, number and the title on two or three lines; subtitle; the six families; one tile per key concept in its family's column, with its page | about 50 |
 | What is X? | `why` | Two or three short paragraphs that answer the question, then a Term / Meaning table with one row per key concept | 150 to 180 |
 | How do the parts fit together? | `fit` | The overview diagram, drawn in code, then one short paragraph | about 120, labels included |
 | One entry per key concept | `entry` (one per key) | Identify by, What, So what; two or three field marks; Confused with | about 90 to 130 each |

@@ -397,47 +397,205 @@ def seq_box():
 
 
 # ---------- pages ----------
-def page_cover(doc):
-    para(doc, C.KICKER, 9, bold=True, space_after=6)
-    # The PDF sets the title on the lines in COVER_LINES.
-    lines = list(G.COVER_LINES)
-    t = doc.add_paragraph(style="Title")
-    t.paragraph_format.line_spacing = Pt(29)
-    t.paragraph_format.space_after = Pt(8)
-    for i, line in enumerate(lines):
+# ---------- the cover: the PDF's black band over the part grid ----------
+_cover_pngs = {}
+
+
+def cover_png(name, w, h, draw):
+    """One of the cover's shapes (a family tile, a family's square, the collection's mark),
+    drawn by the PDF build on a canvas its size and rendered, so Word shows the PDF's shapes."""
+    if name not in _cover_pngs:
+        buf = io.BytesIO()
+        c = G.canvas.Canvas(buf, pagesize=(w, h), invariant=1)
+        draw(c)
+        c.save()
+        pdf = pdfium.PdfDocument(buf.getvalue())
+        img = pdf[0].render(scale=TILE_DPI / 72).to_pil()
+        pdf.close()
+        out = io.BytesIO()
+        img.save(out, format="PNG", optimize=True)
+        _cover_pngs[name] = out.getvalue()
+    return io.BytesIO(_cover_pngs[name])
+
+
+def _cell_set(cell, margins=None, valign=None, shade=None, span=None):
+    """Cell margins (top, left, bottom, right in points), vertical alignment and shading."""
+    tc_pr = cell._tc.get_or_add_tcPr()
+    if shade:
+        shd = OxmlElement("w:shd")
+        for k, v in (("w:val", "clear"), ("w:color", "auto"), ("w:fill", shade)):
+            shd.set(qn(k), v)
+        tc_pr.append(shd)
+    if margins:
+        mar = OxmlElement("w:tcMar")
+        for edge, v in zip(("top", "left", "bottom", "right"), margins):
+            el = OxmlElement(f"w:{edge}")
+            el.set(qn("w:w"), str(int(round(v * 20))))
+            el.set(qn("w:type"), "dxa")
+            mar.append(el)
+        tc_pr.append(mar)
+    if valign:
+        va = OxmlElement("w:vAlign")
+        va.set(qn("w:val"), valign)
+        tc_pr.append(va)
+
+
+def _tight(par, size, leading, before=0, after=0, align=None):
+    pf = par.paragraph_format
+    pf.space_before, pf.space_after = Pt(before), Pt(after)
+    pf.line_spacing = Pt(leading)
+    pf.line_spacing_rule = WD_LINE_SPACING.EXACTLY
+    if align is not None:
+        par.alignment = align
+    return par
+
+
+def cover_band(doc):
+    """The band: a black table the width of the page, out to both edges. Its top row has the
+    kicker; the collection's name and the number; and the mark. Its second row has the title,
+    white, on the band's foot. Its height is at least the PDF's, so a substituted font that sets
+    the title taller makes the band taller instead of cutting the title off."""
+    mark_w = G.BAND_MARK + G.MR
+    band = doc.add_table(rows=2, cols=3)
+    band.autofit = False
+    _no_borders(band)
+    _margins(band, top=0, bottom=0, left=0, right=0)
+    widths(band, [G.PW / 2, G.PW / 2 - mark_w, mark_w])
+    ind = OxmlElement("w:tblInd")  # out to the left edge; it follows tblW
+    ind.set(qn("w:w"), str(int(-G.ML * 20)))
+    ind.set(qn("w:type"), "dxa")
+    band._tbl.tblPr.find(qn("w:tblW")).addnext(ind)
+    top, foot = band.rows
+    top.height, top.height_rule = Pt(G.BAND_ROW * 2 - 8), WD_ROW_HEIGHT_RULE.EXACTLY
+    foot.height = Pt(G.BAND - (G.BAND_ROW * 2 - 8))
+    foot.height_rule = WD_ROW_HEIGHT_RULE.AT_LEAST
+    kicker, coll, mark = top.cells
+    _cell_set(kicker, margins=(0, G.ML, 0, 0), shade=INK)
+    _cell_set(coll, margins=(0, 0, 0, 8), shade=INK)
+    s = G.BAND_MARK  # the mark's centre is on the row's centre line
+    _cell_set(mark, margins=(G.BAND_ROW - s / 2, 0, 0, G.MR), shade=INK)
+    # the text sits on the PDF's baseline, BAND_TEXT * 0.36 below the row's centre line
+    before = G.BAND_ROW + G.BAND_TEXT * 0.36 - 12 * 0.8
+    p = _tight(kicker.paragraphs[0], G.BAND_TEXT, 12, before=before)
+    _run(p, C.KICKER, G.BAND_TEXT, "FFFFFF", True, False)
+    p = _tight(coll.paragraphs[0], G.BAND_TEXT, 12, before=before, align=WD_ALIGN_PARAGRAPH.RIGHT)
+    _run(p, C.COLLECTION, G.BAND_TEXT * 0.84, hexof(G.BAND_GREY), False, False)
+    _run(p, "\u2002", G.BAND_TEXT, "FFFFFF", False, False)
+    _run(p, C.NUMBER, G.BAND_TEXT, "FFFFFF", True, False)
+    p = mark.paragraphs[0]
+    p.paragraph_format.space_before = p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+    p.add_run().add_picture(cover_png("mark", s, s, lambda c: G.collection_mark(c, 0, 0, s)), width=Pt(s))
+    cell = foot.cells[0].merge(foot.cells[2])
+    # the title's last baseline is TITLE_FOOT above the band's foot
+    _cell_set(cell, margins=(0, G.ML, G.TITLE_FOOT - 29 * 0.2, G.MR), valign="bottom", shade=INK)
+    for extra in cell.paragraphs[1:]:
+        extra._p.getparent().remove(extra._p)
+    t = cell.paragraphs[0]
+    t.style = doc.styles["Title"]
+    _tight(t, 27, 29)
+    for i, line in enumerate(G.COVER_LINES):
         if i:
             t.add_run().add_break(WD_BREAK.LINE)
-        _run(t, line, 27, INK, True, False)
-    # The PDF puts the grid of tiles at a fixed height near the bottom of the page.
-    para(doc, C.SUBTITLE, 8.6, space_after=cover_gap(lines), leading=11.8)
-    size = 38
-    table = doc.add_table(rows=2, cols=3)
+        _run(t, line, 27, "FFFFFF", True, False)
+
+
+def cover_grid(doc, parts, lay):
+    """The six families in a row under a rule, then one row per part: its tile in its family's
+    column, and its name and page in the cells beside it, merged, on the side the PDF puts them."""
+    cell_w, gut = G.GRID_CELL, G.GRID_GUT
+    table = doc.add_table(rows=1 + len(parts), cols=6)
     table.autofit = False
     _no_borders(table)
     _margins(table, top=0, bottom=0, left=0, right=0)
-    widths(table, [G.W / 3] * 3)
-    for row in table.rows:
-        row.height = Pt(80)
-        row.height_rule = WD_ROW_HEIGHT_RULE.EXACTLY
-    for i, e in enumerate(C.ENTRIES):
-        cell = table.rows[i // 3].cells[i % 3]
-        tile_cell(cell, e["mono"], size, e["num"], align=WD_ALIGN_PARAGRAPH.LEFT)
-        p = cell.add_paragraph()
-        p.paragraph_format.space_before = Pt(3)
-        rich(p, e["name"], 7.6, bold=True)
-        p = cell.add_paragraph()
-        rich(p, "page ", 6.6, GREY)
-        field(p, f"PAGEREF {entry_ref(i)} \\h", str(G.ENTRY_PAGE[i]), 6.6)
+    widths(table, [cell_w] * 6)
+    head = table.rows[0]
+    head.height, head.height_rule = Pt(14 + gut / 2), WD_ROW_HEIGHT_RULE.EXACTLY
+    present = {p["family"] for p in parts}
+    for j, (fam, word, _) in enumerate(G.COVER_FAMILIES):
+        cell = head.cells[j]
+        _border(cell._tc.get_or_add_tcPr(), "top", 0.6, INK)
+        _cell_set(cell, margins=(0, gut / 2, 0, 0))
+        p = _tight(cell.paragraphs[0], 5.8, 7, before=14 - 5 - 7 * 0.8)
+        filled = fam in present
+
+        def square(c, fam=fam, filled=filled):
+            if filled:
+                c.setFillColor(G.family_colors(fam)[0]); c.rect(0, 0, 4.6, 4.6, stroke=0, fill=1)
+            else:
+                c.setStrokeColor(G.HexColor("#b8b8b8")); c.setLineWidth(0.5)
+                c.rect(0.25, 0.25, 4.1, 4.1, stroke=1, fill=0)
+        r = p.add_run()
+        r.add_picture(cover_png(("square", fam, filled), 4.6, 4.6, square), width=Pt(4.6))
+        _run(p, " " + word, 5.8, GREY if filled else "A6A6A6", False, False)
+    for i, part in enumerate(parts):
+        row = table.rows[1 + i]
+        row.height, row.height_rule = Pt(cell_w), WD_ROW_HEIGHT_RULE.EXACTLY
+        j = G.COVER_FAMILY_ORDER.index(part["family"])
+        size = cell_w - gut
+        cell = row.cells[j]
+        _cell_set(cell, margins=(gut / 2, gut / 2, 0, 0))
+        p = cell.paragraphs[0]
+        p.paragraph_format.space_before = p.paragraph_format.space_after = Pt(0)
+        p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+        key = ("tile", part["key"], part["family"], part["num"])
+        p.add_run().add_picture(cover_png(key, size, size, lambda c: G.family_tile(
+            c, part["key"], part["family"], 0, 0, size, number=part["num"])), width=Pt(size))
+        _, align, _, _ = G.cover_label(part)
+        cells = row.cells
+        if align == "left":
+            if j == 5:
+                continue
+            label = cells[j + 1].merge(cells[5]) if j + 1 < 5 else cells[j + 1]
+            _cell_set(label, margins=(0, 5, 0, 0), valign="center")
+            where = WD_ALIGN_PARAGRAPH.LEFT
+        else:
+            label = cells[0].merge(cells[j - 1]) if j - 1 > 0 else cells[0]
+            _cell_set(label, margins=(0, 0, 0, gut / 2 + 4), valign="center")
+            where = WD_ALIGN_PARAGRAPH.RIGHT
+        # merged cells keep a paragraph from each cell; keep the first
+        for extra in label.paragraphs[1:]:
+            extra._p.getparent().remove(extra._p)
+        p = _tight(label.paragraphs[0], 7.2, 8.5, align=where)
+        _run(p, part["name"], 7.2, INK, True, False)
+        p = _tight(label.add_paragraph(), 6.4, 8.5, align=where)
+        if part.get("ref") is None:
+            _run(p, part["sub"], 6.4, GREY, False, False)
+        else:
+            _run(p, "page ", 6.4, GREY, False, False)
+            field(p, f"PAGEREF {entry_ref(part['ref'])} \\h", part["sub"].removeprefix("page "), 6.4)
 
 
-def cover_gap(lines):
-    """Space between the subtitle and the tile grid, from the PDF's page_cover() layout:
-    the grid's top is at y=214."""
-    st = G.ParagraphStyle("t", fontName="Sans-Bold", fontSize=27, leading=29)
-    _, th = G.Paragraph("<br/>".join(lines), st).wrap(G.W, 1000)
-    _, sh = G.Paragraph(G.mono(C.SUBTITLE, G.LEAD.fontSize), G.LEAD).wrap(G.W * 0.8, 1000)
-    subtitle_bottom = G.PH - G.MT - 22 - th - 8 - sh
-    return max(0, subtitle_bottom - 214)
+def page_cover(doc):
+    parts = G.cover_parts()
+    lay = G.cover_layout(parts)
+    cover_band(doc)
+    size, leading = G.COVER_SUB
+    # The PDF puts the family row at a fixed height above the foot; the space after the
+    # subtitle puts it there in Word too.
+    sub_bottom = G.PH - G.BAND - 12 - len(lay["sub"]) * leading
+    p = para(doc, C.SUBTITLE, size, space_after=max(0, sub_bottom - lay["head"]), leading=leading)
+    p.paragraph_format.space_before = Pt(12)
+    p.paragraph_format.right_indent = Pt(G.W * 0.2)
+    cover_grid(doc, parts, lay)
+
+
+def cover_section(doc):
+    """The cover is the first section: no top margin, so the band starts at the top edge, and a
+    section break that takes no room."""
+    s = doc.sections[0]
+    s.top_margin = s.header_distance = Pt(0)
+    brk = s._sectPr.getparent().getparent()  # the w:p that ends the cover
+    p_pr = brk.find(qn("w:pPr"))
+    spacing = OxmlElement("w:spacing")
+    for k, v in (("w:before", "0"), ("w:after", "0"), ("w:line", "20"), ("w:lineRule", "exact")):
+        spacing.set(qn(k), v)
+    p_pr.insert(0, spacing)
+    r_pr = OxmlElement("w:rPr")
+    sz = OxmlElement("w:sz")
+    sz.set(qn("w:val"), "2")
+    r_pr.append(sz)
+    p_pr.insert(p_pr.index(s._sectPr), r_pr)
 
 
 def page_why(doc):
@@ -692,6 +850,7 @@ def build(pdf_path, out):
     page_cover(doc)
     ruled_footer(doc.sections[0], f"{C.COVER_FOOTER} · Version {C.VERSION}")
     body = doc.add_section(WD_SECTION.NEW_PAGE)
+    cover_section(doc)
     running_footer(body)
     start_numbering(body, 2)
 

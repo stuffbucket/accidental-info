@@ -16,6 +16,9 @@ subtitle: A pocket-sized guide to software factories where nobody reads the code
 running_footer: Lights-Off Software Factories
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
+collection: Accidental Intelligence
+collection_mark: square
+number: 13
 version: 0.3.0
 ---
 ```
@@ -28,7 +31,18 @@ version: 0.3.0
 | `running_footer` | Footer on every inner page. Usually the title. |
 | `edition` | The end page footer and the site: `oops@accidental.info · CC BY 4.0 · <Month Year>`, the address for mistakes, the text's license and the month. |
 | `cover_footer` | The cover's footer: `friend@accidental.info · <Month Year>`. |
+| `collection` | The collection's name, in grey in the cover's band. |
+| `collection_mark` | The collection's mark at the band's top right: `square`, `triangle`, `circle` or `diamond`. |
+| `number` | The guide's number in its collection, two digits, in the band. A catalog is `00`. |
 | `version` | Semver. The build fails without a valid one. |
+
+Don't type `collection`, `collection_mark` or `number` by hand. `pnpm sync` writes them from
+`site/src/data/collections.json`: the collection's `name`, its mark (`MARKS` in
+`packages/pipeline/workspace.py`), and the guide's place in the collection's list, counting
+each group's guides and then its coming guides, then the collection's own guides and coming
+guides, from 01. `new_guide.py` sets them the same way, or to placeholders if the guide isn't
+listed yet.
+`pnpm test` fails if they're out of step.
 
 ## Sections
 

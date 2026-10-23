@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to where Copilot CLI keeps its setup, and which c
 running_footer: GitHub Copilot CLI
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.2.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 04
+version: 0.3.0
 ---
 
 # What can you set up<br/>in Copilot CLI? {#why}

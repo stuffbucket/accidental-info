@@ -124,6 +124,16 @@ KICKER = META["kicker"]
 RUNNING_FOOTER = META["running_footer"]
 EDITION = META["edition"]
 COVER_FOOTER = META["cover_footer"]
+# The cover's band: the collection the guide is in, the collection's mark and the guide's
+# number in it. pnpm sync writes them from site/src/data/collections.json.
+COLLECTION = META.get("collection", "")
+COLLECTION_MARK = META.get("collection_mark", "")
+NUMBER = META.get("number", "")
+if not COLLECTION or COLLECTION_MARK not in ("square", "triangle", "circle", "diamond") \
+        or not re.fullmatch(r"\d\d", NUMBER):
+    raise SystemExit(f"{SOURCE}: front matter needs collection:, collection_mark: (square, "
+                     "triangle, circle or diamond) and number: (two digits); pnpm sync writes them "
+                     "for a guide listed in site/src/data/collections.json")
 VERSION = META.get("version", "")
 if not re.fullmatch(r"\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?", VERSION):
     raise SystemExit(f"{SOURCE}: front matter needs version: as semver, such as 1.0.0 (got {VERSION!r})")

@@ -20,13 +20,16 @@ What it does:
     0.1.0, and the public imprint:
         edition: oops@accidental.info · CC BY 4.0 · <Month Year>
         cover_footer: friend@accidental.info · <Month Year>
-    with this month unless --month is given.
+    with this month unless --month is given, and the cover's collection, collection_mark
+    and number from site/src/data/collections.json, as pnpm sync does (placeholders if the
+    new slug isn't listed there yet).
 
 It then prints what still has to change by hand, and the next steps (pnpm sync, then the
 build). Standard library only.
 """
 import argparse
 import datetime
+import importlib.util
 import re
 import shutil
 import sys
@@ -65,6 +68,18 @@ def set_key(lines, key, value):
             lines[i] = f"{key}: {value}"
             return
     lines.insert(end, f"{key}: {value}")
+
+
+PLACEHOLDER_KEYS = {"collection": "PLACEHOLDER Collection", "collection_mark": "square", "number": "00"}
+
+
+def cover_keys(root, slug):
+    """The cover's collection, collection_mark and number for slug, by pnpm sync's rules
+    (packages/pipeline/workspace.py), or None if site/src/data/collections.json doesn't list it."""
+    spec = importlib.util.spec_from_file_location("workspace", root / "packages" / "pipeline" / "workspace.py")
+    workspace = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(workspace)
+    return workspace.cover_keys().get(slug)
 
 
 def cover_lines(title, width=12):
@@ -151,6 +166,9 @@ def main():
     set_key(lines, "version", "0.1.0")
     set_key(lines, "edition", f"oops@accidental.info · CC BY 4.0 · {args.month}")
     set_key(lines, "cover_footer", f"friend@accidental.info · {args.month}")
+    keys = cover_keys(root, new_slug)
+    for key, value in (keys or PLACEHOLDER_KEYS).items():
+        set_key(lines, key, value)
     (dst / "guide.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     rel = dst.relative_to(root) if dst.is_relative_to(root) else dst
@@ -159,9 +177,12 @@ def main():
     print("  guide.md        every word, the subtitle and running_footer (keep the section ids and")
     print("                  table shapes content.py reads)")
     print("  content.py      the voice comment at the top; slots if the sections change")
-    print("  build_guide.py  PART_TOKEN, NAME2MONO, MONO_RE, the FIT_* labels and page_fit(), page order")
+    print("  build_guide.py  PART_FAMILY, NAME2MONO, MONO_RE, the FIT_* labels and page_fit(), page order")
     print("  build_docx.py   page order, fit_box() or fit_layout() if the diagram moved")
     print("  README.md       what's here, how to rebuild, and the Markdown section, if they differ")
+    if not keys:
+        print(f"  site/src/data/collections.json  list {new_slug} in its collection; pnpm sync then")
+        print("                  writes the cover's collection, collection_mark and number")
     print("then, from the repository root:")
     print("  pnpm sync                                   # adds the folder to the workspace")
     print(f"  packages/editorial/skills/accidental-guide-build/scripts/build_one.sh {rel} --update-hash")
