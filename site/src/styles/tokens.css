@@ -12,6 +12,17 @@
   --accent: #111111;
   --accent-text: #ffffff;
   --accent-soft: #ececec;
+  /* Surfaces in z-order: the canvas under the pages, the white paper, translucent glass over both. */
+  --canvas: #e6e4df;
+  --paper: #ffffff;
+  --glass: rgb(250 249 247 / 0.78);
+  --glass-edge: rgb(0 0 0 / 0.08);
+  --glass-hover: rgb(0 0 0 / 0.06);
+  /* Shadows, one per layer: a page on the canvas, a bar over the pages, a menu over the bar. */
+  --shadow-1: 0 0 0 1px rgb(0 0 0 / 0.04), 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 12px -2px rgb(0 0 0 / 0.07),
+    0 16px 32px -12px rgb(0 0 0 / 0.1);
+  --shadow-2: 0 1px 2px rgb(0 0 0 / 0.06), 0 6px 20px -4px rgb(0 0 0 / 0.14);
+  --shadow-3: 0 2px 4px rgb(0 0 0 / 0.08), 0 12px 32px -6px rgb(0 0 0 / 0.2);
   --font: "TeX Gyre Heros", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --mono: "Liberation Mono", ui-monospace, Menlo, Consolas, monospace;
 }
@@ -25,6 +36,15 @@
     --accent: #ececec;
     --accent-text: #161616;
     --accent-soft: #2a2a2a;
+    --canvas: #1d1e21;
+    --paper: #ffffff;
+    --glass: rgb(40 41 45 / 0.78);
+    --glass-edge: rgb(255 255 255 / 0.09);
+    --glass-hover: rgb(255 255 255 / 0.09);
+    --shadow-1: 0 0 0 1px rgb(0 0 0 / 0.35), 0 2px 4px rgb(0 0 0 / 0.3), 0 8px 20px -4px rgb(0 0 0 / 0.4),
+      0 24px 48px -16px rgb(0 0 0 / 0.5);
+    --shadow-2: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -4px rgb(0 0 0 / 0.5);
+    --shadow-3: 0 2px 4px rgb(0 0 0 / 0.35), 0 16px 40px -8px rgb(0 0 0 / 0.6);
   }
 }
 :root[data-theme="dark"] {
@@ -36,4 +56,13 @@
   --accent: #ececec;
   --accent-text: #161616;
   --accent-soft: #2a2a2a;
+  --canvas: #1d1e21;
+  --paper: #ffffff;
+  --glass: rgb(40 41 45 / 0.78);
+  --glass-edge: rgb(255 255 255 / 0.09);
+  --glass-hover: rgb(255 255 255 / 0.09);
+  --shadow-1: 0 0 0 1px rgb(0 0 0 / 0.35), 0 2px 4px rgb(0 0 0 / 0.3), 0 8px 20px -4px rgb(0 0 0 / 0.4),
+    0 24px 48px -16px rgb(0 0 0 / 0.5);
+  --shadow-2: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -4px rgb(0 0 0 / 0.5);
+  --shadow-3: 0 2px 4px rgb(0 0 0 / 0.35), 0 16px 40px -8px rgb(0 0 0 / 0.6);
 }
