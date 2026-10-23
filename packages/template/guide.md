@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to the one question your reader has, in one line.
 running_footer: Your Topic
 edition: Your name · CC BY 4.0 · Month Year
 cover_footer: Month Year
-version: 0.1.0
+collection: Your collection
+collection_mark: square
+number: 01
+version: 0.2.0
 ---
 
 # The question your<br/>reader is asking {#why}

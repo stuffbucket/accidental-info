@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to agreeing on work as a team and checking when i
 running_footer: Specs and Reviews
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.4.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 11
+version: 0.5.0
 ---
 
 # How does work get<br/>from an idea to done? {#why}

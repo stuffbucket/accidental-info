@@ -88,6 +88,8 @@ TOKENS = {  # token: base hex
 # write down figjam (purple), things that check success (green), things an agent uses danger
 # (red-orange), decisions people make assistive (pink), and numbers and claims brand (blue).
 PART_TOKEN = {"In": "figjam", "Sk": "figjam", "Mc": "danger", "Pl": "danger", "Se": "assistive"}
+# Each part's family, for the cover's grid (packages/editorial/registry.md).
+PART_FAMILY = {"In": "Wr", "Sk": "Wr", "Mc": "Us", "Pl": "Us", "Se": "Dm"}
 def colors(mono_key):
     t = PART_TOKEN[mono_key]; base = TOKENS[t]
     fg = INK if t == "warning" else white
@@ -96,8 +98,6 @@ NAME2MONO = {"Instructions file": "In", "Instructions files": "In", "Instruction
              "Skill": "Sk", "Skills": "Sk", "MCP server": "Mc", "MCP servers": "Mc",
              "Plugin": "Pl", "Plugins": "Pl", "Settings": "Se"}
 # Any other name, such as a sub-agent, a hook or a product, is plain text with no tile.
-# Tiles per row on the cover: two rows of two for four parts, otherwise rows of three.
-COVER_COLS = 2 if len(C.ENTRIES) == 4 else 3
 # The cover sets the title on these lines.
 COVER_LINES = ("Claude Code",)
 assert " ".join(COVER_LINES) == C.TITLE, C.TITLE
@@ -255,30 +255,209 @@ def tile_title(c, text, key):
     p.drawOn(c, ML, PH - MT - h + 2)
     return min(PH - MT - TILE, PH - MT - h) - SP_TILE
 
+# ---------- the cover: a black band over the part grid ----------
+# The design is B′ in packages/editorial/design/cover-study/b-prime/. A black band across the
+# top holds the kicker, the collection, the guide's number and the collection's mark in its top
+# row, and the title in white on its foot. Below it are the subtitle, the six families in the
+# series' order, and one row per part with its tile in its family's column, so the tiles step
+# across the page by family. The collection, its mark and the number are in guide.md's front
+# matter, which pnpm sync keeps in step with site/src/data/collections.json.
+BAND = 150            # the band's height, the same on every guide
+BAND_ROW = 24         # the centre of the band's top row, from the top edge
+BAND_MARK = 16        # the collection's mark, on the right margin
+BAND_TEXT = 9         # the kicker and the number; the collection's name is 84% of this
+TITLE_FOOT = 16       # the title's last baseline, above the band's foot
+BAND_GREY = HexColor("#a8a8a8")   # the collection's name, on black
+COVER_SUB = 9.4, 12.2             # the subtitle: size and leading
+GRID_CELL, GRID_GUT = W / 6, 1.5  # six columns, one per family; one row per part
+GRID_Y0 = MB + 12                 # the grid's foot, unless the tagline needs the room
+TAG_CLEAR = 4                     # space between the grid and the tagline
+# The six families in the series' order, with the word the cover prints and the colour
+# token each family has in every guide (packages/editorial/registry.md).
+COVER_FAMILIES = (("Ru", "Runs", "warning"), ("Wr", "Written", "figjam"), ("Ck", "Checks", "success"),
+                  ("Us", "Used", "danger"), ("Dm", "Decided", "assistive"), ("Nu", "Counted", "brand"))
+COVER_FAMILY_ORDER = [f for f, _, _ in COVER_FAMILIES]
+
+
+def family_colors(fam):
+    """A family's colours, as colors() gives a part's: base, darker band, text."""
+    t = dict((f, tok) for f, _, tok in COVER_FAMILIES)[fam]; base = TOKENS[t]
+    fg = INK if t == "warning" else white
+    return HexColor(base), _dark(base, 0.86 if t == "warning" else 0.80), fg
+
+
+def family_tile(c, key, fam, x, y, size, number=None):
+    """A part's two-tone tile in its family's colour; (x, y) is the lower-left corner."""
+    base, dark, fg = family_colors(fam)
+    c.setFillColor(base); c.rect(x, y, size, size, stroke=0, fill=1)
+    band = size * 0.26
+    c.setFillColor(dark); c.rect(x, y, size, band, stroke=0, fill=1)
+    fs = size * 0.40
+    c.setFillColor(fg); c.setFont("Sans-Bold", fs)
+    c.drawString(x + size * 0.13, y + band + (size - band) / 2 - fs * 0.34, key)
+    if number:
+        c.setFont("Sans-Bold", max(5.5, size * 0.14))
+        c.drawString(x + size * 0.13, y + band * 0.30, number)
+
+
+def collection_mark(c, x, y, s, color=white, mark=None):
+    """The collection's mark in an s x s box, lower-left (x, y): square, triangle, circle or
+    diamond."""
+    mark = mark or C.COLLECTION_MARK
+    c.setFillColor(color)
+    if mark == "square":
+        c.rect(x, y, s, s, stroke=0, fill=1)
+        return
+    if mark == "circle":
+        c.circle(x + s / 2, y + s / 2, s / 2, stroke=0, fill=1)
+        return
+    p = c.beginPath()
+    if mark == "triangle":
+        p.moveTo(x, y); p.lineTo(x + s, y); p.lineTo(x + s / 2, y + s * 0.92)
+    else:  # diamond
+        p.moveTo(x + s / 2, y); p.lineTo(x + s, y + s / 2); p.lineTo(x + s / 2, y + s); p.lineTo(x, y + s / 2)
+    p.close(); c.drawPath(p, stroke=0, fill=1)
+
+
+def wrap_words(text, font, size, width):
+    words, lines, cur = text.split(), [], ""
+    for w in words:
+        t = (cur + " " + w).strip()
+        if pdfmetrics.stringWidth(t, font, size) <= width or not cur:
+            cur = t
+        else:
+            lines.append(cur); cur = w
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def cover_label(p):
+    """Where a part's name and page go: right of its tile if they fit before the margin, else
+    left of it. Returns (x, align, x0, x1), x0 and x1 being the label's extent."""
+    j = COVER_FAMILY_ORDER.index(p["family"])
+    x = ML + j * GRID_CELL + GRID_GUT / 2
+    need = max(pdfmetrics.stringWidth(p["name"], "Sans-Bold", 7.2), pdfmetrics.stringWidth(p["sub"], "Sans", 6.4))
+    if x + GRID_CELL - GRID_GUT + 5 + need <= PW - MR:
+        tx = x + GRID_CELL - GRID_GUT / 2 + 5
+        return tx, "left", tx, tx + need
+    tx = x - GRID_GUT - 4
+    return tx, "right", tx - need, tx
+
+
+def grid_foot(parts):
+    """The grid's foot: GRID_Y0, or higher if a row's tile or label would reach the tagline,
+    which is right-aligned above the footer rule."""
+    tag_x0 = ML + W - pdfmetrics.stringWidth(TAGLINE, "Serif-Italic", 9)
+    tag_top = MB + 15 + pdfmetrics.getAscent("Serif-Italic", 9)
+    y0 = GRID_Y0
+    for i, p in enumerate(parts):
+        j = COVER_FAMILY_ORDER.index(p["family"])
+        x = ML + j * GRID_CELL + GRID_GUT / 2
+        _, _, l0, l1 = cover_label(p)
+        if max(x + GRID_CELL - GRID_GUT, l1) > tag_x0:
+            bottom = GRID_Y0 + (5 - i) * GRID_CELL + GRID_GUT / 2
+            y0 = max(y0, GRID_Y0 + tag_top + TAG_CLEAR - bottom)
+    return y0
+
+
+def part_grid(c, parts, y0):
+    """The six family columns, each headed by its square and word, filled where the guide
+    has parts in that family; then one row per part, in entry order, from the top of a grid six
+    rows high. Returns the head rule's y."""
+    if len(parts) > 6:
+        PROBLEMS.append(f"cover: {len(parts)} parts, and the grid has room for six")
+    top = y0 + 6 * GRID_CELL
+    c.setStrokeColor(INK); c.setLineWidth(0.6); c.line(ML, top + 14, PW - MR, top + 14)
+    present = {p["family"] for p in parts}
+    for j, (f, word, _) in enumerate(COVER_FAMILIES):
+        hx = ML + j * GRID_CELL + GRID_GUT / 2
+        if f in present:
+            c.setFillColor(family_colors(f)[0]); c.rect(hx, top + 4.2, 4.6, 4.6, stroke=0, fill=1)
+            c.setFont("Sans", 5.8); c.setFillColor(GREY)
+        else:
+            c.setStrokeColor(HexColor("#b8b8b8")); c.setLineWidth(0.5)
+            c.rect(hx + 0.25, top + 4.45, 4.1, 4.1, stroke=1, fill=0)
+            c.setFont("Sans", 5.8); c.setFillColor(HexColor("#a6a6a6"))
+        c.drawString(hx + 7, top + 5, word)
+    for i, p in enumerate(parts):
+        j = COVER_FAMILY_ORDER.index(p["family"])
+        x = ML + j * GRID_CELL + GRID_GUT / 2; y = top - (i + 1) * GRID_CELL + GRID_GUT / 2
+        family_tile(c, p["key"], p["family"], x, y, GRID_CELL - GRID_GUT, number=p["num"])
+        ty = y + (GRID_CELL - GRID_GUT) / 2
+        tx, align, _, _ = cover_label(p)
+        draw = c.drawString if align == "left" else c.drawRightString
+        c.setFillColor(INK); c.setFont("Sans-Bold", 7.2); draw(tx, ty + 1.5, p["name"])
+        c.setFillColor(GREY); c.setFont("Sans", 6.4); draw(tx, ty - 7, p["sub"])
+    return top + 14
+
+
+def cover_layout(parts):
+    """The cover's measures, shared with build_docx.py: the subtitle's lines, the grid's foot
+    and its head rule."""
+    sub = wrap_words(C.SUBTITLE, "Sans", COVER_SUB[0], W * 0.8)
+    y0 = grid_foot(parts)
+    return dict(sub=sub, y0=y0, head=y0 + 6 * GRID_CELL + 14)
+
+
+def band(c):
+    """The full-bleed band with its top row: the kicker on the left; the collection's name, the
+    guide's number and the collection's mark on the right."""
+    c.setFillColor(INK); c.rect(0, PH - BAND, PW, BAND, stroke=0, fill=1)
+    axis = PH - BAND_ROW
+    base = axis - BAND_TEXT * 0.36
+    c.setFillColor(white); c.setFont("Sans-Bold", BAND_TEXT)
+    c.drawString(ML, base, C.KICKER)
+    mx = PW - MR - BAND_MARK
+    collection_mark(c, mx, axis - BAND_MARK / 2, BAND_MARK)
+    x = mx - 8
+    c.setFont("Sans-Bold", BAND_TEXT); c.drawRightString(x, base, C.NUMBER)
+    x -= pdfmetrics.stringWidth(C.NUMBER, "Sans-Bold", BAND_TEXT) + 6
+    c.setFont("Sans", BAND_TEXT * 0.84); c.setFillColor(BAND_GREY)
+    c.drawRightString(x, base, C.COLLECTION)
+    left = x - pdfmetrics.stringWidth(C.COLLECTION, "Sans", BAND_TEXT * 0.84)
+    if left < ML + pdfmetrics.stringWidth(C.KICKER, "Sans-Bold", BAND_TEXT) + 12:
+        PROBLEMS.append("cover: the collection's name runs into the kicker")
+
+
 # ---------- pages ----------
 def page_cover(c):
-    c.setFillColor(INK); c.setFont("Sans-Bold", 9)
-    c.drawString(ML, PH - MT - 8, C.KICKER)
-    y = PH - MT - 22
-    st = ParagraphStyle("t", fontName="Sans-Bold", fontSize=27, leading=29, textColor=INK)
-    y = para(c, "<br/>".join(COVER_LINES), st, ML, y, W)
-    y = para(c, C.SUBTITLE, LEAD, ML, y - 8, W * 0.8)
-    size, colw = 38, W / COVER_COLS
-    top = 214
-    for i, e in enumerate(C.ENTRIES):
-        col, r = i % COVER_COLS, i // COVER_COLS
-        x = ML + col * colw
-        yb = top - r * 80 - size
-        avatar(c, e["mono"], x, yb, size, number=e["num"])
-        c.setFillColor(INK); c.setFont("Sans-Bold", 7.6)
-        c.drawString(x, yb - 11, e["name"])
-        c.setFillColor(GREY); c.setFont("Sans", 6.6)
-        c.drawString(x, yb - 20, f"page {ENTRY_PAGE[i]}")
+    parts = cover_parts()
+    band(c)
+    n = len(COVER_LINES)
+    base = PH - BAND + TITLE_FOOT
+    c.setFillColor(white); c.setFont("Sans-Bold", 27)
+    for k, line in enumerate(COVER_LINES):
+        c.drawString(ML, base + 29 * (n - 1 - k), line)
+        if pdfmetrics.stringWidth(line, "Sans-Bold", 27) > W:
+            PROBLEMS.append(f"cover: title line {line!r} is wider than the page")
+    # The title fits the band if its first line stays clear of the band's top row.
+    if base + 29 * (n - 1) + 27 * 0.72 > PH - BAND_ROW - BAND_MARK / 2 - 8:
+        PROBLEMS.append(f"cover: the title's {n} lines run into the band's top row")
+    lay = cover_layout(parts)
+    size, leading = COVER_SUB
+    c.setFillColor(INK); c.setFont("Sans", size)
+    y = PH - BAND - 12 - size * 0.76
+    for line in lay["sub"]:
+        c.drawString(ML, y, line); y -= leading
+    sub_bottom = y + leading - size * 0.24
+    head = part_grid(c, parts, lay["y0"])
+    if sub_bottom - head < 4:
+        PROBLEMS.append(f"cover: the subtitle reaches y={sub_bottom:.1f}, into the family row at {head:.1f}")
     rule(c, MB + 4, weight=1, color=INK)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
     c.drawString(ML, MB - 6, f"{C.COVER_FOOTER} · Version {C.VERSION}")
     tagline(c)
-    check("cover", y)
+    check("cover", lay["y0"])
+
+
+def cover_parts():
+    """The parts on the cover, in entry order: tile key, family, number, name, the line under
+    the name, and the entry's index for the Word document's page reference."""
+    return [dict(key=e["mono"], family=PART_FAMILY[e["mono"]], num=e["num"], name=e["name"],
+                 sub=f"page {ENTRY_PAGE[i]}", ref=i) for i, e in enumerate(C.ENTRIES)]
+
+
 
 def page_why(c, n):
     y = plain_title(c, C.WHY_TITLE)

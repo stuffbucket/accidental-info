@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to the names for things you add to a coding agent
 running_footer: Plugins, Connectors, and Marketplaces
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.2.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 09
+version: 0.3.0
 ---
 
 # What are all these things? {#why}

@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to the Accidental Guides, as of October 2026.
 running_footer: Accidental Intelligence
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.3.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 00
+version: 0.4.0
 ---
 
 # What are the<br/>Accidental Guides? {#why}

@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to getting Thanksgiving dinner on the table, for 
 running_footer: Hosting Thanksgiving
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.4.0
+collection: At the table
+collection_mark: circle
+number: 01
+version: 0.5.0
 ---
 
 # What does hosting<br/>Thanksgiving take? {#why}

@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to finding the smoke alarm that’s chirping, and
 running_footer: Smoke Detectors That Chirp
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.6.0
+collection: Around the house
+collection_mark: triangle
+number: 01
+version: 0.7.0
 ---
 
 # Why is my smoke<br/>alarm chirping? {#why}

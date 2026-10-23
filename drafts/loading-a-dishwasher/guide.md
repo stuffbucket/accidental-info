@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to loading a dishwasher, and settling the argumen
 running_footer: Loading a Dishwasher
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.5.1
+collection: Around the house
+collection_mark: triangle
+number: 02
+version: 0.6.0
 ---
 
 # Is there a right way<br/>to load a dishwasher? {#why}

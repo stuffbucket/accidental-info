@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to light, watering and telling a thirsty plant fr
 running_footer: Is My Houseplant Dying?
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.4.1
+collection: Around the house
+collection_mark: triangle
+number: 03
+version: 0.5.0
 ---
 
 # Is my houseplant dying? {#why}

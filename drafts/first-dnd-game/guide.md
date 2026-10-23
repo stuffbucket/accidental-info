@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to sitting down at your first Dungeons & Dragons 
 running_footer: Your First D&D Game
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.4.0
+collection: Games
+collection_mark: diamond
+number: 01
+version: 0.5.0
 ---
 
 # What happens at<br/>a D&D game? {#why}

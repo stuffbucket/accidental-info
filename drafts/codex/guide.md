@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to where Codex keeps its setup, and which copy wi
 running_footer: OpenAI Codex
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.2.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 05
+version: 0.3.0
 ---
 
 # What can you set up<br/>in Codex? {#why}

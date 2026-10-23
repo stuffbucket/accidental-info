@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to software factories where nobody reads the code
 running_footer: Lights-Off Software Factories
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.4.0
+collection: Accidental Intelligence
+collection_mark: square
+number: 13
+version: 0.5.0
 ---
 
 # What is a lights-off<br/>software factory? {#why}

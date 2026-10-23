@@ -5,7 +5,10 @@ subtitle: A pocket-sized guide to ordering without knowing every name.
 running_footer: Ordering Wine for the Table
 edition: oops@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
-version: 0.3.0
+collection: At the table
+collection_mark: circle
+number: 03
+version: 0.4.0
 ---
 
 # How do you order<br/>wine for the table? {#why}
