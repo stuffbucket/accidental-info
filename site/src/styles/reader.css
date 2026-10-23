@@ -163,6 +163,12 @@ body:has(.reader-chrome) > .site-header {
   opacity: 0;
   pointer-events: none;
 }
+/* While the pages turn between layouts every bar steps aside, even under the pointer: their blurred glass over
+   moving pages costs frames. */
+:root[data-rotating] .reader-bar {
+  opacity: 0;
+  pointer-events: none;
+}
 @media (prefers-reduced-motion: no-preference) {
   :root[data-scrolling] .reader-bar--start:not(:hover, :focus-within),
   :root[data-scrolling] .reader-bar--end:not(:hover, :focus-within),
