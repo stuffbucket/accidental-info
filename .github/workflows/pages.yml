@@ -1,88 +1,59 @@
 name: Pages
 
+# Edits that can't change the site or its files don't build it: guides' notes, the plans, the contributor docs and
+# the issue forms. (README.md does build: the pipeline's test checks its list of guides.)
 on:
   push:
     branches: [main]
+    paths-ignore: &ignored
+      - "**/notes/**"
+      - "docs/**"
+      - "packages/editorial/design/**"
+      - "CONTRIBUTING.md"
+      - "LICENSE"
+      - "LICENSE-TEXT"
+      - ".github/ISSUE_TEMPLATE/**"
   pull_request:
+    paths-ignore: *ignored
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # Builds every guide (failing if a PDF differs from its expected.sha256), tests them and the site, and on main
+  # deploys the site. Guides whose sources didn't change come from the Turborepo cache.
+  site:
+    uses: ./.github/workflows/astro-pages.yml
     permissions:
       contents: read
-      pages: read
-    outputs:
-      origin: ${{ steps.pages.outputs.origin }}
-      base_path: ${{ steps.pages.outputs.base_path }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # Node, pnpm and Python at the versions in mise.toml.
-      - uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
-        with:
-          cache: true
-      - name: Install packages
-        run: pnpm install --frozen-lockfile
-      # Where Pages serves the site: https://stuffbucket.github.io/accidentalguide, or the custom domain
-      # (https://accidental.info, at the root) once one is set.
-      - id: configure
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
-      # Pages reports http:// for a custom domain until it enforces HTTPS; the site is always served
-      # over HTTPS (through Cloudflare), so its links and share images use https://.
-      - id: pages
-        run: |
-          echo "origin=${ORIGIN/#http:/https:}" >> "$GITHUB_OUTPUT"
-          echo "base_path=$BASE_PATH" >> "$GITHUB_OUTPUT"
-        env:
-          ORIGIN: ${{ steps.configure.outputs.origin }}
-          BASE_PATH: ${{ steps.configure.outputs.base_path }}
-      # Builds every guide (failing if a PDF differs from its expected.sha256), then the site.
-      - name: Build and test
-        run: pnpm turbo run build test
-        env:
-          SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
-          SITE_BASE: ${{ steps.pages.outputs.base_path }}
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
-        with:
-          path: site/dist
-      # The guides' list and files, for the release job.
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: guides
-          path: |
-            site/public/guides.json
-            site/public/guides/*.pdf
-            site/public/guides/*.docx
-          if-no-files-found: error
-          retention-days: 7
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+    with:
+      site-dir: site
+      build-command: pnpm turbo run build test
+      turbo: true
+      # The guides' Python packages, and the reader's page images, which are kept by each PDF's hash.
+      cache-paths: |
+        .venv
+        site/node_modules/.cache/guide-pages
+      cache-key-files: |
+        pnpm-lock.yaml
+        mise.toml
+        packages/pipeline/requirements.txt
+      deploy: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+      # The guides' list and files, for the release job.
+      artifact-name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'guides' || '' }}
+      artifact-path: |
+        site/public/guides.json
+        site/public/guides/*.pdf
+        site/public/guides/*.docx
 
   # A GitHub release for each guide version without a tag yet: tag <slug>-v<version>, the PDF and Word files
   # attached, drafts marked as prereleases. Versions that already have a tag are skipped.
   release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
+    needs: site
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -90,6 +61,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          sparse-checkout: site/scripts/release.py
+          sparse-checkout-cone-mode: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: guides
@@ -99,6 +72,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          SITE_ORIGIN: ${{ needs.build.outputs.origin }}
-          SITE_BASE: ${{ needs.build.outputs.base_path }}
+          SITE_ORIGIN: ${{ needs.site.outputs.origin }}
+          SITE_BASE: ${{ needs.site.outputs.base_path }}
           TARGET: ${{ github.sha }}
