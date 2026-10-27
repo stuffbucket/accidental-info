@@ -4,7 +4,7 @@
   "description": "Builds each guide's PDF and Word document from its guide.md",
   "license": "MIT",
   "scripts": {
-    "build": "python3 -m venv ../../.venv && ../../.venv/bin/pip install -q --require-hashes -r requirements.txt",
+    "build": "python3 -m venv ../../.venv && ../../.venv/bin/python3 -m pip install -q --require-hashes -r requirements.txt",
     "test": "python3 workspace.py --check"
   }
 }
