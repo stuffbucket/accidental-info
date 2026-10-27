@@ -1,6 +1,6 @@
 # The PDF build. These versions give a PDF byte-identical to each guide's expected.sha256.
 reportlab==5.0.1
-pillow==12.3.0
+pillow==13.0.0
 charset-normalizer==3.5.1
 # The .docx build: python-docx writes the document, pypdfium2 renders the diagrams from the PDF.
 python-docx==1.2.0
