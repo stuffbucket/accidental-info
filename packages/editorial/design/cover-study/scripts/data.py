@@ -1,6 +1,6 @@
 """Read guide data from the repo (read-only) into data.json for the mockups."""
 import json, os, re, glob
-REPO = os.path.expanduser("~/github/stuffbucket/accidentalguide")
+REPO = os.path.expanduser("~/github/stuffbucket/accidental-info")
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 def guide_dir(slug):

@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        We publish a few guides from other writers. Read [Sending us a guide](https://github.com/stuffbucket/accidentalguide/blob/main/CONTRIBUTING.md#sending-us-a-guide) first. We may close a submission without comment.
+        We publish a few guides from other writers. Read [Sending us a guide](https://github.com/stuffbucket/accidental-info/blob/main/CONTRIBUTING.md#sending-us-a-guide) first. We may close a submission without comment.
   - type: textarea
     id: file
     attributes:

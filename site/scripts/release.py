@@ -20,8 +20,8 @@ import sys
 from pathlib import Path
 
 # Where the site is served; the Pages workflow sets these from actions/configure-pages.
-SITE = (os.environ.get("SITE_ORIGIN", "https://stuffbucket.github.io").rstrip("/")
-        + os.environ.get("SITE_BASE", "/accidentalguide").rstrip("/"))
+SITE = (os.environ.get("SITE_ORIGIN", "https://accidental.info").rstrip("/")
+        + os.environ.get("SITE_BASE", "").rstrip("/"))
 
 
 def tag(guide):

@@ -1,6 +1,6 @@
 """Render covers and a few pages of the existing guides for reference."""
 import sys, glob, os, pypdfium2 as pdfium
-REPO = os.path.expanduser("~/github/stuffbucket/accidentalguide")
+REPO = os.path.expanduser("~/github/stuffbucket/accidental-info")
 out = sys.argv[1]
 os.makedirs(out, exist_ok=True)
 for pdf in sorted(glob.glob(f"{REPO}/guides/*/dist/*.pdf") + glob.glob(f"{REPO}/drafts/*/dist/*.pdf")):

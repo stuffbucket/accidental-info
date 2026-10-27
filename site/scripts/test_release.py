@@ -36,12 +36,12 @@ class Release(unittest.TestCase):
     def test_finished_guide_is_not_a_prerelease(self):
         guide = dict(GUIDE, status="published")
         self.assertNotIn("--prerelease", release.command(guide, self.folder))
-        self.assertIn("https://stuffbucket.github.io/accidentalguide/guides/mcp/", release.notes(guide))
+        self.assertIn("https://accidental.info/guides/mcp/", release.notes(guide))
 
     def test_notes(self):
         text = release.notes(GUIDE)
         self.assertIn("A subtitle.\n\nA blurb.\n\n", text)
-        self.assertIn("Read it online: https://stuffbucket.github.io/accidentalguide/drafts/mcp/", text)
+        self.assertIn("Read it online: https://accidental.info/drafts/mcp/", text)
 
     def test_missing_file_fails(self):
         (self.folder / "guides" / "mcp.docx").unlink()

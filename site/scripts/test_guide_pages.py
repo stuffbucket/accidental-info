@@ -97,7 +97,7 @@ class Diagrams(unittest.TestCase):
     def test_diagram_becomes_page_image(self):
         md = render("software-factories")
         self.assertIn("![One work item through a factory]"
-                      "(/accidentalguide/guides/software-factories/diagram-9.png)", md)
+                      "(/guides/software-factories/diagram-9.png)", md)
         self.assertNotIn("```", md)
         self.assertNotIn("msg ", md)
         # The image sits where the block was, between the two paragraphs.
@@ -222,9 +222,9 @@ class CrossReferences(unittest.TestCase):
     def test_published_guide_is_linked_across_a_line_break(self):
         md = render()
         self.assertIn("[An Accidental Guide to: Lights-Off Software Factories]"
-                      "(/accidentalguide/guides/lights-off-software-factories/)", md)
+                      "(/guides/lights-off-software-factories/)", md)
         self.assertIn("[An Accidental Guide to: Software Factories]"
-                      "(/accidentalguide/guides/software-factories/)", md)
+                      "(/guides/software-factories/)", md)
 
     def test_unpublished_guide_is_left_alone(self):
         md = render()
@@ -237,7 +237,7 @@ class CrossReferences(unittest.TestCase):
     def test_longer_title_wins(self):
         text = gp.link_xrefs("An Accidental Guide to: Lights-Off Software Factories.", PUBLISHED)
         self.assertEqual(text, "[An Accidental Guide to: Lights-Off Software Factories]"
-                               "(/accidentalguide/guides/lights-off-software-factories/).")
+                               "(/guides/lights-off-software-factories/).")
 
 
 class Page(unittest.TestCase):
@@ -250,11 +250,11 @@ class Page(unittest.TestCase):
         self.assertTrue(page.startswith('---\ntitle: "Software Factories"\n'
                                         'description: "A subtitle."\nsidebar:\n  order: 4\nhead:\n'))
         self.assertIn('      property: "og:image"\n'
-                      '      content: "https://stuffbucket.github.io/accidentalguide/guides/software-factories/card.png"\n',
+                      '      content: "https://accidental.info/guides/software-factories/card.png"\n',
                       page)
         self.assertIn('      content: "The cover of Software Factories"\n---\n', page)
-        self.assertIn("Version 0.1.0 · 12 pages · [PDF](/accidentalguide/guides/software-factories.pdf)"
-                      " · [Word](/accidentalguide/guides/software-factories.docx)", page)
+        self.assertIn("Version 0.1.0 · 12 pages · [PDF](/guides/software-factories.pdf)"
+                      " · [Word](/guides/software-factories.docx)", page)
         self.assertIn("\n\nAnother paragraph.\n\n## One work item", page)
 
     def test_sidebar_order(self):

@@ -7,8 +7,8 @@ import tableFocus from "./scripts/table-focus.mjs";
 
 // Where the site is served. The Pages workflow sets SITE_ORIGIN and SITE_BASE from actions/configure-pages, so
 // the site follows the repository's custom domain (https://accidental.info, at the root) once it is set.
-const origin = process.env.SITE_ORIGIN || "https://stuffbucket.github.io";
-const base = `${(process.env.SITE_BASE ?? "/accidentalguide").replace(/\/$/, "")}/`;
+const origin = process.env.SITE_ORIGIN || "https://accidental.info";
+const base = `${(process.env.SITE_BASE ?? "").replace(/\/$/, "")}/`;
 
 // The sidebar: one group per collection in src/data/collections.json, its guides in the order listed there (a
 // collection with a map: its catalog, then each group's guides). scripts/guide_pages.py writes a page for each built
@@ -49,7 +49,7 @@ export default defineConfig({
   base,
   // A short address for the PDFs and Word files to link to. Astro writes a page that sends the reader on (a meta
   // refresh, a canonical link and a plain link to follow), marked noindex and left out of the sitemap.
-  redirects: { "/star": "https://github.com/stuffbucket/accidentalguide" },
+  redirects: { "/star": "https://github.com/stuffbucket/accidental-info" },
   integrations: [
     // Wide tables scroll sideways; this lets a keyboard reach and scroll them, and turns them into cards on a phone.
     tableFocus(),
@@ -62,7 +62,7 @@ export default defineConfig({
         { tag: "meta", attrs: { property: "og:image:height", content: "630" } },
         { tag: "meta", attrs: { property: "og:image:alt", content: "The covers of the Accidental Guides" } },
       ],
-      social: [{ icon: "github", label: "GitHub", href: "https://github.com/stuffbucket/accidentalguide" }],
+      social: [{ icon: "github", label: "GitHub", href: "https://github.com/stuffbucket/accidental-info" }],
       // The "On this page" panel opens and closes from an icon button, and closed it gives the page its room
       // (see the component). The footer adds "Leave a star" below the previous and next links.
       components: {

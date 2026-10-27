@@ -5,7 +5,7 @@
 #
 #   jobs:
 #     site:
-#       uses: stuffbucket/accidentalguide/.github/workflows/astro-pages.yml@<sha> # or ./.github/... in this repo
+#       uses: stuffbucket/accidental-info/.github/workflows/astro-pages.yml@<sha> # or ./.github/... in this repo
 #       permissions: { contents: read, pages: write, id-token: write }
 #       with:
 #         site-dir: site

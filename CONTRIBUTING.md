@@ -5,17 +5,17 @@ and the quickest to act on.
 
 ## Suggest a guide
 
-Open a [Suggest a guide](https://github.com/stuffbucket/accidentalguide/issues/new?template=suggest-a-guide.yml)
+Open a [Suggest a guide](https://github.com/stuffbucket/accidental-info/issues/new?template=suggest-a-guide.yml)
 issue. Name the question the guide would answer, and who asks it.
 
 ## Report a mistake
 
-- **A wrong fact:** open a [Something is wrong](https://github.com/stuffbucket/accidentalguide/issues/new?template=something-is-wrong.yml)
+- **A wrong fact:** open a [Something is wrong](https://github.com/stuffbucket/accidental-info/issues/new?template=something-is-wrong.yml)
   issue. Name the guide, quote the sentence, and say what's true. Link a source if you have
   one.
 - **A word used two ways:** every guide uses one name for each thing, and a word keeps one
   meaning in every guide. When a word means two things, open an
-  [A word is used two ways](https://github.com/stuffbucket/accidentalguide/issues/new?template=word-used-two-ways.yml)
+  [A word is used two ways](https://github.com/stuffbucket/accidental-info/issues/new?template=word-used-two-ways.yml)
   issue and quote both places.
 
 A small fix can also come as a pull request that changes the guide's `guide.md`.
@@ -34,7 +34,7 @@ check.
 
 1. Write it in the [Word template](https://accidental.info/accidental-guide-template.docx):
    one question, six parts at most, about a page each.
-2. Open a [Send a guide](https://github.com/stuffbucket/accidentalguide/issues/new?template=send-a-guide.yml)
+2. Open a [Send a guide](https://github.com/stuffbucket/accidental-info/issues/new?template=send-a-guide.yml)
    issue and drag the `.docx` into the description field.
 
 What we check:
@@ -62,7 +62,7 @@ CC BY 4.0, so we can edit, publish and translate it.
 ## Start a draft
 
 This is for people already writing with us. A guide from anyone else starts as a
-[Send a guide](https://github.com/stuffbucket/accidentalguide/issues/new?template=send-a-guide.yml)
+[Send a guide](https://github.com/stuffbucket/accidental-info/issues/new?template=send-a-guide.yml)
 issue.
 
 
@@ -87,7 +87,7 @@ guide's `README.md` describes the Markdown. Then add the draft to the workspace 
 ```sh
 pnpm sync
 pnpm build
-pnpm preview    # http://localhost:4321/accidentalguide/drafts/<slug>/
+pnpm preview    # http://localhost:4321/drafts/<slug>/
 ```
 
 Open a pull request with the folder. A draft moves to `guides/` when it's finished.

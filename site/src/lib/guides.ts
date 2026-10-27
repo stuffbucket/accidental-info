@@ -96,4 +96,4 @@ export function loadCollections(): Collection[] {
 
 /** The site's base path, ending in a slash. */
 export const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-export const repo = "https://github.com/stuffbucket/accidentalguide";
+export const repo = "https://github.com/stuffbucket/accidental-info";

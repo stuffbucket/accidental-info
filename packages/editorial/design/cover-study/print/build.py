@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the print PDF of the design study.
 
-  ~/github/stuffbucket/accidentalguide/.venv/bin/python print/build.py [check-dir]
+  ~/github/stuffbucket/accidental-info/.venv/bin/python print/build.py [check-dir]
 
 1. Makes print/print.html from ../index.html (read only): paths re-rooted to ../,
    lazy loading removed, the masthead/hero/answer wrapped as a title page,

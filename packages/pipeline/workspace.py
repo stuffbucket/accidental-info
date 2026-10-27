@@ -28,7 +28,7 @@ def guide_package(slug):
     }
 
 
-SITE = "https://stuffbucket.github.io/accidentalguide"
+SITE = "https://accidental.info"
 
 
 def front_matter(folder):

@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 // Sites that show a link's preview need absolute addresses.
 const url = new URL(Astro.url.pathname, Astro.site).href;
 const imageUrl = new URL(`${base}${image}`, Astro.site).href;
-const repo = "https://github.com/stuffbucket/accidentalguide";
+const repo = "https://github.com/stuffbucket/accidental-info";
 ---
 
 <!doctype html>
