@@ -32,6 +32,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -199,7 +200,9 @@ def render_body(sections, guide_id, published, diagram_pages, fit_page=None, fen
 
         for block in s.blocks:
             emit(block)
-        if s.id == "fit" and fit_page:
+        # The overview figure, unless one of the section's own diagrams is already that page.
+        own = {page for (i, _), page in diagram_pages.items() if i == si}
+        if s.id == "fit" and fit_page and fit_page not in own:
             out.append(image(s, guide_id, fit_page))
     return "\n\n".join(out) + "\n"
 
@@ -279,7 +282,17 @@ def diagram_labels(lines):
             labels += rest.split(" -> ")
         elif kind == "board":
             labels.append(rest.split("|")[0])
+        elif kind in FIRST_FIELD_KINDS:
+            # These figure kinds print their first field, such as a heading, a label, a
+            # part's tile key or a threshold.
+            labels.append(rest.split("|")[0])
     return [normalize(l) for l in labels if l.strip()]
+
+
+# The figure kinds in guides/decision-models and guides/judgment-to-action.
+FIRST_FIELD_KINDS = {"message", "ask", "answer", "group", "step", "input", "output", "missing", "side",
+                     "shape", "case", "model", "fact", "rules", "rule", "rule*", "outcome", "yes", "no",
+                     "cut", "try", "axis", "zone", "ruleset", "record", "field"}
 
 
 def find_page(texts, title, labels=(), window=120):
@@ -536,6 +549,29 @@ def render_pages(pdf, pdf_path, out_dir):
     return cached
 
 
+def builder_figures(folder):
+    """Where the guide's PDF builder drew each figure, as [(page, (x0, y0, x1, y1))] in PDF points
+    and in drawing order, when the builder records them (build_guide.figure_boxes). None
+    otherwise. The builder runs in its own process so each guide imports its own content.py."""
+    if "def figure_boxes" not in (folder / "build_guide.py").read_text(encoding="utf-8"):
+        return None
+    code = "import json, build_guide as G; print(json.dumps(G.figure_boxes()))"
+    out = subprocess.run([sys.executable, "-c", code], cwd=folder, capture_output=True, text=True)
+    if out.returncode:
+        sys.exit(f"{folder.name}: figure_boxes() failed\n{out.stderr}")
+    return [(page, tuple(box)) for page, box in json.loads(out.stdout.strip().splitlines()[-1])]
+
+
+def render_box(pdf, page_number, box, path, pad=6):
+    """Render the part of one PDF page inside box (PDF points, origin bottom-left), with pad
+    points of white around it."""
+    page = pdf[page_number - 1]
+    w, h = page.get_size()
+    x0, y0, x1, y1 = max(0, box[0] - pad), max(0, box[1] - pad), min(w, box[2] + pad), min(h, box[3] + pad)
+    img = page.render(scale=SCALE, crop=(x0, y0, w - x1, h - y1)).to_pil().convert("RGB")
+    save_png(img, path)
+
+
 def save_png(image, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path, optimize=True)
@@ -600,21 +636,36 @@ def main():
                 save_png(guide_card(cover, g["title"], g["subtitle"]), out_dir / "card.png")
             texts = page_texts(pdf)
             diagram_pages, fences = {}, {}
+            boxes = builder_figures(folder)
+            drawn = iter(boxes or ())
+            exact = {}  # page: the box its builder recorded
             langs = iter(fence_langs((folder / "guide.md").read_text(encoding="utf-8")))
             for si, s in enumerate(sections):
-                for di, block in enumerate(b for b in s.blocks if b[0] == "diagram"):
+                # Entry figures sit in the entry's own section; take every diagram in order.
+                blocks_ = [x for b in s.blocks for x in (b[1] if b[0] == "grey" else [b])]
+                for di, block in enumerate(b for b in blocks_ if b[0] == "diagram"):
                     lang = next(langs)
-                    if lang == "diagram":
+                    if lang == "diagram" and boxes is not None:
+                        page, box = next(drawn)
+                        if page in exact:
+                            sys.exit(f"{gid}: two figures on page {page}; the site shows one per page")
+                        diagram_pages[(si, di)], exact[page] = page, box
+                    elif lang == "diagram":
                         diagram_pages[(si, di)] = find_page(texts, s.title, diagram_labels(block[1]))
                     else:
                         fences[(si, di)] = lang
+            if boxes is not None and next(drawn, None) is not None:
+                sys.exit(f"{gid}: the builder drew more figures than guide.md has diagram blocks")
             fit_page = None
             fit = next((s for s in sections if s.id == "fit"), None)
             if fit and "def page_fit" in (folder / "build_guide.py").read_text(encoding="utf-8"):
                 fit_page = find_page(texts, fit.title)
             figures = {n: sections[si] for (si, _di), n in diagram_pages.items()}
             for n, section in sorted(figures.items()):
-                render_diagram(pdf, n, section, out_dir / f"diagram-{n}.png")
+                if n in exact:
+                    render_box(pdf, n, exact[n], out_dir / f"diagram-{n}.png")
+                else:
+                    render_diagram(pdf, n, section, out_dir / f"diagram-{n}.png")
             # The overview page may be text only; then there is no figure to show.
             if fit_page and fit_page not in figures:
                 try:

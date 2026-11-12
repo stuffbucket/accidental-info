@@ -3,12 +3,12 @@ title: Getting Out of Trouble in Chess
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to five common problem positions, and the clearest way out of each.
 running_footer: Getting Out of Trouble in Chess
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Games
 collection_mark: diamond
 number: 06
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What are the<br/>five problems? {#why}

@@ -3,12 +3,12 @@ title: Agents, Harnesses, Skills, and Tools
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to the AI coding systems of mid-October 2026 (morning edition).
 running_footer: Accidental Guide to AI
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 01
-version: 1.1.0
+version: 1.1.1
 ---
 
 # Which words this guide uses {#why}

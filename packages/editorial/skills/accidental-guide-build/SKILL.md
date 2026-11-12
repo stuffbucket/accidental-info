@@ -32,7 +32,7 @@ Run every command from the repository root. `GUIDE` is the guide folder (`drafts
    `python3 SCRIPTS/new_guide.py lights-off-software-factories <slug> --title "<Title>" [--guide-md <placeholder guide.md>]`.
    Use `specs-and-reviews` as the source instead if the plan needs grey blocks, callouts,
    packed pages or a sequence diagram. The script sets the public imprint in the front
-   matter (`edition: oops@accidental.info · CC BY 4.0 · <Month Year>` and
+   matter (`edition: friend@accidental.info · CC BY 4.0 · <Month Year>` and
    `cover_footer: friend@accidental.info · <Month Year>`) and the author "Accidental Guides" in
    the builders.
 3. Run `pnpm sync` to add the folder to the workspace. It writes the guide's

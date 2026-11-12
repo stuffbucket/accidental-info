@@ -3,12 +3,12 @@ title: Software Factories
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to software delivery run by coding agents, as of October 2026.
 running_footer: Software Factories
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 12
-version: 0.2.0
+version: 0.2.1
 ---
 
 # What is a software factory? {#why}

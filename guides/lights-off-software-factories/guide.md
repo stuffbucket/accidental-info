@@ -3,12 +3,12 @@ title: Lights-Off Software Factories
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to software factories where nobody reads the code, as of October 2026.
 running_footer: Lights-Off Software Factories
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 13
-version: 0.5.0
+version: 0.5.1
 ---
 
 # What is a lights-off<br/>software factory? {#why}

@@ -3,12 +3,12 @@ title: Claude Desktop
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where Claude Desktop keeps its settings, as of October 2026.
 running_footer: Claude Desktop
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 03
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What can you set up<br/>in Claude Desktop? {#why}

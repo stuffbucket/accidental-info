@@ -3,12 +3,12 @@ title: Ordering Wine for the Table
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to ordering without knowing every name.
 running_footer: Ordering Wine for the Table
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: At the table
 collection_mark: circle
 number: 03
-version: 0.4.0
+version: 0.4.1
 ---
 
 # How do you order<br/>wine for the table? {#why}

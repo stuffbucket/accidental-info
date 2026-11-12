@@ -3,12 +3,12 @@ title: The First Move in Chess
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to what to play first, as White or as Black.
 running_footer: The First Move in Chess
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Games
 collection_mark: diamond
 number: 02
-version: 0.4.0
+version: 0.4.1
 ---
 
 # What should your<br/>first move be? {#why}

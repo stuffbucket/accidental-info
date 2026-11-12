@@ -1,9 +1,10 @@
 # Registry of key concepts
 
 One list of the key concepts in the Accidental Guides, so a concept has the same tile code,
-the same color and one owning guide everywhere. Written on 22 October 2026 from each guide's
+the same color and one owning guide everywhere. Updated on 12 November 2026 from each guide's
 `guide.md` and `build_guide.py`, and from the plan skill's `list_concepts.py`.
-`registry.json` holds the same table for a builder to read.
+`registry.json` is the canonical structured registry. The concept table in this file is generated
+from it.
 
 "Changes per guide" lists the work each guide needed on that date. Some of it is done, such
 as the code changes in the drafts, so check a guide's `guide.md` and `build_guide.py` before
@@ -43,20 +44,21 @@ Hex values are the `TOKENS` in every `build_guide.py`.
 
 ## Concepts
 
-54 concepts. "Appears in" lists the guides other than the owner that show the tile now
+63 concepts. "Appears in" lists the guides other than the owner that show the tile now
 (tiles in entries and tiles the builders draw from `NAME2MONO`). The catalog, Accidental
 Intelligence, shows the parts of its seven guides on its map and isn't listed in each row.
 
+<!-- registry:concepts:start -->
 | Concept | Code | Family | Color | Hex | Owner | Appears in |
 |---|---|---|---|---|---|---|
 | Model | `Mo` | Ru | yellow | `#FFCD29` | agents-harnesses-skills-tools | — |
-| Harness | `Ha` | Ru | yellow | `#FFCD29` | agents-harnesses-skills-tools | harness-engineering (outlined now) |
-| Agent | `Ag` | Ru | yellow | `#FFCD29` | agents-harnesses-skills-tools | copilot-cli, visual-studio-and-vs-code (both "Custom agent"), harness-engineering (outlined now) |
-| Tool | `To` | Us | red-orange | `#F24822` | agents-harnesses-skills-tools | plugins-and-marketplaces, harness-engineering (outlined now) |
-| Instructions file | `In` | Wr | purple | `#9747FF` | agents-harnesses-skills-tools | claude-code, claude-desktop ("Instructions"), codex, copilot-cli, visual-studio-and-vs-code, plugins-and-marketplaces ("Instructions"), harness-engineering (outlined now) |
-| Permissions | `Pe` | Dm | pink | `#E83FBF` | agents-harnesses-skills-tools | codex, harness-engineering (outlined now) |
-| Settings | `Se` | Dm | pink | `#E83FBF` | none yet | claude-code, claude-desktop ("Settings and permissions"), codex ("Config file"), copilot-cli, visual-studio-and-vs-code |
-| Skill | `Sk` | Wr | purple | `#9747FF` | skills | agents-harnesses-skills-tools, claude-code, claude-desktop, codex, copilot-cli, visual-studio-and-vs-code, harness-engineering (outlined now) |
+| Harness | `Ha` | Ru | yellow | `#FFCD29` | agents-harnesses-skills-tools | harness-engineering (outlined) |
+| Agent | `Ag` | Ru | yellow | `#FFCD29` | agents-harnesses-skills-tools | copilot-cli ("Custom agent"), visual-studio-and-vs-code ("Custom agent"), harness-engineering ("Agent, Main agent") (outlined) |
+| Tool | `To` | Us | red-orange | `#F24822` | agents-harnesses-skills-tools | plugins-and-marketplaces ("Tools"), harness-engineering (outlined) |
+| Instructions file | `In` | Wr | purple | `#9747FF` | agents-harnesses-skills-tools | claude-code, claude-desktop ("Instructions"), codex, copilot-cli, visual-studio-and-vs-code, plugins-and-marketplaces ("Instructions"), harness-engineering (outlined) |
+| Permissions | `Pe` | Dm | pink | `#E83FBF` | agents-harnesses-skills-tools | codex, harness-engineering (outlined) |
+| Settings | `Se` | Dm | pink | `#E83FBF` | none yet | claude-code, claude-desktop ("Settings and permissions"), codex ("Config file"), copilot-cli, visual-studio-and-vs-code ("Setting") |
+| Skill | `Sk` | Wr | purple | `#9747FF` | skills | agents-harnesses-skills-tools, claude-code, claude-desktop ("Skills"), codex, copilot-cli, visual-studio-and-vs-code, harness-engineering (outlined) |
 | Description | `Ds` | Wr | purple | `#9747FF` | skills | — |
 | Skill instructions | `Is` | Wr | purple | `#9747FF` | skills | — |
 | Script | `Sr` | Us | red-orange | `#F24822` | skills | — |
@@ -67,7 +69,7 @@ Intelligence, shows the parts of its seven guides on its map and isn't listed in
 | Server entry | `En` | Dm | pink | `#E83FBF` | mcp | — |
 | Transport | `Tp` | Us | red-orange | `#F24822` | mcp | — |
 | Hook | `Hk` | Ru | yellow | `#FFCD29` | plugins-and-marketplaces | — |
-| Plugin | `Pl` | Us | red-orange | `#F24822` | plugins-and-marketplaces | claude-code, claude-desktop |
+| Plugin | `Pl` | Us | red-orange | `#F24822` | plugins-and-marketplaces | claude-code, claude-desktop ("Plugins") |
 | Marketplace | `Mk` | Wr | purple | `#9747FF` | plugins-and-marketplaces | — |
 | Token | `Tk` | Nu | blue | `#0D99FF` | context-windows | — |
 | Startup context | `St` | Wr | purple | `#9747FF` | context-windows | — |
@@ -79,18 +81,18 @@ Intelligence, shows the parts of its seven guides on its map and isn't listed in
 | Acceptance criteria | `Ac` | Dm | pink | `#E83FBF` | specs-and-reviews | — |
 | Review | `Rv` | Ck | green | `#14AE5C` | specs-and-reviews | — |
 | Orchestrator | `Or` | Ru | yellow | `#FFCD29` | software-factories | — |
-| Agent session | `As` | Ru | yellow | `#FFCD29` | software-factories | harness-engineering (outlined now) |
-| Gate | `Ga` | Ck | green | `#14AE5C` | software-factories | harness-engineering, running-a-software-factory (both outlined now) |
+| Agent session | `As` | Ru | yellow | `#FFCD29` | software-factories | harness-engineering (outlined) |
+| Gate | `Ga` | Ck | green | `#14AE5C` | software-factories | harness-engineering (outlined), running-a-software-factory (outlined) |
 | Scenario | `Sn` | Wr | purple | `#9747FF` | lights-off-software-factories | — |
 | Digital twin | `Dt` | Us | red-orange | `#F24822` | lights-off-software-factories | — |
 | Satisfaction | `Sa` | Ck | green | `#14AE5C` | lights-off-software-factories | — |
 | Closed loop | `Cl` | Ru | yellow | `#FFCD29` | lights-off-software-factories | — |
-| Check | `Ch` | Ck | green | `#14AE5C` | harness-engineering | running-a-software-factory (outlined now) |
+| Check | `Ch` | Ck | green | `#14AE5C` | harness-engineering | running-a-software-factory (outlined) |
 | Review agent | `Ra` | Ck | green | `#14AE5C` | harness-engineering | — |
 | Eval | `Ev` | Ck | green | `#14AE5C` | harness-engineering | — |
 | Outer loop | `Ol` | Ru | yellow | `#FFCD29` | harness-engineering | — |
 | Progress file | `Pf` | Wr | purple | `#9747FF` | harness-engineering | — |
-| Sandbox | `Sb` | Us | red-orange | `#F24822` | harness-engineering | running-a-software-factory (outlined now) |
+| Sandbox | `Sb` | Us | red-orange | `#F24822` | harness-engineering | running-a-software-factory (outlined) |
 | Accepted output | `Ao` | Dm | pink | `#E83FBF` | running-a-software-factory | — |
 | Boundary | `Bd` | Dm | pink | `#E83FBF` | running-a-software-factory | — |
 | Identity | `Id` | Dm | pink | `#E83FBF` | running-a-software-factory | — |
@@ -103,6 +105,16 @@ Intelligence, shows the parts of its seven guides on its map and isn't listed in
 | Demo | `De` | Nu | blue | `#0D99FF` | software-factory-claims | — |
 | Headcount | `Hc` | Nu | blue | `#0D99FF` | software-factory-claims | — |
 | Dark factory | `Df` | Nu | blue | `#0D99FF` | software-factory-claims | — |
+| Decision model | `Dj` | Ru | yellow | `#FFCD29` | decision-models | — |
+| State | `Si` | Wr | purple | `#9747FF` | decision-models | — |
+| Judgment question | `Jq` | Wr | purple | `#9747FF` | decision-models | — |
+| Allowed answers | `Al` | Wr | purple | `#9747FF` | decision-models | — |
+| Probability | `Pb` | Nu | blue | `#0D99FF` | decision-models | — |
+| Policy | `Po` | Dm | pink | `#E83FBF` | judgment-to-action | — |
+| Threshold | `Td` | Dm | pink | `#E83FBF` | judgment-to-action | — |
+| Review path | `Rp` | Dm | pink | `#E83FBF` | judgment-to-action | — |
+| Labeled case | `Lc` | Wr | purple | `#9747FF` | judgment-to-action | — |
+<!-- registry:concepts:end -->
 
 ### How the clashes were settled
 

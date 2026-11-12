@@ -11,14 +11,14 @@ lowercase words joined by hyphens, and it names the output files.
 
 What it does:
   - copies every file except dist/, node_modules/, __pycache__, built PDFs and .docx files,
-    package.json (pnpm sync writes a new one) and expected.sha256;
+    package.json (pnpm sync writes a new one), expected.sha256 and template-only rename.py;
   - replaces the old slug and the old title with the new ones in build_guide.py,
     build_docx.py and README.md;
   - sets COVER_LINES in build_guide.py from the new title;
   - sets the PDF's and the Word document's author to "Accidental Guides";
   - in guide.md (copied, or taken from --guide-md), sets title to the new title, version to
     0.1.0, and the public imprint:
-        edition: oops@accidental.info · CC BY 4.0 · <Month Year>
+        edition: friend@accidental.info · CC BY 4.0 · <Month Year>
         cover_footer: friend@accidental.info · <Month Year>
     with this month unless --month is given, and the cover's collection, collection_mark
     and number from site/src/data/collections.json, as pnpm sync does (placeholders if the
@@ -37,7 +37,7 @@ from pathlib import Path
 
 SKIP_DIRS = {"__pycache__", "dist", "node_modules", ".turbo"}
 SKIP_SUFFIXES = {".pdf", ".docx", ".pyc"}
-SKIP_NAMES = {"expected.sha256", ".DS_Store", "package.json"}
+SKIP_NAMES = {"expected.sha256", ".DS_Store", "package.json", "rename.py"}
 TEXT_FILES = ("build_guide.py", "build_docx.py", "README.md")
 AUTHOR = "Accidental Guides"
 
@@ -146,7 +146,10 @@ def main():
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
-        text = text.replace(old_slug, new_slug)
+        if name == "README.md":
+            text = text.replace(old_slug, new_slug)
+        else:  # only output file names: a slug such as "template" is also an ordinary word in comments
+            text = re.sub(rf"\b{re.escape(old_slug)}(?=\.(?:pdf|docx)\b)", new_slug, text)
         if old_title:
             text = text.replace(old_title, args.title)
         if name == "build_guide.py":
@@ -164,7 +167,7 @@ def main():
     lines, _ = front_matter(guide)
     set_key(lines, "title", args.title)
     set_key(lines, "version", "0.1.0")
-    set_key(lines, "edition", f"oops@accidental.info · CC BY 4.0 · {args.month}")
+    set_key(lines, "edition", f"friend@accidental.info · CC BY 4.0 · {args.month}")
     set_key(lines, "cover_footer", f"friend@accidental.info · {args.month}")
     keys = cover_keys(root, new_slug)
     for key, value in (keys or PLACEHOLDER_KEYS).items():

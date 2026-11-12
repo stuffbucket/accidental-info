@@ -314,6 +314,18 @@ importers:
         specifier: workspace:*
         version: link:../../packages/pipeline
 
+  guides/decision-models:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
+  guides/judgment-to-action:
+    devDependencies:
+      '@accidentalguide/pipeline':
+        specifier: workspace:*
+        version: link:../../packages/pipeline
+
   guides/lights-off-software-factories:
     devDependencies:
       '@accidentalguide/pipeline':
@@ -402,6 +414,9 @@ importers:
       '@accidentalguide/copilot-cli':
         specifier: workspace:*
         version: link:../drafts/copilot-cli
+      '@accidentalguide/decision-models':
+        specifier: workspace:*
+        version: link:../guides/decision-models
       '@accidentalguide/first-dnd-game':
         specifier: workspace:*
         version: link:../drafts/first-dnd-game
@@ -417,6 +432,9 @@ importers:
       '@accidentalguide/is-my-houseplant-dying':
         specifier: workspace:*
         version: link:../drafts/is-my-houseplant-dying
+      '@accidentalguide/judgment-to-action':
+        specifier: workspace:*
+        version: link:../guides/judgment-to-action
       '@accidentalguide/lights-off-software-factories':
         specifier: workspace:*
         version: link:../guides/lights-off-software-factories

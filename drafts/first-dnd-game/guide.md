@@ -3,12 +3,12 @@ title: Your First D&D Game
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to sitting down at your first Dungeons & Dragons table, as of October 2026.
 running_footer: Your First D&D Game
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Games
 collection_mark: diamond
 number: 01
-version: 0.5.0
+version: 0.5.1
 ---
 
 # What happens at<br/>a D&D game? {#why}

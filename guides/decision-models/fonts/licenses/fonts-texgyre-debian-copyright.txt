@@ -1,0 +1,430 @@
+This package was debianized by Norbert Preining <preining@debian.org> on
+Thu, 23 Aug 2007 18:38:31 +0200.
+
+The following TeX Live packages were downloaded from 
+    http://www.ctan.org/tex-archive/systems/texlive/tlnet/archive/
+and merged into one orig.tar.gz file:
+    tex-gyre.tar.xz
+    tex-gyre.doc.tar.xz
+    tex-gyre-math.tar.xz
+    tex-gyre-math.doc.tar.xz
+This is done with the script debian/make-orig-tar
+
+Upstream work
+-------------
+
+We include the relevant parts from the various README-* files:
+
+-----  README-TeX-Gyre-Adventor.txt:
+License:
+  % Copyright 2007--2018 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Adventor.txt file.
+
+
+----- README-TeX-Gyre-Bonum.txt
+License:
+  % Copyright 2007--2009 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  % The original Greek symbols were replaced by the relevant glyphs
+  % from the Kerkis package (http://iris.math.aegean.gr/kerkis/)
+  % with the kind permission of the authors, Apostolos Syropoulos
+  % and Antonis Tsolomitis.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed in
+  %   % in the MANIFEST-TeX-Gyre-Bonum.txt file.
+
+
+----- README-TeX-Gyre-Chorus.txt
+License:
+  % Copyright 2007--2009 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Chorus.txt file.
+
+
+----- README-TeX-Gyre-Cursor.txt
+License:
+  % Copyright 2007--2009 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed in
+  % the MANIFEST-TeX-Gyre-Cursor.txt file.
+
+
+----- README-TeX-Gyre-Heros.txt
+License:
+  % Copyright 2007--2009 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Heros.txt file.
+
+
+----- README-TeX-Gyre-Pagella.txt
+License:
+  % Copyright 2006--2018 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Pagella.txt file.
+
+
+----- README-TeX-Gyre-Schola.txt
+License:
+  % Copyright 2007--2009 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed in
+  % in the MANIFEST-TeX-Gyre-Schola.txt file.
+
+
+----- README-TeX-Gyre-Termes.txt
+License:
+  % Copyright 2006--2009 for TeX Gyre extensions by B. Jackowski
+  % and J.M. Nowacki (on behalf of TeX Users Groups).
+  % Vietnamese characters were added by Han The Thanh.
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt ).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski and Janusz M. Nowacki.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Termes.txt file.
+
+
+----- README-TeX-Gyre-Bonum-Math.txt
+License:
+  % Copyright 2014 for the TeX Gyre math extensions by B. Jackowski,
+  % P. Strzelczyk and P. Pianowski (on behalf of TeX Users Groups).
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski, Piotr Strzelczyk and Piotr Pianowski.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Bonum.txt file.
+
+
+----- README-TeX-Gyre-Pagella-Math.txt
+License:
+  % Copyright 2012--2014 for the TeX Gyre math extensions by B. Jackowski,
+  % P. Strzelczyk and P. Pianowski (on behalf of TeX Users Groups).
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski, Piotr Strzelczyk and Piotr Pianowski.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Pagella.txt file.
+
+
+----- README-TeX-Gyre-Schola-Math.txt
+License:
+  % Copyright 2014 for the TeX Gyre math extensions by B. Jackowski,
+  % P. Strzelczyk and P. Pianowski (on behalf of TeX Users Groups).
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski, Piotr Strzelczyk and Piotr Pianowski.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Schola.txt file.
+
+
+----- README-TeX-Gyre-Termes-Math.txt
+License:
+  % Copyright 2012--2014 for the TeX Gyre math extensions by B. Jackowski,
+  % P. Strzelczyk and P. Pianowski (on behalf of TeX Users Groups).
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski, Piotr Strzelczyk and Piotr Pianowski.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-Termes.txt file.
+
+
+-----  README-TeX-Gyre-DejaVu-Math.txt
+License:
+  % Copyright 2016 for TeX Gyre math extensions by B. Jackowski,
+  % P. Strzelczyk and P. Pianowski (on behalf of TeX Users Groups).
+  %
+  % Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved.
+  % DejaVu changes are in public domain (see the LICENSE-DejaVu.txt file).
+  %
+  % This work can be freely used and distributed under
+  % the GUST Font License (GFL -- see GUST-FONT-LICENSE.txt)
+  % which is actually an instance of the LaTeX Project Public License
+  % (LPPL -- see http://www.latex-project.org/lppl.txt).
+  %
+  % This work has the maintenance status "maintained". The Current Maintainer
+  % of this work is Bogus\l{}aw Jackowski, Piotr Strzelczyk and Piotr Pianowski.
+  %
+  % This work consists of the files listed
+  % in the MANIFEST-TeX-Gyre-DejaVu-Math.txt file.
+
+
+
+------------------
+
+See the appendix A for the GUST Font License.
+See the appendix B for the DejaVu License.
+
+Debian packaging
+----------------
+
+Copyright (c) 2004-2007 Florent Rougon
+Copyright (c) 2007-2016 Norbert Preining
+
+The packaging of the TeX Gyre fonts are based heavily on Florent's 
+package for the Latin Modern fonts (lmodern).
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; version 2 dated June, 1991.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; see the file COPYING. If not, write to the
+   Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+   Boston, MA  02110-1301 USA.
+
+On Debian systems, the complete text of the GNU General Public License version
+2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+
+Appendix A -- GUST Font License
+-------------------------------
+
+What follows is the exact contents of GUST-FONT-LICENSE.txt from the
+upstream distribution of the TeX Gyre fonts.
+
+
+% This is a preliminary version (2006-09-30), barring acceptance from
+% the LaTeX Project Team and other feedback, of the GUST Font License.
+% (GUST is the Polish TeX Users Group, http://www.gust.org.pl)
+%
+% For the most recent version of this license see
+% http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt
+% or
+% http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+%
+% This work may be distributed and/or modified under the conditions
+% of the LaTeX Project Public License, either version 1.3c of this
+% license or (at your option) any later version.
+% 
+% Please also observe the following clause:
+% 1) it is requested, but not legally required, that derived works be
+%    distributed only after changing the names of the fonts comprising this
+%    work and given in an accompanying "manifest", and that the
+%    files comprising the Work, as listed in the manifest, also be given
+%    new names. Any exceptions to this request are also given in the
+%    manifest.
+%    
+%    We recommend the manifest be given in a separate file named
+%    MANIFEST-<fontid>.txt, where <fontid> is some unique identification
+%    of the font family. If a separate "readme" file accompanies the Work, 
+%    we recommend a name of the form README-<fontid>.txt.
+%
+% The latest version of the LaTeX Project Public License is in
+% http://www.latex-project.org/lppl.txt and version 1.3c or later
+% is part of all distributions of LaTeX version 2006/05/20 or later.
+
+
+
+Appendix B -- DejaVu License
+----------------------------
+
+What follows is the exact contents of LICENSE-DejaVu.txt from the
+upstream distribution of the TeX Gyre fonts.
+
+Fonts are (c) Bitstream (see below). DejaVu changes are in public domain.
+Glyphs imported from Arev fonts are (c) Tavmjong Bah (see below)
+
+Bitstream Vera Fonts Copyright
+------------------------------
+
+Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream Vera is
+a trademark of Bitstream, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the fonts accompanying this license ("Fonts") and associated
+documentation files (the "Font Software"), to reproduce and distribute the
+Font Software, including without limitation the rights to use, copy, merge,
+publish, distribute, and/or sell copies of the Font Software, and to permit
+persons to whom the Font Software is furnished to do so, subject to the
+following conditions:
+
+The above copyright and trademark notices and this permission notice shall
+be included in all copies of one or more of the Font Software typefaces.
+
+The Font Software may be modified, altered, or added to, and in particular
+the designs of glyphs or characters in the Fonts may be modified and
+additional glyphs or characters may be added to the Fonts, only if the fonts
+are renamed to names not containing either the words "Bitstream" or the word
+"Vera".
+
+This License becomes null and void to the extent applicable to Fonts or Font
+Software that has been modified and is distributed under the "Bitstream
+Vera" names.
+
+The Font Software may be sold as part of a larger software package but no
+copy of one or more of the Font Software typefaces may be sold by itself.
+
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT,
+TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL BITSTREAM OR THE GNOME
+FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING
+ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE
+FONT SOFTWARE.
+
+Except as contained in this notice, the names of Gnome, the Gnome
+Foundation, and Bitstream Inc., shall not be used in advertising or
+otherwise to promote the sale, use or other dealings in this Font Software
+without prior written authorization from the Gnome Foundation or Bitstream
+Inc., respectively. For further information, contact: fonts at gnome dot
+org. 
+
+Arev Fonts Copyright
+------------------------------
+
+Copyright (c) 2006 by Tavmjong Bah. All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the fonts accompanying this license ("Fonts") and
+associated documentation files (the "Font Software"), to reproduce
+and distribute the modifications to the Bitstream Vera Font Software,
+including without limitation the rights to use, copy, merge, publish,
+distribute, and/or sell copies of the Font Software, and to permit
+persons to whom the Font Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright and trademark notices and this permission notice
+shall be included in all copies of one or more of the Font Software
+typefaces.
+
+The Font Software may be modified, altered, or added to, and in
+particular the designs of glyphs or characters in the Fonts may be
+modified and additional glyphs or characters may be added to the
+Fonts, only if the fonts are renamed to names not containing either
+the words "Tavmjong Bah" or the word "Arev".
+
+This License becomes null and void to the extent applicable to Fonts
+or Font Software that has been modified and is distributed under the 
+"Tavmjong Bah Arev" names.
+
+The Font Software may be sold as part of a larger software package but
+no copy of one or more of the Font Software typefaces may be sold by
+itself.
+
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL
+TAVMJONG BAH BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+Except as contained in this notice, the name of Tavmjong Bah shall not
+be used in advertising or otherwise to promote the sale, use or other
+dealings in this Font Software without prior written authorization
+from Tavmjong Bah. For further information, contact: tavmjong @ free
+. fr.
+
+$Id: LICENSE 2133 2007-11-28 02:46:28Z lechimp $

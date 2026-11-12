@@ -3,12 +3,12 @@ title: Stopping Scholar’s Mate
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to spotting the four-move checkmate, and making it backfire.
 running_footer: Stopping Scholar’s Mate
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Games
 collection_mark: diamond
 number: 04
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What is<br/>Scholar’s Mate? {#why}

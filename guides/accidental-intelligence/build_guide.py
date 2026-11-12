@@ -614,8 +614,11 @@ def page_cards(c, n, pg):
     footer(c, n); check(f"cards {pg['title']}", y)
 
 STAR_LABEL, STAR_TEXT, STAR_URL = "Leave a star: ", "accidental.info/star", "https://accidental.info/star/"
+CONTACT_EMAIL = "friend@accidental.info"
+_EDITION_PARTS = [part for part in C.EDITION.split(" · ") if "@" not in part]
+END_FOOTER = " · ".join([CONTACT_EMAIL, *_EDITION_PARTS])
 
-TAGLINE = "My friend has a lot of questions."
+TAGLINE = "My friend has some questions."
 
 def tagline(c):
     """The series' line, right-aligned above the footer's rule on the cover and the end page.
@@ -636,7 +639,7 @@ def page_end(c):
     for t in C.END_INTRO:
         y = para(c, t, BODY, ML, y, W) - SP_PARA
     size, gap = 20, 6
-    yb = MB + 64
+    yb = MB + 93
     check("end", y)
     # colophon
     for i, f in enumerate(C.FAMILIES):
@@ -646,22 +649,26 @@ def page_end(c):
     c.setFillColor(INK); c.setFont("Sans-Bold", 7.6)
     c.drawString(ML, yb - 22, C.TITLE)
     c.setFillColor(GREY); c.setFont("Sans", 6.4)
-    c.drawString(ML, yb - 31, C.SUBTITLE)
-    c.drawString(ML, yb - 40, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros and Newsreader.")
-    c.drawString(ML, yb - 49, STAR_LABEL)
-    link(c, ML + pdfmetrics.stringWidth(STAR_LABEL, "Sans", 6.4), yb - 49, STAR_TEXT,
+    colophon_y = yb - 31
+    for line in wrap_words(C.SUBTITLE, "Sans", 6.4, W):
+        c.drawString(ML, colophon_y, line)
+        colophon_y -= 7.8
+    colophon_y -= 1.2
+    c.drawString(ML, colophon_y, "Written and reviewed by a person. AI does the grunt work.")
+    colophon_y -= 9
+    c.drawString(ML, colophon_y, "Set in TeX Gyre Heros and Newsreader.")
+    colophon_y -= 10
+    c.drawString(ML, colophon_y, STAR_LABEL)
+    link(c, ML + pdfmetrics.stringWidth(STAR_LABEL, "Sans", 6.4), colophon_y, STAR_TEXT,
          "Mono", 5.9, STAR_URL)  # mono at the size of the sources' addresses
     rule(c, MB + 4, weight=1, color=INK)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
     tagline(c)
     c.setFont("Sans", 6.4); c.setFillColor(GREY)
-    mail = C.EDITION.split(" · ")[0]
-    if "@" in mail:  # the address for mistakes opens a new email
-        link(c, ML, MB - 6, mail, "Sans", 6.4, f"mailto:{mail}")
-        c.setFont("Sans", 6.4)
-        c.drawString(ML + pdfmetrics.stringWidth(mail, "Sans", 6.4), MB - 6, C.EDITION[len(mail):])
-    else:
-        c.drawString(ML, MB - 6, C.EDITION)
+    link(c, ML, MB - 6, CONTACT_EMAIL, "Sans", 6.4, f"mailto:{CONTACT_EMAIL}")
+    c.setFont("Sans", 6.4)
+    c.drawString(ML + pdfmetrics.stringWidth(CONTACT_EMAIL, "Sans", 6.4), MB - 6,
+                 END_FOOTER[len(CONTACT_EMAIL):])
 
 def build(out):
     c = canvas.Canvas(out, pagesize=(PW, PH), invariant=1)

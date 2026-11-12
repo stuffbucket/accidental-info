@@ -3,7 +3,7 @@
     {
       "id": "intelligence",
       "name": "Accidental Intelligence",
-      "line": "Coding agents, and what to make of them.",
+      "line": "Coding agents, decision models, and what to make of them.",
       "code": "Ai",
       "colour": "blue",
       "page": "intelligence/",
@@ -24,7 +24,9 @@
         "software-factories": "Sf",
         "lights-off-software-factories": "Lo",
         "software-factory-claims": "Fc",
-        "harness-engineering": "He"
+        "harness-engineering": "He",
+        "decision-models": "Di",
+        "judgment-to-action": "Ja"
       },
       "groups": [
         {
@@ -104,6 +106,15 @@
               "id": "harness-engineering",
               "title": "Harness Engineering"
             }
+          ]
+        },
+        {
+          "id": "models",
+          "name": "Models",
+          "colour": "yellow",
+          "guides": [
+            "decision-models",
+            "judgment-to-action"
           ]
         }
       ]

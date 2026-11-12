@@ -3,12 +3,12 @@ title: Your Topic
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to the one question your reader has, in one line.
 running_footer: Your Topic
-edition: Your name · CC BY 4.0 · Month Year
-cover_footer: Month Year
+edition: friend@accidental.info · CC BY 4.0 · Month Year
+cover_footer: friend@accidental.info · Month Year
 collection: Your collection
 collection_mark: square
 number: 01
-version: 0.2.0
+version: 0.2.1
 ---
 
 # The question your<br/>reader is asking {#why}
