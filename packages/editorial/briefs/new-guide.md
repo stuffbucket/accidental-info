@@ -30,7 +30,9 @@ are they an expert. These are 5 minute reads, tops."
 - **The base guide:** `guides/agents-harnesses-skills-tools/guide.md` is well reviewed and
   fixed. Never contradict it, don't repeat it, and point to it for the basics (agent,
   harness, skill, tool, session, context window).
-- **The registry:** `packages/editorial/registry.md` gives each concept one tile code, one
+- **The taxonomy:** `packages/editorial/taxonomy.md` gives each guide one collection and group.
+  Reserve the slug, placement and map code under `coming` before making the draft.
+- **The registry:** `packages/editorial/registry.json` gives each concept one tile code, one
   colour family and one owning guide. A new key concept gets a code no other concept uses.
 - **Facts:** come only from public, official documentation and the project's own published
   material, fetched now. Save notes with URLs and short verbatim excerpts in a `sources.md`
@@ -38,7 +40,7 @@ are they an expert. These are 5 minute reads, tops."
   appendix (title, publisher, URL, date checked). Where products differ or change often, say
   "as of <Month Year>".
 - **Front matter:** `version: 0.1.0`, `kicker: An Accidental Guide to…`, a short, balanced
-  title, and the public imprint: `edition: oops@accidental.info · CC BY 4.0 · <Month Year>`
+  title, and the public imprint: `edition: friend@accidental.info · CC BY 4.0 · <Month Year>`
   and `cover_footer: friend@accidental.info · <Month Year>`.
 
 ## How to build it

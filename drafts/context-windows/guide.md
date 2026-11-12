@@ -3,12 +3,12 @@ title: Context Windows
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to what fills a coding agent’s context window, as of October 2026.
 running_footer: Context Windows
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 10
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What is the<br/>context window? {#why}

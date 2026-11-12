@@ -3,12 +3,12 @@ title: Model Context Protocol
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to MCP servers and clients, as of October 2026.
 running_footer: MCP
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 08
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What is MCP? {#why}

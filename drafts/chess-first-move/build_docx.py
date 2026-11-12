@@ -708,6 +708,18 @@ def page_side(doc):
     para(doc, C.SIDE_NOTE, 7.6)
 
 
+def page_openings(doc, pdf, i):
+    """The editable heading and intro, followed by the PDF's board grid."""
+    page = C.OPENINGS[i]
+    heading(doc, page["title"])
+    for text in page["intro"]:
+        para(doc, text, 7.0, space_after=6)
+    top, bottom = G.openings_layout(i)
+    back = [sid for sid in ("seq", "levels", "flow", "side") if sid in G.HAVE]
+    page_no = G.ENTRY_START + len(G.PAGES) + len(back) + i
+    diagram(doc, pdf, page_no, (G.ML, bottom - 2, G.PW - G.MR, top + 2))
+
+
 def page_parts(doc, parts):
     """One of the PDF's packed pages: entries and term sections, in the order G.PAGES has them."""
     for k, part in enumerate(parts):
@@ -743,7 +755,8 @@ def page_end(doc):
     para(doc, C.KICKER, 6.4, GREY, space_after=1)
     para(doc, C.TITLE, 7.6, bold=True, space_after=1)
     para(doc, C.SUBTITLE, 6.4, GREY, space_after=1)
-    para(doc, "Written and reviewed by a person. AI does the grunt work. Set in TeX Gyre Heros and Newsreader.", 6.4, GREY, space_after=1)
+    para(doc, "Written and reviewed by a person. AI does the grunt work.", 6.4, GREY, space_after=1)
+    para(doc, "Set in TeX Gyre Heros and Newsreader.", 6.4, GREY, space_after=1)
     p = para(doc, G.STAR_LABEL, 6.4, GREY, space_after=0)
     hyperlink(p, G.STAR_TEXT, G.STAR_URL, 5.9, GREY, MONO)
 
@@ -849,12 +862,13 @@ def build(pdf_path, out):
     back = (("seq", lambda d: page_seq(d, pdf)), ("levels", lambda d: page_table(d, "levels")),
             ("flow", page_flow), ("side", page_side))
     pages += [fn for sid, fn in back if sid in G.HAVE]
+    pages += [lambda d, i=i: page_openings(d, pdf, i) for i in range(len(C.OPENINGS))]
     for k, fn in enumerate(pages):
         if k:
             new_page(doc)
         fn(doc)
     end = doc.add_section(WD_SECTION.NEW_PAGE)
-    ruled_footer(end, C.EDITION, mail=True)
+    ruled_footer(end, G.END_FOOTER, mail=True)
     page_end(doc)
 
     props = doc.core_properties

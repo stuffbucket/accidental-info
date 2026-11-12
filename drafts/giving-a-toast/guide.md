@@ -3,12 +3,12 @@ title: Giving a Toast
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to giving a short, warm toast.
 running_footer: Giving a Toast
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: At the table
 collection_mark: circle
 number: 04
-version: 0.4.0
+version: 0.4.1
 ---
 
 # What goes in a toast? {#why}

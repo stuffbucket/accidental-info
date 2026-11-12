@@ -7,7 +7,7 @@ For each guide you're given, edit it in place. Don't regenerate it.
 
 ## Steps
 
-1. **Registry.** Apply `packages/editorial/registry.md` (and `registry.json`) for this
+1. **Registry.** Apply canonical `packages/editorial/registry.json` and its generated table in `registry.md` for this
    guide:
    - tile codes
    - color families and hex values

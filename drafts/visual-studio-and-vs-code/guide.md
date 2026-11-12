@@ -3,12 +3,12 @@ title: VS Code and Visual Studio
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to where GitHub Copilot’s agent setup lives, as of October 2026.
 running_footer: VS Code and Visual Studio
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 06
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What can you set up<br/>in VS Code? {#why}

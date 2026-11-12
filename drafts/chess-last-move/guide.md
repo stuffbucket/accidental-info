@@ -3,12 +3,12 @@ title: The Last Move in Chess
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to how a game of chess ends, and how to end one well.
 running_footer: The Last Move in Chess
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Games
 collection_mark: diamond
 number: 03
-version: 0.4.0
+version: 0.4.1
 ---
 
 # How does a<br/>chess game end? {#why}

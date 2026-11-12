@@ -3,12 +3,12 @@ title: Accidental Intelligence
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to the Accidental Guides, as of October 2026.
 running_footer: Accidental Intelligence
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 00
-version: 0.4.0
+version: 0.4.1
 ---
 
 # What are the<br/>Accidental Guides? {#why}

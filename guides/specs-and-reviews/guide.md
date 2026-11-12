@@ -3,12 +3,12 @@ title: Specs and Reviews
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to agreeing on work as a team and checking when it’s done.
 running_footer: Specs and Reviews
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 11
-version: 0.5.0
+version: 0.5.1
 ---
 
 # How does work get<br/>from an idea to done? {#why}

@@ -3,12 +3,12 @@ title: Smoke Detectors That Chirp
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to finding the smoke alarm that’s chirping, and making it stop.
 running_footer: Smoke Detectors That Chirp
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Around the house
 collection_mark: triangle
 number: 01
-version: 0.7.0
+version: 0.7.1
 ---
 
 # Why is my smoke<br/>alarm chirping? {#why}

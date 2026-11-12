@@ -3,12 +3,12 @@ title: The Caro-Kann for Black
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to a solid answer to 1.e4 that you can play as Black.
 running_footer: The Caro-Kann for Black
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Games
 collection_mark: diamond
 number: 05
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What is<br/>the Caro-Kann? {#why}

@@ -3,12 +3,12 @@ title: Plugins, Connectors, and Marketplaces
 kicker: An Accidental Guide to…
 subtitle: A pocket-sized guide to the names for things you add to a coding agent or AI app.
 running_footer: Plugins, Connectors, and Marketplaces
-edition: oops@accidental.info · CC BY 4.0 · October 2026
+edition: friend@accidental.info · CC BY 4.0 · October 2026
 cover_footer: friend@accidental.info · October 2026
 collection: Accidental Intelligence
 collection_mark: square
 number: 09
-version: 0.3.0
+version: 0.3.1
 ---
 
 # What are all these things? {#why}

@@ -2,14 +2,14 @@
 
 Usage: python imprint.py <guide folder> [<guide folder> ...]
 
-The cover's footer gets the general address, the end page's footer the address for
-mistakes and the text's license, and the PDF's and Word document's author is the series:
+The cover and end-page footers get the general address, the end page also gets the
+text's license, and the PDF's and Word document's author is the series:
 
     cover_footer: friend@accidental.info · <month>
-    edition: oops@accidental.info · CC BY 4.0 · <month>
+    edition: friend@accidental.info · CC BY 4.0 · <month>
     author "Accidental Guides" in build_guide.py and build_docx.py
 
-The builders link the end page's oops@ address with mailto: and add the colophon's
+The builders link the end page's friend@ address with mailto: and add the colophon's
 "Leave a star: accidental.info/star" line themselves, so this doesn't touch them for that.
 
 <month> is the last part of the guide's current edition, such as "October 2026". A
@@ -24,7 +24,6 @@ import tempfile
 from pathlib import Path
 
 HI = "friend@accidental.info"
-OOPS = "oops@accidental.info"
 LICENSE = "CC BY 4.0"
 AUTHOR = "Accidental Guides"
 
@@ -39,7 +38,7 @@ def front_matter(text, key):
 def imprint_text(text):
     edition = front_matter(text, "edition")
     month = edition.group(1).split(" · ")[-1]
-    text = text[:edition.start(1)] + f"{OOPS} · {LICENSE} · {month}" + text[edition.end(1):]
+    text = text[:edition.start(1)] + f"{HI} · {LICENSE} · {month}" + text[edition.end(1):]
     cover = front_matter(text, "cover_footer")
     return text[:cover.start(1)] + f"{HI} · {month}" + text[cover.end(1):]
 

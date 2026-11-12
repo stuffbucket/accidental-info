@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-22",
-  "source": "packages/editorial/registry.md",
+  "updated": "2026-11-12",
+  "source": "packages/editorial/registry.json",
   "families": [
     {
       "key": "Ru",
@@ -204,7 +204,7 @@
           "guide": "plugins-and-marketplaces",
           "entry": "Tools",
           "num": "01",
-          "code_now": "Tl",
+          "code_now": "To",
           "color_now": "blue",
           "role": "reference",
           "tile": "filled"
@@ -357,7 +357,7 @@
           "guide": "codex",
           "entry": "Config file",
           "num": "04",
-          "code_now": "Cf",
+          "code_now": "Se",
           "color_now": "yellow",
           "role": "reference",
           "tile": "filled"
@@ -473,7 +473,7 @@
           "guide": "skills",
           "entry": "Description",
           "num": "01",
-          "code_now": "De",
+          "code_now": "Ds",
           "color_now": "blue",
           "role": "owner",
           "tile": "filled"
@@ -492,9 +492,9 @@
       "appears_in": [
         {
           "guide": "skills",
-          "entry": "Instructions",
+          "entry": "Skill instructions",
           "num": "02",
-          "code_now": "In",
+          "code_now": "Is",
           "color_now": "green",
           "role": "owner",
           "tile": "filled"
@@ -515,7 +515,7 @@
           "guide": "skills",
           "entry": "Script",
           "num": "03",
-          "code_now": "Sc",
+          "code_now": "Sr",
           "color_now": "purple",
           "role": "owner",
           "tile": "filled"
@@ -557,7 +557,7 @@
           "guide": "skills",
           "entry": "Asset",
           "num": "05",
-          "code_now": "As",
+          "code_now": "At",
           "color_now": "pink",
           "role": "owner",
           "tile": "filled"
@@ -576,9 +576,9 @@
       "appears_in": [
         {
           "guide": "mcp",
-          "entry": "Server",
+          "entry": "MCP server",
           "num": "01",
-          "code_now": "Sv",
+          "code_now": "Mc",
           "color_now": "blue",
           "role": "owner",
           "tile": "filled"
@@ -607,7 +607,7 @@
           "guide": "claude-desktop",
           "entry": "Connectors",
           "num": "03",
-          "code_now": "Cn",
+          "code_now": "Mc",
           "color_now": "purple",
           "role": "reference",
           "tile": "filled"
@@ -655,7 +655,7 @@
           "guide": "mcp",
           "entry": "Client",
           "num": "02",
-          "code_now": "Cl",
+          "code_now": "Ct",
           "color_now": "green",
           "role": "owner",
           "tile": "filled"
@@ -676,7 +676,7 @@
           "guide": "mcp",
           "entry": "Server entry",
           "num": "03",
-          "code_now": "Se",
+          "code_now": "En",
           "color_now": "purple",
           "role": "owner",
           "tile": "filled"
@@ -697,7 +697,7 @@
           "guide": "mcp",
           "entry": "Transport",
           "num": "04",
-          "code_now": "Tr",
+          "code_now": "Tp",
           "color_now": "yellow",
           "role": "owner",
           "tile": "filled"
@@ -739,7 +739,7 @@
           "guide": "plugins-and-marketplaces",
           "entry": "Packages",
           "num": "04",
-          "code_now": "Pk",
+          "code_now": "Pl",
           "color_now": "yellow",
           "role": "owner",
           "tile": "filled"
@@ -1557,6 +1557,195 @@
           "num": "06",
           "code_now": "Df",
           "color_now": "red-orange",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Decision model",
+      "code": "Dj",
+      "family": "Ru",
+      "family_name": "Things that run",
+      "color": "yellow",
+      "token": "warning",
+      "hex": "#FFCD29",
+      "owner": "decision-models",
+      "appears_in": [
+        {
+          "guide": "decision-models",
+          "entry": "Decision model",
+          "num": null,
+          "code_now": "Dj",
+          "color_now": "yellow",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "State",
+      "code": "Si",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "decision-models",
+      "appears_in": [
+        {
+          "guide": "decision-models",
+          "entry": "State",
+          "num": null,
+          "code_now": "Si",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Judgment question",
+      "code": "Jq",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "decision-models",
+      "appears_in": [
+        {
+          "guide": "decision-models",
+          "entry": "Judgment question",
+          "num": null,
+          "code_now": "Jq",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Allowed answers",
+      "code": "Al",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "decision-models",
+      "appears_in": [
+        {
+          "guide": "decision-models",
+          "entry": "Allowed answers",
+          "num": null,
+          "code_now": "Al",
+          "color_now": "purple",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Probability",
+      "code": "Pb",
+      "family": "Nu",
+      "family_name": "Numbers and claims",
+      "color": "blue",
+      "token": "brand",
+      "hex": "#0D99FF",
+      "owner": "decision-models",
+      "appears_in": [
+        {
+          "guide": "decision-models",
+          "entry": "Probability",
+          "num": null,
+          "code_now": "Pb",
+          "color_now": "blue",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Policy",
+      "code": "Po",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "judgment-to-action",
+      "appears_in": [
+        {
+          "guide": "judgment-to-action",
+          "entry": "Policy",
+          "num": null,
+          "code_now": "Po",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Threshold",
+      "code": "Td",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "judgment-to-action",
+      "appears_in": [
+        {
+          "guide": "judgment-to-action",
+          "entry": "Threshold",
+          "num": null,
+          "code_now": "Td",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Review path",
+      "code": "Rp",
+      "family": "Dm",
+      "family_name": "Decisions people make",
+      "color": "pink",
+      "token": "assistive",
+      "hex": "#E83FBF",
+      "owner": "judgment-to-action",
+      "appears_in": [
+        {
+          "guide": "judgment-to-action",
+          "entry": "Review path",
+          "num": null,
+          "code_now": "Rp",
+          "color_now": "pink",
+          "role": "owner",
+          "tile": "filled"
+        }
+      ]
+    },
+    {
+      "concept": "Labeled case",
+      "code": "Lc",
+      "family": "Wr",
+      "family_name": "Things you write down",
+      "color": "purple",
+      "token": "figjam",
+      "hex": "#9747FF",
+      "owner": "judgment-to-action",
+      "appears_in": [
+        {
+          "guide": "judgment-to-action",
+          "entry": "Labeled case",
+          "num": null,
+          "code_now": "Lc",
+          "color_now": "purple",
           "role": "owner",
           "tile": "filled"
         }
