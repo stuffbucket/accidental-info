@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "0.42.5",
-    "astro": "7.3.5",
+    "astro": "7.4.7",
     "d3-shape": "3.2.0",
     "pdfjs-dist": "6.4.299"
   },
